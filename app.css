@@ -1,5 +1,5 @@
 body {
-    background: #e7ede9;
+    background: #e7ede9; 
     color: #A38F85;
     font-family: "Figtree", serif;
   }
@@ -10,7 +10,7 @@ body {
     border: 1px solid #A38F85;
   }
   
-  .navbar {
+  .navbar { 
     padding: 10px;
     background: #e7ede9;
     display: flex;
@@ -18,7 +18,7 @@ body {
     align-items: center;
   }
   .logo {
-    width: 50px;
+    width: 70px;
     color: #D4B2A7;
 
   }
