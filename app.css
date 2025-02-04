@@ -1,0 +1,35 @@
+body {
+    background: #e7ede9;
+    color: #A38F85;
+    font-family: "Figtree", serif;
+  }
+  section {
+    padding: 20px;
+  }
+  hr {
+    border: 1px solid #A38F85;
+  }
+  
+  .navbar {
+    padding: 10px;
+    background: #e7ede9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    width: 50px;
+    color: #D4B2A7;
+
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: black;
+    padding:20px;
+  }
+
+
+  footer {
+    margin-top: auto; /* this pushes the footer to bottom?*/
+    color: #D4B2A7;
+  }
