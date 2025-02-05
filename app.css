@@ -7,7 +7,7 @@ body { /* this is general for the page*/
     padding: 20px;
   }
   hr { /*this is a line creating visual space between header and footer*/
-    border: 5px solid #A38F85;
+    border: 2px solid #A38F85;
   }
   
   /* this is design for navigation. This is also your flexbox*/
@@ -55,10 +55,10 @@ body { /* this is general for the page*/
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Auto-fill columns, each with a minimum width of 250px */
   gap: 20px; /* Space between items */
   margin: 0 auto; /* Center the grid */
+  padding: 80px;
 }
-
   
-    /*Design for images inside article*/
+    /*Design for images inside the grid*/
   img { 
       width: 100%;
       height: 200px;
@@ -67,6 +67,14 @@ body { /* this is general for the page*/
       
   }
 
+  .quote-section {
+    text-align: center; /* Center the text */
+    margin: 100px 0; /* Adds space above and below the section */
+    background-color: #f4f4f4; /* Light background for contrast */
+    padding: 100px;
+    border-radius: 8px; /* Rounded corners */
+  }
+  
 
   /* Media Queries for Responsiveness */
 
@@ -95,6 +103,20 @@ body { /* this is general for the page*/
   }
 }
 
+button {
+  margin-top: 10px; /* Adds space between the paragraph and button */
+  padding: 10px 20px; /* Adds padding inside the button */
+  font-size: 14px;
+  background-color: #A38F85;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #8C7B6B; /* Button color change on hover */
+}
 
   footer {
     margin-top: auto; /* this pushes the footer to bottom?*/
@@ -103,4 +125,9 @@ body { /* this is general for the page*/
     justify-content: space-between;
     align-items: center;
     
+    
   }
+  footer a {
+    text-decoration: none; /* removes underline from the links */
+    color: #A38F85;
+}
