@@ -2,6 +2,7 @@ body { /* this is general for the page*/
     background: #EDE9E3; 
     color: #A38F85;
     font-family: "Figtree", serif;
+  
   }
   section {
     padding: 20px;
@@ -82,6 +83,7 @@ body { /* this is general for the page*/
 @media (max-width: 320px) {
   .grid-container {
       grid-template-columns: 1fr; /* 1 column on small screens */
+    
   }
 }
 
