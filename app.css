@@ -1,58 +1,106 @@
 body { /* this is general for the page*/
-    background: #e7ede9; 
+    background: #EDE9E3; 
     color: #A38F85;
     font-family: "Figtree", serif;
   }
   section {
     padding: 20px;
   }
-  hr {
-    border: 1px solid #A38F85;
+  hr { /*this is a line creating visual space between header and footer*/
+    border: 5px solid #A38F85;
   }
   
-  
+  /* this is design for navigation. This is also your flexbox*/
   .navbar { 
     padding: 10px;
-    background: #e7ede9;
+    background: #EDE9E3; 
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     }
 
-    /* See on tablet (768px and up) as requested for the project */
-@media (min-width: 768px) {
-    section {
-      padding: 40px;
-    }
-     }
+    .logo {
+      width: 70px;
+      color:#D4B2A7;
+      font-family: "Great Vibes", cursive;
+      animation: bounce 2s infinite;
+      }
 
-    /* See on desktop (1024px and up) as requested for the project */
-@media (min-width: 1024px) {
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #e7ede9;
-      padding: 10px 20px;
-    }
-    }
+      @keyframes bounce {
+        0%, 100% {
+          transform: translateY(0); /* Original position */
+        }
+        50% {
+          transform: translateY(-10px); /* Moves up by 10px */
+        }
+      }
 
-  .logo {
-    width: 70px;
-    color: #D4B2A7;
-
-
-  }
-  /* adjusting links*/
+      /* adjusting links*/
   .nav-links a {
     text-decoration: none; /*removing underline, it is as default*/
-    color: black;
+    color: #A38F85;
     padding:20px;
   }
+
+  /* Make the navigation bar responsive */
+@media (max-width: 1024px) {
+  .navbar {
+      display: none; /* Hide the navbar on tablets and smaller devices */
+  }
+}
+
+    /*Grid for articles. This is also your CSS grid layout*/
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); /* creates 4 columns*/
+      /*grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); Example: automatically adjusts the number of columns */
+      gap: 10px;
+      margin: 0 auto;
+  }
+    /* Design for articles*/
+  article { 
+      background-color: #f4f4f4;
+      padding: 15px;
+      border-radius: 8px;
+  }
+    /*Design for images inside article*/
+  img { 
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+  }
+
+
+  /* Media Queries for Responsiveness */
+
+/* 1 Column for mobile (320px and up) */
+@media (max-width: 320px) {
+  .grid-container {
+      grid-template-columns: 1fr; /* 1 column on small screens */
+  }
+}
+
+/* 2 Columns for tablets (up to 768px) */
+@media (min-width: 321px) and (max-width: 768px) {
+  .grid-container {
+      grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
+  }
+}
+
+/* 4 Columns for desktop (1024px and up) */
+@media (min-width: 1024px) {
+  .grid-container {
+      grid-template-columns: repeat(4, 1fr); /* 4 columns for desktop */
+  }
+
+  .navbar {
+      display: flex; /* Show the navbar on desktop */
+  }
+}
 
 
   footer {
     margin-top: auto; /* this pushes the footer to bottom?*/
-    color: #D4B2A7;
+    background: #EDE9E3; 
   }
