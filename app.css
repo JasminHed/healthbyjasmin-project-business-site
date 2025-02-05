@@ -53,7 +53,8 @@ body { /* this is general for the page*/
     /*Grid for articles. This is also your CSS grid layout*/
     .grid-container {
       display: grid;
-      grid-template-columns: repeat(4, 1fr); /* creates 4 columns*/
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      /*grid-template-columns: repeat(4, 1fr); creates 4 columns*/
       /*grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); Example: automatically adjusts the number of columns */
       gap: 10px;
       margin: 0 auto;
