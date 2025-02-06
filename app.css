@@ -83,7 +83,7 @@ body {
   margin: 40px auto;
   padding: 20px;
 }
-/*Design links in journal grid*/
+/*Design links in content grid*/
 .grid-content a {
   text-decoration: none;
   color: #D4B2A7;
@@ -159,6 +159,7 @@ body {
     grid-template-columns: repeat(2, 1fr);
   
   }
+  /*Design flexboxes*/
   .about-me-section {
     text-align: left;
     padding: 20px;
