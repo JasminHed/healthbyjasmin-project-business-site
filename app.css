@@ -62,14 +62,13 @@ body {
   margin: 10px 0; /* Adds space above and below the section */
   background-color: #f4f4f4;
   border-radius: 8px;
-  padding: 80px;
+  padding: 50px;
 
   }
 
 /*Design for content grid*/
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Auto-fill columns, each with a minimum width of 250px */
   gap: 20px; /* Space between items */
   margin: 40px auto; /* Center the grid */
   padding: 20px;
@@ -82,7 +81,7 @@ body {
     text-align: center; /* Center the text */
     margin: 100px 0; /* Adds space above and below the section */
     background-color: #f4f4f4; 
-    padding: 80px;
+    padding: 50px;
     border-radius: 8px;
   }
 /*Design journal grid*/
@@ -98,7 +97,7 @@ body {
   /* Media Queries for Responsiveness */
 
 /* Mobile exceptions */
-@media (max-width: 320px) {
+@media (max-width: 667px) {
   .navbar {
     display: none; /* Hide navbar on mobile */
   }
@@ -122,17 +121,17 @@ body {
  }
 }
 /* Tablet exceptions*/
-@media (min-width: 321px) and (max-width: 668px) {
+@media (min-width: 668px) and (max-width: 1024px;) {
   .navbar {
     display: none; /* Hide navbar on mobile */
   }
   .grid-container {
-      grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
-      text-align: center;
+    grid-template-columns: repeat(2, 1fr);
       
   }
   .grid-container1 {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
+    grid-template-columns: repeat(2, 1fr);
+  
   }
   .about-me-section {
     text-align: left;
@@ -145,30 +144,20 @@ body {
 
 }
 /* Desktop exceptions */
-@media (min-width: 669px) and (max-width: 1024px) {
+@media (min-width: 1024px) {
   .grid-container {
-      grid-template-columns: repeat(4, 1fr); /* 4 columns for desktop */
-      text-align: left;
-      padding:20px;
+    grid-template-columns: repeat(4, 1fr);
+    
   }
   .grid-container1 {
-    grid-template-columns: repeat(4, 1fr); /* 4 columns for desktop */
-    text-align: left;
+    grid-template-columns: repeat(4, 1fr); 
+    
   }
   .navbar {
     display: flex; /* Show the navbar on desktop */
-}
-}
 
-@media (min-width: 1025px) {
-  .grid-container {
-    grid-template-columns: repeat(4, 1fr); 
-  }
-  .grid-container1 {
-    grid-template-columns: repeat(4, 1fr); 
-  }
 }
-
+}
 
 /* Footer*/
 
