@@ -83,6 +83,13 @@ body {
   margin: 40px auto;
   padding: 20px;
 }
+/*Design links in journal grid*/
+.grid-content a {
+  text-decoration: none;
+  color: #D4B2A7;
+  font-style: italic;
+}
+
   
 /* Design quote section*/
   .quote-section {
@@ -110,6 +117,7 @@ body {
   .grid-journal a {
     text-decoration: none;
     color: #D4B2A7;
+    font-style: italic;
   }
 
   /* Media Queries */
