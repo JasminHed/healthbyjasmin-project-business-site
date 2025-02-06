@@ -1,4 +1,7 @@
-body { /* this is general for the page*/
+/*General for full page*/
+
+/* Design for page*/
+body { 
     background: #EDE9E3; 
     color: #A38F85;
     font-family: "Figtree", serif;
@@ -7,11 +10,17 @@ body { /* this is general for the page*/
   section {
     padding: 20px;
   }
-  hr { /*this is a line creating visual space between header and footer*/
-    border: 2px solid #A38F85;
-  }
+
+/*Design for page images*/
+  img { 
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    
+}
   
-  /* this is design for navigation. This is also your flexbox*/
+/* Design for navigation bar.*/
   .navbar { 
     padding: 10px;
     background: #EDE9E3; 
@@ -20,7 +29,7 @@ body { /* this is general for the page*/
     align-items: center;
 
     }
-
+ /*Design for logo + animation*/
     .logo {
       width: 70px;
       color:#D4B2A7;
@@ -37,16 +46,15 @@ body { /* this is general for the page*/
         }
       }
 
-      /* adjusting links*/
+  /*Design for links in navigation bar*/
   .nav-links a {
     text-decoration: none; /*removing underline, it is as default*/
     color: #A38F85;
     padding:20px;
   }
 
-  
 
-/*this is for my about me section*/
+  /*Design about me section*/
 .about-me-section {
   display: flex;
   flex-direction: column;
@@ -58,86 +66,126 @@ body { /* this is general for the page*/
 
   }
 
+/*Design for content grid*/
 .grid-container {
-  display: grid; /* Enable grid layout */
+  display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Auto-fill columns, each with a minimum width of 250px */
   gap: 20px; /* Space between items */
   margin: 40px auto; /* Center the grid */
   padding: 20px;
 }
   
-    /*Design for images inside the grid*/
-  img { 
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 8px;
-      
-  }
-
+/* Design quote section*/
   .quote-section {
     display:flex;
     flex-direction: column;
     text-align: center; /* Center the text */
     margin: 100px 0; /* Adds space above and below the section */
-    background-color: #f4f4f4; /* Light background for contrast */
+    background-color: #f4f4f4; 
     padding: 80px;
-    border-radius: 8px; /* Rounded corners */
+    border-radius: 8px;
   }
-  
-  .journal-grid {
+/*Design journal grid*/
+  .grid-container1 {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Auto-fill columns, each with a minimum width of 250px */
-    gap: 50px; /* Mellanrum mellan kolumnerna */
+    gap: 20px; 
+    margin: 40 auto; /* Center grid */
     padding: 20px;
-    margin: 0 auto; /* Center grid */
   
   }
 
   /* Media Queries for Responsiveness */
 
-  /* Make the navigation bar responsive */
-@media (max-width: 1024px) {
-  .navbar {
-      display: none; /* Hide the navbar on tablets and smaller devices */
-  }
-}  
-
-/* 1 Column for mobile (320px and up) */
+/* Mobile exceptions */
 @media (max-width: 320px) {
+  .navbar {
+    display: none; /* Hide navbar on mobile */
   }
   .grid-container {
       grid-template-columns: 1fr; /* 1 column on small screens */
+ }
 
+.grid-container1 {
+  grid-template-columns: 1fr;
 }
 
-/* 2 Columns for tablets (up to 768px) */
-@media (min-width: 321px) and (max-width: 768px) {
+ /* Design about me section on mobile screen*/
+ .about-me-section {
+  text-align: left;
+  padding: 20px;
+ }
+ /* Design  quote section on mobile screen*/
+ .quote-section {
+  text-align: left;
+  padding: 20px;
+ }
+}
+/* Tablet exceptions*/
+@media (min-width: 321px) and (max-width: 668px) {
+  .navbar {
+    display: none; /* Hide navbar on mobile */
+  }
   .grid-container {
       grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
+      text-align: center;
+      
   }
-}
+  .grid-container1 {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
+  }
+  .about-me-section {
+    text-align: left;
+    padding: 20px;
+  }
+  .quote-section {
+    text-align: left;
+    padding: 20px;
+  }
 
-/* 4 Columns for desktop (1024px and up) */
-@media (min-width: 1024px) {
+}
+/* Desktop exceptions */
+@media (min-width: 669px) and (max-width: 1024px) {
   .grid-container {
       grid-template-columns: repeat(4, 1fr); /* 4 columns for desktop */
+      text-align: left;
+      padding:20px;
   }
-
+  .grid-container1 {
+    grid-template-columns: repeat(4, 1fr); /* 4 columns for desktop */
+    text-align: left;
+  }
   .navbar {
-      display: flex; /* Show the navbar on desktop */
+    display: flex; /* Show the navbar on desktop */
+}
+}
+
+@media (min-width: 1025px) {
+  .grid-container {
+    grid-template-columns: repeat(4, 1fr); 
+  }
+  .grid-container1 {
+    grid-template-columns: repeat(4, 1fr); 
   }
 }
 
+
+/* Footer*/
+
+/*Line creating visual space*/
+hr { 
+  border: 2px solid #A38F85;
+}
+/*Design footer*/
   footer {
-    margin-top: auto; /* this pushes the footer to bottom?*/
+    margin-top: auto; /* this pushes the footer to bottom*/
     background: #EDE9E3; 
     display: flex;
     justify-content: space-between;
     align-items: center;
     
-    
   }
+  /*Design footer links*/
   footer a {
     text-decoration: none; /* removes underline from the links */
     color: #A38F85;
