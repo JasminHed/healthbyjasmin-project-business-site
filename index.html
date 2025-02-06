@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!--Link below makes page adjusted to mobile screen-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HealthbyJasmin</title>
+    <!--Link below connects html and css-->
     <link rel="stylesheet" href="app.css">
 </head>
 <body>
-<!--Here starts the flexbox-->
+
+<!--Navigation bar/Flexbox-->
   <section>
     <nav class="navbar">
         <h1 class="logo">HealthbyJasmin</h1>
@@ -20,41 +23,47 @@
       </div>
     </nav>
   </section>
+  <!-- Nav bar finish-->
 
   <hr>
+
+<!-- About me section/Flexbox -->
+<div class="about-me-section">
+  <h3>About Health by Jasmin</h3>
+  <p>Health by Jasmin is run by Jasmin Hedlund, who has been practicing Ashtanga Yoga and Ayurveda for over 15 years. She places great importance on embodying the practices she teaches. Jasmin offers Ashtanga Yoga classes, Ayurvedic health consultations, massage, courses, workshops, and more in Stockholm. She collaborates with fellow yoga practitioners and organizes annual retreats focusing on Ashtanga Yoga and Ayurveda.</p>
+</div>
 
 
 <!-- Here starts the grid, to be a grid we have to have several items -->
 
 <div class="grid-container">
-  <section class="About">
+  <section class="Ashtanga Yoga">
     <article>
       <div>
-        <h3>About</h3>
-        <p>Health by Jasmin is run by Jasmin Hedlund, who has been practicing Ashtanga Yoga and Ayurveda for over 15 years. She places great importance on embodying the practices she teaches.Jasmin offers Ashtanga Yoga classes, Ayurvedic health consultations, massage, courses, workshops, and more in Stockholm. She collaborates with fellow yoga practitioners and organizes annual retreats focusing on Ashtanga Yoga and Ayurveda. </p>
+        <img src="./ashtanga.jpg" alt="Ashtanga Yoga"/>
+        <h3>Ashtanga Yoga</h3>
+        <p>Ashtanga Yoga is a practice where the breath is at the core, synchronized with gentle, dynamic movements. </p>
          
       </div>
     </article>
   </section>
 
-  <section class="ashtanga">
+  <section class="ayurveda">
     <article>
       <div>
-        <img src="./ashtanga.jpg" alt="Ashtanga Yoga"/>
-        <h3>Ashtanga Yoga</h3>
-        <p>Ashtanga Yoga is a practice where the breath is at the core, synchronized with gentle, dynamic movements.
-          By following a set sequence of postures, an inner rhythm is cultivated that promotes balance, presence, and transformation.
-          The practice is an inward journey that strengthens both body and mind, with a focus on calmness and gradual progress at your own pace.</p>
+        <img src="./ayurveda.jpg" alt="Ayurveda"/>
+        <h3>Ayurveda</h3>
+        <p>Ayurveda offers us the knowledge and tools to strengthen and heal ourselves, both physically and mentally.</p>
           <button>Read More</button>
     </article>
   </section>
 
-  <section class="ayurveda">
+  <section class="Workshops">
     <article>
-      <img src="./ayurveda.jpg" alt="Herbmix"/>
+      <img src="./workshops.jpg" alt="Workshops"/>
       <div>
-        <h3>Ayurveda</h3>
-        <p>Ayurveda offers us the knowledge and tools to strengthen and heal ourselves, both physically and mentally.</p>
+        <h3>Workshops</h3>
+        <p></p>
           The word Ayurveda comes from Sanskrit and means “the knowledge of life.” Originating in India, it is one of the world’s oldest systems of health.</p> 
           One of the most well-known aspects of Ayurveda is the dosha theory, which describes each individual’s unique personality and body type.</p>
           <button>Read More</button>
@@ -62,29 +71,53 @@
     </article>
   </section>
 
-  <section class="Retreat">
+  <section class="Retreats">
     <article>
-      <img src="./ashtanga.jpg" alt="Ashtanga Yoga"/>
+      <img src="./retreat.jpg" alt="Retreats"/>
       <h3>Retreats</h3>
       <p>For those seeking deeper recovery and inner balance, our retreat offers the perfect weekend with daily Ashtanga Yoga, nourishing food, and Ayurveda.</p>
-        The retreat is held at a peaceful location near Stockholm, where you’ll have time to unwind, enjoy nature, and take part in yoga, sauna baths, and inspiring workshops, all designed to provide you with a complete and relaxing experience.</p>
-        <button>Go to Retreats</button>
+        <button>Go to</button>
     </article>
   </section>
 </div>
-
 <!--Here stops the grid-->
 
 <!-- Here starts section for quote/text -->
 <section class="quote-section">
   <div>
     <blockquote>
-      <p>""Health is the ability to live life to its fullest, with vitality and meaning. It’s about creating balance in every aspect of your being—mind, body, and spirit." – Dr. Andrew Weil"</p>
+      <p>"Sleep like tomorrow matters. Eat like your body is listening. Rest like it is productive. Vex King"</p>
     </blockquote>
-  
+
   </div>
 </section>
-  
+<!-- Here stops quote section-->
+
+<!-- Here starts grid for journal-->
+<div class="journal-grid">
+  <section class="Journal Post 1">
+    <article>
+      <div>
+        <img src="./journal1.jpg" alt="Journal 1"/>
+        <h3>Se dig själv genom din konstitution</h3>
+        <p>Att se på dig själv genom ayurvedans doshor, kroppskonstitutioner, kan ge dig en bättre förståelse för vem du är och vad du behöver.</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="Journal Post 2">
+    <article>
+      <div>
+        <img src="./journal2.jpg" alt="Yogapaus"/>
+        <h3>Yoga paus</h3>
+        <p>Här är tre enkla yoga-stretcher som du kan göra hemma.</p>
+      </div>
+    </article>
+  </section>
+</div>
+<!-- Here stops grid for journal -->
+
+
 <hr>
 
   <footer>
