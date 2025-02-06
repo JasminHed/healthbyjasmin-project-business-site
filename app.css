@@ -1,24 +1,24 @@
 /*General for full page*/
 
-/* Design for page*/
+/* Design for text + section on page*/
 body { 
     background: #EDE9E3; 
     color: #A38F85;
     font-family: "Times New Roman", Times, serif;
     font-size: 16px;
+    text-align: center;
     
     h3 {
-    font-family: "Georgia", serif; /* Same font for h3 */
+    font-family: "Georgia", serif; 
     font-size: 18px;
 
     }
-  
   }
   section {
     padding: 20px;
   }
 
-/*Design for page images*/
+/*Design for images on page*/
   img { 
     width: 100%;
     height: 200px;
@@ -26,7 +26,8 @@ body {
     border-radius: 8px;
     
 }
-  
+  /*Navigation bar/
+
 /* Design for navigation bar.*/
   .navbar { 
     padding: 10px;
@@ -56,17 +57,18 @@ body {
   /*Design for links in navigation bar*/
   .nav-links a {
     text-decoration: none; /*removing underline, it is as default*/
-    color: #A38F85;
+    color:#D4B2A7;
     padding:20px;
   }
 
+/*Design page sections*/
 
   /*Design about me section*/
 .about-me-section {
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin: 10px 0; /* Adds space above and below the section */
+  margin: 10px 0; 
   background-color: #f4f4f4;
   border-radius: 8px;
   padding: 50px;
@@ -74,11 +76,11 @@ body {
   }
 
 /*Design for content grid*/
-.grid-container {
+.grid-content {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Auto-fill columns, each with a minimum width of 250px */
-  gap: 20px; /* Space between items */
-  margin: 40px auto; /* Center the grid */
+  gap: 20px; 
+  margin: 40px auto;
   padding: 20px;
 }
   
@@ -86,8 +88,8 @@ body {
   .quote-section {
     display:flex;
     flex-direction: column;
-    text-align: center; /* Center the text */
-    margin: 100px 0; /* Adds space above and below the section */
+    text-align: center; 
+    margin: 100px 0; 
     background-color: #f4f4f4; 
     padding: 50px;
     border-radius: 8px;
@@ -96,33 +98,38 @@ body {
 
   }
 /*Design journal grid*/
-  .grid-container1 {
+  .grid-journal {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Auto-fill columns, each with a minimum width of 250px */
     gap: 20px; 
-    margin: 40 auto; /* Center grid */
+    margin: 40 auto; 
     padding: 20px;
   
   }
+  /*Design links in journal grid*/
+  .grid-journal a {
+    text-decoration: none;
+    color: #D4B2A7;
+  }
 
-  /* Media Queries for Responsiveness */
+  /* Media Queries */
 
 /* Mobile exceptions */
 @media (max-width: 667px) {
   .navbar {
-    display: none; /* Hide navbar on mobile */
+    display: none; /* Hide navbar */
   }
-  .grid-container {
+  .grid-content {
       grid-template-columns: 1fr; /* 1 column on small screens */
  }
 
-.grid-container1 {
-  grid-template-columns: 1fr;
+  .grid-journal {
+     grid-template-columns: 1fr;
+  
 }
-
  /* Design about me section on mobile screen*/
  .about-me-section {
-  text-align: left;
+  text-align: left; /*makes the text look aligned on small screens*/
   padding: 20px;
  }
  /* Design  quote section on mobile screen*/
@@ -134,13 +141,13 @@ body {
 /* Tablet exceptions*/
 @media (min-width: 668px) and (max-width: 1024px) {
   .navbar {
-    display: none; /* Hide navbar on mobile */
+    display: none; 
   }
-  .grid-container {
+  .grid-content {
     grid-template-columns: repeat(2, 1fr);
       
   }
-  .grid-container1 {
+  .grid-journal {
     grid-template-columns: repeat(2, 1fr);
   
   }
@@ -156,21 +163,19 @@ body {
 }
 /* Desktop exceptions */
 @media (min-width: 1024px) {
-  .grid-container {
+  .grid-content {
     grid-template-columns: repeat(4, 1fr);
     
   }
-  .grid-container1 {
+  .grid-journal {
     grid-template-columns: repeat(4, 1fr); 
     
   }
   .navbar {
-    display: flex; /* Show the navbar on desktop */
-
+    display: flex; /* Show navbar on desktop */
 }
 
 }
-
 
 /* Footer*/
 
@@ -189,7 +194,8 @@ hr {
   }
   /*Design footer links*/
   footer a {
-    text-decoration: none; /* removes underline from the links */
-    color: #A38F85;
+    text-decoration: none; 
+    color: #D4B2A7;
+    padding: 5px 10px;
 
 }
