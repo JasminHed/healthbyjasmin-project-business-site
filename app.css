@@ -90,7 +90,6 @@ body {
   font-style: italic;
 }
 
-  
 /* Design quote section*/
   .quote-section {
     display:flex;
@@ -102,12 +101,13 @@ body {
     border-radius: 8px;
     font-family: "Book Antiqua", Palatino, serif;
     font-size: 22px;
+    font-weight: bold;
 
   }
 /*Design journal grid*/
   .grid-journal {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Auto-fill columns, each with a minimum width of 250px */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 2fr)); /* Auto-fill columns, each with a minimum width of 250px */
     gap: 20px; 
     margin: 40 auto; 
     padding: 20px;
@@ -159,7 +159,7 @@ body {
     grid-template-columns: repeat(2, 1fr);
   
   }
-  /*Design flexboxes*/
+
   .about-me-section {
     text-align: left;
     padding: 20px;
