@@ -1,45 +1,56 @@
-/*General for full page*/
-
-/* Design for text + section on page*/
+/*Page design*/
 body { 
     background: #EDE9E3; 
     color: #A38F85;
     font-family: "Times New Roman", Times, serif;
     font-size: 16px;
     text-align: center;
-    
-    h3 {
+  }
+
+  h3 {
     font-family: "Georgia", serif; 
     font-size: 18px;
 
     }
-  }
+
+    p {
+      line-height: 1.6;
+      max-width: 700px;
+      margin: 20px auto;
+    }
+
   section {
     padding: 20px;
   }
 
-/*Design for images on page*/
+/*Image design*/
   img { 
     width: 100%;
     height: 200px;
     object-fit: cover;
-    border-radius: 8px;
-    
+    border-radius: 8px;   
 }
-  /*Navigation bar/
 
-/* Design for navigation bar.*/
+/* Navbar design*/
   .navbar { 
     padding: 10px;
     background: #EDE9E3; 
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     }
- /*Design for logo + animation*/
+
+    /*Navbar links design*/
+  .nav-links a {
+    text-decoration: none; /*removing underline, it is as default*/
+    color:#D4B2A7;
+    padding:20px;
+  }
+
+ /*Logo design*/
     .logo {
-      width: 70px;
+      font-size: 20px;
+      /*width: 70px;*/
       color:#D4B2A7;
       font-family: "Great Vibes", cursive;
       animation: bounce 2s infinite;
@@ -54,28 +65,18 @@ body {
         }
       }
 
-  /*Design for links in navigation bar*/
-  .nav-links a {
-    text-decoration: none; /*removing underline, it is as default*/
-    color:#D4B2A7;
-    padding:20px;
-  }
-
-/*Design page sections*/
-
-  /*Design about me section*/
+  /*about-me-section design*/
 .about-me-section {
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin: 10px 0; 
+  margin: 10px 0;
   background-color: #f4f4f4;
   border-radius: 8px;
   padding: 50px;
-
   }
 
-/*Design for content grid*/
+/*grid-content design*/
 .grid-content {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Auto-fill columns, each with a minimum width of 250px */
@@ -83,14 +84,14 @@ body {
   margin: 40px auto;
   padding: 20px;
 }
-/*Design links in content grid*/
+/*grid-content links design*/
 .grid-content a {
   text-decoration: none;
   color: #D4B2A7;
   font-style: italic;
 }
 
-/* Design quote section*/
+/*quote-section design*/
   .quote-section {
     display:flex;
     flex-direction: column;
@@ -104,7 +105,7 @@ body {
     font-weight: bold;
 
   }
-/*Design journal grid*/
+/*grid-journal design*/
   .grid-journal {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Auto-fill columns, each with a minimum width of 250px */
@@ -113,7 +114,7 @@ body {
     padding: 20px;
   
   }
-  /*Design links in journal grid*/
+  /*grid-journal links design*/
   .grid-journal a {
     text-decoration: none;
     color: #D4B2A7;
@@ -127,43 +128,31 @@ body {
   .navbar {
     display: none; /* Hide navbar */
   }
-  .grid-content {
-      grid-template-columns: 1fr; /* 1 column on small screens */
- }
 
+  .grid-content,
   .grid-journal {
-     grid-template-columns: 1fr;
-  
+    grid-template-columns: 1fr; /*1 column on screens up to 667px*/
+  }
+
+  .about-me-section,
+  .quote-section {
+    text-align: left;
+    padding: 20px;
+  }
 }
- /* Design about me section on mobile screen*/
- .about-me-section {
-  text-align: left; /*makes the text look aligned on small screens*/
-  padding: 20px;
- }
- /* Design  quote section on mobile screen*/
- .quote-section {
-  text-align: left;
-  padding: 20px;
- }
-}
+
 /* Tablet exceptions*/
 @media (min-width: 668px) and (max-width: 1024px) {
   .navbar {
     display: none; 
   }
-  .grid-content {
-    grid-template-columns: repeat(2, 1fr);
-      
-  }
+
+  .grid-content,
   .grid-journal {
     grid-template-columns: repeat(2, 1fr);
-  
   }
 
-  .about-me-section {
-    text-align: left;
-    padding: 20px;
-  }
+  .about-me-section,
   .quote-section {
     text-align: left;
     padding: 20px;
@@ -172,39 +161,35 @@ body {
 }
 /* Desktop exceptions */
 @media (min-width: 1024px) {
-  .grid-content {
-    grid-template-columns: repeat(4, 1fr);
-    
-  }
-  .grid-journal {
-    grid-template-columns: repeat(4, 1fr); 
-    
-  }
   .navbar {
     display: flex; /* Show navbar on desktop */
 }
 
+  .grid-content,
+  .grid-journal {
+    grid-template-columns: repeat(4, 1fr); /*4 columns on screens 1024px and up*/
+  }
+
 }
 
-/* Footer*/
-
-/*Line creating visual space*/
+/*Visual space line design*/
 hr { 
-  border: 2px solid #A38F85;
+  border: 1px solid #A38F85;
 }
-/*Design footer*/
+
+/*Footer design*/
   footer {
     margin-top: auto; /* this pushes the footer to bottom*/
     background: #EDE9E3; 
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    
+    align-items: center; 
   }
-  /*Design footer links*/
+
+  /*Footer links design*/
   footer a {
     text-decoration: none; 
     color: #D4B2A7;
-    padding: 5px 10px;
+    padding: 5px 5px;
 
 }
