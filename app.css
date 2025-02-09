@@ -53,15 +53,15 @@ body {
       /*width: 70px;*/
       color:#D4B2A7;
       font-family: "Great Vibes", cursive;
-      animation: bounce 2s infinite;
+      animation: bounce 2s infinite; 
       }
 
       @keyframes bounce {
         0%, 100% {
-          transform: translateY(0); /* Original position */
+          transform: translateY(0); /* Original position of logo */
         }
         50% {
-          transform: translateY(-10px); /* Moves up by 10px */
+          transform: translateY(-10px); /* Moves up by 10px, creates bounce */
         }
       }
 
@@ -136,7 +136,7 @@ body {
 
   .about-me-section,
   .quote-section {
-    text-align: left;
+    text-align: left; /*text aligns on small screens*/
     padding: 20px;
   }
 }
@@ -149,7 +149,7 @@ body {
 
   .grid-content,
   .grid-journal {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr); /*2 columns on tabelet*/
   }
 
   .about-me-section,
