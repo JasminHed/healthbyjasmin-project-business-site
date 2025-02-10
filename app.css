@@ -43,8 +43,13 @@ body {
     /*Navbar links design*/
   .nav-links a {
     text-decoration: none; /*removing underline, it is as default*/
-    color:#D4B2A7;
+    color:#A38F85;
     padding:20px;
+  }
+
+  /*Hover effect*/
+  .nav-links a:hover {
+    color: black;
   }
 
  /*Logo design*/
@@ -89,6 +94,10 @@ body {
   text-decoration: none;
   color: #D4B2A7;
   font-style: italic;
+}
+/*Hover effect*/
+.grid-content a:hover, .grid-journal a:hover {
+color: black;
 }
 
 /*quote-section design*/
@@ -168,6 +177,10 @@ hr {
   /*Footer links design*/
   footer a {
     text-decoration: none; 
-    color: #D4B2A7;
+    color: #A38F85;
     padding: 5px 5px;
+}
+/*Hover effect*/
+   footer a:hover {
+  color: black;
 }
