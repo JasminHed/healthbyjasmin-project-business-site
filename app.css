@@ -35,15 +35,29 @@ header {
   /*keeps it in header, no overfloe*/
 }
 
-video {
-  position: absolute;
-  /*positions the video in relation to header*/
-  top: 0;
-  left: 0;
+/* Slider container */
+.slider {
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Create a flexbox for the slides */
+.slides {
+  display: flex;
+  width: 400%;
+  /* For 4 images, adjust if you have more or fewer */
+  animation: slide 12s infinite;
+  /* Controls the speed of the sliding */
+}
+
+/* Style for each image */
+.slides img {
+  width: 100vw;
+  /* Each image takes up 100% of the viewport width */
+  height: 100%;
   object-fit: cover;
-  /*covers header area withouth stretching*/
 }
 
 /*Image design*/
