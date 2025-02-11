@@ -1,6 +1,6 @@
 /*Page design*/
 body {
-  background: #EDE9E3;
+  background: white;
   color: #A38F85;
   font-family: "Times New Roman", Times, serif;
   font-size: 16px;
@@ -26,6 +26,36 @@ body a:hover {
   color: #204045;
 }
 
+header {
+  position: relative;
+  /*positions the video as just header and is reference point for position absolute*/
+  width: 100vw;
+  height: 50vw;
+  overflow: hidden;
+  /*keeps it in header, no overfloe*/
+}
+
+video {
+  position: absolute;
+  /*positions the video in relation to header*/
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /*covers header area withouth stretching*/
+}
+
+.header-content {
+  position: absolute;
+  /*positions the text over video*/
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  /*forces text to center*/
+}
+
 /*Image design*/
 img {
   width: 100%;
@@ -37,7 +67,6 @@ img {
 /* Navbar design*/
 .navbar {
   padding: 10px;
-  background: #EDE9E3;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -57,22 +86,22 @@ img {
   /*width: 70px;*/
   color: #D4B2A7;
   font-family: "Great Vibes", cursive;
-  animation: bounce 2s infinite;
+  /*animation: bounce 2s infinite;*/
 }
 
-@keyframes bounce {
+/*@keyframes bounce {
 
   0%,
   100% {
     transform: translateY(0);
-    /* Original position of logo */
+    /* Original position of logo 
   }
 
   50% {
     transform: translateY(-10px);
-    /* Moves up by 10px, creates bounce */
+    /* Moves up by 10px, creates bounce 
   }
-}
+}*/
 
 /*about-me-section design*/
 .about-me-section {
@@ -110,7 +139,8 @@ img {
   flex-direction: column;
   text-align: center;
   margin: 100px 0;
-  background-color: #f4f4f4;
+  background-color: #E7D7C9;
+  color: white;
   padding: 20px;
   border-radius: 8px;
   font-family: "Book Antiqua", Palatino, serif;
@@ -179,7 +209,6 @@ hr {
 footer {
   margin-top: auto;
   /* this pushes the footer to bottom*/
-  background: #EDE9E3;
   display: flex;
   justify-content: space-between;
   align-items: center;
