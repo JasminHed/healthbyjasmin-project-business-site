@@ -27,12 +27,12 @@ section {
 }
 
 body a:hover {
-  color: #204045;
+  color: black;
 }
 
-/* Style for the header */
+/* Design header */
 header {
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)), url(assets/header.jpg) no-repeat center center;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2)), url(assets/header.jpg) no-repeat center center;
   background-size: cover;
   position: relative;
   width: 98vw;
@@ -60,7 +60,7 @@ img {
 .nav-links a {
   text-decoration: none;
   /*removing underline, it is as default*/
-  color: white;
+  color: #D4B2A7;
   padding: 20px;
   font-size: 14px;
 }
@@ -72,7 +72,7 @@ img {
   font-family: "Great Vibes", cursive
 }
 
-/*grid-content & grid-journal design*/
+/*Grid-content & grid-journal design*/
 .grid-content,
 .grid-journal {
   display: grid;
@@ -84,7 +84,7 @@ img {
   margin-top: 60px;
 }
 
-/*grid-content & grid-journal links design*/
+/*Grid-content & grid-journal links design*/
 .grid-content a,
 .grid-journal a {
   text-decoration: none;
@@ -92,7 +92,7 @@ img {
   font-style: italic;
 }
 
-/*quote-section design*/
+/*Quote-section design*/
 .quote-section {
   display: flex;
   flex-direction: column;
@@ -165,6 +165,7 @@ hr {
   margin: 20px 0;
 }
 
+/*Design for form*/
 form {
   border-radius: 8px;
   padding: 20px;
@@ -172,8 +173,6 @@ form {
   margin: 40px auto;
   /*centers box*/
   background: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.0);
-  /* Adds a soft shadow */
 }
 
 fieldset {
