@@ -161,26 +161,83 @@
     </div>
   </section>
 
-  <!--Visula space line-->
-  <hr>
-
+  <!--Form-->
   <form
-    action="/submit-newsletter"
-    method="POST"
+    action="/submit_newsletter"
+    method="post"
   >
-
-    <h3> Sign up to newsletter!</h3>
-
+    <!--Name & Email-->
     <fieldset>
       <label>
-        <span>name</span>
+        <span>Name</span>
         <input
           type="text"
           name="name"
-          </label
         >
+      </label>
+
+      <label>
+        <span>Email</span>
+        <input
+          type="email"
+          name="email"
+        >
+      </label>
+
     </fieldset>
+    <!-- Frequency selection, radio buttons -->
+    <fieldset>
+      <legend>How often would you like to receive our newsletter?</legend>
+      <label>
+        <input
+          type="radio"
+          name="frequency"
+          value="monthly"
+          required
+        > Monthly
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="frequency"
+          value="every-3-months"
+        > Every 3 months
+      </label>
+    </fieldset>
+
+    <!-- Interest selection, checkboxes -->
+    <fieldset>
+      <legend>Select the topics you are interested in:</legend>
+      <label>
+        <input
+          type="checkbox"
+          name="interests"
+          value="yoga"
+        > Yoga
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          name="interests"
+          value="ayurveda"
+        > Ayurveda
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          name="interests"
+          value="events"
+        > Events
+      </label>
+    </fieldset>
+
+    <!-- Submit button -->
+    <button type="submit">Submit</button>
   </form>
+
+  <!--Visula space line-->
+  <hr>
+
   <!-- Footer -->
   <footer>
     <p>© 2025 HealthbyJasmin</p>
