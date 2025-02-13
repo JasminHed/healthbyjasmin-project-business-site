@@ -32,10 +32,11 @@ body a:hover {
 
 /* Design header */
 header {
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2)), url(assets/header.jpg) no-repeat center center;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url(assets/header.jpg) no-repeat center center;
   background-size: cover;
   position: relative;
-  width: 98vw;
+  /*controls the positioning base of this element*/
+  width: 100vw;
   height: 40vw;
   overflow: hidden;
 }
@@ -90,6 +91,82 @@ img {
   text-decoration: none;
   color: #D4B2A7;
   font-style: italic;
+}
+
+
+/*Form layout*/
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 8px;
+  margin: 0 auto;
+  padding: 20px;
+  width: 100%;
+  max-width: 100%;
+  background: #E9C6BB;
+}
+
+/* === Make Labels and Headlines Bold === */
+h3,
+p,
+label,
+legend {
+  font-weight: bold;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  padding: 0;
+  margin-bottom: 15px;
+  width: 60%;
+  /*keeps it aligned*/
+}
+
+/* Legends (Titles Above Radio and Checkbox Groups) */
+fieldset legend {
+  text-align: left;
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+fieldset label {
+  /*Inline radio options*/
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  /*align labels with input*/
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+input[type="text"],
+input[type="email"] {
+  width: 60%;
+  font-size: 15px;
+  border-radius: 1px solid;
+}
+
+button {
+  background: #E9C6BB;
+  color: white;
+  width: 50%;
+  padding: 5px;
+  border-radius: 12px;
+  border: 1px solid;
+  text-transform: uppercase;
+}
+
+button:hover {
+  background: #A38F85;
 }
 
 /*Quote-section design*/
@@ -159,72 +236,20 @@ img {
 
 }
 
-/*Visual space line design*/
-hr {
-  border: 1px solid #A38F85;
-  margin: 20px 0;
-}
-
-/*Design for form*/
-form {
-  border-radius: 8px;
-  padding: 20px;
-  max-width: 400px;
-  margin: 40px auto;
-  /*centers box*/
-  background: white;
-}
-
-fieldset {
-  border: none;
-  padding: 0;
-  margin-bottom: 15px;
-  /*adds space between sections*/
-}
-
-label {
-  display: block;
-  text-align: center;
-  margin-bottom: 10px;
-  font-size: 16px;
-}
-
-span {
-  width: 30%;
-  text-align: left;
-  margin: 10px;
-  /*seperates value from box*/
-}
-
-input[type="text"],
-input[type="email"] {
-  width: 100%;
-  font-size: 15px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-button {
-  background: #D4B2A7;
-  color: white;
-  width: 30%;
-  padding: 5px;
-  margin-top: 20px;
-  border-radius: 12px;
-  border: none;
-}
-
-/*Footer design*/
+/*Footer layout*/
 footer {
   margin-top: auto;
   /* this pushes the footer to bottom*/
+  padding: 20px;
   background-size: cover;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  flex-wrap: wrap;
+  /*wraps on smaller screens*/
 }
 
-/*Footer links design*/
+
+/*Social media links*/
 footer a {
   text-decoration: none;
   color: #A38F85;

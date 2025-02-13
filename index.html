@@ -161,91 +161,90 @@
     </div>
   </section>
 
-  <!--Visula space line-->
-  <hr>
 
-  <!--Form-->
+  <!-- Form-->
   <form
     action="https://httpbin.org/anything"
     method="post"
   >
-
     <h3>Stay in touch and informed</h3>
     <p>Sign up to receive news and updates</p>
 
-    <!--Name & Email-->
+    <!-- Name & Email -->
     <fieldset>
-      <label>
-        <span>Name</span>
-        <input
-          type="text"
-          name="name"
-        >
-      </label>
+      <label for="name">Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        required
+      >
 
-      <label>
-        <span>Email</span>
-        <input
-          type="email"
-          name="email"
-        >
-      </label>
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required
+      >
     </fieldset>
 
-    <!-- Frequency selection, radio buttons -->
+    <!-- Frequency selection -->
     <fieldset>
       <legend>How often would you like to receive our newsletter?</legend>
       <label>
         <input
           type="radio"
           name="frequency"
-          value="monthly"
+          value="every-3-months"
           required
-        > Monthly
+        > Every 3 months
       </label>
       <label>
         <input
           type="radio"
           name="frequency"
-          value="every-3-months"
-        > Every 3 months
+          value="every-6-months"
+        > Every 6 months
       </label>
     </fieldset>
 
-    <!-- Interest selection, checkboxes -->
+    <!-- Interests selection -->
     <fieldset>
       <legend>Select the topics you are interested in:</legend>
       <label>
         <input
-          type="checkbox"
-          name="interests"
+          type="radio"
+          name="interests[]"
           value="yoga"
         > Yoga
       </label>
       <label>
         <input
-          type="checkbox"
-          name="interests"
+          type="radio"
+          name="interests[]"
           value="ayurveda"
         > Ayurveda
       </label>
       <label>
         <input
-          type="checkbox"
-          name="interests"
-          value="events"
-        > Events
+          type="radio"
+          name="interests[]"
+          value="both"
+        > Both
       </label>
     </fieldset>
 
-    <!-- Submit button -->
-    <button type="submit">Submit</button>
+    <!-- Sign up button -->
+    <button type="sign-up">Sign Up</button>
   </form>
 
-  <hr>
+  <!--Visula space line
+  <hr>-->
 
   <!-- Footer -->
   <footer>
+    <p>© 2025 HealthbyJasmin</p>
 
     <head>
       <link
@@ -253,8 +252,6 @@
         rel="stylesheet"
       >
     </head>
-
-    <p>© 2025 HealthbyJasmin</p>
 
     <a
       href="https://www.instagram.com/healthbyjasmin/"
@@ -272,6 +269,7 @@
       <i class="fas fa-envelope"></i>
     </a>
   </footer>
+
 
 </body>
 
