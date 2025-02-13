@@ -7,8 +7,7 @@
 /* General Styling */
 body {
   background: white;
-  color: #A38F85;
-  font-family: "Lato", sans-serif;
+  color: #333333 font-family: "Lato", sans-serif;
   font-size: 15px;
   text-align: center;
   margin: 0;
@@ -21,7 +20,7 @@ a {
 }
 
 a:hover {
-  color: black;
+  color: #333333;
 }
 
 h1,
@@ -31,6 +30,7 @@ label,
 legend {
   font-family: "Playfair Display", serif;
   font-weight: bold;
+  color: #333333;
 }
 
 p {
@@ -40,7 +40,7 @@ p {
 }
 
 section {
-  background-color: #E7D7C9;
+  background-color: #EDE9E3;
   padding: 20px;
 }
 
@@ -86,7 +86,7 @@ header {
 
 .logo {
   font-size: 24px;
-  color: #D4B2A7;
+  color: #EFE7DA;
   font-family: "Poppins", sans-serif;
 }
 
@@ -125,7 +125,7 @@ header {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: #D4B2A7;
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url(./assets/background.jpg) no-repeat center center/cover;
   color: white;
   padding: 30px;
   border-radius: 8px;
@@ -139,7 +139,6 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #CDC6C3;
   border-radius: 16px;
   padding: 20px;
   width: 80%;
@@ -292,6 +291,6 @@ footer {
 
 footer a {
   text-decoration: none;
-  color: #A38F85;
+  color: #D4B2A7;
   padding: 5px;
 }
