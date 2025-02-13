@@ -1,12 +1,15 @@
 /* Importing Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+
 
 /* General Styling */
 body {
   background: white;
   color: #A38F85;
-  font-family: "Cormorant Garamond", serif;
-  font-size: 18px;
+  font-family: "Lato", sans-serif;
+  font-size: 15px;
   text-align: center;
   margin: 0;
   padding: 0;
@@ -26,7 +29,7 @@ h2,
 h3,
 label,
 legend {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Playfair Display", serif;
   font-weight: bold;
 }
 
@@ -37,6 +40,7 @@ p {
 }
 
 section {
+  background-color: #E7D7C9;
   padding: 20px;
 }
 
@@ -83,7 +87,7 @@ header {
 .logo {
   font-size: 24px;
   color: #D4B2A7;
-  font-family: "Great Vibes", cursive;
+  font-family: "Poppins", sans-serif;
 }
 
 /* Grid Layout for Content & Journal */
@@ -125,7 +129,7 @@ header {
   color: white;
   padding: 30px;
   border-radius: 8px;
-  font-family: "Book Antiqua", Palatino, serif;
+  font-family: "Playfair Display", serif;
   font-style: italic;
   font-size: 22px;
 }
@@ -135,8 +139,8 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #E9C6BB;
-  border-radius: 8px;
+  background: #CDC6C3;
+  border-radius: 16px;
   padding: 20px;
   width: 80%;
   max-width: 750px;
@@ -171,7 +175,7 @@ input[type="email"] {
 }
 
 button {
-  background: #E9C6BB;
+  background: #D4B2A7;
   color: white;
   width: 50%;
   padding: 10px;
