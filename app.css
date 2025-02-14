@@ -59,7 +59,8 @@ header {
   max-width: 1200px;
   padding: 10px 20px;
   position: absolute;
-  top: 20px;
+  /*to fix it on header*/
+  top: 10px;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -139,8 +140,8 @@ form {
   flex-direction: column;
   align-items: center;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-  background-color: #E7D7C9;
-  border: 14px solid #CDC6C3;
+  background-color: #CDC6C3;
+  border: 10px solid #E7D7C9;
   border-radius: 16px;
   padding: 20px;
   width: 80%;
@@ -149,6 +150,7 @@ form {
 }
 
 fieldset {
+  /*my box inside the form*/
   display: flex;
   flex-direction: column;
   border: none;
@@ -158,12 +160,14 @@ fieldset {
 }
 
 fieldset legend {
+  /*describe what the input is*/
   text-align: left;
   font-size: 16px;
   margin-bottom: 5px;
 }
 
 fieldset label {
+  /*describe what input is for*/
   display: flex;
   align-items: center;
   gap: 8px;
@@ -173,6 +177,21 @@ input[type="text"],
 input[type="email"] {
   width: 60%;
   font-size: 15px;
+}
+
+input[type="radio"] {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 1px black solid;
+  background-color: azure;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="radio"]:checked {
+  border-color: black;
+  background-color: #D4B2A7;
 }
 
 button {
@@ -212,7 +231,7 @@ button:hover {
   }
 
   form {
-    width: 85%;
+    width: 83%;
     max-width: 320px;
     padding: 15px;
   }
