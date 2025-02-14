@@ -1,8 +1,5 @@
 /* Importing Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-
-
 
 /* General Styling */
 body {
@@ -20,13 +17,12 @@ a {
 }
 
 a:hover {
-  color: #333333;
+  color: #A38F85;
 }
 
 h1,
 h2,
 h3,
-label,
 legend {
   font-family: "Playfair Display", serif;
   font-weight: bold;
@@ -40,13 +36,12 @@ p {
 }
 
 section {
-  background-color: #EDE9E3;
   padding: 20px;
 }
 
 /* Header Section */
 header {
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)),
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url(assets/header.jpg) no-repeat center center;
   background-size: cover;
   height: 40vh;
@@ -84,8 +79,12 @@ header {
   color: #D4B2A7;
 }
 
+.nav-links a:hover {
+  color: #A38F85;
+}
+
 .logo {
-  font-size: 24px;
+  font-size: 22px;
   color: #EFE7DA;
   font-family: "Playfair Display", serif;
 }
@@ -125,7 +124,7 @@ header {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url(./assets/background.jpg) no-repeat center center/cover;
+  background: #CDC6C3;
   color: white;
   padding: 30px;
   border-radius: 8px;
@@ -139,6 +138,9 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+  background-color: #E7D7C9;
+  border: 14px solid #CDC6C3;
   border-radius: 16px;
   padding: 20px;
   width: 80%;
