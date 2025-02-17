@@ -21,10 +21,15 @@
 
 <body>
 
-  <!-- Header with navigation bar -->
+  <!-- Header with logo+navigation bar -->
   <header>
     <nav class="navbar">
-      <h1 class="logo">HealthbyJasmin</h1>
+      <a href="index.html">
+        <img
+          src="./assets/lightlogo.png"
+          alt="HealthbyJasminlogo"
+          class="logo"
+        ></a>
       <ul class="nav-links">
         <li><a href="#">Home</a></li>
         <li><a href="#">About</a></li>
@@ -37,6 +42,7 @@
   <!-- Main content -->
   <main>
     <!-- Grid section for content -->
+    <h1>Ashtanga and Ayurveda</h1>
     <section class="grid-content">
       <article class="grid-item ashtanga-yoga">
         <img
@@ -77,14 +83,10 @@
       </article>
     </section>
 
-    <!-- Quote section -->
-    <section class="quote-section">
-      <blockquote>
-        <p>"Sleep like tomorrow matters. Eat like your body is listening. Rest like it is productive." - Vex King</p>
-      </blockquote>
-    </section>
+    <section class="image-section"></section>
 
     <!-- Grid section for journal -->
+    <h1>Journal</h1>
     <section class="grid-journal">
       <article class="journal-post">
         <img
@@ -131,8 +133,8 @@
         action="https://httpbin.org/anything"
         method="post"
       >
-        <h2>Hold On, Gorgeous!</h2>
-        <p>Sign up to receive news and updates. No spam, we promise. Just the right amount of self-care.</p>
+        <h2>Join our community!</h2>
+        <h3>Sign up to receive news and updates. No spam, we promise. Just the right amount of self-care.</h3>
         <fieldset>
           <label for="name">Name</label>
           <input
@@ -182,16 +184,32 @@
               value="both"
             > Both</label>
         </fieldset>
-        <button type="sign-up">Sign Up</button>
+        <button type="submit">Sign Up</button>
       </form>
     </section>
 
+    <!--Contact Section-->
+    <div class="contact-section">
+      <img
+        src="./assets/contact.jpg"
+        alt="Contact"
+      >
+      <div class="contact-content">
+        <h2>Get in Touch</h2>
+        <p>Can't find what you are looking for or need more help? Click the button to send an email.
+        </p>
+        <a
+          href="mailto:healthbyjasmin@gmail.com"
+          class="contact-button"
+        >Send Email</a>
+      </div>
+
+    </div>
   </main>
 
   <!-- Footer -->
   <footer>
     <div class="footer-container">
-      <p>© 2025 HealthbyJasmin</p>
       <div class="social-icons">
         <a
           href="https://www.instagram.com/healthbyjasmin/"
@@ -201,8 +219,8 @@
           href="https://www.facebook.com/jasmin.hedlund"
           target="_blank"
         ><i class="fab fa-facebook"></i></a>
-        <a href="mailto:healthbyjasmin@gmail.com"><i class="fas fa-envelope"></i></a>
       </div>
+      <p class="footer-copyright">© 2025 HealthbyJasmin</p>
     </div>
   </footer>
 
