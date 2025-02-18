@@ -80,6 +80,52 @@ header {
   object-fit: contain;
 }
 
+.hamburger {
+  display: none;
+  /* Hidden on large screens */
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.nav-links {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 78px;
+  left: 0;
+  width: 100%;
+  background: white;
+  padding: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.nav-active {
+  display: flex;
+}
+
+.toggle span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+.toggle span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+
 /* Grid Layout for Content & Journal*/
 .grid-content,
 .grid-journal {
@@ -104,9 +150,13 @@ header {
   border-radius: 8px;
 }
 
-.grid-item a,
 .journal-post a {
-  font-style: italic;
+  color: inherit;
+}
+
+.journal-post a:hover {
+  color: #A38F85;
+  cursor: pointer;
 }
 
 /*Full-width image section*/
@@ -214,7 +264,6 @@ button:hover {
   justify-content: center;
 }
 
-/* Button Styling */
 .contact-button {
   display: inline-block;
   padding: 10px 20px;
@@ -230,7 +279,7 @@ button:hover {
   background: #A38F85;
 }
 
-/*Footer Main  Layout*/
+/*Footer Layout*/
 .footer-container {
   display: flex;
   flex-direction: row;
@@ -254,9 +303,19 @@ button:hover {
     width: 95vw;
   }
 
-  .navbar {
-    display: none;
-    /* Hide navbar */
+  .logo {
+    width: 100px;
+  }
+
+  .hamburger {
+    display: flex;
+    /* Show hamburger menu on small screens */
+  }
+
+  .nav-active {
+    /*When click, show menu*/
+    display: flex;
+    flex-direction: column;
   }
 
   .grid-content,
@@ -290,7 +349,13 @@ button:hover {
   }
 
   .contact-content p {
-    font-size: 0.9rem;
+    font-size: 14px;
+  }
+
+  button {
+    width: 20%;
+    padding: 8px;
+    font-size: 13px;
   }
 
   .footer-container {
@@ -321,9 +386,23 @@ button:hover {
     background-size: cover;
   }
 
-  .navbar {
-    display: none;
-    /* Still hidden on tablet */
+  .logo {
+    width: 100px;
+  }
+
+  .nav-links {
+    width: 90%;
+  }
+
+  .hamburger {
+    display: flex;
+    /* Show hamburger menu on small screens */
+  }
+
+  .nav-active {
+    /*When click, show menu*/
+    display: flex;
+    flex-direction: column;
   }
 
   .grid-content,
@@ -359,18 +438,38 @@ button:hover {
     text-align: left;
     padding: 20px;
   }
+
+  button {
+    width: 40%;
+    padding: 8px;
+    font-size: 14px;
+  }
 }
 
 /* Desktop exceptions */
-@media (min-width: 1025px) {
+@media (min-width: 1025px) and (max-width: 1600px) {
+
+  body {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
   .header {
     height: 40vh;
     max-width: 100vw;
   }
 
-  .navbar {
-    display: flex;
-    /* Show navbar only on desktop */
+  .nav-links {
+    display: flex !important;
+    flex-direction: row;
+    position: static;
+    width: auto;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .hamburger {
+    display: none;
   }
 
   .grid-content,
@@ -378,5 +477,6 @@ button:hover {
     grid-template-columns: repeat(4, 1fr);
     /* 4 columns */
   }
+
 
 }
