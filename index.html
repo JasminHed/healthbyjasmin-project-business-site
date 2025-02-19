@@ -93,7 +93,7 @@
       </article>
     </section>
 
-    <section class="image-section"></section>
+    <section class="image-section first-image"></section>
 
     <!-- Grid section for journal -->
     <h1>Journal</h1>
@@ -144,8 +144,10 @@
       </article>
     </section>
 
+    <button class="open-button">Join Our Community</button>
+
     <!-- Form section -->
-    <section>
+    <div id="popup-container">
       <form
         action="https://httpbin.org/anything"
         method="post"
@@ -168,6 +170,7 @@
             required
           >
         </fieldset>
+
         <fieldset>
           <legend>How often would you like to receive our newsletter?</legend>
           <label><input
@@ -182,6 +185,7 @@
               value="every-6-months"
             > Every 6 months</label>
         </fieldset>
+
         <fieldset>
           <legend>Select the topics you are interested in:</legend>
           <label><input
@@ -201,9 +205,16 @@
               value="both"
             > Both</label>
         </fieldset>
-        <button type="submit">Sign Up</button>
+
+        <button
+          type="submit"
+          class="submit-button"
+        >Sign Up</button>
+
+        <button class="close-button">Close</button>
+
       </form>
-    </section>
+    </div>
 
     <!--Contact Section-->
     <div class="contact-section">

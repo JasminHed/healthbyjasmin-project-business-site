@@ -161,24 +161,46 @@ header {
 
 /*Full-width image section*/
 .image-section {
-  background: url(./assets/heroimage.jpg) no-repeat center center/cover;
   width: 100%;
   height: 60vw;
+  background: no-repeat center center/cover;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-/* Form Layout */
+.first-image {
+  background-image: url("./assets/heroimage.jpg");
+}
+
+.second-image {
+  background-image: url("./assets/heroimage1.jpg");
+}
+
+#popup-container {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 360px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
   background-color: #CDC6C3;
   border: 10px solid #E7D7C9;
   border-radius: 16px;
-  padding: 20px;
-  width: 80%;
-  max-width: 750px;
-  margin: 0 auto 40px;
+  padding: 15px;
+  width: 100%;
+  max-width: 360px;
+  box-sizing: border-box;
 }
 
 fieldset {
@@ -226,9 +248,10 @@ input[type="radio"]:checked {
   background-color: #D4B2A7;
 }
 
-button {
+.open-button {
   background: #D4B2A7;
   color: white;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
   width: 50%;
   padding: 10px;
   border-radius: 12px;
@@ -236,9 +259,33 @@ button {
   text-transform: uppercase;
 }
 
-button:hover {
+.open-button:hover {
   background: #A38F85;
 }
+
+.close-button {
+  background: #A38F85;
+  color: white;
+  width: 50%;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+
+.submit-button {
+  background: #D4B2A7;
+  color: white;
+  width: 50%;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
 
 /* Contact Layout */
 .contact-section {
@@ -277,6 +324,7 @@ button:hover {
 
 .contact-button:hover {
   background: #A38F85;
+  color: white;
 }
 
 /*Footer Layout*/
