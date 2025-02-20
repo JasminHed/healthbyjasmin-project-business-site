@@ -55,14 +55,16 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 90%;
-  max-width: 1200px;
-  padding: 10px 20px;
+  width: 100%;
+  max-width: 320px;
+  padding: 10px;
   position: absolute;
-  /*to fix it on header*/
   top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+  /*left: 50%;
+  transform: translateX(-50%);*/
+  left: 0;
+  transform: none;
+  box-sizing: border-box;
 }
 
 .nav-links {
@@ -130,7 +132,7 @@ header {
 .grid-content,
 .grid-journal {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: 1fr;
   gap: 20px;
   max-width: 1200px;
   margin: 20px auto 40px;
@@ -161,9 +163,14 @@ header {
 
 /*Full-width image section*/
 .image-section {
+  display: block;
   width: 100%;
   height: 60vw;
+  min-height: 300px;
   background: url(./assets/heroimage.jpg)no-repeat center center/cover;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
 }
 
 #popup-container {
@@ -172,9 +179,11 @@ header {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 360px;
-  padding: 10px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 110vh;
+  height: auto;
+  padding: 30px;
   box-sizing: border-box;
 }
 
@@ -197,27 +206,27 @@ form {
 }
 
 fieldset {
-  /*my box inside the form*/
   display: flex;
   flex-direction: column;
   border: none;
   padding: 0;
   margin-bottom: 15px;
-  width: 60%;
+  width: 100%;
+  max-width: 400px;
 }
 
 fieldset legend {
   /*describes what the input is*/
   text-align: left;
   font-size: 16px;
-  margin-bottom: 5px;
 }
 
 fieldset label {
   /*describes what input is for*/
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  cursor: pointer;
 }
 
 input[type="text"],
@@ -283,6 +292,7 @@ input[type="radio"]:checked {
 /* Contact Layout */
 .contact-section {
   display: flex;
+  flex-direction: column;
   align-items: center;
   width: 100%;
   height: 300px;
@@ -291,17 +301,18 @@ input[type="radio"]:checked {
 }
 
 .contact-section img {
-  width: 50%;
-  height: 100%;
+  width: 100%;
+  height: 200px;
   object-fit: cover;
 }
 
 .contact-content {
-  width: 50%;
-  padding: 40px;
+  width: 100%;
   display: flex;
+  text-align: center;
   flex-direction: column;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .contact-button {
@@ -324,27 +335,20 @@ input[type="radio"]:checked {
 /*Footer Layout*/
 .footer-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
   width: 100%;
-  max-width: 1200px;
-  padding: 0 20px;
+  padding: 10px 20px;
   gap: 15px;
+  box-sizing: border-box;
 }
 
 /* Media Queries */
 
 /* Mobile exceptions */
 @media (max-width: 667px) {
-  .header {
-    height: 20vh;
-    background-position: top center;
-    background-size: cover;
-    width: 95vw;
-  }
-
   .logo {
     width: 100px;
   }
@@ -358,12 +362,6 @@ input[type="radio"]:checked {
     /*When click, show menu*/
     display: flex;
     flex-direction: column;
-  }
-
-  .grid-content,
-  .grid-journal {
-    grid-template-columns: 1fr;
-    /* 1 column */
   }
 
   form {
@@ -400,15 +398,6 @@ input[type="radio"]:checked {
     font-size: 13px;
   }
 
-  .footer-container {
-    flex-direction: column !important;
-    /* Stack elements vertically on small screens */
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    padding: 10px 15px;
-  }
-
   .footer-copyright {
     text-align: center !important;
     width: 100%;
@@ -430,6 +419,15 @@ input[type="radio"]:checked {
 
   .logo {
     width: 100px;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
   }
 
   .nav-links {
@@ -486,19 +484,27 @@ input[type="radio"]:checked {
     padding: 8px;
     font-size: 14px;
   }
+
+  .footer-container {
+    flex-direction: row;
+  }
 }
 
+
 /* Desktop exceptions */
-@media (min-width: 1025px) and (max-width: 1600px) {
-
-  body {
-    max-width: 1600px;
-    margin: 0 auto;
-  }
-
+@media (min-width: 1025px) {
   .header {
     height: 40vh;
     max-width: 100vw;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
   .nav-links {
@@ -520,5 +526,48 @@ input[type="radio"]:checked {
     /* 4 columns */
   }
 
+  .contact-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
 
+  .contact-content {
+    width: 50%;
+  }
+
+  .contact-section img {
+    width: 50%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .contact-button {
+    width: 50%;
+    margin: 0 auto;
+  }
 }
+
+/*@media (min-width: 1400px) {
+  body {
+    font-size: 19px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  .open-button {
+    font-size: 18px;
+  }
+
+  .contact-button {
+    font-size: 17px;
+  }
+
+}*/
