@@ -163,19 +163,7 @@ header {
 .image-section {
   width: 100%;
   height: 60vw;
-  background: no-repeat center center/cover;
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.first-image {
-  background-image: url("./assets/heroimage.jpg");
-}
-
-.second-image {
-  background-image: url("./assets/heroimage1.jpg");
+  background: url(./assets/heroimage.jpg)no-repeat center center/cover;
 }
 
 #popup-container {
@@ -188,6 +176,11 @@ header {
   max-width: 360px;
   padding: 10px;
   box-sizing: border-box;
+}
+
+#popup-container.visible {
+  display: block;
+  opacity: 1;
 }
 
 form {
@@ -313,13 +306,14 @@ input[type="radio"]:checked {
 
 .contact-button {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 5px 10px;
   background: #D4B2A7;
   color: white;
   text-decoration: none;
   border-radius: 5px;
   font-size: 16px;
   text-align: center;
+  width: auto;
 }
 
 .contact-button:hover {
@@ -401,7 +395,7 @@ input[type="radio"]:checked {
   }
 
   button {
-    width: 20%;
+    width: 10%;
     padding: 8px;
     font-size: 13px;
   }

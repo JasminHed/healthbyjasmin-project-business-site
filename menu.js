@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const hamburger = document.querySelector(".hamburger")
   const navLinks = document.querySelector(".nav-links")
 
-  hamburger.addEventListener("click", function () {
+  hamburger.addEventListener("click", () => {
     navLinks.classList.toggle("nav-active")
     hamburger.classList.toggle("toggle")
   })
@@ -13,16 +13,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const closeformButton = document.querySelector(".close-button")
   const popupContainer = document.getElementById("popup-container")
 
-  // Button clicked, form pops up
+  // Open Popup
   openformButton.addEventListener("click", () => {
-    popupContainer.style.display = "block"
-  })
+    popupContainer.classList.add("visible");
+  });
 
-
-  // Button clicked, form close
+  // Close Popup
   closeformButton.addEventListener("click", () => {
-    popupContainer.style.display = "none"
-  })
+    popupContainer.classList.remove("visible");
+  });
 
 })
 
