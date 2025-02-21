@@ -35,10 +35,6 @@ p {
   margin: 20px auto;
 }
 
-section {
-  padding: 20px;
-}
-
 /* Header Layout */
 header {
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
@@ -53,17 +49,6 @@ header {
   justify-content: space-between;
   align-items: center;
   width: 80%;
-  max-width: 320px;
-  padding: 10px 0;
-  top: 60px;
-  left: 50%;
-  box-sizing: border-box;
-}
-
-.nav-links {
-  display: flex;
-  gap: 10px;
-
 }
 
 .nav-links li {
@@ -71,21 +56,31 @@ header {
   padding: 8px 0;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 3;
+  }
+}
+
 .logo {
   width: 130px;
   height: auto;
   object-fit: contain;
+  opacity: 0;
+  animation: fadeIn 3s ease-in-out forwards;
 }
 
 .hamburger {
-  display: none;
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
 }
 
 .hamburger span {
-  display: block;
   width: 25px;
   height: 3px;
   background: white;
@@ -105,6 +100,7 @@ header {
   padding: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
+  gap: 5px;
 }
 
 .nav-active {
@@ -176,9 +172,6 @@ header {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-  max-width: 600px;
-  max-height: 110vh;
-  height: auto;
   padding: 30px;
   box-sizing: border-box;
 }
@@ -196,7 +189,6 @@ form {
   border: 10px solid #E7D7C9;
   border-radius: 16px;
   padding: 15px;
-  width: 100%;
   max-width: 360px;
   box-sizing: border-box;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
@@ -206,23 +198,19 @@ fieldset {
   display: flex;
   flex-direction: column;
   border: none;
-  padding: 0;
   margin-bottom: 15px;
   width: 100%;
   max-width: 400px;
 }
 
 fieldset legend {
-  /*describes what the input is*/
   text-align: left;
   font-size: 16px;
 }
 
 fieldset label {
-  /*describes what input is for*/
   display: flex;
   align-items: center;
-  gap: 10px;
   cursor: pointer;
 }
 
@@ -278,26 +266,19 @@ input[type="radio"]:checked {
 /* Contact Section Layout*/
 .contact-section {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  width: 100%;
   height: 300px;
   background: #EDE9E3;
   overflow: hidden;
 }
 
 .contact-content {
-  width: 100%;
-  display: flex;
-  text-align: center;
   flex-direction: column;
   justify-content: center;
   box-sizing: border-box;
 }
 
 .contact-button {
-  display: inline-block;
   padding: 5px 10px;
   background: #D4B2A7;
   color: white;
@@ -305,7 +286,6 @@ input[type="radio"]:checked {
   border-radius: 5px;
   font-size: 16px;
   text-align: center;
-  width: auto;
 }
 
 .contact-button:hover {
@@ -313,18 +293,6 @@ input[type="radio"]:checked {
   color: white;
 }
 
-/*Footer Layout*/
-.footer-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  width: 100%;
-  padding: 10px 20px;
-  gap: 15px;
-  box-sizing: border-box;
-}
 
 /* Media Queries */
 
@@ -339,14 +307,10 @@ input[type="radio"]:checked {
   }
 
   .contact-section {
-    flex-direction: column;
     height: auto;
-    padding: 0px;
   }
 
   .contact-content {
-    width: 100%;
-    text-align: center;
     padding: 15px;
   }
 }
@@ -365,9 +329,6 @@ input[type="radio"]:checked {
   }
 
   .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     width: 90%;
     max-width: 900px;
     margin: 0 auto;
@@ -378,10 +339,7 @@ input[type="radio"]:checked {
   }
 
   #popup-container {
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: auto;
-    max-width: 600px;
   }
 
   .grid-content,
@@ -392,18 +350,11 @@ input[type="radio"]:checked {
 
   .contact-section {
     display: flex;
-    flex-direction: row;
     height: auto;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    max-width: 700px;
-    gap: 20px;
   }
 
   .contact-content {
     width: 45%;
-    text-align: left;
     padding: 20px;
   }
 
@@ -413,17 +364,11 @@ input[type="radio"]:checked {
     font-size: 14px;
   }
 
-  .footer-container {
-    flex-direction: row;
-  }
 }
 
 /* Desktop exceptions */
 @media (min-width: 1025px) {
   .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     width: 90%;
     max-width: 1200px;
     margin: 0 auto;
@@ -438,15 +383,8 @@ input[type="radio"]:checked {
     box-shadow: none;
   }
 
-  .hamburger {
-    display: none;
-  }
-
   #popup-container {
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: auto;
-    max-width: 600px;
   }
 
   .grid-content,
@@ -457,19 +395,11 @@ input[type="radio"]:checked {
 
   .contact-section {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 20px;
+    height: 200px;
   }
 
   .contact-content {
     width: 50%;
-  }
-
-  .contact-section img {
-    width: 50%;
-    height: auto;
-    object-fit: cover;
   }
 
   .contact-button {
