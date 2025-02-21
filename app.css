@@ -268,7 +268,7 @@ input[type="radio"]:checked {
 
 /*Image Layout 2*/
 .second-image {
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(./assets/test.jpg) no-repeat center center/cover;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(./assets/test5.jpg) no-repeat center center/cover;
 }
 
 /* Contact Section Layout*/
