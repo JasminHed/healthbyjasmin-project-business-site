@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeformButton = document.querySelector(".close-button")
   const popupContainer = document.getElementById("popup-container")
 
-  //Popup after 10 sec
+  //Popup 
   setTimeout(() => {
     if (popupContainer) {
       popupContainer.classList.add("visible")
