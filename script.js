@@ -4,13 +4,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const hamburger = document.getElementsByClassName("hamburger")[0]
   const navLinks = document.getElementsByClassName("nav-links")[0]
 
-
+  //Open menu
   hamburger.addEventListener("click", () => {
     navLinks.classList.toggle("nav-active")
     hamburger.classList.toggle("toggle")
   })
 
-  //Select Elements
+  //Get Elements
   const closeformButton = document.getElementById("close-button")
   const popupContainer = document.getElementById("popup-container")
 
