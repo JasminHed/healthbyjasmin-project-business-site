@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (popupContainer) {
       popupContainer.classList.add("visible")
     }
-  }, 20000) // = 20 seconds
+  }, 10000) // = 10 seconds
 
   // Close popup
   closeformButton.addEventListener("click", () => {

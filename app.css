@@ -1,7 +1,7 @@
-/* Importing Google Fonts */
+/* Importing Google fonts */
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap');
 
-/* General Layout */
+/* General layout */
 body {
   background: white;
   color: #333333;
@@ -35,7 +35,7 @@ p {
   margin: 20px auto;
 }
 
-/* Header Layout */
+/* Header layout */
 header {
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url(assets/header.jpg) no-repeat center center;
@@ -43,7 +43,7 @@ header {
   height: 40vh;
 }
 
-/* Navbar Layout */
+/* Navbar layout */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -122,7 +122,7 @@ header {
 }
 
 
-/* Grid Layout for Content & Journal*/
+/* Grid layout for content & journal*/
 .grid-content,
 .grid-journal {
   display: grid;
@@ -155,7 +155,7 @@ header {
   cursor: pointer;
 }
 
-/*Image Layout 1*/
+/*Image layout 1*/
 .image-section {
   width: 100%;
   height: 60vw;
@@ -165,7 +165,7 @@ header {
   margin: 0;
 }
 
-/*Form & PopUp Layout*/
+/*Form & popUp layout*/
 #popup-container {
   display: none;
   position: fixed;
@@ -253,12 +253,12 @@ input[type="radio"]:checked {
   cursor: pointer;
 }
 
-/*Image Layout 2*/
+/*Image layout 2*/
 .second-image {
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(./assets/heroimage2.jpg) no-repeat center center/cover;
 }
 
-/* Contact Section Layout*/
+/* Contact layout*/
 .contact-section {
   display: flex;
   justify-content: center;
