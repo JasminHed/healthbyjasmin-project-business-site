@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM fullu loaded and parsed")
 
   // Hamburger Menu
   const hamburger = document.querySelector(".hamburger")
