@@ -1,25 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM fullu loaded and parsed")
 
-  // Hamburger Menu
-  const hamburger = document.querySelector(".hamburger")
-  const navLinks = document.querySelector(".nav-links")
+  // Get elements
+  const hamburger = document.getElementsByClassName("hamburger")[0]
+  const navLinks = document.getElementsByClassName("nav-links")[0]
+
 
   hamburger.addEventListener("click", () => {
     navLinks.classList.toggle("nav-active")
     hamburger.classList.toggle("toggle")
   })
-  // Click on a link + menu disappears
-  const navItems = document.querySelectorAll(".nav-links li a")
-  navItems.forEach((item) => {
-    item.addEventListener("click", () => {
-      navLinks.classList.remove("nav-active")
-      hamburger.classList.remove("toggle")
-    })
-  })
 
-  // Select Elements
-  const closeformButton = document.querySelector(".close-button")
+  //Select Elements
+  const closeformButton = document.getElementById("close-button")
   const popupContainer = document.getElementById("popup-container")
 
   //Popup 

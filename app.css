@@ -63,6 +63,7 @@ header {
 .nav-links {
   display: flex;
   gap: 10px;
+
 }
 
 .nav-links li {
@@ -78,7 +79,6 @@ header {
 
 .hamburger {
   display: none;
-  /* Hidden on large screens */
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
@@ -97,16 +97,19 @@ header {
   flex-direction: column;
   position: absolute;
   top: 78px;
-  left: 0;
-  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  /*made it center*/
+  width: 50%;
   background: white;
   padding: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 .nav-active {
   display: flex;
+  opacity: 1;
 }
 
 .toggle span:nth-child(1) {
@@ -189,13 +192,14 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #CDC6C3;
+  background-color: whitesmoke;
   border: 10px solid #E7D7C9;
   border-radius: 16px;
   padding: 15px;
   width: 100%;
   max-width: 360px;
   box-sizing: border-box;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 fieldset {
@@ -243,7 +247,7 @@ input[type="radio"]:checked {
   background-color: #D4B2A7;
 }
 
-.close-button {
+#close-button {
   background: #A38F85;
   color: white;
   width: 50%;
