@@ -75,6 +75,7 @@ header {
 }
 
 .hamburger {
+  display: flex;
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
@@ -214,12 +215,6 @@ fieldset label {
   cursor: pointer;
 }
 
-input[type="text"],
-input[type="email"] {
-  width: 60%;
-  font-size: 15px;
-}
-
 input[type="radio"] {
   appearance: none;
   width: 14px;
@@ -302,10 +297,6 @@ input[type="radio"]:checked {
     width: 100px;
   }
 
-  .hamburger {
-    display: flex;
-  }
-
   .contact-section {
     height: auto;
   }
@@ -332,10 +323,6 @@ input[type="radio"]:checked {
     width: 90%;
     max-width: 900px;
     margin: 0 auto;
-  }
-
-  .hamburger {
-    display: flex;
   }
 
   #popup-container {
@@ -381,6 +368,10 @@ input[type="radio"]:checked {
     width: auto;
     background: transparent;
     box-shadow: none;
+  }
+
+  .hamburger {
+    display: none;
   }
 
   #popup-container {
