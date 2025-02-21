@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     hamburger.classList.toggle("toggle")
   })
 
-  //Get Elements
+  //Get elements
   const closeformButton = document.getElementById("close-button")
   const popupContainer = document.getElementById("popup-container")
 
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }, 20000) // = 20 seconds
 
-  // Close Popup
+  // Close popup
   closeformButton.addEventListener("click", () => {
     popupContainer.classList.remove("visible")
 
