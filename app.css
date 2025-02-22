@@ -298,7 +298,6 @@ input[type="radio"]:checked {
 
   #popup-container {
     top: 10px;
-    left: 50%;
     transform: translateX(-50%);
     max-height: 85vh;
     overflow-y: auto;
