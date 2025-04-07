@@ -256,12 +256,14 @@ input[type="radio"]:checked {
   border: 1px solid;
   text-transform: uppercase;
   cursor: pointer;
+  text-decoration: underline;
 }
 
 
 .submit-button {
-  background: #D4B2A7;
+  background: #D16B54;
   color: white;
+  text-decoration: underline;
   width: 50%;
   padding: 10px;
   border-radius: 12px;
@@ -292,7 +294,7 @@ input[type="radio"]:checked {
 
 .contact-button {
   padding: 5px 10px;
-  background: #D4B2A7;
+  background: #D16B54;
   color: white;
   text-decoration: none;
   border-radius: 5px;
@@ -302,6 +304,7 @@ input[type="radio"]:checked {
 
 .contact-button:hover {
   background: #A38F85;
+  text-decoration: underline;
   color: white;
 }
 
