@@ -17,13 +17,15 @@ body {
 
 a {
   text-decoration: none;
-  color: #D4B2A7;
+  color: #7D5A50;
 }
 
 a:hover {
-  color: #A38F85;
+  color: #5E3B31;
+  text-decoration: underline;
 }
 
+h1,
 h2,
 h3 {
   font-family: "Playfair Display", serif;
@@ -56,6 +58,17 @@ header {
 .nav-links li {
   list-style: none;
   padding: 8px 0;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #E0E0E0;
+  text-decoration: underline;
 }
 
 @keyframes fadeIn {
