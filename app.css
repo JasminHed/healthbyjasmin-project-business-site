@@ -6,7 +6,6 @@ body {
   background: white;
   color: #333333;
   font-family: "Lato", sans-serif;
-  font-size: 15px;
   text-align: center;
   margin: 0;
   padding: 0;
@@ -40,16 +39,24 @@ h3 {
 
 h1 {
   margin-top: 30px;
+  font-size: 36px;
+  padding: 10px 10px 10px 10px;
 }
 
 h2 {
   margin-top: 60px;
+  font-size: 36px;
+}
+
+h3 {
+  font-size: 18px;
 }
 
 p {
   line-height: 1.6;
   max-width: 700px;
   margin: 20px auto;
+  font-size: 16px;
 }
 
 /* Header layout */
@@ -129,7 +136,7 @@ header {
   padding: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
-  gap: 5px;
+  gap: 10px;
 }
 
 .nav-active {
@@ -165,13 +172,13 @@ header {
 
 .grid-item,
 .journal-post {
-  text-align: center;
+  text-align: left;
 }
 
 .grid-item img,
 .journal-post img {
   width: 100%;
-  height: 200px;
+  height: 300px;
   object-fit: cover;
   border-radius: 8px;
 
@@ -187,15 +194,13 @@ header {
   border: 1px solid #333333;
   background-color: #2D4A5D;
   display: inline-block;
-  padding: 8px 8px 8px 8px;
-  border-radius: 5px;;
+  padding: 12px 12px 12px 12px;
+  border-radius: 5px;
 }
 
 
 .journal-post a {
   color: #333333;
-
-  
 }
 
 .journal-post a:hover {
@@ -205,7 +210,7 @@ header {
 }
 
 
-.image-section,
+.quote-section,
 .second-image {
   width: 100%;
   height: 100vh;
@@ -218,18 +223,66 @@ header {
   background-size: cover;
 }
 
+.image-section {
+  width: 100%;
+  height: 40vh;
+  min-height: 300px;
+  margin: 0;
+  padding: 0;
+  display: block;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  margin-top: 80px;
+  margin-bottom: 30px;
+  background-position: 50% 30%;
 
-/*.image-section {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url(./assets/heroimage.jpg);
-}*/
+}
 
+.quote-section {
+  display: flex;
+  border: 1px solid #333333;
+  align-items: center;
+  justify-content: center;
+  background-color: #2D4A5D;
+  height: 40vh;
+}
+
+.quote-section h2 {
+  text-align: center;
+  font-size: 20px;
+  color: whitesmoke;
+  padding: 5px 5px 5px 5px;
+  margin-bottom: 50px;
+}
+
+.about-text, .ashtanga-text, .ayurveda-text {
+  padding: 20px;
+  text-align: left;
+  margin-top: 10px;
+ 
+}
 .second-image {
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url(./assets/last.jpeg);
 }
 
+.about-image {
+  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+    url("./assets/last.jpeg");
+}
 
+.ashtanga-image {
+  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+    url("./assets/ashtanga.jpeg");
+    
+}
+
+.ayurveda-image {
+  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+    url("./assets/ayurveda.jpg");
+
+}
 
 /*Form & popUp layout*/
 #popup-container {
@@ -324,36 +377,16 @@ input[type="radio"]:checked {
 }
 
 
-/* Contact layout
-.contact-section {
-  display: flex;
-  justify-content: center;
-  height: 300px;
-  background: #EDE9E3;
-  /*overflow: hidden;
+.footer-section {
+margin-top: 20px;
+}
+.footer-section a {
+  color: #333333;
 }
 
-.contact-content {
-  flex-direction: column;
-  justify-content: center;
-  box-sizing: border-box;
+.footer-section a:hover {
+  color: #2D4A5D;
 }
-
-.contact-button {
-  padding: 5px 10px;
-  background: #D16B54;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 16px;
-  text-align: center;
-}
-
-.contact-button:hover {
-  background: #A38F85;
-  text-decoration: underline;
-  color: white;
-}*/
 
 
 /* Media Queries */
