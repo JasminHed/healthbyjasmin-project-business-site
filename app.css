@@ -87,7 +87,6 @@ header {
 }
 
 .nav-links a:hover {
-  color: #2D4A5D;
   text-decoration: underline;
 }
 
@@ -132,7 +131,7 @@ header {
   transform: translateX(-50%);
   /*made it center*/
   width: 50%;
-  background: #2D4A5D;
+  background: #5C7C8A;
   padding: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
@@ -192,7 +191,7 @@ header {
 
 .grid-item a {
   border: 1px solid #333333;
-  background-color: #2D4A5D;
+  background-color: #5C7C8A;
   display: inline-block;
   padding: 12px 12px 12px 12px;
   border-radius: 5px;
@@ -244,7 +243,7 @@ header {
   border: 1px solid #333333;
   align-items: center;
   justify-content: center;
-  background-color: #2D4A5D;
+  background-color: #5C7C8A;
   height: 40vh;
 }
 
@@ -377,14 +376,18 @@ input[type="radio"]:checked {
 }
 
 
-.footer-section {
+footer {
 margin-top: 20px;
 }
-.footer-section a {
+
+footer p {
+  color: #333333;
+}
+footer  a {
   color: #333333;
 }
 
-.footer-section a:hover {
+footer a:hover {
   color: #2D4A5D;
 }
 
