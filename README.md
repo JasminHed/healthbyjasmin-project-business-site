@@ -1,11 +1,35 @@
 # js-project-business-site
-https://healthbyjasmin.netlify.app/
+Live Demo: https://healthbyjasmin.netlify.app/
 
-This is my very first project and website. It is a literal business site, where I have used both html, css, Javascript and learned how to mix both grid and flexbox. It was a fun first project, a real deep dive into coding, learning github and much more. 
+Overview
+This is my very first web development project - a complete business website that I built from the ground up. I learned so much creating this site, from basic HTML and CSS to making it work perfectly on phones and computers. It was challenging but rewarding to see my code turn into a real, working website that people can actually use.
 
 
-# Project Name
-## API Endpoints
-## Installation Guide  
-## Troubleshooting
-## Code Comments Explained
+Tech Stack
+Frontend: HTML5, CSS3, JavaScript (ES6+)
+Layout: CSS Grid, Flexbox
+Deployment: Netlify
+Version Control: Git/GitHub
+
+
+Features
+Browse health and wellness services
+Responsive design that works on all devices
+Smooth scrolling navigation
+Interactive image gallery
+Mobile-friendly menu
+
+Setup Instructions
+Run locally:
+bash# Download the files
+git clone [your-repo-url]
+cd js-project-business-site
+*No installation needed - it's pure HTML, CSS, and JavaScript
+
+What I Learned
+How to combine CSS Grid and Flexbox effectively
+Making websites work on different screen sizes
+JavaScript for interactive elements
+Deploying with Netlify
+Git workflow and version control
+
