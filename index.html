@@ -126,60 +126,30 @@
 
 
     <!-- Form section -->
-    <div id="popup-container">
-      <form
-        action="https://formsubmit.co/healthbyjasmin@gmail.com"
-        method="post"
-      >
+    <div id="popup-container" style="display:none;">
+      <form action="https://healthbyjasmin.us13.list-manage.com/subscribe/post?u=a14e7c4d50f02f6aa70bd1671&amp;id=39c0a96c8c" 
+            method="post" 
+            id="mc-embedded-subscribe-form" 
+            name="mc-embedded-subscribe-form" 
+            target="_blank" 
+            novalidate>
         <h2>Join our community!</h2>
-        <h3>Sign up to receive news and updates. No spam, we promise. Just the right amount of self-care.</h3>
-        <fieldset>
-          <legend><Contact-information></legend>
-          <label for="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            required
-          >
-          <label for="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-          >
-        </fieldset>
-
+        <label for="mce-FNAME">First Name</label>
+        <input type="text" name="FNAME" id="mce-FNAME" required>
         
-
-        <fieldset>
-          <legend>Select the topics you are interested in:</legend>
-          <label><input
-              type="radio"
-              name="interests[]"
-              value="yoga"
-              required
-            > Yoga</label>
-          <label><input
-              type="radio"
-              name="interests[]"
-              value="ayurveda"
-            > Ayurveda</label>
-          <label><input
-              type="radio"
-              name="interests[]"
-              value="both"
-            > Both</label>
-        </fieldset>
-
-        <button
-          type="submit"
-          class="submit-button"
-        >Sign Up</button>
-
-        <button id="close-button">Close</button>
-
+        <label for="mce-LNAME">Last Name</label>
+        <input type="text" name="LNAME" id="mce-LNAME" required>
+        
+        <label for="mce-EMAIL">Email</label>
+        <input type="email" name="EMAIL" id="mce-EMAIL" required>
+    
+        <!-- Anti-bot hidden field -->
+        <div style="position: absolute; left: -5000px;" aria-hidden="true">
+          <input type="text" name="b_a14e7c4d50f02f6aa70bd1671_39c0a96c8c" tabindex="-1" value="">
+        </div>
+    
+        <button type="submit" id="mc-embedded-subscribe">Subscribe</button>
+        <button type="button" id="close-button">Close</button>
       </form>
     </div>
 
