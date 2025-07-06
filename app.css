@@ -299,6 +299,7 @@ header {
 }
 
 #popup-container.visible {
+  transition-delay: 0s;
   display: block;
   opacity: 1;
 }
