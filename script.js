@@ -59,34 +59,43 @@ document.addEventListener("DOMContentLoaded", () => {
     const existingDays = calendarGrid.querySelectorAll('.calendar-day')
     existingDays.forEach(day => day.remove())
     
-    // Create calendar days
-    const currentDateObj = new Date(startDate)
-    for (let i = 0; i < 42; i++) {
-      const dayDiv = document.createElement('div')
-      dayDiv.className = 'calendar-day'
-      
-      const dayNumber = document.createElement('div')
-      dayNumber.className = 'day-number'
-      dayNumber.textContent = currentDateObj.getDate()
-      
-      const dateString = currentDateObj.toISOString().split('T')[0]
-      
-      if (currentDateObj.getMonth() !== month) {
-        dayDiv.classList.add('other-month')
-      } else if (availableSlots[dateString]) {
-        dayDiv.classList.add('has-slots')
-        dayDiv.dataset.date = dateString
-        
-        const indicator = document.createElement('div')
-        indicator.className = 'slots-indicator'
-        dayDiv.appendChild(indicator)
-      }
-      
-      dayDiv.appendChild(dayNumber)
-      calendarGrid.appendChild(dayDiv)
-      
-      currentDateObj.setDate(currentDateObj.getDate() + 1)
-    }
+// Create calendar days
+const currentDateObj = new Date(startDate);
+for (let i = 0; i < 42; i++) {
+  const dayDiv = document.createElement('div');
+  dayDiv.className = 'calendar-day';
+
+ 
+  const displayDay = currentDateObj.getDate();
+  const displayMonth = currentDateObj.getMonth();
+
+  const dayNumber = document.createElement('div');
+  dayNumber.className = 'day-number';
+  dayNumber.textContent = displayDay;
+
+  const pad = (num) => num.toString().padStart(2, '0');
+const dateString = `${currentDateObj.getFullYear()}-${pad(currentDateObj.getMonth()+1)}-${pad(currentDateObj.getDate())}`;
+
+
+  
+  if (displayMonth !== month) {
+    dayDiv.classList.add('other-month');
+  } else if (availableSlots[dateString]) {
+    dayDiv.classList.add('has-slots');
+    dayDiv.dataset.date = dateString;
+
+    const indicator = document.createElement('div');
+    indicator.className = 'slots-indicator';
+    dayDiv.appendChild(indicator);
+  }
+
+  dayDiv.appendChild(dayNumber);
+  calendarGrid.appendChild(dayDiv);
+
+  
+  currentDateObj.setDate(currentDateObj.getDate() + 1);
+}
+
   }
 
   const showTimeSlots = (date) => {
