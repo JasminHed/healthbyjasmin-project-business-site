@@ -785,4 +785,90 @@ footer a:hover {
 }
 
 
+/* Schedule Section - Minimal Styling */
+.schedule-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
 
+.schedule-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.schedule-day {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  transition: all 0.3s ease;
+}
+
+.schedule-day:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.schedule-day h3 {
+  color: #333333;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.class-info p:first-child {
+  color: #3F5B6B;
+  font-size: 1.1rem;
+}
+
+.class-info p:nth-child(2) {
+  color: #5C7C8A;
+  font-weight: 600;
+}
+
+.booking-info {
+  background: #3F5B6B;
+  color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.booking-info a {
+  color: white;
+  text-decoration: underline;
+}
+
+/* Tablet - 2 columns */
+@media (min-width: 668px) and (max-width: 1024px) {
+  .schedule-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  
+  .schedule-day:nth-child(3) {
+    grid-column: 1 / -1;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+/* Desktop - 3 columns */
+@media (min-width: 1025px) {
+  .schedule-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  
+  .schedule-day:nth-child(3) {
+    grid-column: auto;
+    max-width: none;
+    margin: 0;
+  }
+}
