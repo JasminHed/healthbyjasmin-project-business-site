@@ -207,6 +207,4 @@ const dateString = `${currentDateObj.getFullYear()}-${pad(currentDateObj.getMont
   renderCalendar()
 
 
-
-  
 })
