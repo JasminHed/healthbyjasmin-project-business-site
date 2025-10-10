@@ -1,141 +1,119 @@
+/* ================================
+   FRONT PAGE STYLING
+================================ */
 
-body.front-page {
-  background: linear-gradient(180deg, #fdfdfd 0%, #f5f7f8 100%);
-  font-family: 'Raleway', sans-serif;
-  font-weight: 400;
-  color: #222;
+/* Fullscreen background video */
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  filter: brightness(70%);
+}
+
+/* Main layout */
+body {
   margin: 0;
   padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-}
-
-h1, h2, h3 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-.front-container {
-  max-width: 90%;
-  width: 600px;
-  text-align: center;
-  padding: 2rem 1rem;
-  animation: fadeIn 1s ease-in;
-}
-
-.front-container h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 1rem;
-  letter-spacing: 0.5px;
-}
-
-.front-container > p {
-  font-size: 1rem;
-  color: #444;
-  line-height: 1.6;
-  margin-bottom: 2.5rem;
-}
-
-
-.front-cards {
+  font-family: 'Raleway', sans-serif;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-}
-
-
-.front-card {
-  background: #fff;
-  border-radius: 16px;
-  padding: 2.5rem 1.5rem;
-  text-decoration: none;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
-  transition: all 0.35s ease;
-  position: relative;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  color: white;
   overflow: hidden;
 }
 
+/* Headings and paragraph */
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+p {
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin-bottom: 3rem;
+  line-height: 1.6;
+  color: white;
+}
+
+/* Cards container */
+.front-cards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* White minimalist boxes */
+.front-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 240px;
+  height: 140px;
+  background-color: white;
+  border-radius: 16px;
+  text-decoration: none;
+  color: black !important;
+  transition: transform 0.3s ease;
+  border: none;
+}
+
+/* Subtle lift on hover (no color/text change) */
+.front-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Prevent all blue link behavior */
+.front-card:link,
+.front-card:visited,
+.front-card:hover,
+.front-card:active,
+.front-card:focus {
+  color: black !important;
+  text-decoration: none !important;
+  outline: none !important;
+}
+
+/* Text inside cards */
 .front-card h2 {
   font-size: 1.4rem;
-  color: #222;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
+  margin-bottom: 0.4rem;
+  font-family: 'Playfair Display', serif;
+  color: black;
 }
 
 .front-card p {
-  color: #555;
-  font-size: 0.95rem;
+  font-size: 1rem;
+  margin: 0;
+  color: #333;
 }
 
-
-.front-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, #5C7C8A1A, #5C7C8A33);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.front-card:hover::before {
-  opacity: 1;
-}
-
-.front-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-}
-
-.front-card:hover h2 {
-  color: #5C7C8A; 
-}
-
-
-.soon {
-  display: inline-block;
-  background: #e9f0f2;
-  color: #5C7C8A;
-  padding: 5px 14px;
-  border-radius: 30px;
-  font-size: 0.8rem;
-  margin-top: 1rem;
-}
-
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-
-@media (min-width: 768px) {
-  .front-container {
-    max-width: 900px;
-    padding: 4rem 2rem;
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2rem;
   }
 
-  .front-container h1 {
-    font-size: 3rem;
-  }
-
-  .front-container > p {
-    font-size: 1.2rem;
-    margin-bottom: 3.5rem;
-  }
-
-  .front-cards {
-    flex-direction: row;
-    justify-content: center;
-    gap: 2rem;
+  p {
+    font-size: 1rem;
+    padding: 0 1rem;
   }
 
   .front-card {
-    flex: 1;
-    padding: 3rem 2rem;
+    width: 180px;
+    height: 100px;
   }
 }
+
