@@ -284,6 +284,37 @@ header {
 
 }
 
+.yoga-image {
+  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+    url("./assets/yoga.jpg");
+  background-size: cover;
+  background-position: center 20%; 
+}
+
+
+.yoga-instagram {
+  text-align: center;
+  margin: 80px auto;
+  max-width: 700px;
+  padding: 20px;
+}
+
+.instagram-icon-link {
+  display: inline-block;
+  color: #3F5B6B;
+  font-size: 48px;
+  margin-top: 20px;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.instagram-icon-link:hover {
+  color: #E1306C; 
+  transform: scale(1.1);
+}
+
+
+
+
 /*Form & popUp layout*/
 #popup-container {
   display: none;
