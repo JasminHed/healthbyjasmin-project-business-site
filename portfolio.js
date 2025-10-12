@@ -3,10 +3,11 @@ const projects = [
   {
       title: "Unga Allergiker",
       image: "assets/UA.png",
-      description: "Updated and developed WordPress website focusing on accessibility, performance, and SEO. As well as making the site responsive. Visual identity and images were outside project scope.",
+      description: "Updated and developed WordPress website focusing on accessibility, performance, and SEO. As well as making the site responsive.",
       tech: "WordPress, CSS, JavaScript",
       link: "https://www.ungaallergiker.se/",
-       linkText: "Visit Unga Allergiker"
+       linkText: "Visit Unga Allergiker",
+       note: "*This project has been handed over to the client. Later updates and design changes may differ from the original delivery."
   },
   {
       title: "Kodcentrum",
@@ -14,7 +15,8 @@ const projects = [
       description: "Updated and developed Squarespace website focusing on accessibility, SEO, and site structure as well as making the site responsive.",
       tech: "Squarespace, CSS, JavaScript",
       link: "https://kodcentrum.se/",
-       linkText: "Visit Kodcentrum"
+       linkText: "Visit Kodcentrum",
+       note: "*This project has been handed over to the client. Later updates and design changes may differ from the original delivery."
   },
   {
       title: "Zikki Website",
@@ -22,7 +24,8 @@ const projects = [
       description: "Built and developed business website in Squarespace using custom code. Worked with existing visual identity and images. Created content, structure, and design in collaboration with the company. Also added accessibility, responsiveness and SEO features.",
       tech: "Squarespace, CSS, JavaScript, E-commerce",
       link: "https://zikkidesign.com",
-       linkText: "Visit Zikki Design"
+       linkText: "Visit Zikki Design",
+       note: "*This project has been handed over to the client. Later updates and design changes may differ from the original delivery."
   },
   {
     title: "Cyberarena",
@@ -30,7 +33,8 @@ const projects = [
     description: "Developed and updated Squarespace website for Kodcentrum's Cyberarena. Designed color scheme, site structure, and all content including images and text. Built with custom code, focusing on accessibility, responsiveness and SEO optimization.",
     tech: "Squarespace, CSS, JavaScript",
     link: "https://zikkidesign.com",
-     linkText: "Visit Cyberarena"
+     linkText: "Visit Cyberarena",
+     note: "*This project has been handed over to the client. Later updates and design changes may differ from the original delivery."
 }
 ];
 
@@ -44,8 +48,10 @@ function renderProjects() {
       <img src="${project.image}" alt="${project.title} preview" class="project-image">
           <h3>${project.title}</h3>
           <p>${project.description}</p>
+             ${project.note ? `<p class="project-note">${project.note}</p>` : ""}
           <p class="tech">${project.tech}</p>
          <a href="${project.link}" target="_blank" rel="noopener noreferrer">${project.linkText}</a>
+      
       </div>
   `).join('');
 }
