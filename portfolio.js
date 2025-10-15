@@ -30,7 +30,7 @@ const projects = [
   {
     title: "Cyberarena",
     image: "assets/Cyber.png",
-    description: "Developed and updated Squarespace website for Kodcentrum's Cyberarena. Designed color scheme, site structure, and all content including images and text. Built with custom code, focusing on accessibility, responsiveness and SEO optimization.",
+    description: "Developed and updated Squarespace website for Kodcentrum's Cyberarena (subsite aimed for pre-schools). Designed color scheme, site structure and all content including images and text based on clients ideas. Built with custom code, focusing on accessibility, responsiveness and SEO optimization.",
     tech: "Squarespace, CSS, JavaScript",
     link: "https://cyberarena.se",
      linkText: "Visit Cyberarena",
