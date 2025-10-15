@@ -38,7 +38,7 @@ const projects = [
 },
 {
   title: "Intention Hub",
-  image: "assets/intentionhub.png",
+  image: "assets/int.png",
   description: "A fully custom-coded website built from scratch without using templates or CMS platforms. A intention hub that helps users set intentions and goals with an AI bot for guidance and a supportive community.",
   tech: "React, styled components, MongoDB, Node.js",
   link: "https://intentionhub.netlify.app/",
@@ -55,7 +55,7 @@ const projects = [
 },
 {
   title: "HeidikaYoga",
-  image: "assets/heidi.png",
+  image: "assets/heidi1.png",
   description: "Built and developed business website in Squarespace using custom code. Worked with existing visual identity and images. Created content, structure, and design in collaboration with the company. Also added accessibility, responsiveness and SEO features.",
   tech: "Squarespace, CSS, JavaScript, E-commerce",
   link: "https://heidikayoga.com",
