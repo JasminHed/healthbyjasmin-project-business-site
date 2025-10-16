@@ -25,7 +25,7 @@ const projects = [
       tech: "Squarespace, CSS, JavaScript, E-commerce",
       link: "https://zikkidesign.com",
        linkText: "Visit Zikki Design",
-       note: "*This project has been handed over to the client. Later updates and design changes may differ from the original delivery."
+       note: "*This project is still being developed. Published soon."
   },
   {
     title: "Cyberarena",
@@ -60,7 +60,7 @@ const projects = [
   tech: "Squarespace, CSS, JavaScript, E-commerce",
   link: "https://heidikayoga.com",
    linkText: "Visit Heidikayoga",
-  note: "*This project has been handed over to the client. Later updates and design changes may differ from the original delivery."
+  note: "*This project is still being developed. Published soon."
 }
 ];
 
