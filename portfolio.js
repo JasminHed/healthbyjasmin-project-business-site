@@ -3,7 +3,7 @@ const projects = [
   {
       title: "Unga Allergiker",
       image: "assets/UA.png",
-      description: "A fully customed CMS platform website. Updated and developed WordPress website focusing on accessibility, performance, and SEO. As well as making the site responsive.",
+      description: "A fully customed CMS platform website. Updated and developed WordPress website focusing on accessibility, performance and SEO. As well as making the site responsive. No web design included per request by customer.",
       tech: "WordPress, CSS, JavaScript",
       link: "https://www.ungaallergiker.se/",
        linkText: "Visit Unga Allergiker",
@@ -12,7 +12,7 @@ const projects = [
   {
       title: "Kodcentrum",
       image: "assets/kodc.png",
-      description: "A fully customed CMS platform website. Updated and developed Squarespace website focusing on accessibility, SEO, and site structure as well as making the site responsive.",
+      description: "A fully customed CMS platform website. Updated and developed Squarespace website focusing on accessibility, SEO and site structure as well as making the site responsive. No web design as requested by customer.",
       tech: "Squarespace, CSS, JavaScript",
       link: "https://kodcentrum.se/",
        linkText: "Visit Kodcentrum",
@@ -21,16 +21,16 @@ const projects = [
   {
       title: "Zikki Website",
       image: "assets/Zikki.png",
-      description: "A fully customed CMS platofmr website. Built and developed business website in Squarespace using custom code. Worked with existing visual identity and images. Created content, structure, and design in collaboration with the company. Also added accessibility, responsiveness and SEO features.",
+      description: "A fully customed CMS platofmr website. Built and developed business website in Squarespace using custom code. Worked with existing visual identity and images. Created content, structure and design in collaboration with the company. Also added accessibility, responsiveness and SEO features.",
       tech: "Squarespace, CSS, JavaScript, E-commerce",
       link: "https://zikkidesign.com",
        linkText: "Visit Zikki Design",
-       note: "*This project is still being developed. Published soon."
+       note: "*TThis project has been handed over to the client. Later updates and design changes may differ from the original delivery."
   },
   {
     title: "Cyberarena",
     image: "assets/Cyber.png",
-    description: "A fully customed CMS platform website. Developed and updated Squarespace website for Kodcentrum's Cyberarena (subsite aimed for pre-schools). Designed color scheme, site structure and all content including images and text based on clients ideas. Built with custom code, focusing on accessibility, responsiveness and SEO optimization.",
+    description: "A fully customed CMS platform website. Developed and updated Squarespace website for Kodcentrum's Cyberarena (subsite aimed towards pre-schools). Designed color scheme, site structure and all content including images and text based on clients ideas. Built with custom code, focusing on accessibility, responsiveness and SEO optimization.",
     tech: "Squarespace, CSS, JavaScript",
     link: "https://cyberarena.se",
      linkText: "Visit Cyberarena",
@@ -44,14 +44,6 @@ const projects = [
   link: "https://intentionhub.netlify.app/",
    linkText: "Visit Intention Hub",
    note: "*This project is still being developed and updated."
-},
-{
-  title: "Movie App",
-  image: "assets/movie.png",
-  description: "A fully custom-coded website built from scratch without using templates or CMS platforms. A movie discovery website that displays popular and new films across all categories with real-time updates. ",
-  tech: "React, styled components, API",
-  link: "https://movie-projectapp.netlify.app/",
-   linkText: "Visit The movie App",
 },
 {
   title: "HeidikaYoga",
