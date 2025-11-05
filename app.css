@@ -157,6 +157,40 @@ header {
   transform: rotate(-45deg) translate(5px, -5px);
 }
 
+/* Retreat styling utan att påverka andra grid-content */
+.retreat-section {
+  display: flex;
+  justify-content: center;
+  margin: 60px auto;
+}
+
+.retreat {
+ 
+  width: 90%;
+  background-color: #faf4ef;
+  padding: 15px 20px; 
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+.retreat img {
+  width: 100%;
+  height: 300px;            
+  object-fit: cover;   
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.retreat a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #3F5B6B;
+  color: white;
+  border-radius: 8px;
+}
+
+
 
 /* Grid layout for content & journal*/
 .grid-content,
@@ -316,99 +350,6 @@ header {
 
 
 
-/*Form & popUp layout
-#popup-container {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  padding: 30px;
-  box-sizing: border-box;
-  z-index: 1000;
-  opacity: 0;
-  transition: opacity 0.6s ease-in-out;
-}
-
-#popup-container.visible {
-  transition-delay: 0s;
-  display: block;
-  opacity: 1;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: whitesmoke;
-  border-radius: 16px;
-  padding: 15px;
-  max-width: 360px;
-  box-sizing: border-box;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-
-}
-
-fieldset {
-  display: flex;
-  flex-direction: column;
-  border: none;
-  margin-bottom: 15px;
-  width: 100%;
-  max-width: 400px;
-}
-
-fieldset legend {
-  text-align: left;
-  font-size: 16px;
-}
-
-fieldset label {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-input[type="radio"] {
-  appearance: none;
-  width: 14px;
-  height: 14px;
-  border: 1px black solid;
-  background-color: azure;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-input[type="radio"]:checked {
-  border-color: black;
-  background-color: #2D4A5D;
-}
-
-#close-button {
-  background: #A38F85;
-  color: white;
-  width: 50%;
-  padding: 10px;
-  border-radius: 12px;
-  border: 1px solid;
-  text-transform: uppercase;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-
-.submit-button {
-  background: #3F5B6B;
-  color: white;
-  text-decoration: underline;
-  width: 50%;
-  padding: 10px;
-  border-radius: 12px;
-  border: 1px solid;
-  text-transform: uppercase;
-  cursor: pointer;
-}*/
 
 
 footer {
@@ -557,3 +498,189 @@ footer a:hover {
   }
 }
 
+
+
+/* Retreat sida styling */
+
+/* Container för hela retreat-sektionen */
+.retreat-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Intro-texten */
+.retreat-intro {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.retreat-intro h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #2D4A5D;
+}
+
+.retreat-intro p {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #333333;
+}
+
+/* Bilder på huset */
+.house-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 50px;
+}
+
+.house-gallery img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.house-gallery img:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Rumssektionen */
+.rooms-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.room {
+  text-align: center;
+  padding: 20px;
+  border-radius: 12px;
+  background: #f7f7f7;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.room:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.room img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.room h3 {
+  margin-bottom: 10px;
+  color: #3F5B6B;
+}
+
+.room p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333333;
+}
+
+/* Bokningsformulär */
+.retreat-booking {
+  max-width: 600px;
+  margin: 0 auto 60px;
+  padding: 30px;
+  background: #f7f7f7;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.retreat-booking h2 {
+  margin-bottom: 20px;
+  color: #2D4A5D;
+}
+
+.retreat-booking p {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #333333;
+}
+
+.retreat-booking form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.retreat-booking input,
+.retreat-booking textarea {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.retreat-booking button {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: #3F5B6B;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.retreat-booking button:hover {
+  background-color: #2D4A5D;
+  transform: scale(1.05);
+}
+
+/* Responsivitet */
+@media (max-width: 768px) {
+  .retreat-intro h2 {
+    font-size: 28px;
+  }
+
+  .house-gallery img,
+  .room img {
+    height: 200px;
+  }
+}
+.retreat-schedule {
+  margin-top: 2rem;
+ 
+ 
+ 
+}
+
+.retreat-schedule p {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  
+}
+
+.retreat-schedule strong {
+  font-weight: 600;
+}
+
+.retreat-price h2 {
+  text-align: center; /* centrerar rubrik och text */
+  margin: 2rem 0;
+  color: #2D4A5D;
+  margin-bottom: 20px;
+
+}
+
+.retreat-price p {
+ 
+  margin-top: 0.5rem;
+  text-align: center;
+}
