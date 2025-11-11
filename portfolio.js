@@ -1,21 +1,6 @@
 // Portfolio projects data -
 const projects = [
-  {
-      title: "Unga Allergiker",
-      image: "assets/UA.png",
-      description: "Improved existing WordPress website by optimizing for accessibility, performance, SEO and responsive design. No new design created.",
-      link: "https://www.ungaallergiker.se/",
-       linkText: "Visit Unga Allergiker",
-       note: "*This project has been handed over to the client. Later updates and design changes may differ from the original delivery."
-  },
-  {
-      title: "Kodcentrum",
-      image: "assets/kodc.png",
-      description: "Improved existing Squarespace website by optimizing for accessibility, performance, SEO and responsive design. No new design created.",
-      link: "https://kodcentrum.se/",
-       linkText: "Visit Kodcentrum",
-       note: "*This project has been handed over to the client. Later updates and design changes may differ from the original delivery."
-  },
+
   {
       title: "Zikki Website",
       image: "assets/Zikki.png",
@@ -24,14 +9,6 @@ const projects = [
        linkText: "Visit Zikki Design",
        note: "*This project has been handed over to the client. Later updates and design changes may differ from the original delivery."
   },
-  {
-    title: "Cyberarena",
-    image: "assets/Cyber.png",
-    description:"Built a Squarespace website using custom code. Worked with their existing brand identity and created structure, design, and content in collaboration. Optimized for accessibility, responsiveness and SEO.",
-    link: "https://cyberarena.se",
-     linkText: "Visit Cyberarena",
-     note: "*This project has been handed over to the client. Later updates and design changes may differ from the original delivery."
-},
 {
   title: "Intention Hub",
   image: "assets/int.png",
