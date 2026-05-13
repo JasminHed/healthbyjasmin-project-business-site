@@ -1,13 +1,6 @@
-import { useState, useEffect } from "react";
-import emailjs from "@emailjs/browser";
+import { useState } from "react";
 import "../styles/app.css";
 
-const EMAILJS_SERVICE_ID = "service_l3ep6p5";
-const EMAILJS_TEMPLATE_JASMIN = "template_2cf4wi7";
-const EMAILJS_TEMPLATE_CUSTOMER = "template_eozargj";
-const EMAILJS_PUBLIC_KEY = "NGTVbZ66S_Eb_WLCC";
-
-// ── Booking data ──────────────────────────────────────────────────────────────
 const TREATMENTS = [
   {
     id: "abhyanga",
@@ -67,7 +60,6 @@ const MONTHS = [
 ];
 const DAYS = ["Sön", "Mån", "Tis", "Ons", "Tor", "Fre", "Lör"];
 
-// ── Booking component ─────────────────────────────────────────────────────────
 function BookingSection() {
   const [step, setStep] = useState(1);
   const [treatment, setTreatment] = useState(null);
@@ -79,17 +71,6 @@ function BookingSection() {
     email: "",
     phone: "",
   });
-
-  const [bookedSlots, setBookedSlots] = useState([]);
-  const [sending, setSending] = useState(false);
-
-  useEffect(() => {
-    fetch("/api/bookings")
-      .then((r) => r.json())
-      .then((data) => setBookedSlots(data))
-      .catch(() => {});
-  }, []);
-  const [sendError, setSendError] = useState(false);
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -113,54 +94,8 @@ function BookingSection() {
     setSlot(null);
   }
 
-  async function submitBooking() {
-    setSending(true);
-    setSendError(false);
-
-    const d = SESSION_DATES[dateIdx].date;
-    const dateStr = `${d.getDate()} ${MONTHS[d.getMonth()]} 2026`;
-    const timeStr = `${slot.t}–${slot.e}`;
-    const fullName = `${form.firstName} ${form.lastName}`;
-
-    const templateParams = {
-      treatment: `${treatment.name} (55 min)`,
-      date: dateStr,
-      time: timeStr,
-      customer_name: fullName,
-      customer_email: form.email,
-      customer_phone: form.phone,
-    };
-
-    try {
-      // Skicka till Jasmin
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_JASMIN,
-        templateParams,
-        EMAILJS_PUBLIC_KEY
-      );
-      // Skicka till kunden
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_CUSTOMER,
-        templateParams,
-        EMAILJS_PUBLIC_KEY
-      );
-      // Spara bokad tid
-      const bookingKey = `${dateIdx}-${slot.t}`;
-      await fetch("/api/bookings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: bookingKey }),
-      });
-      setBookedSlots((prev) => [...prev, bookingKey]);
-      setStep(4);
-    } catch (err) {
-      console.error("EmailJS error:", err);
-      setSendError(true);
-    } finally {
-      setSending(false);
-    }
+  function submitBooking() {
+    setStep(4);
   }
 
   function newBooking() {
@@ -177,7 +112,6 @@ function BookingSection() {
     <section className="booking-section">
       <h2>Boka behandling</h2>
 
-      {/* Step indicator */}
       <div className="booking-steps">
         {steps.map((label, i) => {
           const num = i + 1;
@@ -272,26 +206,18 @@ function BookingSection() {
                 <>
                   <p className="times-hint">Välj tid</p>
                   <div className="times-grid">
-                    {SESSION_DATES[dateIdx].slots.map((s, i) => {
-                      const key = `${dateIdx}-${s.t}`;
-                      const isBooked = bookedSlots.includes(key);
-                      return (
-                        <div
-                          key={i}
-                          className={`time-slot${
-                            slot === s ? " selected" : ""
-                          }${isBooked ? " booked" : ""}`}
-                          onClick={() => !isBooked && setSlot(s)}
-                        >
-                          <div className="time-slot-t">
-                            {s.t} – {s.e}
-                          </div>
-                          <div className="time-slot-s">
-                            {isBooked ? "Fullbokad" : "55 min"}
-                          </div>
+                    {SESSION_DATES[dateIdx].slots.map((s, i) => (
+                      <div
+                        key={i}
+                        className={`time-slot${slot === s ? " selected" : ""}`}
+                        onClick={() => setSlot(s)}
+                      >
+                        <div className="time-slot-t">
+                          {s.t} – {s.e}
                         </div>
-                      );
-                    })}
+                        <div className="time-slot-s">55 min</div>
+                      </div>
+                    ))}
                   </div>
                 </>
               )}
@@ -394,18 +320,12 @@ function BookingSection() {
             </button>
             <button
               className="booking-btn-next"
-              disabled={!formValid || sending}
+              disabled={!formValid}
               onClick={submitBooking}
             >
-              {sending ? "Skickar..." : "Bekräfta bokning ✓"}
+              Bekräfta bokning ✓
             </button>
           </div>
-          {sendError && (
-            <p className="send-error">
-              Något gick fel. Försök igen eller kontakta
-              healthbyjasmin@gmail.com
-            </p>
-          )}
         </div>
       )}
 
@@ -415,7 +335,11 @@ function BookingSection() {
           <div className="confirm-box">
             <div className="confirm-icon">✓</div>
             <h3>Bokning bekräftad!</h3>
-            <p>En bekräftelse har skickats till {form.email}</p>
+            <p>
+              Tack {form.firstName}! Vi ses den{" "}
+              {SESSION_DATES[dateIdx].date.getDate()}{" "}
+              {MONTHS[SESSION_DATES[dateIdx].date.getMonth()]} kl {slot.t}.
+            </p>
           </div>
 
           <div className="booking-card" style={{ marginTop: "1rem" }}>
@@ -427,7 +351,7 @@ function BookingSection() {
               <span className="summary-key">Datum</span>
               <span className="summary-val">
                 {SESSION_DATES[dateIdx].date.getDate()}{" "}
-                {MONTHS[SESSION_DATES[dateIdx].date.getMonth()]} 2025
+                {MONTHS[SESSION_DATES[dateIdx].date.getMonth()]} 2026
               </span>
             </div>
             <div className="summary-row">
@@ -471,7 +395,6 @@ function BookingSection() {
   );
 }
 
-// ── Main page component ───────────────────────────────────────────────────────
 export default function HealthByJasmin() {
   return (
     <>
