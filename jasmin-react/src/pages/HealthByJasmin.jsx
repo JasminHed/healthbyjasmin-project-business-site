@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import "../styles/app.css";
 
@@ -80,7 +80,15 @@ function BookingSection() {
     phone: "",
   });
 
+  const [bookedSlots, setBookedSlots] = useState([]);
   const [sending, setSending] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/bookings")
+      .then((r) => r.json())
+      .then((data) => setBookedSlots(data))
+      .catch(() => {});
+  }, []);
   const [sendError, setSendError] = useState(false);
 
   const today = new Date();
@@ -138,6 +146,14 @@ function BookingSection() {
         templateParams,
         EMAILJS_PUBLIC_KEY
       );
+      // Spara bokad tid
+      const bookingKey = `${dateIdx}-${slot.t}`;
+      await fetch("/api/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key: bookingKey }),
+      });
+      setBookedSlots((prev) => [...prev, bookingKey]);
       setStep(4);
     } catch (err) {
       console.error("EmailJS error:", err);
@@ -256,18 +272,26 @@ function BookingSection() {
                 <>
                   <p className="times-hint">Välj tid</p>
                   <div className="times-grid">
-                    {SESSION_DATES[dateIdx].slots.map((s, i) => (
-                      <div
-                        key={i}
-                        className={`time-slot${slot === s ? " selected" : ""}`}
-                        onClick={() => setSlot(s)}
-                      >
-                        <div className="time-slot-t">
-                          {s.t} – {s.e}
+                    {SESSION_DATES[dateIdx].slots.map((s, i) => {
+                      const key = `${dateIdx}-${s.t}`;
+                      const isBooked = bookedSlots.includes(key);
+                      return (
+                        <div
+                          key={i}
+                          className={`time-slot${
+                            slot === s ? " selected" : ""
+                          }${isBooked ? " booked" : ""}`}
+                          onClick={() => !isBooked && setSlot(s)}
+                        >
+                          <div className="time-slot-t">
+                            {s.t} – {s.e}
+                          </div>
+                          <div className="time-slot-s">
+                            {isBooked ? "Fullbokad" : "55 min"}
+                          </div>
                         </div>
-                        <div className="time-slot-s">55 min</div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </>
               )}
