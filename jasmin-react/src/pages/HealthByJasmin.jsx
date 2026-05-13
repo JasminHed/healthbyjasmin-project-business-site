@@ -23,21 +23,21 @@ const TREATMENTS = [
 
 const SESSION_DATES = [
   {
-    date: new Date(2025, 4, 26),
+    date: new Date(2026, 4, 26),
     slots: [
       { t: "18:00", e: "18:55" },
       { t: "19:10", e: "20:05" },
     ],
   },
   {
-    date: new Date(2025, 5, 9),
+    date: new Date(2026, 5, 9),
     slots: [
       { t: "18:00", e: "18:55" },
       { t: "19:10", e: "20:05" },
     ],
   },
   {
-    date: new Date(2025, 5, 16),
+    date: new Date(2026, 5, 16),
     slots: [
       { t: "18:00", e: "18:55" },
       { t: "19:10", e: "20:05" },
