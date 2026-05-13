@@ -1,5 +1,401 @@
+import { useState } from "react";
 import "../styles/app.css";
 
+// ── Booking data ──────────────────────────────────────────────────────────────
+const TREATMENTS = [
+  {
+    id: "abhyanga",
+    name: "Abhyanga",
+    duration: "55 min",
+    price: "750 kr",
+    description:
+      "Behaglig helkroppsmassage med varm sesamolja inkl. huvud, ansikte och fötter. Fokus djup återhämtning och vila. Avslutas med varmvattenpåse över rygg.",
+  },
+  {
+    id: "vishesh",
+    name: "Vishesh",
+    duration: "55 min",
+    price: "750 kr",
+    description:
+      "Djupare helkroppsmassage med varm sesamolja, inkl. huvud, ansikte och fötter. Fokus spänningar och vila.",
+  },
+];
+
+const SESSION_DATES = [
+  {
+    date: new Date(2025, 4, 26),
+    slots: [
+      { t: "18:00", e: "18:55" },
+      { t: "19:10", e: "20:05" },
+    ],
+  },
+  {
+    date: new Date(2025, 5, 9),
+    slots: [
+      { t: "18:00", e: "18:55" },
+      { t: "19:10", e: "20:05" },
+    ],
+  },
+  {
+    date: new Date(2025, 5, 16),
+    slots: [
+      { t: "18:00", e: "18:55" },
+      { t: "19:10", e: "20:05" },
+    ],
+  },
+];
+
+const MONTHS = [
+  "jan",
+  "feb",
+  "mar",
+  "apr",
+  "maj",
+  "jun",
+  "jul",
+  "aug",
+  "sep",
+  "okt",
+  "nov",
+  "dec",
+];
+const DAYS = ["Sön", "Mån", "Tis", "Ons", "Tor", "Fre", "Lör"];
+
+// ── Booking component ─────────────────────────────────────────────────────────
+function BookingSection() {
+  const [step, setStep] = useState(1);
+  const [treatment, setTreatment] = useState(null);
+  const [dateIdx, setDateIdx] = useState(null);
+  const [slot, setSlot] = useState(null);
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+  });
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const formValid =
+    form.firstName.trim() &&
+    form.lastName.trim() &&
+    form.email.includes("@") &&
+    form.phone.trim().length >= 8;
+
+  function handleFormChange(e) {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }
+
+  function goTo(n) {
+    setStep(n);
+  }
+
+  function selectDate(i) {
+    setDateIdx(i);
+    setSlot(null);
+  }
+
+  function submitBooking() {
+    // Here you would send a confirmation email via EmailJS or similar
+    setStep(4);
+  }
+
+  function newBooking() {
+    setTreatment(null);
+    setDateIdx(null);
+    setSlot(null);
+    setForm({ firstName: "", lastName: "", email: "", phone: "" });
+    setStep(1);
+  }
+
+  const steps = ["Behandling", "Tid", "Dina uppgifter", "Bekräftelse"];
+
+  return (
+    <section className="booking-section">
+      <h2>Boka behandling</h2>
+
+      {/* Step indicator */}
+      <div className="booking-steps">
+        {steps.map((label, i) => {
+          const num = i + 1;
+          const isDone = step > num;
+          const isActive = step === num;
+          return (
+            <div key={num} className="booking-step-wrapper">
+              <div
+                className={`booking-step-item${isActive ? " active" : ""}${
+                  isDone ? " done" : ""
+                }`}
+              >
+                <div className="booking-step-dot">{isDone ? "✓" : num}</div>
+                <span className="booking-step-label">{label}</span>
+              </div>
+              {i < steps.length - 1 && (
+                <div className={`booking-step-line${isDone ? " done" : ""}`} />
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* ── Step 1: Choose treatment ── */}
+      {step === 1 && (
+        <div className="booking-card-wrapper">
+          <div className="booking-card">
+            <div className="treatment-grid">
+              {TREATMENTS.map((tr) => (
+                <div
+                  key={tr.id}
+                  className={`treatment-card${
+                    treatment?.id === tr.id ? " selected" : ""
+                  }`}
+                  onClick={() => setTreatment(tr)}
+                >
+                  <h3>{tr.name}</h3>
+                  <div className="treatment-meta">{tr.duration}</div>
+                  <div className="treatment-price">{tr.price}</div>
+                  <p className="treatment-desc">{tr.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="booking-btn-row">
+            <button
+              className="booking-btn-next"
+              disabled={!treatment}
+              onClick={() => goTo(2)}
+            >
+              Välj tid →
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ── Step 2: Choose date & time ── */}
+      {step === 2 && (
+        <div className="booking-card-wrapper">
+          <div className="booking-card">
+            <div className="cal-header">
+              <span className="cal-title">Välj datum</span>
+              <span className="cal-subtitle">Varannan tisdag</span>
+            </div>
+            <div className="dates-scroll">
+              {SESSION_DATES.map((s, i) => {
+                const d = s.date;
+                const isPast = d < today;
+                return (
+                  <button
+                    key={i}
+                    className={`date-btn${isPast ? " disabled" : ""}${
+                      dateIdx === i ? " selected" : ""
+                    }`}
+                    onClick={() => !isPast && selectDate(i)}
+                    disabled={isPast}
+                  >
+                    <span className="date-wd">{DAYS[d.getDay()]}</span>
+                    <span className="date-dd">{d.getDate()}</span>
+                    <span className="date-mo">{MONTHS[d.getMonth()]}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="times-section">
+              {dateIdx === null ? (
+                <p className="times-hint">
+                  Välj ett datum för att se lediga tider
+                </p>
+              ) : (
+                <>
+                  <p className="times-hint">Välj tid</p>
+                  <div className="times-grid">
+                    {SESSION_DATES[dateIdx].slots.map((s, i) => (
+                      <div
+                        key={i}
+                        className={`time-slot${slot === s ? " selected" : ""}`}
+                        onClick={() => setSlot(s)}
+                      >
+                        <div className="time-slot-t">
+                          {s.t} – {s.e}
+                        </div>
+                        <div className="time-slot-s">55 min</div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+          <div className="booking-btn-row">
+            <button className="booking-btn-back" onClick={() => goTo(1)}>
+              ← Tillbaka
+            </button>
+            <button
+              className="booking-btn-next"
+              disabled={!slot}
+              onClick={() => goTo(3)}
+            >
+              Gå vidare →
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ── Step 3: Personal details ── */}
+      {step === 3 && (
+        <div className="booking-card-wrapper">
+          <div className="booking-card">
+            {dateIdx !== null && slot && (
+              <div className="chosen-summary">
+                <span className="chosen-label">Bokad tid</span>
+                <span className="chosen-value">
+                  {treatment.name} &bull;{" "}
+                  {SESSION_DATES[dateIdx].date.getDate()}{" "}
+                  {MONTHS[SESSION_DATES[dateIdx].date.getMonth()]} &bull;{" "}
+                  {slot.t}–{slot.e}
+                </span>
+              </div>
+            )}
+
+            <div className="massage-form">
+              <label>
+                Förnamn
+                <input
+                  type="text"
+                  name="firstName"
+                  value={form.firstName}
+                  onChange={handleFormChange}
+                  placeholder="Ditt förnamn"
+                  required
+                />
+              </label>
+              <label>
+                Efternamn
+                <input
+                  type="text"
+                  name="lastName"
+                  value={form.lastName}
+                  onChange={handleFormChange}
+                  placeholder="Ditt efternamn"
+                  required
+                />
+              </label>
+              <label>
+                E-postadress
+                <input
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleFormChange}
+                  placeholder="din@email.se"
+                  required
+                />
+              </label>
+              <label>
+                Mobilnummer
+                <input
+                  type="tel"
+                  name="phone"
+                  value={form.phone}
+                  onChange={handleFormChange}
+                  placeholder="07X XXX XX XX"
+                  required
+                />
+              </label>
+
+              <div className="payment-section-label">Betalningssätt</div>
+              <div className="payment-opt selected">
+                <input type="radio" name="pay" defaultChecked readOnly />
+                <div>
+                  <div className="payment-opt-title">
+                    Faktura – Frilans Finans
+                  </div>
+                  <div className="payment-opt-sub">
+                    Du faktureras via Frilans Finans efter behandlingen
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="booking-btn-row">
+            <button className="booking-btn-back" onClick={() => goTo(2)}>
+              ← Tillbaka
+            </button>
+            <button
+              className="booking-btn-next"
+              disabled={!formValid}
+              onClick={submitBooking}
+            >
+              Bekräfta bokning ✓
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ── Step 4: Confirmation ── */}
+      {step === 4 && (
+        <div className="booking-card-wrapper">
+          <div className="confirm-box">
+            <div className="confirm-icon">✓</div>
+            <h3>Bokning bekräftad!</h3>
+            <p>En bekräftelse har skickats till {form.email}</p>
+          </div>
+
+          <div className="booking-card" style={{ marginTop: "1rem" }}>
+            <div className="summary-row">
+              <span className="summary-key">Behandling</span>
+              <span className="summary-val">{treatment.name} (55 min)</span>
+            </div>
+            <div className="summary-row">
+              <span className="summary-key">Datum</span>
+              <span className="summary-val">
+                {SESSION_DATES[dateIdx].date.getDate()}{" "}
+                {MONTHS[SESSION_DATES[dateIdx].date.getMonth()]} 2025
+              </span>
+            </div>
+            <div className="summary-row">
+              <span className="summary-key">Tid</span>
+              <span className="summary-val">
+                {slot.t}–{slot.e}
+              </span>
+            </div>
+            <div className="summary-row">
+              <span className="summary-key">Namn</span>
+              <span className="summary-val">
+                {form.firstName} {form.lastName}
+              </span>
+            </div>
+            <div className="summary-row">
+              <span className="summary-key">E-post</span>
+              <span className="summary-val">{form.email}</span>
+            </div>
+            <div className="summary-row">
+              <span className="summary-key">Mobil</span>
+              <span className="summary-val">{form.phone}</span>
+            </div>
+            <div className="summary-row">
+              <span className="summary-key">Betalning</span>
+              <span className="summary-val">Faktura – Frilans Finans</span>
+            </div>
+            <div className="summary-row summary-row-total">
+              <span className="summary-key">Totalt</span>
+              <span className="summary-val">750 kr</span>
+            </div>
+          </div>
+
+          <div className="booking-btn-row">
+            <button className="booking-btn-next" onClick={newBooking}>
+              Gör en ny bokning
+            </button>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+// ── Main page component ───────────────────────────────────────────────────────
 export default function HealthByJasmin() {
   return (
     <>
@@ -111,118 +507,7 @@ export default function HealthByJasmin() {
           </article>
         </section>
 
-        {/* Bokningsformulär */}
-        <section className="booking-section">
-          <h2>Book a Session</h2>
-
-          <div className="booking-options">
-            {/* Yoga-bokning */}
-            <div className="booking-card">
-              <h3>Yoga Classes</h3>
-              <p>Book a spot in one of our yoga classes at the studio.</p>
-              <a href="/yoga" className="booking-btn">
-                Book Yoga &#10132;
-              </a>
-            </div>
-
-            {/* Massage-bokning */}
-            <div className="booking-card">
-              <h3>Ayurvedic Massage</h3>
-              <p>
-                Book a personal Ayurvedic massage session. Each treatment is 1
-                hour.
-              </p>
-              <form
-                name="massage-booking"
-                method="POST"
-                data-netlify="true"
-                className="massage-form"
-              >
-                <input type="hidden" name="form-name" value="massage-booking" />
-                <input
-                  type="hidden"
-                  name="treatment"
-                  value="Ayurvedic massage"
-                />
-                <label>
-                  Name
-                  <input type="text" name="name" required />
-                </label>
-                <label>
-                  Email
-                  <input type="email" name="email" required />
-                </label>
-                <label>
-                  Phone
-                  <input type="tel" name="phone" required />
-                </label>
-                <label>
-                  Preferred time
-                  <select name="preferred_time" required>
-                    <option value="">-- Choose a time --</option>
-                    <option>Saturday 10 May – 9:00</option>
-                    <option>Saturday 10 May – 10:15</option>
-                    <option>Saturday 10 May – 11:30</option>
-                    <option>Thursday 14 May – 18:00</option>
-                    <option>Thursday 14 May – 19:15</option>
-                  </select>
-                </label>
-                <label>
-                  Message
-                  <textarea
-                    name="message"
-                    rows="3"
-                    placeholder="Any wishes or questions?"
-                  ></textarea>
-                </label>
-                <button type="submit">Send Booking</button>
-              </form>
-            </div>
-
-            {/* Kursbokning */}
-            <div className="booking-card">
-              <h3>Courses</h3>
-              <p>
-                Interested in one of our courses? Fill in the form and we'll get
-                back to you with details.
-              </p>
-              <form
-                name="course-booking"
-                method="POST"
-                data-netlify="true"
-                className="massage-form"
-              >
-                <input type="hidden" name="form-name" value="course-booking" />
-                <label>
-                  Name
-                  <input type="text" name="name" required />
-                </label>
-                <label>
-                  Email
-                  <input type="email" name="email" required />
-                </label>
-                <label>
-                  Course
-                  <select name="course" required>
-                    <option value="">-- Choose a course --</option>
-                    <option>Introduction to Ayurveda</option>
-                    <option>Ashtanga Yoga Basics</option>
-                    <option>Yin Yoga</option>
-                  </select>
-                </label>
-                <label>
-                  Message
-                  <textarea
-                    name="message"
-                    rows="3"
-                    placeholder="Questions or comments?"
-                  ></textarea>
-                </label>
-                <button type="submit">Send Booking</button>
-              </form>
-            </div>
-          </div>
-        </section>
+        <BookingSection />
       </main>
 
       <section className="second-image"></section>
