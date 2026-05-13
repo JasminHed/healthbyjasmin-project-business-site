@@ -1,5 +1,11 @@
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import "../styles/app.css";
+
+const EMAILJS_SERVICE_ID = "service_o2v2ozc";
+const EMAILJS_TEMPLATE_JASMIN = "template_2cf4wi7";
+const EMAILJS_TEMPLATE_CUSTOMER = "template_eozargj";
+const EMAILJS_PUBLIC_KEY = "NGTVbZ66S_Eb_WLCC";
 
 // ── Booking data ──────────────────────────────────────────────────────────────
 const TREATMENTS = [
@@ -74,6 +80,9 @@ function BookingSection() {
     phone: "",
   });
 
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState(false);
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -96,9 +105,46 @@ function BookingSection() {
     setSlot(null);
   }
 
-  function submitBooking() {
-    // Here you would send a confirmation email via EmailJS or similar
-    setStep(4);
+  async function submitBooking() {
+    setSending(true);
+    setSendError(false);
+
+    const d = SESSION_DATES[dateIdx].date;
+    const dateStr = `${d.getDate()} ${MONTHS[d.getMonth()]} 2026`;
+    const timeStr = `${slot.t}–${slot.e}`;
+    const fullName = `${form.firstName} ${form.lastName}`;
+
+    const templateParams = {
+      treatment: `${treatment.name} (55 min)`,
+      date: dateStr,
+      time: timeStr,
+      customer_name: fullName,
+      customer_email: form.email,
+      customer_phone: form.phone,
+    };
+
+    try {
+      // Skicka till Jasmin
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_JASMIN,
+        templateParams,
+        EMAILJS_PUBLIC_KEY
+      );
+      // Skicka till kunden
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_CUSTOMER,
+        templateParams,
+        EMAILJS_PUBLIC_KEY
+      );
+      setStep(4);
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      setSendError(true);
+    } finally {
+      setSending(false);
+    }
   }
 
   function newBooking() {
@@ -324,12 +370,18 @@ function BookingSection() {
             </button>
             <button
               className="booking-btn-next"
-              disabled={!formValid}
+              disabled={!formValid || sending}
               onClick={submitBooking}
             >
-              Bekräfta bokning ✓
+              {sending ? "Skickar..." : "Bekräfta bokning ✓"}
             </button>
           </div>
+          {sendError && (
+            <p className="send-error">
+              Något gick fel. Försök igen eller kontakta
+              healthbyjasmin@gmail.com
+            </p>
+          )}
         </div>
       )}
 
