@@ -6,7 +6,7 @@ export default function App() {
       <div className="hero">
         <div className="hero-text">
           <h1>Health by Jasmin</h1>
-          <p>Yoga & Ayurveda since 2015</p>
+          <p>Yoga & Ayurveda 2015</p>
           <a href="/healthbyjasmin" className="hero-btn">
             Explore &#10132;
           </a>

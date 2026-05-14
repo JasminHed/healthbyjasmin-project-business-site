@@ -19,42 +19,38 @@ export default function About() {
           </div>
           <ul className="nav-links">
             <li>
-              <a href="/">Home</a>
+              <a href="/">Hem</a>
             </li>
+
             <li>
-              <a href="/yoga">Yoga</a>
-            </li>
-            <li>
-              <a href="/ayurveda">Ayurveda</a>
-            </li>
-            <li>
-              <a href="mailto:healthbyjasmin@gmail.com">Contact</a>
+              <a href="mailto:healthbyjasmin@gmail.com">Kontakt</a>
             </li>
           </ul>
         </nav>
       </header>
 
       <section>
-        <h1>About</h1>
+        <h1>Om Jasmin</h1>
         <p className="about-text">
-          I am Jasmin – the person behind Health by Jasmin, a one-woman business
-          based in Stockholm, Sweden. I've been practicing primarly Ashtanga
-          yoga but also Yoga in general and Ayurveda for nearly 17 years. What
-          first pulled me in was the structure, the rhythm, and the way both
-          practices bring things into focus – sometimes gently, sometimes
-          boldly.
+          Jag är Jasmin, personen bakom Health by Jasmin, ett enmannaföretag
+          baserat i Stockholm, Sverige. Jag har praktiserat främst Ashtanga yoga
+          men även yoga i allmänhet och Ayurveda i nästan 17 år. Det som först
+          drog mig till både yoga och ayurveda var strukturen, rytmen och sättet
+          som båda praktikerna sätter saker i fokus – ibland mjukt, ibland med
+          kraft.
         </p>
         <p className="about-text">
-          I fell in love with their holistic approach and how they challenge you
-          to look at yourself and your habits from a completely different angle.
-          In 2015/2016, I started Health by Jasmin to create a space where I
-          could share what has deeply resonated with me over the years.
+          Jag förälskade mig i deras holistiska förhållningssätt och hur de
+          utmanar dig att se på dig själv och dina vanor från en helt annan
+          vinkel. År 2015/2016 startade jag Health by Jasmin för att skapa ett
+          utrymme där jag kunde dela det som verkligen har resonerat med mig
+          under åren.
         </p>
         <p className="about-text">
-          I do this in small doses – through yoga classes, short courses, the
-          occasional retreat, and of course, the magical Ayurvedic massages. I
-          also offer talks and introductions to Ayurveda, to help people get a
-          better understanding of its beautiful foundation.
+          Det här gör jag i små doser genom yogaklasser, korta kurser, enstaka
+          retreats och naturligtvis de magiska ayurvediska massagerna. Jag
+          erbjuder också föreläsningar och introduktioner till Ayurveda, för att
+          hjälpa människor få en bättre förståelse för dess grund.
         </p>
       </section>
 
