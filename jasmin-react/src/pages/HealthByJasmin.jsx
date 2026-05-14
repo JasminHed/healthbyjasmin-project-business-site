@@ -166,7 +166,6 @@ function MassageBooking() {
     <div className="booking-panel">
       <h3 className="booking-panel-title">Ayurvedisk massage</h3>
 
-      {/* Steps */}
       <div className="booking-steps">
         {steps.map((label, i) => {
           const num = i + 1;
@@ -190,7 +189,6 @@ function MassageBooking() {
         })}
       </div>
 
-      {/* Step 1 */}
       {step === 1 && (
         <div className="booking-card-wrapper">
           <div className="booking-card">
@@ -223,7 +221,6 @@ function MassageBooking() {
         </div>
       )}
 
-      {/* Step 2 */}
       {step === 2 && (
         <div className="booking-card-wrapper">
           <div className="booking-card">
@@ -305,7 +302,6 @@ function MassageBooking() {
         </div>
       )}
 
-      {/* Step 3 */}
       {step === 3 && (
         <div className="booking-card-wrapper">
           <div className="booking-card">
@@ -393,7 +389,6 @@ function MassageBooking() {
         </div>
       )}
 
-      {/* Step 4 */}
       {step === 4 && (
         <div className="booking-card-wrapper">
           <div className="confirm-box">
@@ -504,20 +499,17 @@ function MassageBooking() {
 
 function YogaBooking() {
   const [selectedClass, setSelectedClass] = useState(null);
-
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
   return (
     <div className="booking-panel">
       <h3 className="booking-panel-title">Yogaklass</h3>
-
       <div className="booking-card" style={{ marginBottom: "1rem" }}>
         <div className="cal-header">
           <span className="cal-title">Välj klass</span>
           <span className="cal-subtitle">Lördagar · Slow Flow · 60 min</span>
         </div>
-
         <div className="yoga-classes-list">
           {YOGA_CLASSES.map((cls, i) => {
             const isPast = cls.date < today;
@@ -547,7 +539,6 @@ function YogaBooking() {
           })}
         </div>
       </div>
-
       {selectedClass !== null && (
         <div
           className="booking-card"
@@ -567,12 +558,11 @@ function YogaBooking() {
             }}
           >
             Bokning sker direkt via{" "}
-            <strong>{YOGA_CLASSES[selectedClass].studio}</strong>. Klicka på
-            knappen nedan för att boka din plats.
+            <strong>{YOGA_CLASSES[selectedClass].studio}</strong>. Klicka nedan
+            för att boka din plats.
           </p>
         </div>
       )}
-
       <div className="booking-btn-row">
         <a
           href="https://www.homeinyoga.com/schedule"
@@ -602,7 +592,7 @@ export default function HealthByJasmin() {
           <a href="/">
             <img
               src="/assets/lightlogo.png"
-              alt="HealthbyJasminlogo"
+              alt="Health by Jasmin logotyp"
               className="logo"
             />
           </a>
@@ -613,43 +603,102 @@ export default function HealthByJasmin() {
           </div>
           <ul className="nav-links">
             <li>
-              <a href="/about">About</a>
+              <a href="/about">Om mig</a>
             </li>
             <li>
-              <a href="mailto:healthbyjasmin@gmail.com">Contact</a>
+              <a href="mailto:healthbyjasmin@gmail.com">Kontakt</a>
             </li>
           </ul>
         </nav>
       </header>
 
       <main>
-        <h1>Yoga and Ayurveda</h1>
+        <h1>Yoga & Ayurveda</h1>
+        <p className="intro-text">
+          Välkommen till en plats där kropp och sinne får mötas. Genom yoga och
+          ayurveda erbjuder jag verktyg för att stärka, återhämta och hitta
+          balans i vardagen.
+        </p>
 
-        <section className="grid-content">
-          <article className="grid-item ashtanga-yoga">
+        {/* ── Yoga & Ayurveda info-kort ── */}
+        <section className="info-grid">
+          <article className="info-card">
             <img
               src="/assets/ashtanga.jpeg"
-              alt="Jasmin i en Ashtanga Yoga-pose"
+              alt="Jasmin i en yogapose"
+              className="info-card-img"
             />
-            <h2>Yoga</h2>
-            <p>
-              Explore different yoga practices to bring balance, strength, and
-              awareness to body and mind.
-            </p>
-            <a href="/yoga">To Yoga classes &#10132;</a>
+            <div className="info-card-body">
+              <h2>Yoga</h2>
+              <p>
+                Yoga är mer än rörelse — det är en praktik av närvaro och
+                koppling mellan kropp, sinne och ande. Här kan du utforska
+                klasser som stödjer ditt dagliga liv och din praktik.
+              </p>
+              <h3>Ashtanga Yoga</h3>
+              <p>
+                Ashtanga är en praktik där andningen är kärnan, synkroniserad
+                med mjuka, dynamiska rörelser. Metoden kommer från Indien och
+                betraktar hela människan — kropp, sinne och allt däremellan. Vi
+                börjar där vi är och arbetar med det vi har. Alla kan utöva
+                Ashtanga — på olika sätt.
+              </p>
+              <p>
+                Det finns två huvudstilar: Mysore, en självpraktik där du i din
+                egen takt lär dig en sekvens av positioner med stöd från en
+                lärare, och den mer välkända guidade klassen där alla rör sig
+                tillsammans med instruktioner.
+              </p>
+              <h3>Yin Yoga</h3>
+              <p>
+                Yin Yoga är en lugn, meditativ praktik med fokus på stillhet och
+                djup avspänning. Positionerna hålls under flera minuter för att
+                nå bindväv, fascia och leder. Det ger förbättrad rörlighet,
+                mobilitet och ett lugnande intryck på nervsystemet. Yin bjuder
+                in dig att vända blicken inåt.
+              </p>
+            </div>
           </article>
-          <article className="grid-item ayurveda">
-            <img src="/assets/ayurveda.jpg" alt="Örter från Ayurveda" />
-            <h2>Ayurveda</h2>
-            <p>
-              Ayurveda offers us the knowledge and tools to strengthen and heal
-              ourselves, both physically and mentally.
-            </p>
-            <a href="/ayurveda">Read about Ayurveda &#10132;</a>
+
+          <article className="info-card">
+            <img
+              src="/assets/ayurveda.jpg"
+              alt="Ayurvediska örter och oljor"
+              className="info-card-img"
+            />
+            <div className="info-card-body">
+              <h2>Ayurveda</h2>
+              <p>
+                Ayurveda ger oss kunskap och verktyg för att stärka och läka oss
+                själva, både fysiskt och mentalt. Det är ett holistiskt
+                förhållningssätt till hälsa med rötter i Indien och över 6000 år
+                av tradition.
+              </p>
+              <p>
+                Ayurveda ser hela människan — kropp, sinne och allt däremellan.
+                Ingenting står ensamt. Har du huvudvärk beror det sällan bara på
+                huvudet — det finns troligtvis något annat i kroppen eller livet
+                som hänger samman.
+              </p>
+              <h3>Ayurvedisk massage</h3>
+              <p>
+                En av de vackraste delarna av Ayurveda är behandlingarna —
+                framförallt massagerna. De är ofta värmande och djupt lugnande,
+                med varm sesamolja. Sesamolja är antiseptisk och
+                antiinflammatorisk, värmande och mjukar naturligt upp
+                muskelspänningar. Den är gynnsam för alla doshor — vata, pitta
+                och kapha.
+              </p>
+              <p>
+                Vi masserar huvud, ansikte, framsida och baksida av kroppen
+                inklusive fötter. Vissa behandlingar avslutas med en
+                varmvattenpåse längs ryggen för extra djup avslappning.
+              </p>
+            </div>
           </article>
         </section>
 
-        {/* ── Booking section moved up here ── */}
+        {/* ── Bokningssektionen ── */}
         <section className="booking-section">
           <h2>Boka</h2>
           <div className="booking-panels-grid">
@@ -662,54 +711,54 @@ export default function HealthByJasmin() {
           <article className="retreat">
             <img
               src="/assets/retreat.jpg"
-              alt="Peaceful yoga retreat in nature"
+              alt="Fridfull yogaretreat i naturen"
             />
-            <h2>Retreats, Courses and Workshops</h2>
-            <span>Coming Soon</span>
+            <h2>Retreats, kurser & workshops</h2>
+            <span>Kommer snart</span>
           </article>
         </section>
 
         <section className="quote-section">
           <h2>
             "Because discomfort is not the enemy. It is the pathway to your
-            potential" - The Mind Friend
+            potential" – The Mind Friend
           </h2>
         </section>
 
-        <h2>Journal</h2>
+        <h2>Journalen</h2>
         <section className="grid-journal">
           <article className="journal-post">
             <img src="/assets/journal1.jpg" alt="Journal 1" />
-            <h3>#1 See yourself through your Ayurvedic dosha</h3>
+            <h3>#1 Se dig själv genom din ayurvediska dosha</h3>
             <a href="https://medium.com/@healthbyjasmin/see-yourself-through-the-ayurvedic-lens-of-the-doshas-bb0ee3f25c72">
               <p>
-                Looking at yourself through Ayurveda's body/mind constitutions
-                can give you a better understanding of who you are.
+                Att se dig själv genom Ayurvedas kropp- och sinneskonstitutioner
+                kan ge dig en djupare förståelse för vem du är.
               </p>
             </a>
           </article>
           <article className="journal-post">
-            <img src="/assets/journal2.jpg" alt="Yoga Break" />
-            <h3>#2 Me-time. Take a Yoga Break</h3>
+            <img src="/assets/journal2.jpg" alt="Yogapaus" />
+            <h3>#2 Mig-tid. Ta en yogapaus</h3>
             <a href="https://medium.com/@healthbyjasmin/here-are-one-simple-stretch-to-do-at-home-1aa8a2a75f8d">
-              <p>Here is one simple stretch to do at home.</p>
+              <p>Här är en enkel stretch att göra hemma.</p>
             </a>
           </article>
           <article className="journal-post">
-            <img src="/assets/clock.jpg" alt="Circadian Rhythm" />
-            <h3>#3 Ayurvedic Circadian Rhythm</h3>
+            <img src="/assets/clock.jpg" alt="Dygnsrytm" />
+            <h3>#3 Ayurvedisk dygnsrytm</h3>
             <a href="https://medium.com/@healthbyjasmin/how-the-ayurvedic-clock-can-help-you-find-daily-balance-caa2fab0f74d">
               <p>
-                Seeing the day from an Ayurvedic perspective can help us better
-                understand what we need and when.
+                Att se dagen ur ett ayurvediskt perspektiv hjälper oss förstå
+                vad vi behöver och när.
               </p>
             </a>
           </article>
           <article className="journal-post">
             <img src="/assets/meditation.jpg" alt="Meditation" />
-            <h3>#4 Short Meditation Practice</h3>
+            <h3>#4 Kort meditationsövning</h3>
             <a href="#">
-              <p>Start by finding a comfortable but awake seated position.</p>
+              <p>Börja med att hitta en bekväm men vaken sittande position.</p>
             </a>
           </article>
         </section>
