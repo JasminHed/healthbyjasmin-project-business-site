@@ -1,5 +1,5 @@
 /* Importing Google fonts */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
 /* ── Reset & Base ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -16,7 +16,7 @@ a { text-decoration: none; color: whitesmoke; }
 a:hover { text-decoration: underline; }
 
 h1, h2, h3 {
-  font-family: "Fraunces", serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: bold;
   color: #333333;
 }
@@ -286,7 +286,7 @@ header {
 .hero::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.35); }
 
 .hero-text { position: relative; text-align: center; color: white; padding: 2rem; }
-.hero-text h1 { font-family: 'Fraunces', serif; font-size: clamp(2rem, 6vw, 3.5rem); margin-bottom: 1rem; color: white; }
+.hero-text h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(2rem, 6vw, 3.5rem); margin-bottom: 1rem; color: white; }
 .hero-text p { font-family: 'Inter', sans-serif; font-size: clamp(1rem, 2.5vw, 1.3rem); margin-bottom: 2rem; letter-spacing: 0.05em; text-align: center; color: white; max-width: 100%; }
 
 .hero-btn {
@@ -341,7 +341,7 @@ footer a:hover { color: #2D4A5D; }
 }
 
 .booking-panel-title {
-  font-family: "Fraunces", serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-size: clamp(15px, 2.5vw, 18px);
   font-weight: 600;
   color: #3F5B6B;
