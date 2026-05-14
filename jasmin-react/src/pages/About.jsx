@@ -21,6 +21,9 @@ export default function About() {
             <li>
               <a href="/">Hem</a>
             </li>
+            <li>
+              <a href="/healthbyjasmin">Health by Jasmin</a>
+            </li>
 
             <li>
               <a href="mailto:healthbyjasmin@gmail.com">Kontakt</a>
