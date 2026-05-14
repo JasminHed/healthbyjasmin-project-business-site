@@ -436,6 +436,50 @@ function BookingSection() {
             </div>
           </div>
 
+          <div className="booking-card" style={{ marginTop: "0.5rem" }}>
+            <div
+              style={{
+                fontSize: "14px",
+                fontWeight: "500",
+                color: "#222",
+                marginBottom: "12px",
+              }}
+            >
+              Praktisk information
+            </div>
+            <div className="summary-row">
+              <span className="summary-key">Adress</span>
+              <span className="summary-val">
+                <a
+                  href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x465f770ac3f4572b:0xbd82f93b91013157"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#0f6e56", textDecoration: "underline" }}
+                >
+                  Åsögatan 166, 116 32 Stockholm
+                </a>
+              </span>
+            </div>
+            <div className="summary-row">
+              <span className="summary-key">Ankomst</span>
+              <span className="summary-val">
+                Kom gärna 10 min innan behandlingen
+              </span>
+            </div>
+            <div className="summary-row">
+              <span className="summary-key">Kläder</span>
+              <span className="summary-val">
+                Kom i eller ha med oömma kläder och underkläder
+              </span>
+            </div>
+            <div className="summary-row" style={{ borderBottom: "none" }}>
+              <span className="summary-key">Dusch</span>
+              <span className="summary-val">
+                Dusch finns med handduk, schampo och duschcreme
+              </span>
+            </div>
+          </div>
+
           <div className="booking-btn-row">
             <button className="booking-btn-next" onClick={newBooking}>
               Gör en ny bokning
