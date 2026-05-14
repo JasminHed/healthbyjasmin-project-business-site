@@ -102,6 +102,28 @@ const MONTHS = [
 ];
 const DAYS = ["Sön", "Mån", "Tis", "Ons", "Tor", "Fre", "Lör"];
 
+// ── Summer Banner ─────────────────────────────────────────────────────────────
+
+function SummerBanner() {
+  const [visible, setVisible] = useState(true);
+  if (!visible) return null;
+  return (
+    <div className="summer-banner">
+      <span>
+        Sommarstängt för ayurvedisk massage 22 juni – 31 juli. Yoga fortsätter
+        som vanligt.
+      </span>
+      <button
+        className="summer-banner-close"
+        onClick={() => setVisible(false)}
+        aria-label="Stäng"
+      >
+        ✕
+      </button>
+    </div>
+  );
+}
+
 // ── Massage Booking ───────────────────────────────────────────────────────────
 
 function MassageBooking() {
@@ -161,28 +183,22 @@ function MassageBooking() {
     };
 
     try {
-      // Spara i Supabase
       const { error } = await supabase
         .from("bookings")
         .insert({ slot_key: bookingKey });
       if (error) throw error;
-
-      // Mejl till Jasmin
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_JASMIN,
         emailParams,
         EMAILJS_PUBLIC_KEY
       );
-
-      // Mejl till kunden
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_CUSTOMER,
         emailParams,
         EMAILJS_PUBLIC_KEY
       );
-
       setBookedSlots((prev) => [...prev, bookingKey]);
       setStep(4);
     } catch (err) {
@@ -433,7 +449,7 @@ function MassageBooking() {
       {step === 4 && (
         <div className="booking-card-wrapper">
           <div className="confirm-box">
-            <div className="confirm-icon"></div>
+            <div className="confirm-icon">✓</div>
             <h3>Bokning bekräftad!</h3>
             <p>
               Tack {form.firstName}! Vi ses den{" "}
@@ -617,7 +633,7 @@ function YogaBooking() {
         >
           {selectedClass === null
             ? "Välj en klass först"
-            : `Boka på ${YOGA_CLASSES[selectedClass].studio} `}
+            : `Boka på ${YOGA_CLASSES[selectedClass].studio}`}
         </a>
       </div>
     </div>
@@ -629,6 +645,8 @@ function YogaBooking() {
 export default function HealthByJasmin() {
   return (
     <>
+      <SummerBanner />
+
       <header>
         <nav className="navbar">
           <a href="/">
