@@ -8,10 +8,10 @@ const supabase = createClient(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJlc254anhpYWRrYXB4Z21hYmR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzY0OTIsImV4cCI6MjA5NDI1MjQ5Mn0.VEH6QtlFEieEYtQTuWvXPNPVwAB_Lw19wk-NGYz0oNY"
 );
 
-const EMAILJS_SERVICE_ID = "service_l3ep6p5";
-const EMAILJS_TEMPLATE_JASMIN = "template_2cf4wi7";
-const EMAILJS_TEMPLATE_CUSTOMER = "template_eozargj";
-const EMAILJS_PUBLIC_KEY = "NGTVbZ66S_Eb_WLCC";
+const EMAILJS_SERVICE_ID = "service_mjw4cpb";
+const EMAILJS_TEMPLATE_JASMIN = "template_m9afbud";
+const EMAILJS_TEMPLATE_CUSTOMER = "template_8rmxsm9";
+const EMAILJS_PUBLIC_KEY = "y7Yu8QbgFj3NM0VeM";
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
