@@ -409,6 +409,7 @@ footer a:hover {
   font-size: 1.6rem;
   font-weight: 500;
   margin-bottom: 2rem;
+  color: #333333;
 }
 
 .booking-steps {
@@ -437,19 +438,19 @@ footer a:hover {
 }
 
 .booking-step-item.active {
-  color: #222;
+  color: #3F5B6B;
   font-weight: 500;
 }
 
 .booking-step-item.done {
-  color: #1d9e75;
+  color: #5C7C8A;
 }
 
 .booking-step-dot {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  border: 1.5px solid #ddd;
+  border: 1.5px solid #ccc;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -460,14 +461,14 @@ footer a:hover {
 }
 
 .booking-step-item.active .booking-step-dot {
-  border-color: #1d9e75;
-  background: #1d9e75;
+  border-color: #5C7C8A;
+  background: #5C7C8A;
   color: #fff;
 }
 
 .booking-step-item.done .booking-step-dot {
-  border-color: #1d9e75;
-  background: #1d9e75;
+  border-color: #5C7C8A;
+  background: #5C7C8A;
   color: #fff;
 }
 
@@ -478,12 +479,12 @@ footer a:hover {
 .booking-step-line {
   flex: 1;
   height: 1px;
-  background: #e5e5e5;
+  background: #ddd;
   margin: 0 8px;
 }
 
 .booking-step-line.done {
-  background: #1d9e75;
+  background: #5C7C8A;
 }
 
 .booking-card-wrapper {
@@ -494,7 +495,7 @@ footer a:hover {
 
 .booking-card {
   background: #fff;
-  border: 0.5px solid #e5e5e5;
+  border: 0.5px solid #d0dde3;
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 1rem;
@@ -513,27 +514,29 @@ footer a:hover {
 }
 
 .treatment-card {
-  border: 1.5px solid #e5e5e5;
+  border: 1.5px solid #d0dde3;
   border-radius: 10px;
   padding: 1.1rem 1.25rem;
   cursor: pointer;
   transition: border-color 0.15s;
   background: #fff;
+  text-align: left;
 }
 
 .treatment-card:hover {
-  border-color: #1d9e75;
+  border-color: #5C7C8A;
 }
 
 .treatment-card.selected {
-  border-color: #1d9e75;
-  background: #e1f5ee;
+  border-color: #5C7C8A;
+  background: linear-gradient(145deg, rgba(92,124,138,0.1) 0%, rgba(107,148,164,0.1) 100%);
 }
 
 .treatment-card h3 {
   font-size: 16px;
   font-weight: 500;
   margin-bottom: 4px;
+  color: #3F5B6B;
 }
 
 .treatment-meta {
@@ -545,7 +548,7 @@ footer a:hover {
 .treatment-price {
   font-size: 18px;
   font-weight: 500;
-  color: #0f6e56;
+  color: #3F5B6B;
   margin-bottom: 10px;
 }
 
@@ -565,6 +568,7 @@ footer a:hover {
 .cal-title {
   font-size: 15px;
   font-weight: 500;
+  color: #3F5B6B;
 }
 
 .cal-subtitle {
@@ -585,7 +589,7 @@ footer a:hover {
 }
 
 .dates-scroll::-webkit-scrollbar-thumb {
-  background: #ddd;
+  background: #b0c4cc;
   border-radius: 2px;
 }
 
@@ -597,7 +601,7 @@ footer a:hover {
   justify-content: center;
   width: 58px;
   height: 66px;
-  border: 1.5px solid #e5e5e5;
+  border: 1.5px solid #d0dde3;
   border-radius: 10px;
   cursor: pointer;
   background: #fff;
@@ -606,12 +610,12 @@ footer a:hover {
 }
 
 .date-btn:hover {
-  border-color: #1d9e75;
+  border-color: #5C7C8A;
 }
 
 .date-btn.selected {
-  border-color: #1d9e75;
-  background: #e1f5ee;
+  border-color: #5C7C8A;
+  background: linear-gradient(145deg, rgba(92,124,138,0.12) 0%, rgba(123,168,184,0.12) 100%);
 }
 
 .date-btn.disabled {
@@ -627,7 +631,7 @@ footer a:hover {
 .date-dd {
   font-size: 18px;
   font-weight: 500;
-  color: #222;
+  color: #3F5B6B;
 }
 
 .date-mo {
@@ -638,7 +642,7 @@ footer a:hover {
 .date-btn.selected .date-wd,
 .date-btn.selected .date-dd,
 .date-btn.selected .date-mo {
-  color: #085041;
+  color: #3F5B6B;
 }
 
 .times-section {
@@ -649,6 +653,7 @@ footer a:hover {
   font-size: 13px;
   color: #777;
   margin-bottom: 10px;
+  text-align: left;
 }
 
 .times-grid {
@@ -658,27 +663,34 @@ footer a:hover {
 }
 
 .time-slot {
-  border: 1.5px solid #e5e5e5;
+  border: 1.5px solid #d0dde3;
   border-radius: 10px;
   padding: 10px 14px;
   cursor: pointer;
   background: #fff;
   transition: border-color 0.15s;
+  text-align: left;
 }
 
 .time-slot:hover {
-  border-color: #1d9e75;
+  border-color: #5C7C8A;
 }
 
 .time-slot.selected {
-  border-color: #1d9e75;
-  background: #e1f5ee;
+  border-color: #5C7C8A;
+  background: linear-gradient(145deg, rgba(92,124,138,0.12) 0%, rgba(123,168,184,0.12) 100%);
+}
+
+.time-slot.booked {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: #f5f5f5;
 }
 
 .time-slot-t {
   font-size: 14px;
   font-weight: 500;
-  color: #222;
+  color: #3F5B6B;
 }
 
 .time-slot-s {
@@ -689,7 +701,7 @@ footer a:hover {
 
 .time-slot.selected .time-slot-t,
 .time-slot.selected .time-slot-s {
-  color: #085041;
+  color: #3F5B6B;
 }
 
 .chosen-summary {
@@ -698,7 +710,8 @@ footer a:hover {
   gap: 2px;
   padding-bottom: 1rem;
   margin-bottom: 1rem;
-  border-bottom: 0.5px solid #e5e5e5;
+  border-bottom: 0.5px solid #d0dde3;
+  text-align: left;
 }
 
 .chosen-label {
@@ -709,13 +722,14 @@ footer a:hover {
 .chosen-value {
   font-size: 15px;
   font-weight: 500;
-  color: #222;
+  color: #3F5B6B;
 }
 
 .massage-form {
   display: flex;
   flex-direction: column;
   gap: 0;
+  text-align: left;
 }
 
 .massage-form label {
@@ -730,23 +744,23 @@ footer a:hover {
 .massage-form input {
   height: 38px;
   padding: 0 10px;
-  border: 0.5px solid #ccc;
+  border: 0.5px solid #b0c4cc;
   border-radius: 8px;
   font-size: 14px;
   background: #fff;
-  color: #222;
+  color: #333;
   width: 100%;
 }
 
 .massage-form input:focus {
   outline: none;
-  border-color: #1d9e75;
+  border-color: #5C7C8A;
 }
 
 .payment-section-label {
   font-size: 14px;
   font-weight: 500;
-  color: #222;
+  color: #3F5B6B;
   margin-top: 8px;
   margin-bottom: 8px;
 }
@@ -756,27 +770,27 @@ footer a:hover {
   align-items: center;
   gap: 12px;
   padding: 12px 14px;
-  border: 1.5px solid #1d9e75;
+  border: 1.5px solid #5C7C8A;
   border-radius: 10px;
-  background: #e1f5ee;
+  background: linear-gradient(145deg, rgba(92,124,138,0.1) 0%, rgba(123,168,184,0.1) 100%);
 }
 
 .payment-opt input[type="radio"] {
   width: 16px;
   height: 16px;
-  accent-color: #1d9e75;
+  accent-color: #5C7C8A;
   flex-shrink: 0;
 }
 
 .payment-opt-title {
   font-size: 14px;
   font-weight: 500;
-  color: #222;
+  color: #3F5B6B;
 }
 
 .payment-opt-sub {
   font-size: 12px;
-  color: #555;
+  color: #666;
   margin-top: 2px;
 }
 
@@ -789,44 +803,45 @@ footer a:hover {
 .booking-btn-next {
   flex: 1;
   height: 46px;
-  background: #1d9e75;
+  background: linear-gradient(145deg, #5C7C8A 0%, #6B94A4 50%, #7BA8B8 100%);
   color: #fff;
   border: none;
   border-radius: 10px;
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: opacity 0.15s;
 }
 
 .booking-btn-next:hover {
-  background: #0f6e56;
+  opacity: 0.88;
 }
 
 .booking-btn-next:disabled {
   background: #e5e5e5;
   color: #aaa;
   cursor: not-allowed;
+  opacity: 1;
 }
 
 .booking-btn-back {
   height: 46px;
   padding: 0 20px;
   background: #fff;
-  border: 0.5px solid #ccc;
+  border: 0.5px solid #b0c4cc;
   border-radius: 10px;
   font-size: 15px;
   cursor: pointer;
-  color: #555;
+  color: #5C7C8A;
 }
 
 .booking-btn-back:hover {
-  background: #f5f5f5;
+  background: #f0f5f7;
 }
 
 .confirm-box {
-  background: #e1f5ee;
-  border: 0.5px solid #9fe1cb;
+  background: linear-gradient(145deg, #5C7C8A 0%, #6B94A4 50%, #7BA8B8 100%);
+  border: none;
   border-radius: 12px;
   padding: 1.5rem;
   text-align: center;
@@ -834,20 +849,22 @@ footer a:hover {
 
 .confirm-icon {
   font-size: 36px;
-  color: #0f6e56;
+  color: #fff;
   margin-bottom: 8px;
 }
 
 .confirm-box h3 {
   font-size: 18px;
   font-weight: 500;
-  color: #085041;
+  color: #fff;
   margin-bottom: 6px;
 }
 
 .confirm-box p {
   font-size: 13px;
-  color: #0f6e56;
+  color: rgba(255,255,255,0.9);
+  text-align: center;
+  max-width: 100%;
 }
 
 .summary-row {
@@ -855,7 +872,8 @@ footer a:hover {
   justify-content: space-between;
   align-items: baseline;
   padding: 8px 0;
-  border-bottom: 0.5px solid #f0f0f0;
+  border-bottom: 0.5px solid #e0e9ed;
+  text-align: left;
 }
 
 .summary-row:last-child {
@@ -867,17 +885,19 @@ footer a:hover {
 .summary-row-total .summary-val {
   font-weight: 600;
   font-size: 15px;
-  color: #222;
+  color: #3F5B6B;
 }
 
 .summary-key {
   font-size: 13px;
   color: #888;
+  min-width: 80px;
 }
 
 .summary-val {
   font-size: 14px;
-  color: #222;
+  color: #333;
+  text-align: right;
 }
 
 .send-error {
