@@ -8,7 +8,7 @@ export default function App() {
           <h1>Health by Jasmin</h1>
           <p>Yoga & Ayurveda 2015</p>
           <a href="/healthbyjasmin" className="hero-btn">
-            Explore &#10132;
+            Utforska &#10132;
           </a>
         </div>
       </div>
