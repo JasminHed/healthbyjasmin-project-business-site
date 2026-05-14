@@ -906,3 +906,116 @@ footer a:hover {
   color: #c0392b;
   text-align: center;
 }
+
+/* ── Booking panels grid ── */
+
+.booking-panels-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .booking-panels-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.booking-panel {
+  background: #fff;
+  border: 0.5px solid #d0dde3;
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+
+.booking-panel-title {
+  font-family: "Playfair Display", serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #3F5B6B;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 0.5px solid #d0dde3;
+  text-align: left;
+}
+
+/* Yoga class list */
+.yoga-classes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.yoga-class-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1.5px solid #d0dde3;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  background: #fff;
+}
+
+.yoga-class-row:hover {
+  border-color: #5C7C8A;
+}
+
+.yoga-class-row.selected {
+  border-color: #5C7C8A;
+  background: linear-gradient(145deg, rgba(92,124,138,0.1) 0%, rgba(123,168,184,0.1) 100%);
+}
+
+.yoga-class-row.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.yoga-class-left {
+  text-align: left;
+}
+
+.yoga-class-date {
+  font-size: 14px;
+  font-weight: 500;
+  color: #3F5B6B;
+}
+
+.yoga-class-time {
+  font-size: 12px;
+  color: #888;
+  margin-top: 2px;
+}
+
+.yoga-class-right {
+  text-align: right;
+}
+
+.yoga-class-studio {
+  font-size: 13px;
+  font-weight: 500;
+  color: #5C7C8A;
+}
+
+.yoga-class-teacher {
+  font-size: 11px;
+  color: #aaa;
+  margin-top: 2px;
+}
+
+.booking-link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none !important;
+}
+
+.booking-link-btn.disabled-link {
+  background: #e5e5e5;
+  color: #aaa;
+  cursor: not-allowed;
+  pointer-events: none;
+}

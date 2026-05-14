@@ -7,6 +7,8 @@ const supabase = createClient(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJlc254anhpYWRrYXB4Z21hYmR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzY0OTIsImV4cCI6MjA5NDI1MjQ5Mn0.VEH6QtlFEieEYtQTuWvXPNPVwAB_Lw19wk-NGYz0oNY"
 );
 
+// ── Data ──────────────────────────────────────────────────────────────────────
+
 const TREATMENTS = [
   {
     id: "abhyanga",
@@ -26,7 +28,7 @@ const TREATMENTS = [
   },
 ];
 
-const SESSION_DATES = [
+const MASSAGE_DATES = [
   {
     date: new Date(2026, 4, 26),
     slots: [
@@ -50,6 +52,33 @@ const SESSION_DATES = [
   },
 ];
 
+const YOGA_CLASSES = [
+  {
+    date: new Date(2026, 5, 20),
+    t: "09:30",
+    e: "10:30",
+    studio: "Home in Yoga",
+  },
+  {
+    date: new Date(2026, 5, 27),
+    t: "09:30",
+    e: "10:30",
+    studio: "Home in Yoga",
+  },
+  {
+    date: new Date(2026, 6, 4),
+    t: "09:30",
+    e: "10:30",
+    studio: "Home in Yoga",
+  },
+  {
+    date: new Date(2026, 6, 11),
+    t: "09:30",
+    e: "10:30",
+    studio: "Home in Yoga",
+  },
+];
+
 const MONTHS = [
   "jan",
   "feb",
@@ -66,7 +95,9 @@ const MONTHS = [
 ];
 const DAYS = ["Sön", "Mån", "Tis", "Ons", "Tor", "Fre", "Lör"];
 
-function BookingSection() {
+// ── Massage Booking ───────────────────────────────────────────────────────────
+
+function MassageBooking() {
   const [step, setStep] = useState(1);
   const [treatment, setTreatment] = useState(null);
   const [dateIdx, setDateIdx] = useState(null);
@@ -84,13 +115,13 @@ function BookingSection() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // Hämta bokade tider från Supabase
   useEffect(() => {
-    async function fetchBooked() {
-      const { data } = await supabase.from("bookings").select("slot_key");
-      if (data) setBookedSlots(data.map((r) => r.slot_key));
-    }
-    fetchBooked();
+    supabase
+      .from("bookings")
+      .select("slot_key")
+      .then(({ data }) => {
+        if (data) setBookedSlots(data.map((r) => r.slot_key));
+      });
   }, []);
 
   const formValid =
@@ -103,33 +134,18 @@ function BookingSection() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  function goTo(n) {
-    setStep(n);
-  }
-
-  function selectDate(i) {
-    setDateIdx(i);
-    setSlot(null);
-  }
-
   async function submitBooking() {
     setSending(true);
     setSendError(false);
-
-    const bookingKey = `${dateIdx}-${slot.t}`;
-
+    const bookingKey = `massage-${dateIdx}-${slot.t}`;
     try {
-      // Spara i Supabase
       const { error } = await supabase
         .from("bookings")
         .insert({ slot_key: bookingKey });
-
       if (error) throw error;
-
       setBookedSlots((prev) => [...prev, bookingKey]);
       setStep(4);
-    } catch (err) {
-      console.error("Supabase error:", err);
+    } catch {
       setSendError(true);
     } finally {
       setSending(false);
@@ -144,36 +160,37 @@ function BookingSection() {
     setStep(1);
   }
 
-  const steps = ["Behandling", "Tid", "Dina uppgifter", "Bekräftelse"];
+  const steps = ["Behandling", "Tid", "Uppgifter", "Klart"];
 
   return (
-    <section className="booking-section">
-      <h2>Boka behandling</h2>
+    <div className="booking-panel">
+      <h3 className="booking-panel-title">Ayurvedisk massage</h3>
 
+      {/* Steps */}
       <div className="booking-steps">
         {steps.map((label, i) => {
           const num = i + 1;
-          const isDone = step > num;
-          const isActive = step === num;
           return (
             <div key={num} className="booking-step-wrapper">
               <div
-                className={`booking-step-item${isActive ? " active" : ""}${
-                  isDone ? " done" : ""
+                className={`booking-step-item${step === num ? " active" : ""}${
+                  step > num ? " done" : ""
                 }`}
               >
-                <div className="booking-step-dot">{isDone ? "✓" : num}</div>
+                <div className="booking-step-dot">{step > num ? "✓" : num}</div>
                 <span className="booking-step-label">{label}</span>
               </div>
               {i < steps.length - 1 && (
-                <div className={`booking-step-line${isDone ? " done" : ""}`} />
+                <div
+                  className={`booking-step-line${step > num ? " done" : ""}`}
+                />
               )}
             </div>
           );
         })}
       </div>
 
-      {/* ── Step 1: Choose treatment ── */}
+      {/* Step 1 */}
       {step === 1 && (
         <div className="booking-card-wrapper">
           <div className="booking-card">
@@ -198,15 +215,15 @@ function BookingSection() {
             <button
               className="booking-btn-next"
               disabled={!treatment}
-              onClick={() => goTo(2)}
+              onClick={() => setStep(2)}
             >
-              Välj tid
+              Välj tid →
             </button>
           </div>
         </div>
       )}
 
-      {/* ── Step 2: Choose date & time ── */}
+      {/* Step 2 */}
       {step === 2 && (
         <div className="booking-card-wrapper">
           <div className="booking-card">
@@ -215,7 +232,7 @@ function BookingSection() {
               <span className="cal-subtitle">Varannan tisdag</span>
             </div>
             <div className="dates-scroll">
-              {SESSION_DATES.map((s, i) => {
+              {MASSAGE_DATES.map((s, i) => {
                 const d = s.date;
                 const isPast = d < today;
                 return (
@@ -224,7 +241,12 @@ function BookingSection() {
                     className={`date-btn${isPast ? " disabled" : ""}${
                       dateIdx === i ? " selected" : ""
                     }`}
-                    onClick={() => !isPast && selectDate(i)}
+                    onClick={() => {
+                      if (!isPast) {
+                        setDateIdx(i);
+                        setSlot(null);
+                      }
+                    }}
                     disabled={isPast}
                   >
                     <span className="date-wd">{DAYS[d.getDay()]}</span>
@@ -234,7 +256,6 @@ function BookingSection() {
                 );
               })}
             </div>
-
             <div className="times-section">
               {dateIdx === null ? (
                 <p className="times-hint">
@@ -244,8 +265,8 @@ function BookingSection() {
                 <>
                   <p className="times-hint">Välj tid</p>
                   <div className="times-grid">
-                    {SESSION_DATES[dateIdx].slots.map((s, i) => {
-                      const key = `${dateIdx}-${s.t}`;
+                    {MASSAGE_DATES[dateIdx].slots.map((s, i) => {
+                      const key = `massage-${dateIdx}-${s.t}`;
                       const isBooked = bookedSlots.includes(key);
                       return (
                         <div
@@ -270,36 +291,32 @@ function BookingSection() {
             </div>
           </div>
           <div className="booking-btn-row">
-            <button className="booking-btn-back" onClick={() => goTo(1)}>
-              Tillbaka
+            <button className="booking-btn-back" onClick={() => setStep(1)}>
+              ← Tillbaka
             </button>
             <button
               className="booking-btn-next"
               disabled={!slot}
-              onClick={() => goTo(3)}
+              onClick={() => setStep(3)}
             >
-              Gå vidare
+              Gå vidare →
             </button>
           </div>
         </div>
       )}
 
-      {/* ── Step 3: Personal details ── */}
+      {/* Step 3 */}
       {step === 3 && (
         <div className="booking-card-wrapper">
           <div className="booking-card">
-            {dateIdx !== null && slot && (
-              <div className="chosen-summary">
-                <span className="chosen-label">Bokad tid</span>
-                <span className="chosen-value">
-                  {treatment.name} &bull;{" "}
-                  {SESSION_DATES[dateIdx].date.getDate()}{" "}
-                  {MONTHS[SESSION_DATES[dateIdx].date.getMonth()]} &bull;{" "}
-                  {slot.t}–{slot.e}
-                </span>
-              </div>
-            )}
-
+            <div className="chosen-summary">
+              <span className="chosen-label">Bokad tid</span>
+              <span className="chosen-value">
+                {treatment.name} &bull; {MASSAGE_DATES[dateIdx].date.getDate()}{" "}
+                {MONTHS[MASSAGE_DATES[dateIdx].date.getMonth()]} &bull; {slot.t}
+                –{slot.e}
+              </span>
+            </div>
             <div className="massage-form">
               <label>
                 Förnamn
@@ -309,7 +326,6 @@ function BookingSection() {
                   value={form.firstName}
                   onChange={handleFormChange}
                   placeholder="Ditt förnamn"
-                  required
                 />
               </label>
               <label>
@@ -320,7 +336,6 @@ function BookingSection() {
                   value={form.lastName}
                   onChange={handleFormChange}
                   placeholder="Ditt efternamn"
-                  required
                 />
               </label>
               <label>
@@ -331,7 +346,6 @@ function BookingSection() {
                   value={form.email}
                   onChange={handleFormChange}
                   placeholder="din@email.se"
-                  required
                 />
               </label>
               <label>
@@ -342,12 +356,10 @@ function BookingSection() {
                   value={form.phone}
                   onChange={handleFormChange}
                   placeholder="07X XXX XX XX"
-                  required
                 />
               </label>
-
               <div className="payment-section-label">Betalningssätt</div>
-              <div className="payment-opt selected">
+              <div className="payment-opt">
                 <input type="radio" name="pay" defaultChecked readOnly />
                 <div>
                   <div className="payment-opt-title">
@@ -361,8 +373,8 @@ function BookingSection() {
             </div>
           </div>
           <div className="booking-btn-row">
-            <button className="booking-btn-back" onClick={() => goTo(2)}>
-              Tillbaka
+            <button className="booking-btn-back" onClick={() => setStep(2)}>
+              ← Tillbaka
             </button>
             <button
               className="booking-btn-next"
@@ -381,20 +393,19 @@ function BookingSection() {
         </div>
       )}
 
-      {/* ── Step 4: Confirmation ── */}
+      {/* Step 4 */}
       {step === 4 && (
         <div className="booking-card-wrapper">
           <div className="confirm-box">
-            <div className="confirm-icon"></div>
+            <div className="confirm-icon">✓</div>
             <h3>Bokning bekräftad!</h3>
             <p>
               Tack {form.firstName}! Vi ses den{" "}
-              {SESSION_DATES[dateIdx].date.getDate()}{" "}
-              {MONTHS[SESSION_DATES[dateIdx].date.getMonth()]} kl {slot.t}.
+              {MASSAGE_DATES[dateIdx].date.getDate()}{" "}
+              {MONTHS[MASSAGE_DATES[dateIdx].date.getMonth()]} kl {slot.t}.
             </p>
           </div>
-
-          <div className="booking-card" style={{ marginTop: "1rem" }}>
+          <div className="booking-card" style={{ marginTop: "0.5rem" }}>
             <div className="summary-row">
               <span className="summary-key">Behandling</span>
               <span className="summary-val">{treatment.name} (55 min)</span>
@@ -402,8 +413,8 @@ function BookingSection() {
             <div className="summary-row">
               <span className="summary-key">Datum</span>
               <span className="summary-val">
-                {SESSION_DATES[dateIdx].date.getDate()}{" "}
-                {MONTHS[SESSION_DATES[dateIdx].date.getMonth()]} 2026
+                {MASSAGE_DATES[dateIdx].date.getDate()}{" "}
+                {MONTHS[MASSAGE_DATES[dateIdx].date.getMonth()]} 2026
               </span>
             </div>
             <div className="summary-row">
@@ -435,13 +446,12 @@ function BookingSection() {
               <span className="summary-val">750 kr</span>
             </div>
           </div>
-
           <div className="booking-card" style={{ marginTop: "0.5rem" }}>
             <div
               style={{
                 fontSize: "14px",
                 fontWeight: "500",
-                color: "#222",
+                color: "#3F5B6B",
                 marginBottom: "12px",
               }}
             >
@@ -454,7 +464,7 @@ function BookingSection() {
                   href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x465f770ac3f4572b:0xbd82f93b91013157"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: "#0f6e56", textDecoration: "underline" }}
+                  style={{ color: "#3F5B6B", textDecoration: "underline" }}
                 >
                   Åsögatan 166, 116 32 Stockholm
                 </a>
@@ -479,7 +489,6 @@ function BookingSection() {
               </span>
             </div>
           </div>
-
           <div className="booking-btn-row">
             <button className="booking-btn-next" onClick={newBooking}>
               Gör en ny bokning
@@ -487,9 +496,103 @@ function BookingSection() {
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
 }
+
+// ── Yoga Booking ──────────────────────────────────────────────────────────────
+
+function YogaBooking() {
+  const [selectedClass, setSelectedClass] = useState(null);
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  return (
+    <div className="booking-panel">
+      <h3 className="booking-panel-title">Yogaklass</h3>
+
+      <div className="booking-card" style={{ marginBottom: "1rem" }}>
+        <div className="cal-header">
+          <span className="cal-title">Välj klass</span>
+          <span className="cal-subtitle">Lördagar · Slow Flow · 60 min</span>
+        </div>
+
+        <div className="yoga-classes-list">
+          {YOGA_CLASSES.map((cls, i) => {
+            const isPast = cls.date < today;
+            return (
+              <div
+                key={i}
+                className={`yoga-class-row${
+                  selectedClass === i ? " selected" : ""
+                }${isPast ? " disabled" : ""}`}
+                onClick={() => !isPast && setSelectedClass(i)}
+              >
+                <div className="yoga-class-left">
+                  <div className="yoga-class-date">
+                    {DAYS[cls.date.getDay()]} {cls.date.getDate()}{" "}
+                    {MONTHS[cls.date.getMonth()]}
+                  </div>
+                  <div className="yoga-class-time">
+                    {cls.t} – {cls.e}
+                  </div>
+                </div>
+                <div className="yoga-class-right">
+                  <div className="yoga-class-studio">{cls.studio}</div>
+                  <div className="yoga-class-teacher">med Jasmin</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {selectedClass !== null && (
+        <div
+          className="booking-card"
+          style={{
+            marginBottom: "1rem",
+            background:
+              "linear-gradient(145deg, rgba(92,124,138,0.08) 0%, rgba(123,168,184,0.08) 100%)",
+          }}
+        >
+          <p
+            style={{
+              margin: 0,
+              fontSize: "13px",
+              color: "#555",
+              textAlign: "left",
+              maxWidth: "100%",
+            }}
+          >
+            Bokning sker direkt via{" "}
+            <strong>{YOGA_CLASSES[selectedClass].studio}</strong>. Klicka på
+            knappen nedan för att boka din plats.
+          </p>
+        </div>
+      )}
+
+      <div className="booking-btn-row">
+        <a
+          href="https://www.homeinyoga.com/schedule"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`booking-btn-next booking-link-btn${
+            selectedClass === null ? " disabled-link" : ""
+          }`}
+          onClick={(e) => selectedClass === null && e.preventDefault()}
+        >
+          {selectedClass === null
+            ? "Välj en klass först"
+            : `Boka på ${YOGA_CLASSES[selectedClass].studio} →`}
+        </a>
+      </div>
+    </div>
+  );
+}
+
+// ── Main ──────────────────────────────────────────────────────────────────────
 
 export default function HealthByJasmin() {
   return (
@@ -544,6 +647,15 @@ export default function HealthByJasmin() {
             </p>
             <a href="/ayurveda">Read about Ayurveda &#10132;</a>
           </article>
+        </section>
+
+        {/* ── Booking section moved up here ── */}
+        <section className="booking-section">
+          <h2>Boka</h2>
+          <div className="booking-panels-grid">
+            <MassageBooking />
+            <YogaBooking />
+          </div>
         </section>
 
         <section className="retreat-section">
@@ -601,8 +713,6 @@ export default function HealthByJasmin() {
             </a>
           </article>
         </section>
-
-        <BookingSection />
       </main>
 
       <section className="second-image"></section>
