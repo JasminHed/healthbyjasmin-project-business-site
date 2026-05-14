@@ -205,7 +205,7 @@ function MassageBooking() {
 
   return (
     <div className="booking-panel">
-      <h3 className="booking-panel-title">Ayurvedisk massage</h3>
+      <h3 className="booking-panel-title">Ayurvedisk Massage (Nytorget)</h3>
 
       <div className="booking-steps">
         {steps.map((label, i) => {
@@ -546,7 +546,7 @@ function YogaBooking() {
 
   return (
     <div className="booking-panel">
-      <h3 className="booking-panel-title">Yoga Klass</h3>
+      <h3 className="booking-panel-title">Yoga Klasser</h3>
       <div className="booking-card" style={{ marginBottom: "1rem" }}>
         <div className="cal-header">
           <span className="cal-title">Välj klass</span>
@@ -757,7 +757,7 @@ export default function HealthByJasmin() {
           </h2>
         </section>
 
-        <h2>Journalen</h2>
+        <h2>Journal</h2>
         <section className="grid-journal">
           <article className="journal-post">
             <img src="/assets/journal1.jpg" alt="Journal 1" />
