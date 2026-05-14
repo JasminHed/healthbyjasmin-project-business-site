@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
-import { createClient } from "@supabase/supabase-js";
 import emailjs from "@emailjs/browser";
+import { createClient } from "@supabase/supabase-js";
+import { useEffect, useState } from "react";
+
 import "../styles/app.css";
 
 const supabase = createClient(
@@ -812,7 +813,7 @@ export default function HealthByJasmin() {
             <i className="fab fa-facebook"></i>
           </a>
         </div>
-        <p>copyright© 2025 HealthbyJasmin</p>
+        <p>Södermalm, Stockholm</p>
         <p>
           <a href="mailto:healthbyjasmin@gmail.com">healthbyjasmin@gmail.com</a>
         </p>
