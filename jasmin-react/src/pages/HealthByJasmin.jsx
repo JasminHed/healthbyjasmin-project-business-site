@@ -1,11 +1,17 @@
 import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
+import emailjs from "@emailjs/browser";
 import "../styles/app.css";
 
 const supabase = createClient(
   "https://besnxjxiadkapxgmabdz.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJlc254anhpYWRrYXB4Z21hYmR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzY0OTIsImV4cCI6MjA5NDI1MjQ5Mn0.VEH6QtlFEieEYtQTuWvXPNPVwAB_Lw19wk-NGYz0oNY"
 );
+
+const EMAILJS_SERVICE_ID = "service_l3ep6p5";
+const EMAILJS_TEMPLATE_JASMIN = "template_2cf4wi7";
+const EMAILJS_TEMPLATE_CUSTOMER = "template_eozargj";
+const EMAILJS_PUBLIC_KEY = "NGTVbZ66S_Eb_WLCC";
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
@@ -138,14 +144,48 @@ function MassageBooking() {
     setSending(true);
     setSendError(false);
     const bookingKey = `massage-${dateIdx}-${slot.t}`;
+
+    const d = MASSAGE_DATES[dateIdx].date;
+    const dateStr = `${d.getDate()} ${MONTHS[d.getMonth()]} 2026`;
+    const timeStr = `${slot.t}–${slot.e}`;
+    const fullName = `${form.firstName} ${form.lastName}`;
+
+    const emailParams = {
+      treatment: `${treatment.name} (55 min)`,
+      date: dateStr,
+      time: timeStr,
+      customer_name: fullName,
+      customer_email: form.email,
+      customer_phone: form.phone,
+    };
+
     try {
+      // Spara i Supabase
       const { error } = await supabase
         .from("bookings")
         .insert({ slot_key: bookingKey });
       if (error) throw error;
+
+      // Mejl till Jasmin
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_JASMIN,
+        emailParams,
+        EMAILJS_PUBLIC_KEY
+      );
+
+      // Mejl till kunden
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_CUSTOMER,
+        emailParams,
+        EMAILJS_PUBLIC_KEY
+      );
+
       setBookedSlots((prev) => [...prev, bookingKey]);
       setStep(4);
-    } catch {
+    } catch (err) {
+      console.error("Fel:", err);
       setSendError(true);
     } finally {
       setSending(false);
@@ -377,7 +417,7 @@ function MassageBooking() {
               disabled={!formValid || sending}
               onClick={submitBooking}
             >
-              {sending ? "Skickar..." : "Bekräfta bokning "}
+              {sending ? "Skickar..." : "Bekräfta bokning"}
             </button>
           </div>
           {sendError && (
@@ -392,12 +432,13 @@ function MassageBooking() {
       {step === 4 && (
         <div className="booking-card-wrapper">
           <div className="confirm-box">
-            <div className="confirm-icon"></div>
+            <div className="confirm-icon">✓</div>
             <h3>Bokning bekräftad!</h3>
             <p>
               Tack {form.firstName}! Vi ses den{" "}
               {MASSAGE_DATES[dateIdx].date.getDate()}{" "}
-              {MONTHS[MASSAGE_DATES[dateIdx].date.getMonth()]} kl {slot.t}.
+              {MONTHS[MASSAGE_DATES[dateIdx].date.getMonth()]} kl {slot.t}. En
+              bekräftelse har skickats till {form.email}.
             </p>
           </div>
           <div className="booking-card" style={{ marginTop: "0.5rem" }}>
@@ -575,7 +616,7 @@ function YogaBooking() {
         >
           {selectedClass === null
             ? "Välj en klass först"
-            : `Boka på ${YOGA_CLASSES[selectedClass].studio} `}
+            : `Boka på ${YOGA_CLASSES[selectedClass].studio} →`}
         </a>
       </div>
     </div>
@@ -620,7 +661,6 @@ export default function HealthByJasmin() {
           balans i vardagen.
         </p>
 
-        {/* ── Yoga & Ayurveda info-kort ── */}
         <section className="info-grid">
           <article className="info-card">
             <img
@@ -650,7 +690,9 @@ export default function HealthByJasmin() {
               <h3>Mjuk Yoga</h3>
               <p>
                 En lugn, meditativ praktik med fokus på stillhet och djup
-                avspänning.
+                avspänning. Positionerna är mestadels sittande eller liggande.
+                Vissa rörelser flödar fritt medan andra hålls stilla en stund.
+                Meditation ingår.
               </p>
             </div>
           </article>
@@ -670,9 +712,9 @@ export default function HealthByJasmin() {
                 av tradition.
               </p>
               <p>
-                Ayurveda ser hela människan kropp, sinne och allt däremellan.
+                Ayurveda ser hela människan – kropp, sinne och allt däremellan.
                 Ingenting står ensamt. Har du huvudvärk beror det sällan bara på
-                huvudet, det finns troligtvis något annat i kroppen eller livet
+                huvudet – det finns troligtvis något annat i kroppen eller livet
                 som hänger samman.
               </p>
               <h3>Ayurvedisk massage</h3>
@@ -688,7 +730,6 @@ export default function HealthByJasmin() {
           </article>
         </section>
 
-        {/* ── Bokningssektionen ── */}
         <section className="booking-section">
           <h2>Boka</h2>
           <div className="booking-panels-grid">
