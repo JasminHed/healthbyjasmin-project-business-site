@@ -1,5 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createClient } from "@supabase/supabase-js";
 import "../styles/app.css";
+
+const supabase = createClient(
+  "https://besnxjxiadkapxgmabdz.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJlc254anhpYWRrYXB4Z21hYmR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzY0OTIsImV4cCI6MjA5NDI1MjQ5Mn0.VEH6QtlFEieEYtQTuWvXPNPVwAB_Lw19wk-NGYz0oNY"
+);
 
 const TREATMENTS = [
   {
@@ -71,9 +77,21 @@ function BookingSection() {
     email: "",
     phone: "",
   });
+  const [bookedSlots, setBookedSlots] = useState([]);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState(false);
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+
+  // Hämta bokade tider från Supabase
+  useEffect(() => {
+    async function fetchBooked() {
+      const { data } = await supabase.from("bookings").select("slot_key");
+      if (data) setBookedSlots(data.map((r) => r.slot_key));
+    }
+    fetchBooked();
+  }, []);
 
   const formValid =
     form.firstName.trim() &&
@@ -94,8 +112,28 @@ function BookingSection() {
     setSlot(null);
   }
 
-  function submitBooking() {
-    setStep(4);
+  async function submitBooking() {
+    setSending(true);
+    setSendError(false);
+
+    const bookingKey = `${dateIdx}-${slot.t}`;
+
+    try {
+      // Spara i Supabase
+      const { error } = await supabase
+        .from("bookings")
+        .insert({ slot_key: bookingKey });
+
+      if (error) throw error;
+
+      setBookedSlots((prev) => [...prev, bookingKey]);
+      setStep(4);
+    } catch (err) {
+      console.error("Supabase error:", err);
+      setSendError(true);
+    } finally {
+      setSending(false);
+    }
   }
 
   function newBooking() {
@@ -206,18 +244,26 @@ function BookingSection() {
                 <>
                   <p className="times-hint">Välj tid</p>
                   <div className="times-grid">
-                    {SESSION_DATES[dateIdx].slots.map((s, i) => (
-                      <div
-                        key={i}
-                        className={`time-slot${slot === s ? " selected" : ""}`}
-                        onClick={() => setSlot(s)}
-                      >
-                        <div className="time-slot-t">
-                          {s.t} – {s.e}
+                    {SESSION_DATES[dateIdx].slots.map((s, i) => {
+                      const key = `${dateIdx}-${s.t}`;
+                      const isBooked = bookedSlots.includes(key);
+                      return (
+                        <div
+                          key={i}
+                          className={`time-slot${
+                            slot === s ? " selected" : ""
+                          }${isBooked ? " booked" : ""}`}
+                          onClick={() => !isBooked && setSlot(s)}
+                        >
+                          <div className="time-slot-t">
+                            {s.t} – {s.e}
+                          </div>
+                          <div className="time-slot-s">
+                            {isBooked ? "Fullbokad" : "55 min"}
+                          </div>
                         </div>
-                        <div className="time-slot-s">55 min</div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </>
               )}
@@ -320,12 +366,18 @@ function BookingSection() {
             </button>
             <button
               className="booking-btn-next"
-              disabled={!formValid}
+              disabled={!formValid || sending}
               onClick={submitBooking}
             >
-              Bekräfta bokning ✓
+              {sending ? "Skickar..." : "Bekräfta bokning ✓"}
             </button>
           </div>
+          {sendError && (
+            <p className="send-error">
+              Något gick fel. Försök igen eller kontakta
+              healthbyjasmin@gmail.com
+            </p>
+          )}
         </div>
       )}
 
