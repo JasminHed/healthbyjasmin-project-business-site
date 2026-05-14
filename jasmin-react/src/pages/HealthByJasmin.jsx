@@ -200,7 +200,7 @@ function BookingSection() {
               disabled={!treatment}
               onClick={() => goTo(2)}
             >
-              Välj tid →
+              Välj tid
             </button>
           </div>
         </div>
@@ -271,14 +271,14 @@ function BookingSection() {
           </div>
           <div className="booking-btn-row">
             <button className="booking-btn-back" onClick={() => goTo(1)}>
-              ← Tillbaka
+              Tillbaka
             </button>
             <button
               className="booking-btn-next"
               disabled={!slot}
               onClick={() => goTo(3)}
             >
-              Gå vidare →
+              Gå vidare
             </button>
           </div>
         </div>
@@ -362,7 +362,7 @@ function BookingSection() {
           </div>
           <div className="booking-btn-row">
             <button className="booking-btn-back" onClick={() => goTo(2)}>
-              ← Tillbaka
+              Tillbaka
             </button>
             <button
               className="booking-btn-next"
@@ -385,7 +385,7 @@ function BookingSection() {
       {step === 4 && (
         <div className="booking-card-wrapper">
           <div className="confirm-box">
-            <div className="confirm-icon">✓</div>
+            <div className="confirm-icon"></div>
             <h3>Bokning bekräftad!</h3>
             <p>
               Tack {form.firstName}! Vi ses den{" "}
