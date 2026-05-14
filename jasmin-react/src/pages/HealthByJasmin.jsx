@@ -432,7 +432,7 @@ function MassageBooking() {
       {step === 4 && (
         <div className="booking-card-wrapper">
           <div className="confirm-box">
-            <div className="confirm-icon">✓</div>
+            <div className="confirm-icon"></div>
             <h3>Bokning bekräftad!</h3>
             <p>
               Tack {form.firstName}! Vi ses den{" "}
@@ -545,7 +545,7 @@ function YogaBooking() {
 
   return (
     <div className="booking-panel">
-      <h3 className="booking-panel-title">Yogaklass</h3>
+      <h3 className="booking-panel-title">Yoga Klass</h3>
       <div className="booking-card" style={{ marginBottom: "1rem" }}>
         <div className="cal-header">
           <span className="cal-title">Välj klass</span>
@@ -616,7 +616,7 @@ function YogaBooking() {
         >
           {selectedClass === null
             ? "Välj en klass först"
-            : `Boka på ${YOGA_CLASSES[selectedClass].studio} →`}
+            : `Boka på ${YOGA_CLASSES[selectedClass].studio} `}
         </a>
       </div>
     </div>
