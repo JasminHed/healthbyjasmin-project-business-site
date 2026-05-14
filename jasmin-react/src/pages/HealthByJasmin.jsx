@@ -215,7 +215,7 @@ function MassageBooking() {
               disabled={!treatment}
               onClick={() => setStep(2)}
             >
-              Välj tid →
+              Välj tid
             </button>
           </div>
         </div>
@@ -289,14 +289,14 @@ function MassageBooking() {
           </div>
           <div className="booking-btn-row">
             <button className="booking-btn-back" onClick={() => setStep(1)}>
-              ← Tillbaka
+              Tillbaka
             </button>
             <button
               className="booking-btn-next"
               disabled={!slot}
               onClick={() => setStep(3)}
             >
-              Gå vidare →
+              Gå vidare
             </button>
           </div>
         </div>
@@ -370,14 +370,14 @@ function MassageBooking() {
           </div>
           <div className="booking-btn-row">
             <button className="booking-btn-back" onClick={() => setStep(2)}>
-              ← Tillbaka
+              Tillbaka
             </button>
             <button
               className="booking-btn-next"
               disabled={!formValid || sending}
               onClick={submitBooking}
             >
-              {sending ? "Skickar..." : "Bekräfta bokning ✓"}
+              {sending ? "Skickar..." : "Bekräfta bokning "}
             </button>
           </div>
           {sendError && (
@@ -631,17 +631,15 @@ export default function HealthByJasmin() {
             <div className="info-card-body">
               <h2>Yoga</h2>
               <p>
-                Yoga är mer än rörelse — det är en praktik av närvaro och
-                koppling mellan kropp, sinne och ande. Här kan du utforska
-                klasser som stödjer ditt dagliga liv och din praktik.
+                Yoga är mer än rörelse, det är en praktik av närvaro och
+                koppling mellan kropp och sinne.
               </p>
               <h3>Ashtanga Yoga</h3>
               <p>
                 Ashtanga är en praktik där andningen är kärnan, synkroniserad
                 med mjuka, dynamiska rörelser. Metoden kommer från Indien och
-                betraktar hela människan — kropp, sinne och allt däremellan. Vi
-                börjar där vi är och arbetar med det vi har. Alla kan utöva
-                Ashtanga — på olika sätt.
+                betraktar hela människan - kropp, sinne och allt däremellan. Vi
+                börjar där vi är och arbetar med det vi har.
               </p>
               <p>
                 Det finns två huvudstilar: Mysore, en självpraktik där du i din
@@ -649,13 +647,10 @@ export default function HealthByJasmin() {
                 lärare, och den mer välkända guidade klassen där alla rör sig
                 tillsammans med instruktioner.
               </p>
-              <h3>Yin Yoga</h3>
+              <h3>Mjuk Yoga</h3>
               <p>
-                Yin Yoga är en lugn, meditativ praktik med fokus på stillhet och
-                djup avspänning. Positionerna hålls under flera minuter för att
-                nå bindväv, fascia och leder. Det ger förbättrad rörlighet,
-                mobilitet och ett lugnande intryck på nervsystemet. Yin bjuder
-                in dig att vända blicken inåt.
+                En lugn, meditativ praktik med fokus på stillhet och djup
+                avspänning.
               </p>
             </div>
           </article>
@@ -675,24 +670,19 @@ export default function HealthByJasmin() {
                 av tradition.
               </p>
               <p>
-                Ayurveda ser hela människan — kropp, sinne och allt däremellan.
+                Ayurveda ser hela människan kropp, sinne och allt däremellan.
                 Ingenting står ensamt. Har du huvudvärk beror det sällan bara på
-                huvudet — det finns troligtvis något annat i kroppen eller livet
+                huvudet, det finns troligtvis något annat i kroppen eller livet
                 som hänger samman.
               </p>
               <h3>Ayurvedisk massage</h3>
               <p>
-                En av de vackraste delarna av Ayurveda är behandlingarna —
+                En av de finaste delarna av Ayurveda är behandlingarna,
                 framförallt massagerna. De är ofta värmande och djupt lugnande,
                 med varm sesamolja. Sesamolja är antiseptisk och
                 antiinflammatorisk, värmande och mjukar naturligt upp
                 muskelspänningar. Den är gynnsam för alla doshor — vata, pitta
                 och kapha.
-              </p>
-              <p>
-                Vi masserar huvud, ansikte, framsida och baksida av kroppen
-                inklusive fötter. Vissa behandlingar avslutas med en
-                varmvattenpåse längs ryggen för extra djup avslappning.
               </p>
             </div>
           </article>
