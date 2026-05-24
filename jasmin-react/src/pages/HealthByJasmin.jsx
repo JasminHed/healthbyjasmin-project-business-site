@@ -173,20 +173,36 @@ function MassageBooking() {
     const timeStr = `${slot.t}–${slot.e}`;
     const fullName = `${form.firstName} ${form.lastName}`;
 
-    const emailParams = {
-      treatment: `${treatment.name} (55 min)`,
-      date: dateStr,
-      time: timeStr,
-      customer_name: fullName,
-      customer_email: form.email,
-      customer_phone: form.phone,
-    };
-
     try {
-      const { error } = await supabase
+      const { data: insertData, error } = await supabase
         .from("bookings")
-        .insert({ slot_key: bookingKey });
+        .insert({
+          slot_key: bookingKey,
+          customer_email: form.email,
+          customer_name: fullName,
+          treatment: treatment.name,
+          date: dateStr,
+          time: timeStr,
+        })
+        .select()
+        .single();
+
       if (error) throw error;
+
+      const bookingId = insertData.booking_id;
+      const cancelUrl = `https://jasmin-portfolio.github.io/avboka?id=${bookingId}`;
+
+      const emailParams = {
+        treatment: `${treatment.name} (55 min)`,
+        date: dateStr,
+        time: timeStr,
+        customer_name: fullName,
+        customer_email: form.email,
+        customer_phone: form.phone,
+        booking_id: bookingId,
+        cancel_url: cancelUrl,
+      };
+
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_JASMIN,

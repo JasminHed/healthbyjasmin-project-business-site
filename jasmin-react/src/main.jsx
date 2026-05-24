@@ -1,11 +1,13 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import App from "./App";
+import About from "./pages/About";
+import Avboka from "./pages/Avboka";
+import Ayurveda from "./pages/Ayurveda";
 import HealthByJasmin from "./pages/HealthByJasmin";
 import Yoga from "./pages/Yoga";
-import Ayurveda from "./pages/Ayurveda";
-import About from "./pages/About";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -16,6 +18,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/yoga" element={<Yoga />} />
         <Route path="/ayurveda" element={<Ayurveda />} />
         <Route path="/about" element={<About />} />
+        <Route path="/avboka" element={<Avboka />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
