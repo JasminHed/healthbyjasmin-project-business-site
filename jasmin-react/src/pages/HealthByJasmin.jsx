@@ -190,7 +190,7 @@ function MassageBooking() {
       if (error) throw error;
 
       const bookingId = insertData.booking_id;
-      const cancelUrl = `https://jasmin-portfolio.github.io/avboka?id=${bookingId}`;
+      const cancelUrl = `https://healthbyjasmin.netlify.app/avboka?id=${bookingId}`;
 
       const emailParams = {
         treatment: `${treatment.name} (55 min)`,
