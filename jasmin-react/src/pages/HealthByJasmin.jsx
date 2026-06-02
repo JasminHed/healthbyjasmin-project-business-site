@@ -552,7 +552,7 @@ function MassageBooking() {
           </div>
           <div
             className="booking-card"
-            style={{ marginTop: "0.5rem", fontSize: "13px", color: "#555" }}
+            style={{ marginTop: "0.5rem", fontSize: "11px", color: "#555" }}
           >
             <strong style={{ color: "#3F5B6B" }}>Avbokning</strong>
             <p style={{ margin: "6px 0 0" }}>
