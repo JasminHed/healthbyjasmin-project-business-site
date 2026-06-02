@@ -1,5 +1,10 @@
+import emailjs from "@emailjs/browser";
 import { createClient } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
+
+const EMAILJS_SERVICE_ID = "service_mjw4cpb";
+const EMAILJS_TEMPLATE_CANCEL = "template_cancel"; // skapa detta template i EmailJS
+const EMAILJS_PUBLIC_KEY = "y7Yu8QbgFj3NM0VeM";
 
 const supabase = createClient(
   "https://besnxjxiadkapxgmabdz.supabase.co",
@@ -37,8 +42,23 @@ export default function Avboka() {
       .from("bookings")
       .delete()
       .eq("booking_id", bookingId);
-    if (error) setStatus("error");
-    else setStatus("cancelled");
+    if (error) {
+      setStatus("error");
+      return;
+    }
+    await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_CANCEL,
+      {
+        customer_name: booking.customer_name,
+        treatment: booking.treatment,
+        date: booking.date,
+        time: booking.time,
+        to_email: "jasminhedlund@gmail.com",
+      },
+      EMAILJS_PUBLIC_KEY
+    );
+    setStatus("cancelled");
   }
 
   return (

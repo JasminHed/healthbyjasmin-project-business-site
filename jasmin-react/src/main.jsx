@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import App from "./App";
 import About from "./pages/About";
-import Avboka from "./pages/Avboka";
 import Ayurveda from "./pages/Ayurveda";
 import HealthByJasmin from "./pages/HealthByJasmin";
 import Yoga from "./pages/Yoga";
@@ -18,7 +17,6 @@ createRoot(document.getElementById("root")).render(
         <Route path="/yoga" element={<Yoga />} />
         <Route path="/ayurveda" element={<Ayurveda />} />
         <Route path="/about" element={<About />} />
-        <Route path="/avboka" element={<Avboka />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

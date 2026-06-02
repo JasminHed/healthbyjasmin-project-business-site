@@ -61,12 +61,6 @@ const MASSAGE_DATES = [
 
 const YOGA_CLASSES = [
   {
-    date: new Date(2026, 5, 20),
-    t: "09:30",
-    e: "10:30",
-    studio: "Home in Yoga",
-  },
-  {
     date: new Date(2026, 5, 27),
     t: "09:30",
     e: "10:30",
@@ -190,7 +184,6 @@ function MassageBooking() {
       if (error) throw error;
 
       const bookingId = insertData.booking_id;
-      const cancelUrl = `https://healthbyjasmin.netlify.app/avboka?id=${bookingId}`;
 
       const emailParams = {
         treatment: `${treatment.name} (55 min)`,
@@ -200,7 +193,6 @@ function MassageBooking() {
         customer_email: form.email,
         customer_phone: form.phone,
         booking_id: bookingId,
-        cancel_url: cancelUrl,
       };
 
       await emailjs.send(
@@ -558,6 +550,19 @@ function MassageBooking() {
               </span>
             </div>
           </div>
+          <div
+            className="booking-card"
+            style={{ marginTop: "0.5rem", fontSize: "13px", color: "#555" }}
+          >
+            <strong style={{ color: "#3F5B6B" }}>Avbokning</strong>
+            <p style={{ margin: "6px 0 0" }}>
+              Behöver du avboka? Skicka ett mail till{" "}
+              <a href="mailto:healthbyjasmin@gmail.com" style={{ color: "#3F5B6B" }}>
+                healthbyjasmin@gmail.com
+              </a>{" "}
+              senast 24 timmar innan din bokade tid.
+            </p>
+          </div>
           <div className="booking-btn-row">
             <button className="booking-btn-next" onClick={newBooking}>
               Gör en ny bokning
@@ -652,6 +657,16 @@ function YogaBooking() {
             : `Boka på ${YOGA_CLASSES[selectedClass].studio}`}
         </a>
       </div>
+      <p
+        style={{
+          fontSize: "12px",
+          color: "#777",
+          marginTop: "0.75rem",
+          textAlign: "center",
+        }}
+      >
+        Du kan också boka direkt via studion Bruce.
+      </p>
     </div>
   );
 }
