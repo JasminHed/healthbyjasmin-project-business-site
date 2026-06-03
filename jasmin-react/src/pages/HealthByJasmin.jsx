@@ -552,10 +552,12 @@ function MassageBooking() {
           </div>
           <div
             className="booking-card"
-            style={{ marginTop: "0.5rem", fontSize: "11px", color: "#555" }}
+            style={{ marginTop: "0.5rem" }}
           >
-            <strong style={{ color: "#3F5B6B" }}>Avbokning</strong>
-            <p style={{ margin: "6px 0 0" }}>
+            <div style={{ fontSize: "14px", fontWeight: "500", color: "#3F5B6B", marginBottom: "6px" }}>
+              Avbokning
+            </div>
+            <p style={{ margin: 0, fontSize: "11px", color: "#555" }}>
               Behöver du avboka? Skicka ett mail till{" "}
               <a href="mailto:healthbyjasmin@gmail.com" style={{ color: "#3F5B6B" }}>
                 healthbyjasmin@gmail.com
