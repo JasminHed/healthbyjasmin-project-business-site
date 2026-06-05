@@ -57,6 +57,12 @@ const MASSAGE_DATES = [
       { t: "19:10", e: "20:05" },
     ],
   },
+  {
+    date: new Date(2026, 5, 26),
+    slots: [
+      { t: "19:15", e: "20:10" },
+    ],
+  },
 ];
 
 const YOGA_CLASSES = [
@@ -802,10 +808,10 @@ export default function HealthByJasmin() {
         </section>
 
         <section className="quote-section">
-          <h2>
+          <p>
             "Because discomfort is not the enemy. It is the pathway to your
             potential" – The Mind Friend
-          </h2>
+          </p>
         </section>
 
         <h2>Journal</h2>
