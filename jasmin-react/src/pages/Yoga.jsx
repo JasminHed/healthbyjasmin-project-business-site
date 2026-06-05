@@ -74,7 +74,7 @@ export default function Yoga() {
       <footer>
         <div>
           <a
-            href="https://www.instagram.com/healthbyjasmin"
+            href="https://www.instagram.com/healthbyjasmin/"
             aria-label="Instagram"
           >
             <i className="fab fa-instagram"></i>
