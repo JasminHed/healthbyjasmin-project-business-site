@@ -27,9 +27,6 @@ export default function Yoga() {
             <li>
               <a href="/ayurveda">Ayurveda</a>
             </li>
-            <li>
-              <a href="mailto:healthbyjasmin@gmail.com">Contact</a>
-            </li>
           </ul>
         </nav>
       </header>

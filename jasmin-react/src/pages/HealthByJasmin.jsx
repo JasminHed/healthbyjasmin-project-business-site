@@ -703,9 +703,6 @@ export default function HealthByJasmin() {
             <li>
               <a href="/about">Om mig</a>
             </li>
-            <li>
-              <a href="mailto:healthbyjasmin@gmail.com">Kontakt</a>
-            </li>
           </ul>
         </nav>
       </header>
@@ -744,12 +741,11 @@ export default function HealthByJasmin() {
                 lärare, och den mer välkända guidade klassen där alla rör sig
                 tillsammans med instruktioner.
               </p>
-              <h3>Mjuk Yoga</h3>
+              <h3>Yoga</h3>
               <p>
-                En lugn, meditativ praktik med fokus på stillhet och djup
-                avspänning. Positionerna är mestadels sittande eller liggande.
-                Vissa rörelser flödar fritt medan andra hålls stilla en stund.
-                Meditation ingår.
+                En klass med mjukt flöde och lugna positioner – stående,
+                sittande och liggande. Vissa rörelser flödar fritt medan andra
+                håller vi längre. Meditation ingår.
               </p>
             </div>
           </article>
@@ -827,7 +823,7 @@ export default function HealthByJasmin() {
           </article>
           <article className="journal-post">
             <img src="/assets/journal2.jpg" alt="Yogapaus" />
-            <h3>#2 Mig-tid. Ta en yogapaus</h3>
+            <h3>#2 Mig-tid. Self Care</h3>
             <a href="https://medium.com/@healthbyjasmin/here-are-one-simple-stretch-to-do-at-home-1aa8a2a75f8d">
               <p>Här är en enkel stretch att göra hemma.</p>
             </a>
