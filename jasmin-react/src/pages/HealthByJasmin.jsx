@@ -823,7 +823,7 @@ export default function HealthByJasmin() {
           </article>
           <article className="journal-post">
             <img src="/assets/journal2.jpg" alt="Yogapaus" />
-            <h3>#2 Mig-tid. Self Care</h3>
+            <h3>Self Care</h3>
             <a href="https://medium.com/@healthbyjasmin/here-are-one-simple-stretch-to-do-at-home-1aa8a2a75f8d">
               <p>Här är en enkel stretch att göra hemma.</p>
             </a>
@@ -857,12 +857,6 @@ export default function HealthByJasmin() {
             aria-label="Instagram"
           >
             <i className="fab fa-instagram"></i>
-          </a>
-          <a
-            href="https://www.facebook.com/jasmin.hedlund/"
-            aria-label="Facebook"
-          >
-            <i className="fab fa-facebook"></i>
           </a>
         </div>
         <p>Södermalm, Stockholm</p>

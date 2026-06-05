@@ -70,12 +70,6 @@ export default function Ayurveda() {
           >
             <i className="fab fa-instagram"></i>
           </a>
-          <a
-            href="https://www.facebook.com/jasmin.hedlund/"
-            aria-label="Facebook"
-          >
-            <i className="fab fa-facebook"></i>
-          </a>
         </div>
         <p>copyright© 2025 HealthbyJasmin</p>
         <p>
