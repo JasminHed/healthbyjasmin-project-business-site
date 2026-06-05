@@ -297,7 +297,6 @@ function MassageBooking() {
           <div className="booking-card">
             <div className="cal-header">
               <span className="cal-title">Välj datum</span>
-              <span className="cal-subtitle">Varannan tisdag</span>
             </div>
             <div className="dates-scroll">
               {MASSAGE_DATES.map((s, i) => {
