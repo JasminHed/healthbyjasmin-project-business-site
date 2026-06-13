@@ -58,9 +58,44 @@ const MASSAGE_DATES = [
     ],
   },
   {
-    date: new Date(2026, 5, 26),
+    date: new Date(2026, 5, 25),
     slots: [
       { t: "19:15", e: "20:10" },
+    ],
+  },
+  {
+    date: new Date(2026, 7, 4),
+    slots: [
+      { t: "18:00", e: "18:55" },
+      { t: "19:10", e: "20:05" },
+    ],
+  },
+  {
+    date: new Date(2026, 7, 18),
+    slots: [
+      { t: "18:00", e: "18:55" },
+      { t: "19:10", e: "20:05" },
+    ],
+  },
+  {
+    date: new Date(2026, 8, 1),
+    slots: [
+      { t: "18:00", e: "18:55" },
+      { t: "19:10", e: "20:05" },
+    ],
+  },
+  {
+    date: new Date(2026, 8, 15),
+    slots: [
+      { t: "18:00", e: "18:55" },
+      { t: "19:10", e: "20:05" },
+    ],
+  },
+  {
+    date: new Date(2026, 8, 29),
+    slots: [
+      { t: "18:00", e: "18:55" },
+      { t: "19:10", e: "20:05" },
     ],
   },
 ];
@@ -102,6 +137,9 @@ const MONTHS = [
 ];
 const DAYS = ["Sön", "Mån", "Tis", "Ons", "Tor", "Fre", "Lör"];
 
+// 16 juni är manuellt blockerad och ska visas som fullbokad
+const MANUALLY_BOOKED_SLOTS = ["massage-2-18:00", "massage-2-19:10"];
+
 // ── Summer Banner ─────────────────────────────────────────────────────────────
 
 function SummerBanner() {
@@ -110,8 +148,8 @@ function SummerBanner() {
   return (
     <div className="summer-banner">
       <span>
-        Sommarstängt för ayurvedisk massage 22 juni – 31 juli. Yoga fortsätter
-        som vanligt.
+        Vi har semester i juli och är tillbaka i augusti. Håll utkik – en
+        ayurvedakurs är på väg inom kort!
       </span>
       <button
         className="summer-banner-close"
@@ -137,7 +175,7 @@ function MassageBooking() {
     email: "",
     phone: "",
   });
-  const [bookedSlots, setBookedSlots] = useState([]);
+  const [bookedSlots, setBookedSlots] = useState(MANUALLY_BOOKED_SLOTS);
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState(false);
 
@@ -149,7 +187,7 @@ function MassageBooking() {
       .from("bookings")
       .select("slot_key")
       .then(({ data }) => {
-        if (data) setBookedSlots(data.map((r) => r.slot_key));
+        if (data) setBookedSlots((prev) => [...prev, ...data.map((r) => r.slot_key)]);
       });
   }, []);
 
