@@ -11,7 +11,6 @@ const supabase = createClient(
 
 const EMAILJS_SERVICE_ID = "service_mjw4cpb";
 const EMAILJS_TEMPLATE_JASMIN = "template_m9afbud";
-const EMAILJS_TEMPLATE_CUSTOMER = "template_8rmxsm9";
 const EMAILJS_PUBLIC_KEY = "y7Yu8QbgFj3NM0VeM";
 
 // ── Data ──────────────────────────────────────────────────────────────────────
@@ -20,125 +19,40 @@ const TREATMENTS = [
   {
     id: "abhyanga",
     name: "Abhyanga",
-    duration: "55 min",
-    price: "750 kr",
-    description:
-      "Behaglig helkroppsmassage med varm sesamolja inkl. huvud, ansikte och fötter. Fokus djup återhämtning och vila. Avslutas med varmvattenpåse över rygg.",
+    description: "Helkroppsmassage med varm sesamolja. Fokus djup återhämtning och vila.",
   },
   {
     id: "vishesh",
     name: "Vishesh",
-    duration: "55 min",
-    price: "750 kr",
-    description:
-      "Djupare helkroppsmassage med varm sesamolja, inkl. huvud, ansikte och fötter. Fokus spänningar och vila.",
+    description: "Djupare helkroppsmassage med varm sesamolja. Fokus spänningar och balans.",
   },
 ];
 
-const MASSAGE_DATES = [
-  {
-    date: new Date(2026, 4, 26),
-    slots: [
-      { t: "18:00", e: "18:55" },
-      { t: "19:10", e: "20:05" },
-    ],
-  },
-  {
-    date: new Date(2026, 5, 9),
-    slots: [
-      { t: "18:00", e: "18:55" },
-      { t: "19:10", e: "20:05" },
-    ],
-  },
-  {
-    date: new Date(2026, 5, 16),
-    slots: [
-      { t: "18:00", e: "18:55" },
-      { t: "19:10", e: "20:05" },
-    ],
-  },
-  {
-    date: new Date(2026, 5, 25),
-    slots: [
-      { t: "19:15", e: "20:10" },
-    ],
-  },
-  {
-    date: new Date(2026, 7, 4),
-    slots: [
-      { t: "18:00", e: "18:55" },
-      { t: "19:10", e: "20:05" },
-    ],
-  },
-  {
-    date: new Date(2026, 7, 18),
-    slots: [
-      { t: "18:00", e: "18:55" },
-      { t: "19:10", e: "20:05" },
-    ],
-  },
-  {
-    date: new Date(2026, 8, 1),
-    slots: [
-      { t: "18:00", e: "18:55" },
-      { t: "19:10", e: "20:05" },
-    ],
-  },
-  {
-    date: new Date(2026, 8, 15),
-    slots: [
-      { t: "18:00", e: "18:55" },
-      { t: "19:10", e: "20:05" },
-    ],
-  },
-  {
-    date: new Date(2026, 8, 29),
-    slots: [
-      { t: "18:00", e: "18:55" },
-      { t: "19:10", e: "20:05" },
-    ],
-  },
+// Söndagar från 3:e söndagen i augusti 2026
+const BOOKING_SUNDAYS = [
+  new Date(2026, 7, 16),
+  new Date(2026, 7, 23),
+  new Date(2026, 7, 30),
+  new Date(2026, 8, 6),
+  new Date(2026, 8, 13),
+  new Date(2026, 8, 20),
+  new Date(2026, 8, 27),
+  new Date(2026, 9, 4),
+  new Date(2026, 9, 11),
+  new Date(2026, 9, 18),
+  new Date(2026, 9, 25),
 ];
 
-const YOGA_CLASSES = [
-  {
-    date: new Date(2026, 5, 27),
-    t: "09:30",
-    e: "10:30",
-    studio: "Home in Yoga",
-  },
-  {
-    date: new Date(2026, 6, 4),
-    t: "09:30",
-    e: "10:30",
-    studio: "Home in Yoga",
-  },
-  {
-    date: new Date(2026, 6, 11),
-    t: "09:30",
-    e: "10:30",
-    studio: "Home in Yoga",
-  },
+const MASSAGE_SLOTS = [
+  { t: "09:00", e: "09:55" },
+  { t: "10:10", e: "11:05" },
 ];
 
 const MONTHS = [
-  "jan",
-  "feb",
-  "mar",
-  "apr",
-  "maj",
-  "jun",
-  "jul",
-  "aug",
-  "sep",
-  "okt",
-  "nov",
-  "dec",
+  "jan", "feb", "mar", "apr", "maj", "jun",
+  "jul", "aug", "sep", "okt", "nov", "dec",
 ];
 const DAYS = ["Sön", "Mån", "Tis", "Ons", "Tor", "Fre", "Lör"];
-
-// 16 juni är manuellt blockerad och ska visas som fullbokad
-const MANUALLY_BOOKED_SLOTS = ["massage-2-18:00", "massage-2-19:10"];
 
 // ── Summer Banner ─────────────────────────────────────────────────────────────
 
@@ -148,34 +62,61 @@ function SummerBanner() {
   return (
     <div className="summer-banner">
       <span>
-        Vi har semester i juli och är tillbaka i augusti. Håll utkik – en
-        ayurvedakurs är på väg inom kort!
+        Nya tider ute för yoga och ayurveda, boka din tid nedan!
       </span>
       <button
         className="summer-banner-close"
         onClick={() => setVisible(false)}
         aria-label="Stäng"
       >
-        ✕
+        x
       </button>
     </div>
   );
 }
 
-// ── Massage Booking ───────────────────────────────────────────────────────────
+// ── Navbar ────────────────────────────────────────────────────────────────────
 
-function MassageBooking() {
-  const [step, setStep] = useState(1);
-  const [treatment, setTreatment] = useState(null);
+function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const close = () => setMenuOpen(false);
+  return (
+    <nav className="navbar">
+      <a href="#top" className="nav-logo-link" onClick={close}>
+        <img
+          src="/assets/lightlogo.png"
+          alt="Health by Jasmin logotyp"
+          className="logo"
+        />
+      </a>
+      <button
+        className={`hamburger${menuOpen ? " toggle" : ""}`}
+        onClick={() => setMenuOpen((o) => !o)}
+        aria-label="Öppna meny"
+      >
+        <span />
+        <span />
+        <span />
+      </button>
+      <ul className={`nav-links${menuOpen ? " nav-active" : ""}`}>
+        <li><a href="#om-mig" onClick={close}>Om mig</a></li>
+        <li><a href="#yoga" onClick={close}>Yoga</a></li>
+        <li><a href="#ayurveda" onClick={close}>Ayurveda</a></li>
+        <li><a href="#boka" onClick={close}>Boka</a></li>
+      </ul>
+    </nav>
+  );
+}
+
+// ── Booking ───────────────────────────────────────────────────────────────────
+
+function Booking() {
   const [dateIdx, setDateIdx] = useState(null);
   const [slot, setSlot] = useState(null);
-  const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-  });
-  const [bookedSlots, setBookedSlots] = useState(MANUALLY_BOOKED_SLOTS);
+  const [treatment, setTreatment] = useState(null);
+  const [form, setForm] = useState({ firstName: "", lastName: "", email: "", phone: "" });
+  const [bookedSlots, setBookedSlots] = useState([]);
+  const [step, setStep] = useState("select"); // select | form | done
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState(false);
 
@@ -187,7 +128,7 @@ function MassageBooking() {
       .from("bookings")
       .select("slot_key")
       .then(({ data }) => {
-        if (data) setBookedSlots((prev) => [...prev, ...data.map((r) => r.slot_key)]);
+        if (data) setBookedSlots(data.map((r) => r.slot_key));
       });
   }, []);
 
@@ -195,164 +136,121 @@ function MassageBooking() {
     form.firstName.trim() &&
     form.lastName.trim() &&
     form.email.includes("@") &&
-    form.phone.trim().length >= 8;
+    form.phone.trim().length >= 8 &&
+    treatment !== null;
 
-  function handleFormChange(e) {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  function handleDate(i) {
+    setDateIdx(i);
+    setSlot(null);
+    if (step === "form") setStep("select");
   }
 
-  async function submitBooking() {
+  function handleField(e) {
+    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+  }
+
+  async function submit() {
     setSending(true);
     setSendError(false);
-    const bookingKey = `massage-${dateIdx}-${slot.t}`;
-
-    const d = MASSAGE_DATES[dateIdx].date;
+    const key = `massage-${dateIdx}-${slot.t}`;
+    const d = BOOKING_SUNDAYS[dateIdx];
     const dateStr = `${d.getDate()} ${MONTHS[d.getMonth()]} 2026`;
     const timeStr = `${slot.t}–${slot.e}`;
     const fullName = `${form.firstName} ${form.lastName}`;
+    const treatmentName = TREATMENTS.find((t) => t.id === treatment).name;
 
     try {
-      const { data: insertData, error } = await supabase
+      const { data: ins, error } = await supabase
         .from("bookings")
         .insert({
-          slot_key: bookingKey,
+          slot_key: key,
           customer_email: form.email,
           customer_name: fullName,
-          treatment: treatment.name,
+          treatment: treatmentName,
           date: dateStr,
           time: timeStr,
         })
         .select()
         .single();
-
       if (error) throw error;
 
-      const bookingId = insertData.booking_id;
-
-      const emailParams = {
-        treatment: `${treatment.name} (55 min)`,
+      const params = {
+        treatment: `${treatmentName} (55 min)`,
         date: dateStr,
         time: timeStr,
         customer_name: fullName,
         customer_email: form.email,
         customer_phone: form.phone,
-        booking_id: bookingId,
+        booking_id: ins.booking_id,
       };
 
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_JASMIN,
-        emailParams,
-        EMAILJS_PUBLIC_KEY
-      );
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_CUSTOMER,
-        emailParams,
-        EMAILJS_PUBLIC_KEY
-      );
-      setBookedSlots((prev) => [...prev, bookingKey]);
-      setStep(4);
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_JASMIN, params, EMAILJS_PUBLIC_KEY);
+      setBookedSlots((prev) => [...prev, key]);
+      setStep("done");
     } catch (err) {
-      console.error("Fel:", err);
+      console.error(err);
       setSendError(true);
     } finally {
       setSending(false);
     }
   }
 
-  function newBooking() {
-    setTreatment(null);
+  function reset() {
     setDateIdx(null);
     setSlot(null);
+    setTreatment(null);
     setForm({ firstName: "", lastName: "", email: "", phone: "" });
-    setStep(1);
+    setStep("select");
   }
 
-  const steps = ["Behandling", "Tid", "Uppgifter", "Klart"];
+  const selectedDate = dateIdx !== null ? BOOKING_SUNDAYS[dateIdx] : null;
 
   return (
-    <div className="booking-panel">
-      <h3 className="booking-panel-title">Ayurvedisk Massage (Nytorget)</h3>
+    <div className="booking-wrap">
 
-      <div className="booking-steps">
-        {steps.map((label, i) => {
-          const num = i + 1;
-          return (
-            <div key={num} className="booking-step-wrapper">
-              <div
-                className={`booking-step-item${step === num ? " active" : ""}${
-                  step > num ? " done" : ""
-                }`}
-              >
-                <div className="booking-step-dot">{step > num ? "✓" : num}</div>
-                <span className="booking-step-label">{label}</span>
-              </div>
-              {i < steps.length - 1 && (
-                <div
-                  className={`booking-step-line${step > num ? " done" : ""}`}
-                />
-              )}
-            </div>
-          );
-        })}
+      {/* Platsinformation */}
+      <div className="booking-place">
+        <div className="booking-place-col">
+          <span className="booking-place-label">Plats</span>
+          <span className="booking-place-value">Home in Yoga, Birkagatan 23, Stockholm</span>
+        </div>
+        <div className="booking-place-col">
+          <span className="booking-place-label">Dag</span>
+          <span className="booking-place-value">Söndagar</span>
+        </div>
       </div>
 
-      {step === 1 && (
-        <div className="booking-card-wrapper">
-          <div className="booking-card">
-            <div className="treatment-grid">
+      {step !== "done" && (
+        <>
+          {/* Behandlingsval */}
+          <div className="booking-treatments">
+            <p className="booking-row-label">Välj behandling</p>
+            <div className="treatment-pick-grid">
               {TREATMENTS.map((tr) => (
-                <div
+                <button
                   key={tr.id}
-                  className={`treatment-card${
-                    treatment?.id === tr.id ? " selected" : ""
-                  }`}
-                  onClick={() => setTreatment(tr)}
+                  className={`treatment-pick-card${treatment === tr.id ? " selected" : ""}`}
+                  onClick={() => setTreatment(tr.id)}
                 >
-                  <h3>{tr.name}</h3>
-                  <div className="treatment-meta">{tr.duration}</div>
-                  <div className="treatment-price">{tr.price}</div>
-                  <p className="treatment-desc">{tr.description}</p>
-                </div>
+                  <span className="treatment-pick-name">{tr.name}</span>
+                  <span className="treatment-pick-desc">{tr.description}</span>
+                </button>
               ))}
             </div>
           </div>
-          <div className="booking-btn-row">
-            <button
-              className="booking-btn-next"
-              disabled={!treatment}
-              onClick={() => setStep(2)}
-            >
-              Välj tid
-            </button>
-          </div>
-        </div>
-      )}
 
-      {step === 2 && (
-        <div className="booking-card-wrapper">
-          <div className="booking-card">
-            <div className="cal-header">
-              <span className="cal-title">Välj datum</span>
-            </div>
+          {/* Datumväljare */}
+          <div className="booking-dates">
+            <p className="booking-row-label">Välj datum</p>
             <div className="dates-scroll">
-              {MASSAGE_DATES.map((s, i) => {
-                const d = s.date;
+              {BOOKING_SUNDAYS.map((d, i) => {
                 const isPast = d < today;
                 return (
                   <button
                     key={i}
-                    className={`date-btn${isPast ? " disabled" : ""}${
-                      dateIdx === i ? " selected" : ""
-                    }`}
-                    onClick={() => {
-                      if (!isPast) {
-                        setDateIdx(i);
-                        setSlot(null);
-                      }
-                    }}
+                    className={`date-btn${isPast ? " disabled" : ""}${dateIdx === i ? " selected" : ""}`}
                     disabled={isPast}
+                    onClick={() => handleDate(i)}
                   >
                     <span className="date-wd">{DAYS[d.getDay()]}</span>
                     <span className="date-dd">{d.getDate()}</span>
@@ -361,357 +259,195 @@ function MassageBooking() {
                 );
               })}
             </div>
-            <div className="times-section">
-              {dateIdx === null ? (
-                <p className="times-hint">
-                  Välj ett datum för att se lediga tider
-                </p>
-              ) : (
-                <>
-                  <p className="times-hint">Välj tid</p>
+          </div>
+
+          {/* Tillgängliga tider + yoga */}
+          {step === "select" && (
+            <div className="booking-services">
+
+              {/* Massage tider – visas när datum är valt */}
+              {dateIdx !== null && (
+                <div className="service-row">
                   <div className="times-grid">
-                    {MASSAGE_DATES[dateIdx].slots.map((s, i) => {
+                    {MASSAGE_SLOTS.map((s, i) => {
                       const key = `massage-${dateIdx}-${s.t}`;
-                      const isBooked = bookedSlots.includes(key);
+                      const booked = bookedSlots.includes(key);
                       return (
                         <div
                           key={i}
-                          className={`time-slot${
-                            slot === s ? " selected" : ""
-                          }${isBooked ? " booked" : ""}`}
-                          onClick={() => !isBooked && setSlot(s)}
+                          className={`time-slot${slot === s ? " selected" : ""}${booked ? " booked" : ""}`}
+                          onClick={() => !booked && setSlot(s)}
                         >
-                          <div className="time-slot-t">
-                            {s.t} – {s.e}
-                          </div>
-                          <div className="time-slot-s">
-                            {isBooked ? "Fullbokad" : "55 min"}
-                          </div>
+                          <div className="time-slot-t">{s.t} – {s.e}</div>
+                          <div className="time-slot-s">{booked ? "Fullbokad" : "55 min"}</div>
                         </div>
                       );
                     })}
                   </div>
-                </>
+                  {slot && treatment && (
+                    <button
+                      className="booking-btn-next"
+                      style={{ marginTop: "1rem" }}
+                      onClick={() => setStep("form")}
+                    >
+                      Gå vidare
+                    </button>
+                  )}
+                  {slot && !treatment && (
+                    <p style={{ fontSize: "13px", color: "#888", margin: "0.75rem 0 0", maxWidth: "100%" }}>
+                      Välj en behandling ovan för att gå vidare.
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {/* Yoga – alltid synlig */}
+              <div className="service-row">
+                <div className="yoga-single-row">
+                  <span className="yoga-single-info">Yin Yoga &middot; 60 min &middot; 12:15–13:15</span>
+                  <a
+                    href="https://www.homeinyoga.com/schedule"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="yoga-row-btn"
+                  >
+                    Boka
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Bokningsformulär */}
+          {step === "form" && selectedDate && slot && (
+            <div className="booking-form-wrap">
+              <div className="booking-form-summary">
+                <div>
+                  <span className="booking-form-summary-label">
+                    {TREATMENTS.find((t) => t.id === treatment)?.name} &middot; 55 min
+                  </span>
+                  <span className="booking-form-summary-value">
+                    {selectedDate.getDate()} {MONTHS[selectedDate.getMonth()]} &middot; {slot.t}–{slot.e}
+                  </span>
+                </div>
+                <button className="booking-change-btn" onClick={() => setStep("select")}>
+                  Ändra
+                </button>
+              </div>
+
+              <div className="massage-form">
+                <label>
+                  Förnamn
+                  <input
+                    type="text"
+                    name="firstName"
+                    value={form.firstName}
+                    onChange={handleField}
+                    placeholder="Ditt förnamn"
+                  />
+                </label>
+                <label>
+                  Efternamn
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={form.lastName}
+                    onChange={handleField}
+                    placeholder="Ditt efternamn"
+                  />
+                </label>
+                <label>
+                  E-post
+                  <input
+                    type="email"
+                    name="email"
+                    value={form.email}
+                    onChange={handleField}
+                    placeholder="din@email.se"
+                  />
+                </label>
+                <label>
+                  Telefon
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={form.phone}
+                    onChange={handleField}
+                    placeholder="07X XXX XX XX"
+                  />
+                </label>
+                <div className="payment-section-label">Betalning</div>
+                <div className="payment-opt">
+                  <input type="radio" name="pay" defaultChecked readOnly />
+                  <div>
+                    <div className="payment-opt-title">Faktura via Frilans Finans</div>
+                    <div className="payment-opt-sub">
+                      Du faktureras efter behandlingen
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="booking-btn-row" style={{ marginTop: "1.25rem" }}>
+                <button className="booking-btn-back" onClick={() => setStep("select")}>
+                  Tillbaka
+                </button>
+                <button
+                  className="booking-btn-next"
+                  disabled={!formValid || sending}
+                  onClick={submit}
+                >
+                  {sending ? "Skickar..." : "Bekräfta bokning"}
+                </button>
+              </div>
+              {sendError && (
+                <p className="send-error">
+                  Något gick fel. Kontakta healthbyjasmin@gmail.com
+                </p>
               )}
             </div>
-          </div>
-          <div className="booking-btn-row">
-            <button className="booking-btn-back" onClick={() => setStep(1)}>
-              Tillbaka
-            </button>
-            <button
-              className="booking-btn-next"
-              disabled={!slot}
-              onClick={() => setStep(3)}
-            >
-              Gå vidare
-            </button>
-          </div>
-        </div>
-      )}
-
-      {step === 3 && (
-        <div className="booking-card-wrapper">
-          <div className="booking-card">
-            <div className="chosen-summary">
-              <span className="chosen-label">Bokad tid</span>
-              <span className="chosen-value">
-                {treatment.name} &bull; {MASSAGE_DATES[dateIdx].date.getDate()}{" "}
-                {MONTHS[MASSAGE_DATES[dateIdx].date.getMonth()]} &bull; {slot.t}
-                –{slot.e}
-              </span>
-            </div>
-            <div className="massage-form">
-              <label>
-                Förnamn
-                <input
-                  type="text"
-                  name="firstName"
-                  value={form.firstName}
-                  onChange={handleFormChange}
-                  placeholder="Ditt förnamn"
-                />
-              </label>
-              <label>
-                Efternamn
-                <input
-                  type="text"
-                  name="lastName"
-                  value={form.lastName}
-                  onChange={handleFormChange}
-                  placeholder="Ditt efternamn"
-                />
-              </label>
-              <label>
-                E-postadress
-                <input
-                  type="email"
-                  name="email"
-                  value={form.email}
-                  onChange={handleFormChange}
-                  placeholder="din@email.se"
-                />
-              </label>
-              <label>
-                Mobilnummer
-                <input
-                  type="tel"
-                  name="phone"
-                  value={form.phone}
-                  onChange={handleFormChange}
-                  placeholder="07X XXX XX XX"
-                />
-              </label>
-              <div className="payment-section-label">Betalningssätt</div>
-              <div className="payment-opt">
-                <input type="radio" name="pay" defaultChecked readOnly />
-                <div>
-                  <div className="payment-opt-title">
-                    Faktura – Frilans Finans
-                  </div>
-                  <div className="payment-opt-sub">
-                    Du faktureras via Frilans Finans efter behandlingen
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="booking-btn-row">
-            <button className="booking-btn-back" onClick={() => setStep(2)}>
-              Tillbaka
-            </button>
-            <button
-              className="booking-btn-next"
-              disabled={!formValid || sending}
-              onClick={submitBooking}
-            >
-              {sending ? "Skickar..." : "Bekräfta bokning"}
-            </button>
-          </div>
-          {sendError && (
-            <p className="send-error">
-              Något gick fel. Försök igen eller kontakta
-              healthbyjasmin@gmail.com
-            </p>
           )}
-        </div>
+        </>
       )}
 
-      {step === 4 && (
-        <div className="booking-card-wrapper">
-          <div className="confirm-box">
-            <div className="confirm-icon">✓</div>
-            <h3>Bokning bekräftad!</h3>
-            <p>
-              Tack {form.firstName}! Vi ses den{" "}
-              {MASSAGE_DATES[dateIdx].date.getDate()}{" "}
-              {MONTHS[MASSAGE_DATES[dateIdx].date.getMonth()]} kl {slot.t}. En
-              bekräftelse har skickats till {form.email}.
-            </p>
-          </div>
-          <div className="booking-card" style={{ marginTop: "0.5rem" }}>
-            <div className="summary-row">
-              <span className="summary-key">Behandling</span>
-              <span className="summary-val">{treatment.name} (55 min)</span>
-            </div>
-            <div className="summary-row">
-              <span className="summary-key">Datum</span>
-              <span className="summary-val">
-                {MASSAGE_DATES[dateIdx].date.getDate()}{" "}
-                {MONTHS[MASSAGE_DATES[dateIdx].date.getMonth()]} 2026
-              </span>
-            </div>
-            <div className="summary-row">
-              <span className="summary-key">Tid</span>
-              <span className="summary-val">
-                {slot.t}–{slot.e}
-              </span>
-            </div>
-            <div className="summary-row">
-              <span className="summary-key">Namn</span>
-              <span className="summary-val">
-                {form.firstName} {form.lastName}
-              </span>
-            </div>
-            <div className="summary-row">
-              <span className="summary-key">E-post</span>
-              <span className="summary-val">{form.email}</span>
-            </div>
-            <div className="summary-row">
-              <span className="summary-key">Mobil</span>
-              <span className="summary-val">{form.phone}</span>
-            </div>
-            <div className="summary-row">
-              <span className="summary-key">Betalning</span>
-              <span className="summary-val">Faktura – Frilans Finans</span>
-            </div>
-            <div className="summary-row summary-row-total">
-              <span className="summary-key">Totalt</span>
-              <span className="summary-val">750 kr</span>
-            </div>
-          </div>
-          <div className="booking-card" style={{ marginTop: "0.5rem" }}>
-            <div
-              style={{
-                fontSize: "14px",
-                fontWeight: "500",
-                color: "#3F5B6B",
-                marginBottom: "12px",
-              }}
-            >
-              Praktisk information
-            </div>
-            <div className="summary-row">
-              <span className="summary-key">Adress</span>
-              <span className="summary-val">
-                <a
-                  href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x465f770ac3f4572b:0xbd82f93b91013157"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: "#3F5B6B", textDecoration: "underline" }}
-                >
-                  Åsögatan 166, 116 32 Stockholm
-                </a>
-              </span>
-            </div>
-            <div className="summary-row">
-              <span className="summary-key">Ankomst</span>
-              <span className="summary-val">
-                Kom gärna 10 min innan behandlingen
-              </span>
-            </div>
-            <div className="summary-row">
-              <span className="summary-key">Kläder</span>
-              <span className="summary-val">
-                Kom i eller ha med oömma kläder och underkläder
-              </span>
-            </div>
-            <div className="summary-row" style={{ borderBottom: "none" }}>
-              <span className="summary-key">Dusch</span>
-              <span className="summary-val">
-                Dusch finns med handduk, schampo och duschcreme
-              </span>
-            </div>
-          </div>
-          <div
-            className="booking-card"
-            style={{ marginTop: "0.5rem" }}
-          >
-            <div style={{ fontSize: "14px", fontWeight: "500", color: "#3F5B6B", marginBottom: "6px" }}>
-              Avbokning
-            </div>
-            <p style={{ margin: 0, fontSize: "11px", color: "#555" }}>
-              Behöver du avboka? Skicka ett mail till{" "}
-              <a href="mailto:healthbyjasmin@gmail.com" style={{ color: "#3F5B6B" }}>
-                healthbyjasmin@gmail.com
-              </a>{" "}
-              senast 24 timmar innan din bokade tid.
-            </p>
-          </div>
-          <div className="booking-btn-row">
-            <button className="booking-btn-next" onClick={newBooking}>
-              Gör en ny bokning
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ── Yoga Booking ──────────────────────────────────────────────────────────────
-
-function YogaBooking() {
-  const [selectedClass, setSelectedClass] = useState(null);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  return (
-    <div className="booking-panel">
-      <h3 className="booking-panel-title">Yoga Klasser</h3>
-      <div className="booking-card" style={{ marginBottom: "1rem" }}>
-        <div className="cal-header">
-          <span className="cal-title">Välj klass</span>
-          <span className="cal-subtitle">Lördagar · Slow Flow · 60 min</span>
-        </div>
-        <div className="yoga-classes-list">
-          {YOGA_CLASSES.map((cls, i) => {
-            const isPast = cls.date < today;
-            return (
-              <div
-                key={i}
-                className={`yoga-class-row${
-                  selectedClass === i ? " selected" : ""
-                }${isPast ? " disabled" : ""}`}
-                onClick={() => !isPast && setSelectedClass(i)}
-              >
-                <div className="yoga-class-left">
-                  <div className="yoga-class-date">
-                    {DAYS[cls.date.getDay()]} {cls.date.getDate()}{" "}
-                    {MONTHS[cls.date.getMonth()]}
-                  </div>
-                  <div className="yoga-class-time">
-                    {cls.t} – {cls.e}
-                  </div>
-                </div>
-                <div className="yoga-class-right">
-                  <div className="yoga-class-studio">{cls.studio}</div>
-                  <div className="yoga-class-teacher">med Jasmin</div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-      {selectedClass !== null && (
-        <div
-          className="booking-card"
-          style={{
-            marginBottom: "1rem",
-            background:
-              "linear-gradient(145deg, rgba(92,124,138,0.08) 0%, rgba(123,168,184,0.08) 100%)",
-          }}
-        >
-          <p
-            style={{
-              margin: 0,
-              fontSize: "13px",
-              color: "#555",
-              textAlign: "left",
-              maxWidth: "100%",
-            }}
-          >
-            Bokning sker direkt via{" "}
-            <strong>{YOGA_CLASSES[selectedClass].studio}</strong>. Klicka nedan
-            för att boka din plats.
+      {/* Bekräftelse */}
+      {step === "done" && selectedDate && slot && (
+        <div className="booking-confirm">
+          <p className="booking-confirm-title">Bokning bekräftad</p>
+          <p className="booking-confirm-sub">
+            Tack {form.firstName}! Din bokning är registrerad.
           </p>
+
+          <div className="booking-confirm-rows">
+            {[
+              ["Behandling", `${TREATMENTS.find((t) => t.id === treatment)?.name} · 55 min`],
+              ["Datum", `${selectedDate.getDate()} ${MONTHS[selectedDate.getMonth()]} 2026`],
+              ["Tid", `${slot.t}–${slot.e}`],
+              ["Plats", "Home in Yoga, Birkagatan 23, Stockholm"],
+              ["Betalning", "Faktura via Frilans Finans"],
+            ].map(([k, v]) => (
+              <div key={k} className="summary-row">
+                <span className="summary-key">{k}</span>
+                <span className="summary-val">{v}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="booking-confirm-info">
+            <p>Kom gärna 10 min innan behandlingen.</p>
+            <p>Ta med eller kom i oömma kläder och underkläder.</p>
+            <p>Dusch finns med handduk, schampo och duschcreme.</p>
+            <p>
+              Avbokning senast 24 timmar innan via{" "}
+              <a href="mailto:healthbyjasmin@gmail.com">healthbyjasmin@gmail.com</a>
+            </p>
+          </div>
+
+          <button className="booking-btn-next" onClick={reset}>
+            Gör en ny bokning
+          </button>
         </div>
       )}
-      <div className="booking-btn-row">
-        <a
-          href="https://www.homeinyoga.com/schedule"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`booking-btn-next booking-link-btn${
-            selectedClass === null ? " disabled-link" : ""
-          }`}
-          onClick={(e) => selectedClass === null && e.preventDefault()}
-        >
-          {selectedClass === null
-            ? "Välj en klass först"
-            : `Boka på ${YOGA_CLASSES[selectedClass].studio}`}
-        </a>
-      </div>
-      <p
-        style={{
-          fontSize: "12px",
-          color: "#777",
-          marginTop: "0.75rem",
-          textAlign: "center",
-        }}
-      >
-        Du kan också boka direkt via studion Bruce.
-      </p>
     </div>
   );
 }
@@ -723,78 +459,148 @@ export default function HealthByJasmin() {
     <>
       <SummerBanner />
 
-      <header>
-        <nav className="navbar">
-          <a href="/">
-            <img
-              src="/assets/lightlogo.png"
-              alt="Health by Jasmin logotyp"
-              className="logo"
-            />
-          </a>
-          <div className="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <ul className="nav-links">
-            <li>
-              <a href="/about">Om mig</a>
-            </li>
-          </ul>
-        </nav>
+      <header className="site-header">
+        <Navbar />
       </header>
 
       <main>
-        <h1>Yoga & Ayurveda</h1>
-        <p className="intro-text">
-          Välkommen till en plats där kropp och sinne får mötas. Genom yoga och
-          ayurveda erbjuder jag verktyg för att stärka, återhämta och hitta
-          balans i vardagen.
-        </p>
+        {/* Hero */}
+        <section id="top" className="page-hero">
+          <div className="page-hero-inner">
+            <span className="hero-eyebrow">Yoga &amp; Ayurveda · Stockholm · 2015</span>
+            <h1 className="hero-title">Health by Jasmin</h1>
+            <p className="hero-sub">
+              Välkommen till en plats där kropp och sinne får mötas. Genom yoga
+              och ayurveda erbjuder jag verktyg för att stärka, återhämta och
+              hitta balans i vardagen.
+            </p>
+            <a href="#om-mig" className="hero-scroll-arrow" aria-label="Scrolla ned">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </a>
+          </div>
+        </section>
 
-        <section className="info-grid">
-          <article className="info-card">
-            <img
-              src="/assets/ashtanga.jpeg"
-              alt="Jasmin i en yogapose"
-              className="info-card-img"
-            />
-            <div className="info-card-body">
+        {/* Servicekort */}
+        <section className="service-cards-section">
+          <div className="service-cards-inner">
+            <a href="#ayurveda" className="service-card">
+              <span className="service-card-label">Behandling</span>
+              <h3>Ayurvedisk massage</h3>
+              <p>55 min &middot; Söndagar</p>
+            </a>
+            <a href="#yoga" className="service-card">
+              <span className="service-card-label">Klass</span>
+              <h3>Yin Yoga</h3>
+              <p>60 min &middot; Söndagar</p>
+            </a>
+            <a href="#boka" className="service-card">
+              <span className="service-card-label">Kommande</span>
+              <h3>Retreats &amp; Kurser</h3>
+              <p>Workshops, retreats och fördjupning</p>
+            </a>
+          </div>
+        </section>
+
+        {/* Om mig */}
+        <section id="om-mig" className="content-section about-bg">
+          <div className="section-inner">
+            <div className="about-split">
+              <div className="about-split-head">
+                <span className="section-label">Om mig</span>
+                <h2>
+                  Jasmin<br />Hedlund
+                </h2>
+              </div>
+              <div className="about-split-body">
+                <p>
+                  Jag är Jasmin, personen bakom Health by Jasmin, ett
+                  enmannaföretag baserat i Stockholm, Sverige. Jag har praktiserat
+                  främst Ashtanga yoga men även yoga i allmänhet och Ayurveda i
+                  nästan 17 år. Det som först drog mig till både yoga och ayurveda
+                  var strukturen, rytmen och sättet som båda praktikerna sätter
+                  saker i fokus, ibland mjukt, ibland med kraft.
+                </p>
+                <p>
+                  Jag förälskade mig i deras holistiska förhållningssätt och hur
+                  de utmanar dig att se på dig själv och dina vanor från en helt
+                  annan vinkel. År 2015/2016 startade jag Health by Jasmin för att
+                  skapa ett utrymme där jag kunde dela det som verkligen har
+                  resonerat med mig under åren.
+                </p>
+                <p>
+                  Det här gör jag i små doser genom yogaklasser, korta kurser,
+                  enstaka retreats och naturligtvis de magiska ayurvediska
+                  massagerna. Jag erbjuder också föreläsningar och introduktioner
+                  till Ayurveda, för att hjälpa människor få en bättre förståelse
+                  för dess grund.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div
+          className="img-divider"
+          style={{ backgroundImage: "url(/assets/last.jpeg)" }}
+          role="presentation"
+        />
+
+        {/* Yoga */}
+        <section id="yoga" className="content-section yoga-text-section">
+          <div className="section-inner">
+            <div className="yoga-split-top">
+              <span className="section-label">Rörelse</span>
               <h2>Yoga</h2>
-              <p>
+              <p className="yoga-intro">
                 Yoga är mer än rörelse, det är en praktik av närvaro och
                 koppling mellan kropp och sinne.
               </p>
-              <h3>Ashtanga Yoga</h3>
-              <p>
-                Ashtanga är en praktik där andningen är kärnan, synkroniserad
-                med mjuka, dynamiska rörelser. Metoden kommer från Indien och
-                betraktar hela människan - kropp, sinne och allt däremellan. Vi
-                börjar där vi är och arbetar med det vi har.
-              </p>
-              <p>
-                Det finns två huvudstilar: Mysore, en självpraktik där du i din
-                egen takt lär dig en sekvens av positioner med stöd från en
-                lärare, och den mer välkända guidade klassen där alla rör sig
-                tillsammans med instruktioner.
-              </p>
-              <h3>Yoga</h3>
-              <p>
-                En klass med mjukt flöde och lugna positioner – stående,
-                sittande och liggande. Vissa rörelser flödar fritt medan andra
-                håller vi längre. Meditation ingår.
-              </p>
             </div>
-          </article>
+            <div className="yoga-split-grid">
+              <div className="yoga-split-col">
+                <h3>Ashtanga Yoga</h3>
+                <p>
+                  Ashtanga är en praktik där andningen är kärnan, synkroniserad
+                  med mjuka, dynamiska rörelser. Metoden kommer från Indien och
+                  betraktar hela människan, kropp, sinne och allt däremellan.
+                  Vi börjar där vi är och arbetar med det vi har.
+                </p>
+                <p>
+                  Det finns två huvudstilar: Mysore, en självpraktik där du i
+                  din egen takt lär dig en sekvens av positioner med stöd från
+                  en lärare, och den mer välkända guidade klassen där alla rör
+                  sig tillsammans med instruktioner.
+                </p>
+              </div>
+              <div className="yoga-split-col">
+                <h3>Yin Yoga</h3>
+                <p>
+                  Yin yoga är en långsam, meditativ praktik med fokus på
+                  stillhet och djup avslappning. Positioner hålls i flera
+                  minuter för att nå bindväven, ligamenten och lederna snarare
+                  än musklerna. Det ger ökad rörlighet, bättre ledfunktion och
+                  en lugnande effekt på nervsystemet. Yin bjuder in till att
+                  vända blicken inåt.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-          <article className="info-card">
-            <img
-              src="/assets/ayurveda.jpg"
-              alt="Ayurvediska örter och oljor"
-              className="info-card-img"
-            />
-            <div className="info-card-body">
+        {/* Ayurveda */}
+        <section id="ayurveda" className="content-section">
+          <div className="section-inner editorial-grid">
+            <div className="editorial-media">
+              <img
+                src="/assets/ayurveda.jpg"
+                alt="Ayurvediska örter och oljor"
+                className="editorial-img"
+              />
+            </div>
+            <div className="editorial-text">
+              <span className="section-label">Hälsa &amp; välmående</span>
               <h2>Ayurveda</h2>
               <p>
                 Ayurveda ger oss kunskap och verktyg för att stärka och läka oss
@@ -803,9 +609,9 @@ export default function HealthByJasmin() {
                 av tradition.
               </p>
               <p>
-                Ayurveda ser hela människan – kropp, sinne och allt däremellan.
+                Ayurveda ser hela människan, kropp, sinne och allt däremellan.
                 Ingenting står ensamt. Har du huvudvärk beror det sällan bara på
-                huvudet – det finns troligtvis något annat i kroppen eller livet
+                huvudet, det finns troligtvis något annat i kroppen eller livet
                 som hänger samman.
               </p>
               <h3>Ayurvedisk massage</h3>
@@ -814,79 +620,133 @@ export default function HealthByJasmin() {
                 framförallt massagerna. De är ofta värmande och djupt lugnande,
                 med varm sesamolja. Sesamolja är antiseptisk och
                 antiinflammatorisk, värmande och mjukar naturligt upp
-                muskelspänningar. Den är gynnsam för alla doshor — vata, pitta
+                muskelspänningar. Den är gynnsam för alla doshor: vata, pitta
                 och kapha.
               </p>
+              <p>
+                Ayurvediska massager utförs med varm sesamolja och vid
+                specifika behandlingar används varmvattenpåsar. Vi masserar
+                huvud, ansikte, fram- och baksida av kroppen inklusive fötter.
+                Sesamoljan är antiseptisk och antiinflammatorisk, värmande och
+                mjukar naturligt upp muskelspänningar. Den är gynnsam för alla
+                doshor: vata, pitta och kapha.
+              </p>
             </div>
-          </article>
-        </section>
-
-        <section className="booking-section">
-          <h2>Boka</h2>
-          <div className="booking-panels-grid">
-            <MassageBooking />
-            <YogaBooking />
           </div>
         </section>
 
+        {/* Boka */}
+        <section id="boka" className="booking-bg">
+          <div className="booking-section">
+            <h2>Boka</h2>
+            <Booking />
+          </div>
+        </section>
+
+        {/* Retreats */}
         <section className="retreat-section">
           <article className="retreat">
             <img
               src="/assets/retreat.jpg"
               alt="Fridfull yogaretreat i naturen"
             />
-            <h2>Retreats, kurser & workshops</h2>
+            <h2>Retreats, kurser &amp; workshops</h2>
             <span>Kommer snart</span>
           </article>
         </section>
 
+        {/* Quote */}
         <section className="quote-section">
           <p>
-            "Because discomfort is not the enemy. It is the pathway to your
-            potential" – The Mind Friend
+            "Rörelse är medicin för kroppen, stillhet är medicin för sinnet."
           </p>
         </section>
 
-        <h2>Journal</h2>
-        <section className="grid-journal">
-          <article className="journal-post">
-            <img src="/assets/journal1.jpg" alt="Journal 1" />
-            <h3>#1 Se dig själv genom din ayurvediska dosha</h3>
-            <a href="https://medium.com/@healthbyjasmin/see-yourself-through-the-ayurvedic-lens-of-the-doshas-bb0ee3f25c72">
-              <p>
-                Att se dig själv genom Ayurvedas kropp- och sinneskonstitutioner
-                kan ge dig en djupare förståelse för vem du är.
-              </p>
-            </a>
-          </article>
-          <article className="journal-post">
-            <img src="/assets/journal2.jpg" alt="Yogapaus" />
-            <h3>Self Care</h3>
-            <a href="https://medium.com/@healthbyjasmin/here-are-one-simple-stretch-to-do-at-home-1aa8a2a75f8d">
-              <p>Här är en enkel stretch att göra hemma.</p>
-            </a>
-          </article>
-          <article className="journal-post">
-            <img src="/assets/clock.jpg" alt="Dygnsrytm" />
-            <h3>#3 Ayurvedisk dygnsrytm</h3>
-            <a href="https://medium.com/@healthbyjasmin/how-the-ayurvedic-clock-can-help-you-find-daily-balance-caa2fab0f74d">
-              <p>
-                Att se dagen ur ett ayurvediskt perspektiv hjälper oss förstå
-                vad vi behöver och när.
-              </p>
-            </a>
-          </article>
-          <article className="journal-post">
-            <img src="/assets/meditation.jpg" alt="Meditation" />
-            <h3>#4 Kort meditationsövning</h3>
-            <a href="#">
-              <p>Börja med att hitta en bekväm men vaken sittande position.</p>
-            </a>
-          </article>
+        {/* Recensioner */}
+        <section className="testimonials-section">
+          <div className="section-inner">
+            <span className="section-label">Recensioner</span>
+            <h2>Vad andra säger</h2>
+            <div className="testimonials-grid">
+              <div className="testimonial-card">
+                <p className="testimonial-text">
+                  "Den ayurvediska massagen var precis vad jag behövde. Djup
+                  avslappning och en verkligt professionell behandling. Jag
+                  lämnade med en känsla av fullständig återhämtning."
+                </p>
+                <span className="testimonial-author">Sofia L.</span>
+              </div>
+              <div className="testimonial-card">
+                <p className="testimonial-text">
+                  "Yin yogaklassen med Jasmin är en av veckorutinens höjdpunkter.
+                  Lugn, inkluderande och meningsfull. Jag märker skillnaden i
+                  kroppen direkt efteråt."
+                </p>
+                <span className="testimonial-author">Anna M.</span>
+              </div>
+              <div className="testimonial-card">
+                <p className="testimonial-text">
+                  "Jasmin har ett unikt sätt att förmedla både yoga och ayurveda.
+                  Känslan av helhet och närvaro stannar kvar länge efter
+                  behandlingen."
+                </p>
+                <span className="testimonial-author">Marcus K.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section id="faq" className="content-section faq-section">
+          <div className="section-inner">
+            <span className="section-label">Vanliga frågor</span>
+            <h2>FAQ</h2>
+            <div className="faq-grid">
+              {[
+                {
+                  q: "Var befinner ni er?",
+                  a: "Vi håller till i Vasastan, Stockholm. Exakt adress är Birkagatan 23.",
+                },
+                {
+                  q: "Blir man oljig av massagen?",
+                  a: "Ja, oljan är en viktig del av behandlingen. Det finns dusch på plats med handduk, schampo och duschcreme.",
+                },
+                {
+                  q: "Kan man delta i yoga direkt efter en massagebehandling?",
+                  a: "Absolut, du är välkommen på både ayurveda och yoga samma dag. Tänk på att dusch krävs efter massagebehandlingen innan du deltar i yogaklassen.",
+                },
+                {
+                  q: "Vad ska jag ha med mig till massagen?",
+                  a: "Ta med eller kom i oömma kläder och ombyte. Underkläder behövs under behandlingen.",
+                },
+                {
+                  q: "Vilken massage ska jag välja?",
+                  a: "Välj den behandling du känner att du har behov av. Abhyanga fokuserar på djup återhämtning och vila, medan Vishesh riktar sig mer mot spänningar och balans.",
+                },
+                {
+                  q: "Hur bokar jag yoga?",
+                  a: "Yin Yoga bokas via Home in Yoga. Du hittar bokningslänken direkt i bokningssektionen nedan.",
+                },
+                {
+                  q: "Hur betalas behandlingen?",
+                  a: "Betalning sker via Frilans Finans och du faktureras efter genomförd behandling.",
+                },
+                {
+                  q: "Kommer det fler kurser och workshops?",
+                  a: "Kurser inom ayurveda är på väg. Håll utkik i bannern längst upp på sidan för uppdateringar.",
+                },
+              ].map(({ q, a }) => (
+                <div key={q} className="faq-item">
+                  <h3>{q}</h3>
+                  <p>{a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </section>
       </main>
 
-      <section className="second-image"></section>
+      <section className="second-image" aria-hidden="true" />
 
       <footer>
         <div>
@@ -894,10 +754,10 @@ export default function HealthByJasmin() {
             href="https://www.instagram.com/healthbyjasmin/"
             aria-label="Instagram"
           >
-            <i className="fab fa-instagram"></i>
+            <i className="fab fa-instagram" />
           </a>
         </div>
-        <p>Södermalm, Stockholm</p>
+        <p>Vasastan, Stockholm</p>
         <p>
           <a href="mailto:healthbyjasmin@gmail.com">healthbyjasmin@gmail.com</a>
         </p>
