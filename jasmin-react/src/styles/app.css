@@ -711,14 +711,12 @@ header {
   display: none;
   flex-direction: column;
   position: absolute;
-  top: 78px;
+  top: 66px;
   left: 50%;
   transform: translateX(-50%);
-  width: min(50%, 280px);
-  background: linear-gradient(145deg, #5C7C8A 0%, #6B94A4 50%, #7BA8B8 100%);
+  width: min(60%, 280px);
+  background: rgba(42, 58, 68, 0.97);
   padding: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  border-radius: 12px;
   gap: 10px;
   z-index: 100;
 }
@@ -959,9 +957,9 @@ footer a:hover { color: #2D4A5D; }
 
 /* Buttons */
 .booking-btn-row { display: flex; gap: 8px; margin-top: 0.25rem; flex-wrap: wrap; }
-.booking-btn-next { flex: 1; min-width: 120px; height: clamp(40px, 7vw, 46px); background: linear-gradient(145deg, #5C7C8A 0%, #6B94A4 50%, #7BA8B8 100%); color: #fff; border: none; border-radius: 10px; font-size: clamp(13px, 2vw, 15px); font-weight: 500; cursor: pointer; transition: opacity 0.15s; }
-.booking-btn-next:hover { opacity: 0.88; }
-.booking-btn-next:disabled { background: #e5e5e5; color: #aaa; cursor: not-allowed; opacity: 1; }
+.booking-btn-next { flex: 1; min-width: 120px; height: clamp(40px, 7vw, 46px); background: #fff; border: 0.5px solid #b0c4cc; border-radius: 10px; font-size: clamp(13px, 2vw, 15px); font-weight: 500; cursor: pointer; color: #5C7C8A; transition: background 0.15s; padding: 0 16px; }
+.booking-btn-next:hover { background: #f0f5f7; }
+.booking-btn-next:disabled { background: #f5f5f5; color: #bbb; border-color: #ddd; cursor: not-allowed; }
 .booking-btn-back { height: clamp(40px, 7vw, 46px); padding: 0 16px; background: #fff; border: 0.5px solid #b0c4cc; border-radius: 10px; font-size: clamp(13px, 2vw, 15px); cursor: pointer; color: #5C7C8A; white-space: nowrap; }
 .booking-btn-back:hover { background: #f0f5f7; }
 
