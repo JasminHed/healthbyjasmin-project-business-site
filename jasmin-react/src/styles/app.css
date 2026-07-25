@@ -574,6 +574,79 @@ header {
   flex-wrap: wrap;
 }
 
+/* Yoga column CTAs */
+.yoga-coming-soon {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #999;
+  letter-spacing: 0.04em;
+  border: 0.5px solid #d0dde3;
+  border-radius: 20px;
+  padding: 5px 14px;
+}
+
+.yoga-col-book-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 0.5px solid #e8eef1;
+}
+
+.yoga-col-schedule {
+  font-size: 13px;
+  color: #555;
+}
+
+.yoga-col-via {
+  font-size: 11px;
+  color: #aaa;
+}
+
+/* Ayurveda inline booking area */
+.ayurveda-booking-area {
+  border-top: 1px solid #e8eef1;
+  padding: clamp(40px, 6vw, 72px) 0;
+  background: #f8fafb;
+}
+
+.boka-behandling-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: clamp(44px, 7vw, 50px);
+  padding: 0 28px;
+  background: #fff;
+  border: 0.5px solid #b0c4cc;
+  border-radius: 10px;
+  font-size: clamp(13px, 2vw, 15px);
+  font-weight: 500;
+  color: #5C7C8A;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-bottom: 28px;
+}
+
+.boka-behandling-btn::before {
+  content: "+";
+  font-size: 18px;
+  line-height: 1;
+  transition: transform 0.2s;
+}
+
+.boka-behandling-btn.open::before {
+  content: "×";
+  font-size: 20px;
+}
+
+.boka-behandling-btn:hover {
+  background: #f0f5f7;
+}
+
 .yoga-single-info { font-size: 14px; font-weight: 500; color: #3F5B6B; }
 
 /* Treatment pick cards (step 1 of booking) */

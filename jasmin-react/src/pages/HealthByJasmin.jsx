@@ -59,8 +59,11 @@ const TRANSLATIONS = {
       ashtangaTitle: "Ashtanga Yoga",
       ashtangaP1: "Ashtanga är en praktik där andningen är kärnan, synkroniserad med mjuka, dynamiska rörelser. Metoden kommer från Indien och betraktar hela människan, kropp, sinne och allt däremellan. Vi börjar där vi är och arbetar med det vi har.",
       ashtangaP2: "Det finns två huvudstilar: Mysore, en självpraktik där du i din egen takt lär dig en sekvens av positioner med stöd från en lärare, och den mer välkända guidade klassen där alla rör sig tillsammans med instruktioner.",
+      ashtangaSoon: "Klasser kommer snart",
       yinTitle: "Yin Yoga",
       yinP1: "Yin yoga är en långsam, meditativ praktik med fokus på stillhet och djup avslappning. Positioner hålls i flera minuter för att nå bindväven, ligamenten och lederna snarare än musklerna. Det ger ökad rörlighet, bättre ledfunktion och en lugnande effekt på nervsystemet. Yin bjuder in till att vända blicken inåt.",
+      yinSchedule: "Yin Yoga · 60 min · 12:15–13:15 · Söndagar",
+      yinBookVia: "Bokas via Home in Yoga",
     },
     ayurveda: {
       label: "Hälsa & välmående",
@@ -94,6 +97,8 @@ const TRANSLATIONS = {
       yogaLabel: "Yoga", yogaBookSub: "Bokas direkt via Home in Yoga",
       yogaInfo: "Yin Yoga · 60 min · 12:15–13:15 · Söndagar", bokaNYoga: "Boka",
       behandlingHint: "Välj en behandling ovan för att gå vidare.",
+      bokaBehandling: "Boka behandling",
+      stangBokning: "Stäng",
     },
     treatments: [
       { id: "abhyanga", name: "Abhyanga", description: "Helkroppsmassage med varm sesamolja. Fokus djup återhämtning och vila." },
@@ -154,8 +159,11 @@ const TRANSLATIONS = {
       ashtangaTitle: "Ashtanga Yoga",
       ashtangaP1: "Ashtanga is a practice where the breath is the core, synchronised with soft, dynamic movements. The method originates from India and regards the whole person — body, mind and everything in between. We start where we are and work with what we have.",
       ashtangaP2: "There are two main styles: Mysore, a self-practice where you learn a sequence of postures at your own pace with support from a teacher, and the more well-known led class where everyone moves together with instructions.",
+      ashtangaSoon: "Classes coming soon",
       yinTitle: "Yin Yoga",
       yinP1: "Yin yoga is a slow, meditative practice with a focus on stillness and deep relaxation. Poses are held for several minutes to reach the connective tissue, ligaments and joints rather than the muscles. It increases flexibility, improves joint function and has a calming effect on the nervous system. Yin invites you to turn your gaze inward.",
+      yinSchedule: "Yin Yoga · 60 min · 12:15–13:15 · Sundays",
+      yinBookVia: "Book via Home in Yoga",
     },
     ayurveda: {
       label: "Health & wellbeing",
@@ -189,6 +197,8 @@ const TRANSLATIONS = {
       yogaLabel: "Yoga", yogaBookSub: "Book directly via Home in Yoga",
       yogaInfo: "Yin Yoga · 60 min · 12:15–13:15 · Sundays", bokaNYoga: "Book",
       behandlingHint: "Choose a treatment above to continue.",
+      bokaBehandling: "Book treatment",
+      stangBokning: "Close",
     },
     treatments: [
       { id: "abhyanga", name: "Abhyanga", description: "Full-body massage with warm sesame oil. Focus on deep recovery and rest." },
@@ -450,22 +460,6 @@ function Booking({ t }) {
             </div>
           )}
 
-          {/* Yoga – separat sektion */}
-          {step === "select" && (
-            <div className="booking-yoga-wrap">
-              <div className="booking-yoga-header">
-                <span className="booking-place-label">{b.yogaLabel}</span>
-                <p className="booking-yoga-sub">{b.yogaBookSub}</p>
-              </div>
-              <div className="yoga-single-row">
-                <span className="yoga-single-info">{b.yogaInfo}</span>
-                <a href="https://www.homeinyoga.com/schedule" target="_blank" rel="noopener noreferrer" className="yoga-row-btn">
-                  {b.bokaNYoga}
-                </a>
-              </div>
-            </div>
-          )}
-
           {/* Bokningsformulär */}
           {step === "form" && selectedDate && slot && (
             <div className="booking-form-wrap">
@@ -544,6 +538,7 @@ function Booking({ t }) {
 
 export default function HealthByJasmin() {
   const [lang, setLang] = useState("sv");
+  const [bookingOpen, setBookingOpen] = useState(false);
   const t = TRANSLATIONS[lang];
 
   return (
@@ -622,10 +617,23 @@ export default function HealthByJasmin() {
                 <h3>{t.yoga.ashtangaTitle}</h3>
                 <p>{t.yoga.ashtangaP1}</p>
                 <p>{t.yoga.ashtangaP2}</p>
+                <span className="yoga-coming-soon">{t.yoga.ashtangaSoon}</span>
               </div>
               <div className="yoga-split-col">
                 <h3>{t.yoga.yinTitle}</h3>
                 <p>{t.yoga.yinP1}</p>
+                <div className="yoga-col-book-cta">
+                  <span className="yoga-col-schedule">{t.yoga.yinSchedule}</span>
+                  <a
+                    href="https://www.homeinyoga.com/schedule"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="yoga-row-btn"
+                  >
+                    {t.booking.bokaNYoga}
+                  </a>
+                  <span className="yoga-col-via">{t.yoga.yinBookVia}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -647,13 +655,16 @@ export default function HealthByJasmin() {
               <p>{t.ayurveda.massageP2}</p>
             </div>
           </div>
-        </section>
-
-        {/* Boka */}
-        <section id="boka" className="booking-bg">
-          <div className="booking-section">
-            <h2>{t.booking.title}</h2>
-            <Booking t={t} />
+          <div id="boka" className="ayurveda-booking-area">
+            <div className="section-inner">
+              <button
+                className={`boka-behandling-btn${bookingOpen ? " open" : ""}`}
+                onClick={() => setBookingOpen((o) => !o)}
+              >
+                {bookingOpen ? t.booking.stangBokning : t.booking.bokaBehandling}
+              </button>
+              {bookingOpen && <Booking t={t} />}
+            </div>
           </div>
         </section>
 
