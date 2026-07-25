@@ -499,8 +499,8 @@ export default function HealthByJasmin() {
             </a>
             <a href="#boka" className="service-card">
               <span className="service-card-label">Kommande</span>
-              <h3>Retreats &amp; Kurser</h3>
-              <p>Workshops, retreats och fördjupning</p>
+              <h3>Kurser</h3>
+              <p>Workshops och fördjupning inom yoga och ayurveda</p>
             </a>
           </div>
         </section>
@@ -645,14 +645,14 @@ export default function HealthByJasmin() {
           </div>
         </section>
 
-        {/* Retreats */}
+        {/* Kurser */}
         <section className="retreat-section">
           <article className="retreat">
             <img
-              src="/assets/retreat.jpg"
-              alt="Fridfull yogaretreat i naturen"
+              src="/assets/yogasal.jpg"
+              alt="Kurslokal för yoga och ayurveda"
             />
-            <h2>Retreats, kurser &amp; workshops</h2>
+            <h2>Kurser &amp; workshops</h2>
             <span>Kommer snart</span>
           </article>
         </section>
