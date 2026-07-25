@@ -43,9 +43,9 @@ const TRANSLATIONS = {
       scrollLabel: "Scrolla ned",
     },
     cards: {
-      massageLabel: "Behandling", massageTitle: "Ayurvedisk massage", massageDesc: "55 min · Söndagar",
-      yogaLabel: "Klass", yogaTitle: "Yin Yoga", yogaDesc: "60 min · Söndagar",
-      coursesLabel: "Kommande", coursesTitle: "Kurser", coursesDesc: "Workshops och fördjupning inom yoga och ayurveda",
+      massageLabel: "Behandling", massageTitle: "Ayurveda",
+      yogaLabel: "Klass", yogaTitle: "Yoga",
+      coursesLabel: "Kommande", coursesTitle: "Kurser",
     },
     about: {
       label: "Om mig",
@@ -129,7 +129,7 @@ const TRANSLATIONS = {
         { q: "Kommer det fler kurser och workshops?", a: "Kurser inom ayurveda är på väg. Håll utkik i bannern längst upp på sidan för uppdateringar." },
       ],
     },
-    courses: { title: "Kurser & workshops", soon: "Kommer snart" },
+    courses: { title: "Kurser", soon: "Kommer snart" },
     footer: { location: "Vasastan, Stockholm" },
   },
 
@@ -143,9 +143,9 @@ const TRANSLATIONS = {
       scrollLabel: "Scroll down",
     },
     cards: {
-      massageLabel: "Treatment", massageTitle: "Ayurvedic massage", massageDesc: "55 min · Sundays",
-      yogaLabel: "Class", yogaTitle: "Yin Yoga", yogaDesc: "60 min · Sundays",
-      coursesLabel: "Upcoming", coursesTitle: "Courses", coursesDesc: "Workshops and deepening within yoga and ayurveda",
+      massageLabel: "Treatment", massageTitle: "Ayurveda",
+      yogaLabel: "Class", yogaTitle: "Yoga",
+      coursesLabel: "Upcoming", coursesTitle: "Courses",
     },
     about: {
       label: "About me",
@@ -229,7 +229,7 @@ const TRANSLATIONS = {
         { q: "Will there be more courses and workshops?", a: "Ayurveda courses are on their way. Keep an eye on the banner at the top of the page for updates." },
       ],
     },
-    courses: { title: "Courses & workshops", soon: "Coming soon" },
+    courses: { title: "Courses", soon: "Coming soon" },
     footer: { location: "Vasastan, Stockholm" },
   },
 };
@@ -377,7 +377,7 @@ function Booking({ t }) {
       <div className="booking-place">
         <div className="booking-place-col">
           <span className="booking-place-label">{b.plats}</span>
-          <span className="booking-place-value">Home in Yoga, Birkagatan 23, Stockholm</span>
+          <span className="booking-place-value">Birkagatan 23, Stockholm</span>
         </div>
         <div className="booking-place-col">
           <span className="booking-place-label">{b.dag}</span>
@@ -512,7 +512,7 @@ function Booking({ t }) {
               [b.rowBehandling, `${t.treatments.find((tr) => tr.id === treatment)?.name} · 55 min`],
               [b.rowDatum, `${selectedDate.getDate()} ${t.months[selectedDate.getMonth()]} 2026`],
               [b.rowTid, `${slot.t}–${slot.e}`],
-              [b.rowPlats, "Home in Yoga, Birkagatan 23, Stockholm"],
+              [b.rowPlats, "Birkagatan 23, Stockholm"],
               [b.rowBetalning, b.rowFaktura],
             ].map(([k, v]) => (
               <div key={k} className="summary-row">
@@ -570,17 +570,14 @@ export default function HealthByJasmin() {
             <a href="#ayurveda" className="service-card">
               <span className="service-card-label">{t.cards.massageLabel}</span>
               <h3>{t.cards.massageTitle}</h3>
-              <p>{t.cards.massageDesc}</p>
             </a>
             <a href="#yoga" className="service-card">
               <span className="service-card-label">{t.cards.yogaLabel}</span>
               <h3>{t.cards.yogaTitle}</h3>
-              <p>{t.cards.yogaDesc}</p>
             </a>
             <a href="#boka" className="service-card">
               <span className="service-card-label">{t.cards.coursesLabel}</span>
               <h3>{t.cards.coursesTitle}</h3>
-              <p>{t.cards.coursesDesc}</p>
             </a>
           </div>
         </section>
