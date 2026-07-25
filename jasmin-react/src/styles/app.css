@@ -541,6 +541,32 @@ header {
 
 .yoga-row-btn:hover { background: #f0f5f7; text-decoration: none; color: #5C7C8A; }
 
+.booking-yoga-wrap {
+  margin-top: 28px;
+  padding: 20px 22px;
+  border: 0.5px solid #d0dde3;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.booking-yoga-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 0.5px solid #e8eef1;
+}
+
+.booking-yoga-sub {
+  font-size: 12px;
+  color: #999;
+  margin: 0;
+  max-width: 100%;
+  text-align: left;
+  line-height: 1;
+}
+
 .yoga-single-row {
   display: flex;
   align-items: center;

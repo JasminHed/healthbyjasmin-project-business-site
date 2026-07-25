@@ -261,59 +261,61 @@ function Booking() {
             </div>
           </div>
 
-          {/* Tillgängliga tider + yoga */}
-          {step === "select" && (
+          {/* Massage tider – visas när datum är valt */}
+          {dateIdx !== null && step === "select" && (
             <div className="booking-services">
-
-              {/* Massage tider – visas när datum är valt */}
-              {dateIdx !== null && (
-                <div className="service-row">
-                  <div className="times-grid">
-                    {MASSAGE_SLOTS.map((s, i) => {
-                      const key = `massage-${dateIdx}-${s.t}`;
-                      const booked = bookedSlots.includes(key);
-                      return (
-                        <div
-                          key={i}
-                          className={`time-slot${slot === s ? " selected" : ""}${booked ? " booked" : ""}`}
-                          onClick={() => !booked && setSlot(s)}
-                        >
-                          <div className="time-slot-t">{s.t} – {s.e}</div>
-                          <div className="time-slot-s">{booked ? "Fullbokad" : "55 min"}</div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  {slot && treatment && (
-                    <button
-                      className="booking-btn-next"
-                      style={{ marginTop: "1rem" }}
-                      onClick={() => setStep("form")}
-                    >
-                      Gå vidare
-                    </button>
-                  )}
-                  {slot && !treatment && (
-                    <p style={{ fontSize: "13px", color: "#888", margin: "0.75rem 0 0", maxWidth: "100%" }}>
-                      Välj en behandling ovan för att gå vidare.
-                    </p>
-                  )}
-                </div>
-              )}
-
-              {/* Yoga – alltid synlig */}
               <div className="service-row">
-                <div className="yoga-single-row">
-                  <span className="yoga-single-info">Yin Yoga &middot; 60 min &middot; 12:15–13:15</span>
-                  <a
-                    href="https://www.homeinyoga.com/schedule"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="yoga-row-btn"
-                  >
-                    Boka
-                  </a>
+                <div className="times-grid">
+                  {MASSAGE_SLOTS.map((s, i) => {
+                    const key = `massage-${dateIdx}-${s.t}`;
+                    const booked = bookedSlots.includes(key);
+                    return (
+                      <div
+                        key={i}
+                        className={`time-slot${slot === s ? " selected" : ""}${booked ? " booked" : ""}`}
+                        onClick={() => !booked && setSlot(s)}
+                      >
+                        <div className="time-slot-t">{s.t} – {s.e}</div>
+                        <div className="time-slot-s">{booked ? "Fullbokad" : "55 min"}</div>
+                      </div>
+                    );
+                  })}
                 </div>
+                {slot && treatment && (
+                  <button
+                    className="booking-btn-next"
+                    style={{ marginTop: "1rem" }}
+                    onClick={() => setStep("form")}
+                  >
+                    Gå vidare
+                  </button>
+                )}
+                {slot && !treatment && (
+                  <p style={{ fontSize: "13px", color: "#888", margin: "0.75rem 0 0", maxWidth: "100%" }}>
+                    Välj en behandling ovan för att gå vidare.
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Yoga – separat sektion */}
+          {step === "select" && (
+            <div className="booking-yoga-wrap">
+              <div className="booking-yoga-header">
+                <span className="booking-place-label">Yoga</span>
+                <p className="booking-yoga-sub">Bokas direkt via Home in Yoga</p>
+              </div>
+              <div className="yoga-single-row">
+                <span className="yoga-single-info">Yin Yoga &middot; 60 min &middot; 12:15–13:15 &middot; Söndagar</span>
+                <a
+                  href="https://www.homeinyoga.com/schedule"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="yoga-row-btn"
+                >
+                  Boka
+                </a>
               </div>
             </div>
           )}
