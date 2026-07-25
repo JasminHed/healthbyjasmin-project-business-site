@@ -522,18 +522,24 @@ header {
 .yoga-row-time { font-size: 14px; font-weight: 500; color: #3F5B6B; min-width: 100px; }
 
 .yoga-row-btn {
-  display: inline-block;
-  padding: 9px 20px;
-  background: linear-gradient(145deg, #5C7C8A 0%, #7BA8B8 100%);
-  color: #fff;
-  border-radius: 8px;
-  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(40px, 7vw, 46px);
+  padding: 0 20px;
+  background: #fff;
+  border: 0.5px solid #b0c4cc;
+  border-radius: 10px;
+  font-size: clamp(13px, 2vw, 15px);
   font-weight: 500;
+  color: #5C7C8A;
   text-decoration: none;
-  transition: opacity 0.15s;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
 }
 
-.yoga-row-btn:hover { opacity: 0.88; text-decoration: none; color: #fff; }
+.yoga-row-btn:hover { background: #f0f5f7; text-decoration: none; color: #5C7C8A; }
 
 .yoga-single-row {
   display: flex;
@@ -964,7 +970,7 @@ footer a:hover { color: #2D4A5D; }
 .booking-btn-next { flex: 1; min-width: 120px; height: clamp(40px, 7vw, 46px); background: #fff; border: 0.5px solid #b0c4cc; border-radius: 10px; font-size: clamp(13px, 2vw, 15px); font-weight: 500; cursor: pointer; color: #5C7C8A; transition: background 0.15s; padding: 0 16px; }
 .booking-btn-next:hover { background: #f0f5f7; }
 .booking-btn-next:disabled { background: #fff; color: #5C7C8A; border-color: #b0c4cc; cursor: not-allowed; }
-.booking-btn-back { height: clamp(40px, 7vw, 46px); padding: 0 16px; background: #fff; border: 0.5px solid #b0c4cc; border-radius: 10px; font-size: clamp(13px, 2vw, 15px); cursor: pointer; color: #5C7C8A; white-space: nowrap; }
+.booking-btn-back { height: clamp(40px, 7vw, 46px); padding: 0 16px; background: #fff; border: 0.5px solid #b0c4cc; border-radius: 10px; font-size: clamp(13px, 2vw, 15px); font-weight: 500; cursor: pointer; color: #5C7C8A; white-space: nowrap; transition: background 0.15s; }
 .booking-btn-back:hover { background: #f0f5f7; }
 
 /* Confirmation */
@@ -1046,7 +1052,7 @@ footer a:hover { color: #2D4A5D; }
   .treatment-pick-grid { grid-template-columns: 1fr; }
   .service-row { padding: 16px 14px; }
   .yoga-single-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-  .yoga-row-btn { width: 100%; text-align: center; }
+  .yoga-row-btn { width: 100%; }
   .booking-form-wrap { padding: 16px 14px; }
   .booking-confirm { padding: 20px 14px; }
   .booking-place { gap: 12px 32px; }
