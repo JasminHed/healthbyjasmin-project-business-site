@@ -735,6 +735,22 @@ header {
   outline: none;
 }
 
+.lang-toggle {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.45);
+  border-radius: 6px;
+  color: #f9f9f9;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  cursor: pointer;
+  margin-left: 12px;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.lang-toggle:hover { background: rgba(255,255,255,0.12); }
+
 .hamburger span {
   width: 25px;
   height: 3px;
@@ -816,6 +832,30 @@ header {
 .retreat { width: 100%; max-width: 900px; background-color: #faf4ef; padding: 15px 20px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); text-align: center; }
 .retreat img { width: 100%; height: clamp(180px, 30vw, 300px); object-fit: cover; border-radius: 12px; margin-bottom: 20px; }
 .retreat a { display: inline-block; padding: 10px 20px; background-color: #3F5B6B; color: white; border-radius: 8px; }
+
+/* ── Instagram CTA ── */
+.instagram-cta {
+  margin-top: clamp(32px, 5vw, 48px);
+  text-align: center;
+}
+
+.instagram-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 28px;
+  border: 0.5px solid #b0c4cc;
+  border-radius: 10px;
+  background: #fff;
+  color: #5C7C8A;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.instagram-btn:hover { background: #f0f5f7; text-decoration: none; color: #5C7C8A; }
+.instagram-btn i { font-size: 18px; }
 
 /* ── FAQ section ── */
 .faq-section { background: #fff; }
