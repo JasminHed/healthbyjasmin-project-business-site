@@ -697,6 +697,10 @@ header {
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+  outline: none;
 }
 
 .hamburger span {
@@ -959,7 +963,7 @@ footer a:hover { color: #2D4A5D; }
 .booking-btn-row { display: flex; gap: 8px; margin-top: 0.25rem; flex-wrap: wrap; }
 .booking-btn-next { flex: 1; min-width: 120px; height: clamp(40px, 7vw, 46px); background: #fff; border: 0.5px solid #b0c4cc; border-radius: 10px; font-size: clamp(13px, 2vw, 15px); font-weight: 500; cursor: pointer; color: #5C7C8A; transition: background 0.15s; padding: 0 16px; }
 .booking-btn-next:hover { background: #f0f5f7; }
-.booking-btn-next:disabled { background: #f5f5f5; color: #bbb; border-color: #ddd; cursor: not-allowed; }
+.booking-btn-next:disabled { background: #fff; color: #b0c4cc; border-color: #d8e3e8; cursor: not-allowed; }
 .booking-btn-back { height: clamp(40px, 7vw, 46px); padding: 0 16px; background: #fff; border: 0.5px solid #b0c4cc; border-radius: 10px; font-size: clamp(13px, 2vw, 15px); cursor: pointer; color: #5C7C8A; white-space: nowrap; }
 .booking-btn-back:hover { background: #f0f5f7; }
 
