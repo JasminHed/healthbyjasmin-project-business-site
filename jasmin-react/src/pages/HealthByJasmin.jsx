@@ -77,9 +77,9 @@ const TRANSLATIONS = {
       yinPricing: "Priser",
       yogaAyurvedaTitle: "Yoga & Ayurveda",
       yogaAyurvedaSub: "60 min · Torsdagar · 20:00–21:00",
-      yogaAyurvedaP1: "En klass i två delar. Vi börjar med en kort delning om ayurveda — kanske om sömn, dygnsrytm, mat, matsmältning eller doshornas natur. Något du kan ta med dig ut i vardagen.",
-      yogaAyurvedaP2: "Sedan yoga. Rörelserna är alltid anpassade så att alla doshor mår bra av dem, men stilen varierar — ibland mer dynamiskt och i flöde, ibland långsammare och mer stilla. Vi blandar kroppscanning och meditation när det passar in.",
-      yogaAyurvedaP3: "Varje klass är sin egen. Det enda som är konstant är att du lämnar med mer kunskap om dig själv — och en kropp som fått röra sig.",
+      yogaAyurvedaP1: "En klass i två delar. Vi börjar med en kort delning om ayurveda, kanske om sömn, dygnsrytm, mat, matsmältning eller doshornas natur. Något du kan ta med dig ut i vardagen.",
+      yogaAyurvedaP2: "Sedan yoga. Rörelserna är alltid anpassade så att alla doshor mår bra av dem, men stilen varierar. Ibland mer dynamiskt och i flöde, ibland långsammare och mer stilla. Vi blandar kroppscanning och meditation när det passar in.",
+      yogaAyurvedaP3: "Varje klass är sin egen. Det enda som är konstant är att du lämnar med mer kunskap om dig själv, och en kropp som fått röra sig.",
     },
     ayurveda: {
       label: "Hälsa & välmående",
@@ -150,7 +150,7 @@ const TRANSLATIONS = {
   },
 
   en: {
-    banner: "New times available for yoga and ayurveda — book your spot below!",
+    banner: "New times available for yoga and ayurveda, book your spot below!",
     bannerClose: "Close",
     nav: { aboutMe: "About me", yoga: "Yoga", ayurveda: "Ayurveda", book: "Book" },
     hero: {
@@ -165,15 +165,15 @@ const TRANSLATIONS = {
     },
     about: {
       label: "About me",
-      p1: "I am Jasmin, the person behind Health by Jasmin, a sole proprietorship based in Stockholm, Sweden. I have practised mainly Ashtanga yoga but also yoga in general and Ayurveda for almost 17 years. What first drew me to both yoga and ayurveda was the structure, the rhythm and the way both practices bring things into focus — sometimes gently, sometimes with force.",
+      p1: "I am Jasmin, the person behind Health by Jasmin, a sole proprietorship based in Stockholm, Sweden. I have practised mainly Ashtanga yoga but also yoga in general and Ayurveda for almost 17 years. What first drew me to both yoga and ayurveda was the structure, the rhythm and the way both practices bring things into focus, sometimes gently, sometimes with force.",
       p2: "I fell in love with their holistic approach and how they challenge you to look at yourself and your habits from a completely different angle. In 2015/2016 I started Health by Jasmin to create a space where I could share what has truly resonated with me over the years.",
       p3: "I do this in small doses through yoga classes, short courses, occasional retreats and of course the magical ayurvedic massages. I also offer lectures and introductions to Ayurveda, to help people gain a better understanding of its foundations.",
     },
     yoga: {
       label: "Movement",
-      intro: "Yoga is more than movement — it is a practice of presence and connection between body and mind.",
+      intro: "Yoga is more than movement. It is a practice of presence and connection between body and mind.",
       ashtangaTitle: "Ashtanga Yoga",
-      ashtangaP1: "Ashtanga is a practice where the breath is the core, synchronised with soft, dynamic movements. The method originates from India and regards the whole person — body, mind and everything in between. We start where we are and work with what we have.",
+      ashtangaP1: "Ashtanga is a practice where the breath is the core, synchronised with soft, dynamic movements. The method originates from India and regards the whole person: body, mind and everything in between. We start where we are and work with what we have.",
       ashtangaP2: "There are two main styles: Mysore, a self-practice where you learn a sequence of postures at your own pace with support from a teacher, and the more well-known led class where everyone moves together with instructions.",
       ashtangaSoon: "Classes coming soon",
       yinTitle: "Yin Yoga",
@@ -183,14 +183,14 @@ const TRANSLATIONS = {
       yinPricing: "Pricing",
       yogaAyurvedaTitle: "Yoga & Ayurveda",
       yogaAyurvedaSub: "60 min · Thursdays · 20:00–21:00",
-      yogaAyurvedaP1: "A class in two parts. We begin with a short sharing on ayurveda — perhaps about sleep, the body's daily rhythm, food, digestion or the nature of the doshas. Something to carry with you into everyday life.",
-      yogaAyurvedaP2: "Then yoga. The movements are always adapted so that all doshas benefit, but the style varies — sometimes more dynamic and flowing, sometimes slower and more still. We weave in body scanning and meditation when it fits.",
-      yogaAyurvedaP3: "Every class is its own. The one constant is that you leave with a little more knowledge about yourself — and a body that has had the chance to move.",
+      yogaAyurvedaP1: "A class in two parts. We begin with a short sharing on ayurveda, perhaps about sleep, the body's daily rhythm, food, digestion or the nature of the doshas. Something to carry with you into everyday life.",
+      yogaAyurvedaP2: "Then yoga. The movements are always adapted so that all doshas benefit, but the style varies. Sometimes more dynamic and flowing, sometimes slower and more still. We weave in body scanning and meditation when it fits.",
+      yogaAyurvedaP3: "Every class is its own. The one constant is that you leave with a little more knowledge about yourself, and a body that has had the chance to move.",
     },
     ayurveda: {
       label: "Health & wellbeing",
       p1: "Ayurveda gives us knowledge and tools to strengthen and heal ourselves, both physically and mentally. It is a holistic approach to health with roots in India and over 6,000 years of tradition.",
-      p2: "Ayurveda sees the whole person — body, mind and everything in between. Nothing stands alone. If you have a headache, it is rarely just about your head; there is likely something else in the body or in life that is connected.",
+      p2: "Ayurveda sees the whole person: body, mind and everything in between. Nothing stands alone. If you have a headache, it is rarely just about your head; there is likely something else in the body or in life that is connected.",
       massageTitle: "Ayurvedic massage",
       massageP1: "One of the most beautiful parts of Ayurveda is the treatments, especially the massages. They are often warming and deeply soothing, using warm sesame oil. Sesame oil is antiseptic and anti-inflammatory, warming and naturally softens muscle tension. It is beneficial for all doshas: vata, pitta and kapha.",
       massageP2: "Ayurvedic massages are performed with warm sesame oil and for specific treatments warm water bags are used. We massage the head, face, front and back of the body including the feet. The sesame oil is antiseptic and anti-inflammatory, warming and naturally softens muscle tension. It is beneficial for all doshas: vata, pitta and kapha.",
@@ -627,50 +627,39 @@ export default function HealthByJasmin() {
               <h2>Yoga</h2>
               <p className="yoga-intro">{t.yoga.intro}</p>
             </div>
-            <div className="yoga-split-grid">
-              <div className="yoga-split-col">
+            <div className="yoga-cards-grid">
+              <div className="yoga-card">
                 <h3>{t.yoga.ashtangaTitle}</h3>
                 <p>{t.yoga.ashtangaP1}</p>
                 <p>{t.yoga.ashtangaP2}</p>
-                <span className="yoga-coming-soon">{t.yoga.ashtangaSoon}</span>
+                <div className="yoga-card-footer">
+                  <span className="yoga-coming-soon">{t.yoga.ashtangaSoon}</span>
+                </div>
               </div>
-              <div className="yoga-split-col">
+              <div className="yoga-card">
                 <h3>{t.yoga.yinTitle}</h3>
                 <p>{t.yoga.yinP1}</p>
-                <span className="yoga-col-schedule">{t.yoga.yinSchedule}</span>
+                <div className="yoga-card-footer">
+                  <span className="yoga-col-schedule">{t.yoga.yinSchedule}</span>
+                </div>
               </div>
-            </div>
-
-            {/* Yoga & Ayurveda – eget breddkort */}
-            <div className="yoga-feature-card">
-              <div className="yoga-feature-card-inner">
-                <div className="yoga-feature-text">
-                  <h3>{t.yoga.yogaAyurvedaTitle}</h3>
+              <div className="yoga-card">
+                <h3>{t.yoga.yogaAyurvedaTitle}</h3>
+                <p>{t.yoga.yogaAyurvedaP1}</p>
+                <p>{t.yoga.yogaAyurvedaP2}</p>
+                <p>{t.yoga.yogaAyurvedaP3}</p>
+                <div className="yoga-card-footer">
                   <span className="yoga-col-schedule">{t.yoga.yogaAyurvedaSub}</span>
-                  <p>{t.yoga.yogaAyurvedaP1}</p>
-                  <p>{t.yoga.yogaAyurvedaP2}</p>
-                  <p>{t.yoga.yogaAyurvedaP3}</p>
                 </div>
               </div>
             </div>
 
-            {/* Delade bokningsknappar för alla yogaklasser */}
             <div className="yoga-shared-btns">
               <div className="yoga-col-btns">
-                <a
-                  href="https://www.homeinyoga.com/schedule"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="yoga-row-btn"
-                >
+                <a href="https://www.homeinyoga.com/schedule" target="_blank" rel="noopener noreferrer" className="yoga-row-btn">
                   {t.booking.bokaNYoga}
                 </a>
-                <a
-                  href="https://www.homeinyoga.com/pricing"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="yoga-row-btn"
-                >
+                <a href="https://www.homeinyoga.com/pricing" target="_blank" rel="noopener noreferrer" className="yoga-row-btn">
                   {t.yoga.yinPricing}
                 </a>
               </div>
