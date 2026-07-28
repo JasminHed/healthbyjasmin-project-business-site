@@ -72,9 +72,14 @@ const TRANSLATIONS = {
       ashtangaSoon: "Klasser kommer snart",
       yinTitle: "Yin Yoga",
       yinP1: "Yin yoga är en långsam, meditativ praktik med fokus på stillhet och djup avslappning. Positioner hålls i flera minuter för att nå bindväven, ligamenten och lederna snarare än musklerna. Det ger ökad rörlighet, bättre ledfunktion och en lugnande effekt på nervsystemet. Yin bjuder in till att vända blicken inåt.",
-      yinSchedule: "Yin Yoga · 60 min · 12:15–13:15 · Söndagar",
+      yinSchedule: "60 min · Söndagar · 12:15–13:15",
       yinBookVia: "Bokas via Home in Yoga",
       yinPricing: "Priser",
+      yogaAyurvedaTitle: "Yoga & Ayurveda",
+      yogaAyurvedaSub: "60 min · Torsdagar · 20:00–21:00",
+      yogaAyurvedaP1: "En klass i två delar. Vi börjar med en kort delning om ayurveda — kanske om sömn, dygnsrytm, mat, matsmältning eller doshornas natur. Något du kan ta med dig ut i vardagen.",
+      yogaAyurvedaP2: "Sedan yoga. Rörelserna är alltid anpassade så att alla doshor mår bra av dem, men stilen varierar — ibland mer dynamiskt och i flöde, ibland långsammare och mer stilla. Vi blandar kroppscanning och meditation när det passar in.",
+      yogaAyurvedaP3: "Varje klass är sin egen. Det enda som är konstant är att du lämnar med mer kunskap om dig själv — och en kropp som fått röra sig.",
     },
     ayurveda: {
       label: "Hälsa & välmående",
@@ -173,9 +178,14 @@ const TRANSLATIONS = {
       ashtangaSoon: "Classes coming soon",
       yinTitle: "Yin Yoga",
       yinP1: "Yin yoga is a slow, meditative practice with a focus on stillness and deep relaxation. Poses are held for several minutes to reach the connective tissue, ligaments and joints rather than the muscles. It increases flexibility, improves joint function and has a calming effect on the nervous system. Yin invites you to turn your gaze inward.",
-      yinSchedule: "Yin Yoga · 60 min · 12:15–13:15 · Sundays",
+      yinSchedule: "60 min · Sundays · 12:15–13:15",
       yinBookVia: "Book via Home in Yoga",
       yinPricing: "Pricing",
+      yogaAyurvedaTitle: "Yoga & Ayurveda",
+      yogaAyurvedaSub: "60 min · Thursdays · 20:00–21:00",
+      yogaAyurvedaP1: "A class in two parts. We begin with a short sharing on ayurveda — perhaps about sleep, the body's daily rhythm, food, digestion or the nature of the doshas. Something to carry with you into everyday life.",
+      yogaAyurvedaP2: "Then yoga. The movements are always adapted so that all doshas benefit, but the style varies — sometimes more dynamic and flowing, sometimes slower and more still. We weave in body scanning and meditation when it fits.",
+      yogaAyurvedaP3: "Every class is its own. The one constant is that you leave with a little more knowledge about yourself — and a body that has had the chance to move.",
     },
     ayurveda: {
       label: "Health & wellbeing",
@@ -627,29 +637,44 @@ export default function HealthByJasmin() {
               <div className="yoga-split-col">
                 <h3>{t.yoga.yinTitle}</h3>
                 <p>{t.yoga.yinP1}</p>
-                <div className="yoga-col-book-cta">
-                  <span className="yoga-col-schedule">{t.yoga.yinSchedule}</span>
-                  <div className="yoga-col-btns">
-                    <a
-                      href="https://www.homeinyoga.com/schedule"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="yoga-row-btn"
-                    >
-                      {t.booking.bokaNYoga}
-                    </a>
-                    <a
-                      href="https://www.homeinyoga.com/pricing"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="yoga-row-btn"
-                    >
-                      {t.yoga.yinPricing}
-                    </a>
-                  </div>
-                  <span className="yoga-col-via">{t.yoga.yinBookVia}</span>
+                <span className="yoga-col-schedule">{t.yoga.yinSchedule}</span>
+              </div>
+            </div>
+
+            {/* Yoga & Ayurveda – eget breddkort */}
+            <div className="yoga-feature-card">
+              <div className="yoga-feature-card-inner">
+                <div className="yoga-feature-text">
+                  <h3>{t.yoga.yogaAyurvedaTitle}</h3>
+                  <span className="yoga-col-schedule">{t.yoga.yogaAyurvedaSub}</span>
+                  <p>{t.yoga.yogaAyurvedaP1}</p>
+                  <p>{t.yoga.yogaAyurvedaP2}</p>
+                  <p>{t.yoga.yogaAyurvedaP3}</p>
                 </div>
               </div>
+            </div>
+
+            {/* Delade bokningsknappar för alla yogaklasser */}
+            <div className="yoga-shared-btns">
+              <div className="yoga-col-btns">
+                <a
+                  href="https://www.homeinyoga.com/schedule"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="yoga-row-btn"
+                >
+                  {t.booking.bokaNYoga}
+                </a>
+                <a
+                  href="https://www.homeinyoga.com/pricing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="yoga-row-btn"
+                >
+                  {t.yoga.yinPricing}
+                </a>
+              </div>
+              <span className="yoga-col-via">{t.yoga.yinBookVia}</span>
             </div>
           </div>
         </section>

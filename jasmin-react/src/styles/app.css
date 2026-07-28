@@ -620,6 +620,45 @@ header {
   background: #f8fafb;
 }
 
+/* Yoga & Ayurveda feature card */
+.yoga-feature-card {
+  margin-top: clamp(32px, 5vw, 52px);
+  border: 0.5px solid #d0dde3;
+  border-radius: 14px;
+  background: #f8fafb;
+  overflow: hidden;
+}
+
+.yoga-feature-card-inner {
+  padding: clamp(24px, 4vw, 44px);
+}
+
+.yoga-feature-text h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.yoga-feature-text p {
+  margin: 12px 0 0;
+  max-width: 680px;
+}
+
+.yoga-feature-text .yoga-col-schedule {
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Shared yoga booking buttons */
+.yoga-shared-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: clamp(24px, 4vw, 36px);
+  padding-top: clamp(20px, 3vw, 28px);
+  border-top: 0.5px solid #e8eef1;
+}
+
 /* Two-location grid */
 .booking-location-grid {
   display: grid;
