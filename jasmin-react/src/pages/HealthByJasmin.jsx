@@ -11,6 +11,7 @@ const supabase = createClient(
 
 const EMAILJS_SERVICE_ID = "service_mjw4cpb";
 const EMAILJS_TEMPLATE_JASMIN = "template_m9afbud";
+const EMAILJS_TEMPLATE_CUSTOMER = "template_8rmxsm9";
 const EMAILJS_PUBLIC_KEY = "y7Yu8QbgFj3NM0VeM";
 
 // ── Booking dates & slots (language-neutral) ───────────────────────────────────
@@ -371,6 +372,15 @@ function Booking({ t, dates, slots, address, slotPrefix }) {
         date: dateStr, time: timeStr,
         customer_name: fullName, customer_email: form.email, customer_phone: form.phone,
         booking_id: ins.booking_id,
+        address,
+      }, EMAILJS_PUBLIC_KEY);
+
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CUSTOMER, {
+        customer_name: form.firstName,
+        customer_email: form.email,
+        treatment: `${treatmentName} (55 min)`,
+        date: dateStr,
+        time: timeStr,
         address,
       }, EMAILJS_PUBLIC_KEY);
 
