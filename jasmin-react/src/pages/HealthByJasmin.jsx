@@ -136,10 +136,10 @@ const TRANSLATIONS = {
     faq: {
       label: "Vanliga frågor", title: "FAQ",
       items: [
-        { q: "Var hålls klasser och behandlingar?", a: "Alla yogaklasser hålls i Vasastan på Home in Yoga, Birkagatan 23. Ayurvediska behandlingar hålls på två ställen: söndagar i Vasastan (Birkagatan 23) och torsdagskvällar på Södermalm (Åsögatan 166). Se bokningssektionen ovan för aktuella tider." },
-        { q: "Hur bokar jag yoga?", a: "Yoga bokas direkt via Home in Yoga. Länk till bokning och priser finns i yogasektionen ovan." },
+        { q: "Var hålls klasser och behandlingar?", a: "Alla yogaklasser hålls i Vasastan på Birkagatan 23. Ayurvediska behandlingar hålls på två ställen: söndagar i Vasastan (Birkagatan 23) och torsdagskvällar på Södermalm (Åsögatan 166). Se bokningssektionen ovan för aktuella tider." },
+        { q: "Hur bokar jag yoga?", a: "Yoga bokas via länken i yogasektionen ovan." },
         { q: "Hur bokar jag ayurvedisk behandling?", a: "Behandlingar bokas direkt via formuläret ovan. Välj plats, datum och tid direkt på sidan." },
-        { q: "Vad gäller vid avbokning?", a: "Avbokning av behandling görs senast 24 timmar innan. Mejla healthbyjasmin@gmail.com. För yogaklasser gäller Home in Yogas avbokningsregler." },
+        { q: "Vad gäller vid avbokning?", a: "Avbokning av behandling görs senast 24 timmar innan. Mejla healthbyjasmin@gmail.com. För yogaklasser gäller studiots avbokningsregler." },
         { q: "Hur betalas behandlingen?", a: "Betalning sker via Frilans Finans. Du faktureras efter genomförd behandling." },
         { q: "Blir man oljig av massagen?", a: "Ja, oljan är en viktig del av behandlingen. Det finns dusch på plats med handduk, schampo och duschcreme." },
         { q: "Vilken massage ska jag välja?", a: "Välj den behandling du känner att du behöver. Abhyanga fokuserar på djup återhämtning och vila, medan Vishesh riktar sig mer mot spänningar och balans." },
@@ -242,10 +242,10 @@ const TRANSLATIONS = {
     faq: {
       label: "Frequently asked questions", title: "FAQ",
       items: [
-        { q: "Where are classes and treatments held?", a: "All yoga classes are held in Vasastan at Home in Yoga, Birkagatan 23. Ayurvedic treatments are held at two locations: Sundays in Vasastan (Birkagatan 23) and Thursday evenings in Södermalm (Åsögatan 166). See the booking section above for current times." },
-        { q: "How do I book yoga?", a: "Yoga is booked directly via Home in Yoga. Links to booking and pricing are in the yoga section above." },
+        { q: "Where are classes and treatments held?", a: "All yoga classes are held in Vasastan at Birkagatan 23. Ayurvedic treatments are held at two locations: Sundays in Vasastan (Birkagatan 23) and Thursday evenings in Södermalm (Åsögatan 166). See the booking section above for current times." },
+        { q: "How do I book yoga?", a: "Yoga is booked via the link in the yoga section above." },
         { q: "How do I book an ayurvedic treatment?", a: "Treatments are booked via the form above. Choose your location, date and time directly on the page." },
-        { q: "What is the cancellation policy?", a: "Treatments must be cancelled no later than 24 hours in advance. Email healthbyjasmin@gmail.com. For yoga classes, Home in Yoga's cancellation policy applies." },
+        { q: "What is the cancellation policy?", a: "Treatments must be cancelled no later than 24 hours in advance. Email healthbyjasmin@gmail.com. For yoga classes, the studio's cancellation policy applies." },
         { q: "How is payment handled?", a: "Payment is made via Frilans Finans. You will be invoiced after the completed treatment." },
         { q: "Will I be oily after the massage?", a: "Yes, the oil is an important part of the treatment. There is a shower on site with towel, shampoo and shower gel." },
         { q: "Which massage should I choose?", a: "Choose the treatment you feel you need. Abhyanga focuses on deep recovery and rest, while Vishesh targets tension and balance." },
