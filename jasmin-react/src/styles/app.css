@@ -729,6 +729,12 @@ header {
   margin-top: 4px;
 }
 
+.booking-location-shower-ok {
+  font-size: 11px;
+  color: #7a9e7e;
+  margin-top: 4px;
+}
+
 .booking-location-card.paused {
   opacity: 0.55;
   pointer-events: none;

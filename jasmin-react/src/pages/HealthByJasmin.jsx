@@ -41,7 +41,7 @@ const TRANSLATIONS = {
     nav: { aboutMe: "Om mig", yoga: "Yoga", ayurveda: "Ayurveda", book: "Boka" },
     hero: {
       eyebrow: "Yoga & Ayurveda · Stockholm · 2015",
-      sub: "Välkommen till en plats där kropp och sinne får mötas. Genom yoga och ayurveda erbjuder jag verktyg för att stärka, återhämta och hitta balans i vardagen.",
+      sub: "Välkommen. Genom yoga och ayurveda erbjuder jag verktyg för att stärka, återhämta och hitta balans i vardagen.",
       scrollLabel: "Scrolla ned",
     },
     cards: {
@@ -51,7 +51,7 @@ const TRANSLATIONS = {
     },
     about: {
       label: "Om mig",
-      p1: "Jag är Jasmin, personen bakom Health by Jasmin, ett enmannaföretag baserat i Stockholm, Sverige. Jag har praktiserat främst Ashtanga yoga men även yoga i allmänhet och Ayurveda i nästan 17 år. Det som först drog mig till både yoga och ayurveda var strukturen, rytmen och sättet som båda praktikerna sätter saker i fokus, ibland mjukt, ibland med kraft.",
+      p1: "Jag är Jasmin, personen bakom Health by Jasmin, ett enmannaföretag baserat i Stockholm, Sverige. Jag har praktiserat Ashtanga yoga och Ayurveda i nästan 17 år. Yin yoga byggdes på längs vägen. Det som först drog mig till både yoga och ayurveda var strukturen, rytmen och sättet som båda praktikerna sätter saker i fokus, ibland mjukt, ibland med kraft.",
       p2: "Jag förälskade mig i deras holistiska förhållningssätt och hur de utmanar dig att se på dig själv och dina vanor från en helt annan vinkel. År 2015/2016 startade jag Health by Jasmin för att skapa ett utrymme där jag kunde dela det som verkligen har resonerat med mig under åren.",
       p3: "Det här gör jag i små doser genom yogaklasser, korta kurser, enstaka retreats och naturligtvis de magiska ayurvediska massagerna. Jag erbjuder också föreläsningar och introduktioner till Ayurveda, för att hjälpa människor få en bättre förståelse för dess grund.",
     },
@@ -63,28 +63,28 @@ const TRANSLATIONS = {
       ashtangaP2: "Det finns två huvudstilar: Mysore, en självpraktik där du i din egen takt lär dig en sekvens av positioner med stöd från en lärare, och den mer välkända guidade klassen där alla rör sig tillsammans med instruktioner.",
       ashtangaSoon: "Klasser kommer snart",
       yinTitle: "Yin Yoga",
-      yinP1: "Yin yoga är en långsam, meditativ praktik med fokus på stillhet och djup avslappning. Positioner hålls i flera minuter för att nå bindväven, ligamenten och lederna snarare än musklerna. Det ger ökad rörlighet, bättre ledfunktion och en lugnande effekt på nervsystemet. Yin bjuder in till att vända blicken inåt.",
+      yinP1: "Yin yoga är en långsam, stilla praktik där positioner hålls i flera minuter. Det arbetar djupt in i bindväv, ligament och leder snarare än musklerna, vilket ökar rörligheten och ger bättre ledfunktion. Praktiken har en lugnande effekt på nervsystemet och fungerar som ett bra komplement till mer aktiva träningsformer.",
       yinSchedule: "60 min · Söndagar · 12:15–13:15",
       yinBookVia: "Bokas via Home in Yoga",
       yinPricing: "Priser",
       yogaAyurvedaTitle: "Yoga & Ayurveda",
       yogaAyurvedaSub: "60 min · Torsdagar · 20:00–21:00",
-      yogaAyurvedaP1: "En klass i två delar. Vi börjar med en kort delning om ayurveda, kanske om sömn, dygnsrytm, mat, matsmältning eller doshornas natur. Något du kan ta med dig ut i vardagen.",
-      yogaAyurvedaP2: "Sedan yoga. Rörelserna är alltid anpassade så att alla doshor mår bra av dem, men stilen varierar. Ibland mer dynamiskt och i flöde, ibland långsammare och mer stilla. Vi blandar kroppscanning och meditation när det passar in.",
-      yogaAyurvedaP3: "Varje klass är sin egen. Det enda som är konstant är att du lämnar med mer kunskap om dig själv, och en kropp som fått röra sig.",
+      yogaAyurvedaP1: "En klass i två delar. Vi börjar med en kort ayurvedisk delning, ett tema, ett ämne eller ett tips från traditionen. Det kan handla om doshor, sömn, mat, dygnsrytm eller något annat ur ayurvedans värld.",
+      yogaAyurvedaP2: "Andra delen är yoga anpassad efter temat, med positioner som gynnar alla doshor. Klassen rör sig genom flöde, stående och sittande positioner och avslutas med vila eller meditation.",
+      yogaAyurvedaP3: "Inga förkunskaper krävs. Innehållet varierar från gång till gång.",
     },
     ayurveda: {
       label: "Hälsa & välmående",
       p1: "Ayurveda ger oss kunskap och verktyg för att stärka och läka oss själva, både fysiskt och mentalt. Det är ett holistiskt förhållningssätt till hälsa med rötter i Indien och över 6000 år av tradition.",
       p2: "Ayurveda ser hela människan, kropp, sinne och allt däremellan. Ingenting står ensamt. Har du huvudvärk beror det sällan bara på huvudet, det finns troligtvis något annat i kroppen eller livet som hänger samman.",
       massageTitle: "Ayurvedisk massage",
-      massageP1: "En av de finaste delarna av Ayurveda är behandlingarna, framförallt massagerna. De är ofta värmande och djupt lugnande, med varm sesamolja. Sesamolja är antiseptisk och antiinflammatorisk, värmande och mjukar naturligt upp muskelspänningar. Den är gynnsam för alla doshor: vata, pitta och kapha.",
-      massageP2: "Ayurvediska massager utförs med varm sesamolja och vid specifika behandlingar används varmvattenpåsar. Vi masserar huvud, ansikte, fram- och baksida av kroppen inklusive fötter. Sesamoljan är antiseptisk och antiinflammatorisk, värmande och mjukar naturligt upp muskelspänningar. Den är gynnsam för alla doshor: vata, pitta och kapha.",
+      massageP1: "En av de finaste delarna av Ayurveda är behandlingarna, framförallt massagerna. De är ofta värmande och djupt lugnande, med varm sesamolja. Den är gynnsam för alla doshor: vata, pitta och kapha.",
+      massageP2: "Ayurvediska massager utförs med varm sesamolja och vid specifika behandlingar används varmvattenpåsar. Vi masserar huvud, ansikte, fram- och baksida av kroppen inklusive fötter.",
     },
     booking: {
       title: "Boka",
-      plats: "Plats", dag: "Dag", sondagar: "Söndagar", torsdagar: "Torsdagar", kvallstider: "Kvällstider",
-      pausad: "Tillfälligt pausad", ingenDusch: "Dusch ej tillgänglig på denna plats",
+      plats: "Plats", dag: "Dag", sondagar: "Söndagar", torsdagar: "Torsdagar", kvallstider: "Vardagar kvällstider",
+      pausad: "Tillfälligt pausad", ingenDusch: "Dusch ej tillgänglig på denna plats", duschFinns: "Dusch finns tillgänglig",
       valjBehandling: "Välj behandling", valjDatum: "Välj datum",
       gaVidare: "Gå vidare", andra: "Ändra", tillbaka: "Tillbaka",
       bekrafta: "Bekräfta bokning", skickar: "Skickar...", gorNyBokning: "Gör en ny bokning",
@@ -121,14 +121,14 @@ const TRANSLATIONS = {
       items: [
         { text: '"Den ayurvediska massagen var precis vad jag behövde. Djup avslappning och en verkligt professionell behandling. Jag lämnade med en känsla av fullständig återhämtning."', author: "Sofia L." },
         { text: '"Yin yogaklassen med Jasmin är en av veckorutinens höjdpunkter. Lugn, inkluderande och meningsfull. Jag märker skillnaden i kroppen direkt efteråt."', author: "Anna M." },
-        { text: '"Jasmin har ett unikt sätt att förmedla både yoga och ayurveda. Känslan av helhet och närvaro stannar kvar länge efter behandlingen."', author: "Marcus K." },
+        { text: '"Jasmin har ett unikt sätt att förmedla både yoga och ayurveda. Känslan av helhet och närvaro stannar kvar länge efteråt."', author: "Marcus K." },
       ],
       instagram: "Följ @healthbyjasmin",
     },
     faq: {
       label: "Vanliga frågor", title: "FAQ",
       items: [
-        { q: "Var hålls klasser och behandlingar?", a: "Alla yogaklasser hålls i Vasastan på Birkagatan 23. Ayurvediska behandlingar hålls på två ställen: söndagar i Vasastan (Birkagatan 23) och torsdagskvällar på Södermalm (Åsögatan 166). Se bokningssektionen ovan för aktuella tider." },
+        { q: "Var hålls klasser och behandlingar?", a: "Alla yogaklasser hålls i Vasastan på Birkagatan 23. Ayurvediska behandlingar hålls på två ställen: dagtid i Vasastan (Birkagatan 23) och kvällar på Södermalm (Åsögatan 166). Se bokningssektionen ovan för aktuella tider." },
         { q: "Hur bokar jag yoga?", a: "Yoga bokas via länken i yogasektionen ovan." },
         { q: "Hur bokar jag ayurvedisk behandling?", a: "Behandlingar bokas direkt via formuläret ovan. Välj plats, datum och tid direkt på sidan." },
         { q: "Vad gäller vid avbokning?", a: "Avbokning av behandling görs senast 24 timmar innan. Mejla healthbyjasmin@gmail.com. För yogaklasser gäller studiots avbokningsregler." },
@@ -150,7 +150,7 @@ const TRANSLATIONS = {
     nav: { aboutMe: "About me", yoga: "Yoga", ayurveda: "Ayurveda", book: "Book" },
     hero: {
       eyebrow: "Yoga & Ayurveda · Stockholm · 2015",
-      sub: "Welcome to a place where body and mind can meet. Through yoga and ayurveda I offer tools to strengthen, recover and find balance in everyday life.",
+      sub: "Welcome. Through yoga and ayurveda I offer tools to strengthen, recover and find balance in everyday life.",
       scrollLabel: "Scroll down",
     },
     cards: {
@@ -160,7 +160,7 @@ const TRANSLATIONS = {
     },
     about: {
       label: "About me",
-      p1: "I am Jasmin, the person behind Health by Jasmin, a sole proprietorship based in Stockholm, Sweden. I have practised mainly Ashtanga yoga but also yoga in general and Ayurveda for almost 17 years. What first drew me to both yoga and ayurveda was the structure, the rhythm and the way both practices bring things into focus, sometimes gently, sometimes with force.",
+      p1: "I am Jasmin, the person behind Health by Jasmin, a sole proprietorship based in Stockholm, Sweden. I have practised Ashtanga yoga and Ayurveda for almost 17 years. Yin yoga was added along the way. What first drew me to both yoga and ayurveda was the structure, the rhythm and the way both practices bring things into focus, sometimes gently, sometimes with force.",
       p2: "I fell in love with their holistic approach and how they challenge you to look at yourself and your habits from a completely different angle. In 2015/2016 I started Health by Jasmin to create a space where I could share what has truly resonated with me over the years.",
       p3: "I do this in small doses through yoga classes, short courses, occasional retreats and of course the magical ayurvedic massages. I also offer lectures and introductions to Ayurveda, to help people gain a better understanding of its foundations.",
     },
@@ -172,28 +172,28 @@ const TRANSLATIONS = {
       ashtangaP2: "There are two main styles: Mysore, a self-practice where you learn a sequence of postures at your own pace with support from a teacher, and the more well-known led class where everyone moves together with instructions.",
       ashtangaSoon: "Classes coming soon",
       yinTitle: "Yin Yoga",
-      yinP1: "Yin yoga is a slow, meditative practice with a focus on stillness and deep relaxation. Poses are held for several minutes to reach the connective tissue, ligaments and joints rather than the muscles. It increases flexibility, improves joint function and has a calming effect on the nervous system. Yin invites you to turn your gaze inward.",
+      yinP1: "Yin yoga is a slow, still practice where poses are held for several minutes. It works deep into the connective tissue, ligaments and joints rather than the muscles, increasing flexibility and improving joint function. The practice has a calming effect on the nervous system and works well as a complement to more active forms of exercise.",
       yinSchedule: "60 min · Sundays · 12:15–13:15",
       yinBookVia: "Book via Home in Yoga",
       yinPricing: "Pricing",
       yogaAyurvedaTitle: "Yoga & Ayurveda",
       yogaAyurvedaSub: "60 min · Thursdays · 20:00–21:00",
-      yogaAyurvedaP1: "A class in two parts. We begin with a short sharing on ayurveda, perhaps about sleep, the body's daily rhythm, food, digestion or the nature of the doshas. Something to carry with you into everyday life.",
-      yogaAyurvedaP2: "Then yoga. The movements are always adapted so that all doshas benefit, but the style varies. Sometimes more dynamic and flowing, sometimes slower and more still. We weave in body scanning and meditation when it fits.",
-      yogaAyurvedaP3: "Every class is its own. The one constant is that you leave with a little more knowledge about yourself, and a body that has had the chance to move.",
+      yogaAyurvedaP1: "A class in two parts. We begin with a short ayurvedic sharing — a theme, a topic or a tip from the tradition. It might be about doshas, sleep, food, the body's daily rhythm or something else from the world of ayurveda.",
+      yogaAyurvedaP2: "The second part is yoga adapted to the theme, with poses that benefit all doshas. The class moves through flow, standing and seated positions and ends with rest or meditation.",
+      yogaAyurvedaP3: "No prior experience required. The content varies from session to session.",
     },
     ayurveda: {
       label: "Health & wellbeing",
       p1: "Ayurveda gives us knowledge and tools to strengthen and heal ourselves, both physically and mentally. It is a holistic approach to health with roots in India and over 6,000 years of tradition.",
       p2: "Ayurveda sees the whole person: body, mind and everything in between. Nothing stands alone. If you have a headache, it is rarely just about your head; there is likely something else in the body or in life that is connected.",
       massageTitle: "Ayurvedic massage",
-      massageP1: "One of the most beautiful parts of Ayurveda is the treatments, especially the massages. They are often warming and deeply soothing, using warm sesame oil. Sesame oil is antiseptic and anti-inflammatory, warming and naturally softens muscle tension. It is beneficial for all doshas: vata, pitta and kapha.",
-      massageP2: "Ayurvedic massages are performed with warm sesame oil and for specific treatments warm water bags are used. We massage the head, face, front and back of the body including the feet. The sesame oil is antiseptic and anti-inflammatory, warming and naturally softens muscle tension. It is beneficial for all doshas: vata, pitta and kapha.",
+      massageP1: "One of the most beautiful parts of Ayurveda is the treatments, especially the massages. They are often warming and deeply soothing, using warm sesame oil. It is beneficial for all doshas: vata, pitta and kapha.",
+      massageP2: "Ayurvedic massages are performed with warm sesame oil and for specific treatments warm water bags are used. We massage the head, face, front and back of the body including the feet.",
     },
     booking: {
       title: "Book",
-      plats: "Location", dag: "Day", sondagar: "Sundays", torsdagar: "Thursdays", kvallstider: "Evening times",
-      pausad: "Temporarily paused", ingenDusch: "Shower not available at this location",
+      plats: "Location", dag: "Day", sondagar: "Sundays", torsdagar: "Thursdays", kvallstider: "Weekday evenings",
+      pausad: "Temporarily paused", ingenDusch: "Shower not available at this location", duschFinns: "Shower available",
       valjBehandling: "Choose treatment", valjDatum: "Choose date",
       gaVidare: "Continue", andra: "Change", tillbaka: "Back",
       bekrafta: "Confirm booking", skickar: "Sending...", gorNyBokning: "Make a new booking",
@@ -230,14 +230,14 @@ const TRANSLATIONS = {
       items: [
         { text: '"The ayurvedic massage was exactly what I needed. Deep relaxation and a truly professional treatment. I left with a feeling of complete recovery."', author: "Sofia L." },
         { text: '"The yin yoga class with Jasmin is one of the highlights of my weekly routine. Calm, inclusive and meaningful. I notice the difference in my body right after."', author: "Anna M." },
-        { text: '"Jasmin has a unique way of conveying both yoga and ayurveda. The feeling of wholeness and presence stays with you long after the treatment."', author: "Marcus K." },
+        { text: '"Jasmin has a unique way of conveying both yoga and ayurveda. The feeling of wholeness and presence stays with you long afterwards."', author: "Marcus K." },
       ],
       instagram: "Follow @healthbyjasmin",
     },
     faq: {
       label: "Frequently asked questions", title: "FAQ",
       items: [
-        { q: "Where are classes and treatments held?", a: "All yoga classes are held in Vasastan at Birkagatan 23. Ayurvedic treatments are held at two locations: Sundays in Vasastan (Birkagatan 23) and Thursday evenings in Södermalm (Åsögatan 166). See the booking section above for current times." },
+        { q: "Where are classes and treatments held?", a: "All yoga classes are held in Vasastan at Birkagatan 23. Ayurvedic treatments are held at two locations: daytime in Vasastan (Birkagatan 23) and evenings in Södermalm (Åsögatan 166). See the booking section above for current times." },
         { q: "How do I book yoga?", a: "Yoga is booked via the link in the yoga section above." },
         { q: "How do I book an ayurvedic treatment?", a: "Treatments are booked via the form above. Choose your location, date and time directly on the page." },
         { q: "What is the cancellation policy?", a: "Treatments must be cancelled no later than 24 hours in advance. Email healthbyjasmin@gmail.com. For yoga classes, the studio's cancellation policy applies." },
@@ -716,6 +716,7 @@ export default function HealthByJasmin() {
                       <span className="booking-location-day">{b.kvallstider}</span>
                       <span className="booking-location-address">Åsögatan 166, Stockholm</span>
                       <span className="booking-location-times">Fre 17:30 &nbsp;·&nbsp; Ons 18:00</span>
+                      <span className="booking-location-shower-ok">{b.duschFinns}</span>
                     </div>
                     <button
                       className={`boka-behandling-btn${activeLocation === "thu" ? " open" : ""}`}
