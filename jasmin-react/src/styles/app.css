@@ -723,6 +723,29 @@ header {
   margin-top: 2px;
 }
 
+.booking-location-no-shower {
+  font-size: 11px;
+  color: #b08080;
+  margin-top: 4px;
+}
+
+.booking-location-card.paused {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.booking-paused-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  color: #888;
+  background: #f0f0f0;
+  border-radius: 20px;
+  padding: 4px 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 /* Treatment card price */
 .treatment-pick-price {
   font-size: 13px;

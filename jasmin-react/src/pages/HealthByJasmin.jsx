@@ -16,26 +16,17 @@ const EMAILJS_PUBLIC_KEY = "y7Yu8QbgFj3NM0VeM";
 
 // ── Booking dates & slots (language-neutral) ───────────────────────────────────
 
-const BOOKING_SUNDAYS = [
-  new Date(2026, 7, 16), new Date(2026, 7, 23), new Date(2026, 7, 30),
-  new Date(2026, 8, 6),  new Date(2026, 8, 13), new Date(2026, 8, 20),
-  new Date(2026, 8, 27), new Date(2026, 9, 4),  new Date(2026, 9, 11),
-  new Date(2026, 9, 18), new Date(2026, 9, 25),
-];
 
-const MASSAGE_SLOTS = [
-  { t: "09:00", e: "09:55" },
-  { t: "10:10", e: "11:05" },
-];
-
-const BOOKING_THURSDAYS = [
-  new Date(2026, 7, 13),
-  new Date(2026, 7, 20),
-  new Date(2026, 8, 3),
-];
-
-const EVENING_SLOTS = [
-  { t: "18:00", e: "18:55" },
+// Fredagar 17:30 · Onsdagar 18:00 — ett slot per datum
+const KVALL_ENTRIES = [
+  { date: new Date(2026, 7, 28),  slots: [{ t: "17:30", e: "18:25" }] }, // Fre 28 aug
+  { date: new Date(2026, 8, 18),  slots: [{ t: "17:30", e: "18:25" }] }, // Fre 18 sep
+  { date: new Date(2026, 8, 30),  slots: [{ t: "18:00", e: "18:55" }] }, // Ons 30 sep
+  { date: new Date(2026, 9, 16),  slots: [{ t: "17:30", e: "18:25" }] }, // Fre 16 okt
+  { date: new Date(2026, 9, 23),  slots: [{ t: "17:30", e: "18:25" }] }, // Fre 23 okt
+  { date: new Date(2026, 10, 4),  slots: [{ t: "18:00", e: "18:55" }] }, // Ons 4 nov
+  { date: new Date(2026, 10, 18), slots: [{ t: "18:00", e: "18:55" }] }, // Ons 18 nov
+  { date: new Date(2026, 11, 4),  slots: [{ t: "18:00", e: "18:55" }] }, // Ons 4 dec
 ];
 
 // Swedish months always used in emails to Jasmin
@@ -92,7 +83,8 @@ const TRANSLATIONS = {
     },
     booking: {
       title: "Boka",
-      plats: "Plats", dag: "Dag", sondagar: "Söndagar", torsdagar: "Torsdagar",
+      plats: "Plats", dag: "Dag", sondagar: "Söndagar", torsdagar: "Torsdagar", kvallstider: "Kvällstider",
+      pausad: "Tillfälligt pausad", ingenDusch: "Dusch ej tillgänglig på denna plats",
       valjBehandling: "Välj behandling", valjDatum: "Välj datum",
       gaVidare: "Gå vidare", andra: "Ändra", tillbaka: "Tillbaka",
       bekrafta: "Bekräfta bokning", skickar: "Skickar...", gorNyBokning: "Gör en ny bokning",
@@ -200,7 +192,8 @@ const TRANSLATIONS = {
     },
     booking: {
       title: "Book",
-      plats: "Location", dag: "Day", sondagar: "Sundays", torsdagar: "Thursdays",
+      plats: "Location", dag: "Day", sondagar: "Sundays", torsdagar: "Thursdays", kvallstider: "Evening times",
+      pausad: "Temporarily paused", ingenDusch: "Shower not available at this location",
       valjBehandling: "Choose treatment", valjDatum: "Choose date",
       gaVidare: "Continue", andra: "Change", tillbaka: "Back",
       bekrafta: "Confirm booking", skickar: "Sending...", gorNyBokning: "Make a new booking",
@@ -314,7 +307,7 @@ function Navbar({ t, lang, setLang }) {
 
 // ── Booking ───────────────────────────────────────────────────────────────────
 
-function Booking({ t, dates, slots, address, slotPrefix }) {
+function Booking({ t, entries, address, slotPrefix }) {
   const [dateIdx, setDateIdx] = useState(null);
   const [slot, setSlot] = useState(null);
   const [treatment, setTreatment] = useState(null);
@@ -357,7 +350,7 @@ function Booking({ t, dates, slots, address, slotPrefix }) {
     setSending(true);
     setSendError(false);
     const key = `${slotPrefix}-${dateIdx}-${slot.t}`;
-    const d = dates[dateIdx];
+    const d = entries[dateIdx].date;
     const dateStr = `${d.getDate()} ${SV_MONTHS[d.getMonth()]} 2026`;
     const timeStr = `${slot.t}–${slot.e}`;
     const fullName = `${form.firstName} ${form.lastName}`;
@@ -404,7 +397,8 @@ function Booking({ t, dates, slots, address, slotPrefix }) {
     setStep("select");
   }
 
-  const selectedDate = dateIdx !== null ? dates[dateIdx] : null;
+  const selectedDate = dateIdx !== null ? entries[dateIdx].date : null;
+  const slotsForDate = dateIdx !== null ? entries[dateIdx].slots : [];
   const b = t.booking;
 
   return (
@@ -434,8 +428,8 @@ function Booking({ t, dates, slots, address, slotPrefix }) {
           <div className="booking-dates">
             <p className="booking-row-label">{b.valjDatum}</p>
             <div className="dates-scroll">
-              {dates.map((d, i) => {
-                const isPast = d < today;
+              {entries.map(({ date }, i) => {
+                const isPast = date < today;
                 return (
                   <button
                     key={i}
@@ -443,9 +437,9 @@ function Booking({ t, dates, slots, address, slotPrefix }) {
                     disabled={isPast}
                     onClick={() => handleDate(i)}
                   >
-                    <span className="date-wd">{t.days[d.getDay()]}</span>
-                    <span className="date-dd">{d.getDate()}</span>
-                    <span className="date-mo">{t.months[d.getMonth()]}</span>
+                    <span className="date-wd">{t.days[date.getDay()]}</span>
+                    <span className="date-dd">{date.getDate()}</span>
+                    <span className="date-mo">{t.months[date.getMonth()]}</span>
                   </button>
                 );
               })}
@@ -457,7 +451,7 @@ function Booking({ t, dates, slots, address, slotPrefix }) {
             <div className="booking-services">
               <div className="service-row">
                 <div className="times-grid">
-                  {slots.map((s, i) => {
+                  {slotsForDate.map((s, i) => {
                     const key = `${slotPrefix}-${dateIdx}-${s.t}`;
                     const booked = bookedSlots.includes(key);
                     return (
@@ -702,39 +696,26 @@ export default function HealthByJasmin() {
             <div className="section-inner">
               <div className="booking-location-grid">
 
-                {/* Söndagar – Birkagatan 23 */}
-                <div className={`booking-location-card${activeLocation === "sun" ? " active" : ""}`}>
+                {/* Söndagar – Birkagatan 23 (tillfälligt pausad) */}
+                <div className="booking-location-card paused">
                   <div className="booking-location-card-header">
                     <div className="booking-location-info">
                       <span className="booking-location-day">{b.sondagar}</span>
                       <span className="booking-location-address">Birkagatan 23, Stockholm</span>
                       <span className="booking-location-times">09:00–09:55 &nbsp;·&nbsp; 10:10–11:05</span>
+                      <span className="booking-location-no-shower">{b.ingenDusch}</span>
                     </div>
-                    <button
-                      className={`boka-behandling-btn${activeLocation === "sun" ? " open" : ""}`}
-                      onClick={() => toggleLocation("sun")}
-                    >
-                      {activeLocation === "sun" ? b.stangBokning : b.bokaBehandling}
-                    </button>
+                    <span className="booking-paused-badge">{b.pausad}</span>
                   </div>
-                  {activeLocation === "sun" && (
-                    <Booking
-                      t={t}
-                      dates={BOOKING_SUNDAYS}
-                      slots={MASSAGE_SLOTS}
-                      address="Birkagatan 23, Stockholm"
-                      slotPrefix="massage"
-                    />
-                  )}
                 </div>
 
-                {/* Torsdagar – Åsögatan 166 */}
+                {/* Kvällstider – Åsögatan 166 */}
                 <div className={`booking-location-card${activeLocation === "thu" ? " active" : ""}`}>
                   <div className="booking-location-card-header">
                     <div className="booking-location-info">
-                      <span className="booking-location-day">{b.torsdagar}</span>
+                      <span className="booking-location-day">{b.kvallstider}</span>
                       <span className="booking-location-address">Åsögatan 166, Stockholm</span>
-                      <span className="booking-location-times">18:00–18:55</span>
+                      <span className="booking-location-times">Fre 17:30 &nbsp;·&nbsp; Ons 18:00</span>
                     </div>
                     <button
                       className={`boka-behandling-btn${activeLocation === "thu" ? " open" : ""}`}
@@ -746,8 +727,7 @@ export default function HealthByJasmin() {
                   {activeLocation === "thu" && (
                     <Booking
                       t={t}
-                      dates={BOOKING_THURSDAYS}
-                      slots={EVENING_SLOTS}
+                      entries={KVALL_ENTRIES}
                       address="Åsögatan 166, Stockholm"
                       slotPrefix="thu-massage"
                     />
