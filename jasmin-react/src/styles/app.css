@@ -723,6 +723,13 @@ header {
   margin-top: 2px;
 }
 
+.booking-location-meta {
+  font-size: 12px;
+  color: #5C7C8A;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
 .booking-location-no-shower {
   font-size: 11px;
   color: #b08080;

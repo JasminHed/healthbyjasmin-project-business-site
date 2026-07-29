@@ -69,14 +69,14 @@ const TRANSLATIONS = {
       yinPricing: "Priser",
       yogaAyurvedaTitle: "Yoga & Ayurveda",
       yogaAyurvedaSub: "60 min · Torsdagar · 20:00–21:00",
-      yogaAyurvedaP1: "En klass i två delar. Vi börjar med en kort ayurvedisk delning, ett tema, ett ämne eller ett tips från traditionen. Det kan handla om doshor, sömn, mat, dygnsrytm eller något annat ur ayurvedans värld.",
-      yogaAyurvedaP2: "Andra delen är yoga anpassad efter temat, med positioner som gynnar alla doshor. Klassen rör sig genom flöde, stående och sittande positioner och avslutas med vila eller meditation.",
-      yogaAyurvedaP3: "Inga förkunskaper krävs. Innehållet varierar från gång till gång.",
+      yogaAyurvedaP1: "En klass i två delar. Vi börjar med ayurveda, ett tema, ett ämne eller ett tips från traditionen. Det kan handla om doshor, sömn, mat, dygnsrytm eller något annat ur ayurvedans värld.",
+      yogaAyurvedaP2: "Andra delen är yoga med positioner som gynnar alla doshor. Klassen rör sig genom flöde, stående och sittande positioner och avslutas med vila eller meditation.",
+      yogaAyurvedaP3: "",
     },
     ayurveda: {
       label: "Hälsa & välmående",
       p1: "Ayurveda ger oss kunskap och verktyg för att stärka och läka oss själva, både fysiskt och mentalt. Det är ett holistiskt förhållningssätt till hälsa med rötter i Indien och över 6000 år av tradition.",
-      p2: "Ayurveda ser hela människan, kropp, sinne och allt däremellan. Ingenting står ensamt. Har du huvudvärk beror det sällan bara på huvudet, det finns troligtvis något annat i kroppen eller livet som hänger samman.",
+      p2: "Ayurveda ser hela människan, kropp, sinne och allt däremellan. Har du huvudvärk beror det sällan bara på huvudet, det finns troligtvis något annat i kroppen eller livet som hänger samman.",
       massageTitle: "Ayurvedisk massage",
       massageP1: "En av de finaste delarna av Ayurveda är behandlingarna, framförallt massagerna. De är ofta värmande och djupt lugnande, med varm sesamolja. Den är gynnsam för alla doshor: vata, pitta och kapha.",
       massageP2: "Ayurvediska massager utförs med varm sesamolja och vid specifika behandlingar används varmvattenpåsar. Vi masserar huvud, ansikte, fram- och baksida av kroppen inklusive fötter.",
@@ -119,9 +119,9 @@ const TRANSLATIONS = {
     reviews: {
       label: "Recensioner", title: "Vad andra säger",
       items: [
-        { text: '"Den ayurvediska massagen var precis vad jag behövde. Djup avslappning och en verkligt professionell behandling. Jag lämnade med en känsla av fullständig återhämtning."', author: "Sofia L." },
-        { text: '"Yin yogaklassen med Jasmin är en av veckorutinens höjdpunkter. Lugn, inkluderande och meningsfull. Jag märker skillnaden i kroppen direkt efteråt."', author: "Anna M." },
-        { text: '"Jasmin har ett unikt sätt att förmedla både yoga och ayurveda. Känslan av helhet och närvaro stannar kvar länge efteråt."', author: "Marcus K." },
+        { text: '"Den ayurvediska massagen var precis vad jag behövde. Djup avslappning och en verkligt professionell behandling. Jag lämnade med en känsla av fullständig återhämtning."', author: "Frida" },
+        { text: '"Yin yogaklassen med Jasmin är en av veckorutinens höjdpunkter. Lugn, inkluderande och meningsfull. Jag märker skillnaden i kroppen direkt efteråt."', author: "Anna" },
+        { text: '"Jasmin har ett unikt sätt att förmedla både yoga och ayurveda."', author: "Juan" },
       ],
       instagram: "Följ @healthbyjasmin",
     },
@@ -178,14 +178,14 @@ const TRANSLATIONS = {
       yinPricing: "Pricing",
       yogaAyurvedaTitle: "Yoga & Ayurveda",
       yogaAyurvedaSub: "60 min · Thursdays · 20:00–21:00",
-      yogaAyurvedaP1: "A class in two parts. We begin with a short ayurvedic sharing — a theme, a topic or a tip from the tradition. It might be about doshas, sleep, food, the body's daily rhythm or something else from the world of ayurveda.",
-      yogaAyurvedaP2: "The second part is yoga adapted to the theme, with poses that benefit all doshas. The class moves through flow, standing and seated positions and ends with rest or meditation.",
-      yogaAyurvedaP3: "No prior experience required. The content varies from session to session.",
+      yogaAyurvedaP1: "A class in two parts. We begin with ayurveda, a theme, a topic or a tip from the tradition. It might be about doshas, sleep, food, the body's daily rhythm or something else from the world of ayurveda.",
+      yogaAyurvedaP2: "The second part is yoga with poses that benefit all doshas. The class moves through flow, standing and seated positions and ends with rest or meditation.",
+      yogaAyurvedaP3: "",
     },
     ayurveda: {
       label: "Health & wellbeing",
       p1: "Ayurveda gives us knowledge and tools to strengthen and heal ourselves, both physically and mentally. It is a holistic approach to health with roots in India and over 6,000 years of tradition.",
-      p2: "Ayurveda sees the whole person: body, mind and everything in between. Nothing stands alone. If you have a headache, it is rarely just about your head; there is likely something else in the body or in life that is connected.",
+      p2: "Ayurveda sees the whole person: body, mind and everything in between. If you have a headache, it is rarely just about your head; there is likely something else in the body or in life that is connected.",
       massageTitle: "Ayurvedic massage",
       massageP1: "One of the most beautiful parts of Ayurveda is the treatments, especially the massages. They are often warming and deeply soothing, using warm sesame oil. It is beneficial for all doshas: vata, pitta and kapha.",
       massageP2: "Ayurvedic massages are performed with warm sesame oil and for specific treatments warm water bags are used. We massage the head, face, front and back of the body including the feet.",
@@ -228,9 +228,9 @@ const TRANSLATIONS = {
     reviews: {
       label: "Reviews", title: "What others say",
       items: [
-        { text: '"The ayurvedic massage was exactly what I needed. Deep relaxation and a truly professional treatment. I left with a feeling of complete recovery."', author: "Sofia L." },
-        { text: '"The yin yoga class with Jasmin is one of the highlights of my weekly routine. Calm, inclusive and meaningful. I notice the difference in my body right after."', author: "Anna M." },
-        { text: '"Jasmin has a unique way of conveying both yoga and ayurveda. The feeling of wholeness and presence stays with you long afterwards."', author: "Marcus K." },
+        { text: '"The ayurvedic massage was exactly what I needed. Deep relaxation and a truly professional treatment. I left with a feeling of complete recovery."', author: "Frida" },
+        { text: '"The yin yoga class with Jasmin is one of the highlights of my weekly routine. Calm, inclusive and meaningful. I notice the difference in my body right after."', author: "Anna" },
+        { text: '"Jasmin has a unique way of conveying both yoga and ayurveda."', author: "Juan" },
       ],
       instagram: "Follow @healthbyjasmin",
     },
@@ -655,7 +655,7 @@ export default function HealthByJasmin() {
                 <h3>{t.yoga.yogaAyurvedaTitle}</h3>
                 <p>{t.yoga.yogaAyurvedaP1}</p>
                 <p>{t.yoga.yogaAyurvedaP2}</p>
-                <p>{t.yoga.yogaAyurvedaP3}</p>
+                {t.yoga.yogaAyurvedaP3 && <p>{t.yoga.yogaAyurvedaP3}</p>}
                 <div className="yoga-card-footer">
                   <span className="yoga-col-schedule">{t.yoga.yogaAyurvedaSub}</span>
                 </div>
@@ -703,6 +703,7 @@ export default function HealthByJasmin() {
                       <span className="booking-location-day">{b.sondagar}</span>
                       <span className="booking-location-address">Birkagatan 23, Stockholm</span>
                       <span className="booking-location-times">09:00–09:55 &nbsp;·&nbsp; 10:10–11:05</span>
+                      <span className="booking-location-meta">{b.duration} &nbsp;·&nbsp; {b.pris}</span>
                       <span className="booking-location-no-shower">{b.ingenDusch}</span>
                     </div>
                     <span className="booking-paused-badge">{b.pausad}</span>
@@ -716,6 +717,7 @@ export default function HealthByJasmin() {
                       <span className="booking-location-day">{b.kvallstider}</span>
                       <span className="booking-location-address">Åsögatan 166, Stockholm</span>
                       <span className="booking-location-times">Fre 17:30 &nbsp;·&nbsp; Ons 18:00</span>
+                      <span className="booking-location-meta">{b.duration} &nbsp;·&nbsp; {b.pris}</span>
                       <span className="booking-location-shower-ok">{b.duschFinns}</span>
                     </div>
                     <button
