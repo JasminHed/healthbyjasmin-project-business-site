@@ -317,11 +317,11 @@ header {
   flex-direction: column;
   justify-content: space-between;
   gap: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 .testimonial-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+  background: #f0f5f7;
+  border-color: #b0c4cc;
 }
 
 .testimonial-text {

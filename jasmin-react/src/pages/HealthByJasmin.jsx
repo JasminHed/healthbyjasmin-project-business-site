@@ -339,9 +339,11 @@ function Booking({ t, entries, address, slotPrefix }) {
   function handleDate(i) {
     const s = entries[i].slots[0];
     const key = `${slotPrefix}-${i}-${s.t}`;
+    const available = !bookedSlots.includes(key);
     setDateIdx(i);
-    setSlot(bookedSlots.includes(key) ? null : s);
-    if (step === "form") setStep("select");
+    setSlot(available ? s : null);
+    if (available && treatment !== null) setStep("form");
+    else if (step === "form") setStep("select");
   }
 
   function handleField(e) {
@@ -415,7 +417,10 @@ function Booking({ t, entries, address, slotPrefix }) {
                 <button
                   key={tr.id}
                   className={`treatment-pick-card${treatment === tr.id ? " selected" : ""}`}
-                  onClick={() => setTreatment(tr.id)}
+                  onClick={() => {
+                    setTreatment(tr.id);
+                    if (dateIdx !== null && slot !== null) setStep("form");
+                  }}
                 >
                   <span className="treatment-pick-name">{tr.name}</span>
                   <span className="treatment-pick-desc">{tr.description}</span>
@@ -448,14 +453,8 @@ function Booking({ t, entries, address, slotPrefix }) {
                 );
               })}
             </div>
-            {dateIdx !== null && step === "select" && (
-              <div style={{ marginTop: "1rem" }}>
-                {treatment ? (
-                  <button className="booking-btn-next" onClick={() => setStep("form")}>{b.gaVidare}</button>
-                ) : (
-                  <p style={{ fontSize: "13px", color: "#888", margin: 0 }}>{b.behandlingHint}</p>
-                )}
-              </div>
+            {dateIdx !== null && step === "select" && !treatment && (
+              <p style={{ fontSize: "13px", color: "#888", margin: "0.75rem 0 0" }}>{b.behandlingHint}</p>
             )}
           </div>
 
