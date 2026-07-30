@@ -337,8 +337,10 @@ function Booking({ t, entries, address, slotPrefix }) {
     treatment !== null;
 
   function handleDate(i) {
+    const s = entries[i].slots[0];
+    const key = `${slotPrefix}-${i}-${s.t}`;
     setDateIdx(i);
-    setSlot(null);
+    setSlot(bookedSlots.includes(key) ? null : s);
     if (step === "form") setStep("select");
   }
 
@@ -398,7 +400,6 @@ function Booking({ t, entries, address, slotPrefix }) {
   }
 
   const selectedDate = dateIdx !== null ? entries[dateIdx].date : null;
-  const slotsForDate = dateIdx !== null ? entries[dateIdx].slots : [];
   const b = t.booking;
 
   return (
@@ -430,56 +431,33 @@ function Booking({ t, entries, address, slotPrefix }) {
             <div className="dates-scroll">
               {entries.map(({ date, slots }, i) => {
                 const isPast = date < today;
+                const slotKey = `${slotPrefix}-${i}-${slots[0].t}`;
+                const isBooked = bookedSlots.includes(slotKey);
                 return (
                   <button
                     key={i}
-                    className={`date-btn${isPast ? " disabled" : ""}${dateIdx === i ? " selected" : ""}`}
-                    disabled={isPast}
+                    className={`date-btn${isPast || isBooked ? " disabled" : ""}${dateIdx === i ? " selected" : ""}`}
+                    disabled={isPast || isBooked}
                     onClick={() => handleDate(i)}
                   >
                     <span className="date-wd">{t.days[date.getDay()]}</span>
                     <span className="date-dd">{date.getDate()}</span>
                     <span className="date-mo">{t.months[date.getMonth()]}</span>
-                    <span className="date-time">{slots[0].t}</span>
+                    <span className="date-time">{isBooked ? b.fullbooked : slots[0].t}</span>
                   </button>
                 );
               })}
             </div>
-          </div>
-
-          {/* Massage tider */}
-          {dateIdx !== null && step === "select" && (
-            <div className="booking-services">
-              <div className="service-row">
-                <div className="times-grid">
-                  {slotsForDate.map((s, i) => {
-                    const key = `${slotPrefix}-${dateIdx}-${s.t}`;
-                    const booked = bookedSlots.includes(key);
-                    return (
-                      <div
-                        key={i}
-                        className={`time-slot${slot === s ? " selected" : ""}${booked ? " booked" : ""}`}
-                        onClick={() => !booked && setSlot(s)}
-                      >
-                        <div className="time-slot-t">{s.t} – {s.e}</div>
-                        <div className="time-slot-s">{booked ? b.fullbooked : b.duration}</div>
-                      </div>
-                    );
-                  })}
-                </div>
-                {slot && treatment && (
-                  <button className="booking-btn-next" style={{ marginTop: "1rem" }} onClick={() => setStep("form")}>
-                    {b.gaVidare}
-                  </button>
-                )}
-                {slot && !treatment && (
-                  <p style={{ fontSize: "13px", color: "#888", margin: "0.75rem 0 0", maxWidth: "100%" }}>
-                    {b.behandlingHint}
-                  </p>
+            {dateIdx !== null && step === "select" && (
+              <div style={{ marginTop: "1rem" }}>
+                {treatment ? (
+                  <button className="booking-btn-next" onClick={() => setStep("form")}>{b.gaVidare}</button>
+                ) : (
+                  <p style={{ fontSize: "13px", color: "#888", margin: 0 }}>{b.behandlingHint}</p>
                 )}
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
           {/* Bokningsformulär */}
           {step === "form" && selectedDate && slot && (
