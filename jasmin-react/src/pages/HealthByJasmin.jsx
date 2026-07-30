@@ -208,7 +208,7 @@ const TRANSLATIONS = {
       rowBehandling: "Treatment", rowDatum: "Date", rowTid: "Time",
       rowPlats: "Location", rowBetalning: "Payment", rowFaktura: "Invoice via Frilans Finans",
       info1: "Please arrive 10 minutes before your treatment.",
-      info2: "Bring or wear comfortable clothes and underwear.",
+      info2: "Wear loose, comfortable clothes. Underwear is needed during the treatment.",
       info3: "Shower available with towel, shampoo and shower gel.",
       info4pre: "Cancellation no later than 24 hours before via",
       errorMsg: "Something went wrong. Contact healthbyjasmin@gmail.com",
@@ -428,7 +428,7 @@ function Booking({ t, entries, address, slotPrefix }) {
           <div className="booking-dates">
             <p className="booking-row-label">{b.valjDatum}</p>
             <div className="dates-scroll">
-              {entries.map(({ date }, i) => {
+              {entries.map(({ date, slots }, i) => {
                 const isPast = date < today;
                 return (
                   <button
@@ -440,6 +440,7 @@ function Booking({ t, entries, address, slotPrefix }) {
                     <span className="date-wd">{t.days[date.getDay()]}</span>
                     <span className="date-dd">{date.getDate()}</span>
                     <span className="date-mo">{t.months[date.getMonth()]}</span>
+                    <span className="date-time">{slots[0].t}</span>
                   </button>
                 );
               })}
@@ -567,6 +568,19 @@ export default function HealthByJasmin() {
     setActiveLocation((prev) => (prev === loc ? null : loc));
   }
 
+  useEffect(() => {
+    const els = document.querySelectorAll(".fade-up");
+    if (!els.length) return;
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add("visible"); observer.unobserve(e.target); }
+      }),
+      { threshold: 0.1 }
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [lang]);
+
   return (
     <>
       <SummerBanner t={t} />
@@ -611,7 +625,7 @@ export default function HealthByJasmin() {
         {/* Om mig */}
         <section id="om-mig" className="content-section about-bg">
           <div className="section-inner">
-            <div className="about-split">
+            <div className="about-split fade-up">
               <div className="about-split-head">
                 <span className="section-label">{t.about.label}</span>
                 <h2>Jasmin<br />Hedlund</h2>
@@ -630,12 +644,12 @@ export default function HealthByJasmin() {
         {/* Yoga */}
         <section id="yoga" className="content-section yoga-text-section">
           <div className="section-inner">
-            <div className="yoga-split-top">
+            <div className="yoga-split-top fade-up">
               <span className="section-label">{t.yoga.label}</span>
               <h2>Yoga</h2>
               <p className="yoga-intro">{t.yoga.intro}</p>
             </div>
-            <div className="yoga-cards-grid">
+            <div className="yoga-cards-grid fade-up">
               <div className="yoga-card">
                 <h3>{t.yoga.ashtangaTitle}</h3>
                 <p>{t.yoga.ashtangaP1}</p>
@@ -761,7 +775,7 @@ export default function HealthByJasmin() {
           <div className="section-inner">
             <span className="section-label">{t.reviews.label}</span>
             <h2>{t.reviews.title}</h2>
-            <div className="testimonials-grid">
+            <div className="testimonials-grid fade-up">
               {t.reviews.items.map((r) => (
                 <div key={r.author} className="testimonial-card">
                   <p className="testimonial-text">{r.text}</p>
@@ -783,7 +797,7 @@ export default function HealthByJasmin() {
           <div className="section-inner">
             <span className="section-label">{t.faq.label}</span>
             <h2>{t.faq.title}</h2>
-            <div className="faq-grid">
+            <div className="faq-grid fade-up">
               {t.faq.items.map(({ q, a }) => (
                 <div key={q} className="faq-item">
                   <h3>{q}</h3>
