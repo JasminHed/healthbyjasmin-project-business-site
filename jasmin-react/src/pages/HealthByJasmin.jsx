@@ -17,26 +17,22 @@ const EMAILJS_PUBLIC_KEY = "y7Yu8QbgFj3NM0VeM";
 // ── Booking dates & slots (language-neutral) ───────────────────────────────────
 
 
-// Torsdagar — Birkagatan 23. Dubbeldagar (★) har två separata bokningsbara tider.
+// Torsdagar 18:30 — Birkagatan 23
 const TORSDAG_ENTRIES = [
   { date: new Date(2026, 7, 20),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 20 aug
   { date: new Date(2026, 7, 27),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 27 aug
   { date: new Date(2026, 8, 3),   slots: [{ t: "18:30", e: "19:25" }] }, // Tor  3 sep
-  { date: new Date(2026, 8, 10),  slots: [{ t: "18:00", e: "18:55" }] }, // Tor 10 sep ★
-  { date: new Date(2026, 8, 10),  slots: [{ t: "19:10", e: "20:05" }] }, // Tor 10 sep ★
+  { date: new Date(2026, 8, 10),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 10 sep
   { date: new Date(2026, 8, 17),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 17 sep
   { date: new Date(2026, 8, 24),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 24 sep
   { date: new Date(2026, 9, 1),   slots: [{ t: "18:30", e: "19:25" }] }, // Tor  1 okt
-  { date: new Date(2026, 9, 8),   slots: [{ t: "18:00", e: "18:55" }] }, // Tor  8 okt ★
-  { date: new Date(2026, 9, 8),   slots: [{ t: "19:10", e: "20:05" }] }, // Tor  8 okt ★
+  { date: new Date(2026, 9, 8),   slots: [{ t: "18:30", e: "19:25" }] }, // Tor  8 okt
   { date: new Date(2026, 9, 15),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 15 okt
   { date: new Date(2026, 9, 22),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 22 okt
-  { date: new Date(2026, 9, 29),  slots: [{ t: "18:00", e: "18:55" }] }, // Tor 29 okt ★
-  { date: new Date(2026, 9, 29),  slots: [{ t: "19:10", e: "20:05" }] }, // Tor 29 okt ★
+  { date: new Date(2026, 9, 29),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 29 okt
   { date: new Date(2026, 10, 5),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor  5 nov
   { date: new Date(2026, 10, 12), slots: [{ t: "18:30", e: "19:25" }] }, // Tor 12 nov
-  { date: new Date(2026, 10, 19), slots: [{ t: "18:00", e: "18:55" }] }, // Tor 19 nov ★
-  { date: new Date(2026, 10, 19), slots: [{ t: "19:10", e: "20:05" }] }, // Tor 19 nov ★
+  { date: new Date(2026, 10, 19), slots: [{ t: "18:30", e: "19:25" }] }, // Tor 19 nov
   { date: new Date(2026, 10, 26), slots: [{ t: "18:30", e: "19:25" }] }, // Tor 26 nov
 ];
 
@@ -106,7 +102,7 @@ const TRANSLATIONS = {
     },
     booking: {
       title: "Boka",
-      plats: "Plats", dag: "Dag", sondagar: "Söndagar", torsdagar: "Torsdagar", kvallstider: "Vardagar kvällstider",
+      plats: "Plats", dag: "Dag", sondagar: "Söndagar", torsdagar: "Torsdagar kväll", kvallstider: "Ons & fre kväll",
       pausad: "Tillfälligt pausad", ingenDusch: "Dusch ej tillgänglig på denna plats", duschFinns: "Dusch finns tillgänglig",
       valjBehandling: "Välj behandling", valjDatum: "Välj datum",
       gaVidare: "Gå vidare", andra: "Ändra", tillbaka: "Tillbaka",
@@ -151,7 +147,7 @@ const TRANSLATIONS = {
     faq: {
       label: "Vanliga frågor", title: "FAQ",
       items: [
-        { q: "Var hålls klasser och behandlingar?", a: "Alla yogaklasser hålls i Vasastan på Birkagatan 23. Ayurvediska behandlingar hålls på två ställen: dagtid i Vasastan (Birkagatan 23) och kvällar på Södermalm (Åsögatan 166). Se bokningssektionen ovan för aktuella tider." },
+        { q: "Var hålls klasser och behandlingar?", a: "Alla yogaklasser hålls i Vasastan på Birkagatan 23. Ayurvediska behandlingar hålls på kvällstid på två ställen: torsdagskvällar i Vasastan (Birkagatan 23) och onsdag- och fredagskvällar på Södermalm (Åsögatan 166). Se bokningssektionen ovan för aktuella tider." },
         { q: "Hur bokar jag yoga?", a: "Yoga bokas via länken i yogasektionen ovan." },
         { q: "Hur bokar jag ayurvedisk behandling?", a: "Behandlingar bokas direkt via formuläret ovan. Välj plats, datum och tid direkt på sidan." },
         { q: "Vad gäller vid avbokning?", a: "Avbokning av behandling görs senast 24 timmar innan. Mejla healthbyjasmin@gmail.com. För yogaklasser gäller studiots avbokningsregler." },
@@ -215,7 +211,7 @@ const TRANSLATIONS = {
     },
     booking: {
       title: "Book",
-      plats: "Location", dag: "Day", sondagar: "Sundays", torsdagar: "Thursdays", kvallstider: "Weekday evenings",
+      plats: "Location", dag: "Day", sondagar: "Sundays", torsdagar: "Thursday evenings", kvallstider: "Wed & Fri evenings",
       pausad: "Temporarily paused", ingenDusch: "Shower not available at this location", duschFinns: "Shower available",
       valjBehandling: "Choose treatment", valjDatum: "Choose date",
       gaVidare: "Continue", andra: "Change", tillbaka: "Back",
@@ -260,7 +256,7 @@ const TRANSLATIONS = {
     faq: {
       label: "Frequently asked questions", title: "FAQ",
       items: [
-        { q: "Where are classes and treatments held?", a: "All yoga classes are held in Vasastan at Birkagatan 23. Ayurvedic treatments are held at two locations: daytime in Vasastan (Birkagatan 23) and evenings in Södermalm (Åsögatan 166). See the booking section above for current times." },
+        { q: "Where are classes and treatments held?", a: "All yoga classes are held in Vasastan at Birkagatan 23. Ayurvedic treatments are held in the evenings at two locations: Thursday evenings in Vasastan (Birkagatan 23) and Wednesday and Friday evenings in Södermalm (Åsögatan 166). See the booking section above for current times." },
         { q: "How do I book yoga?", a: "Yoga is booked via the link in the yoga section above." },
         { q: "How do I book an ayurvedic treatment?", a: "Treatments are booked via the form above. Choose your location, date and time directly on the page." },
         { q: "What is the cancellation policy?", a: "Treatments must be cancelled no later than 24 hours in advance. Email healthbyjasmin@gmail.com. For yoga classes, the studio's cancellation policy applies." },
