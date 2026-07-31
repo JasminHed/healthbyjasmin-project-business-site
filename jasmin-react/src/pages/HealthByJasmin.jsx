@@ -17,6 +17,29 @@ const EMAILJS_PUBLIC_KEY = "y7Yu8QbgFj3NM0VeM";
 // ── Booking dates & slots (language-neutral) ───────────────────────────────────
 
 
+// Torsdagar — Birkagatan 23. Dubbeldagar (★) har två separata bokningsbara tider.
+const TORSDAG_ENTRIES = [
+  { date: new Date(2026, 7, 20),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 20 aug
+  { date: new Date(2026, 7, 27),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 27 aug
+  { date: new Date(2026, 8, 3),   slots: [{ t: "18:30", e: "19:25" }] }, // Tor  3 sep
+  { date: new Date(2026, 8, 10),  slots: [{ t: "18:00", e: "18:55" }] }, // Tor 10 sep ★
+  { date: new Date(2026, 8, 10),  slots: [{ t: "19:10", e: "20:05" }] }, // Tor 10 sep ★
+  { date: new Date(2026, 8, 17),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 17 sep
+  { date: new Date(2026, 8, 24),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 24 sep
+  { date: new Date(2026, 9, 1),   slots: [{ t: "18:30", e: "19:25" }] }, // Tor  1 okt
+  { date: new Date(2026, 9, 8),   slots: [{ t: "18:00", e: "18:55" }] }, // Tor  8 okt ★
+  { date: new Date(2026, 9, 8),   slots: [{ t: "19:10", e: "20:05" }] }, // Tor  8 okt ★
+  { date: new Date(2026, 9, 15),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 15 okt
+  { date: new Date(2026, 9, 22),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 22 okt
+  { date: new Date(2026, 9, 29),  slots: [{ t: "18:00", e: "18:55" }] }, // Tor 29 okt ★
+  { date: new Date(2026, 9, 29),  slots: [{ t: "19:10", e: "20:05" }] }, // Tor 29 okt ★
+  { date: new Date(2026, 10, 5),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor  5 nov
+  { date: new Date(2026, 10, 12), slots: [{ t: "18:30", e: "19:25" }] }, // Tor 12 nov
+  { date: new Date(2026, 10, 19), slots: [{ t: "18:00", e: "18:55" }] }, // Tor 19 nov ★
+  { date: new Date(2026, 10, 19), slots: [{ t: "19:10", e: "20:05" }] }, // Tor 19 nov ★
+  { date: new Date(2026, 10, 26), slots: [{ t: "18:30", e: "19:25" }] }, // Tor 26 nov
+];
+
 // Fredagar 17:30 · Onsdagar 18:00 — ett slot per datum
 const KVALL_ENTRIES = [
   { date: new Date(2026, 7, 28),  slots: [{ t: "17:30", e: "18:25" }] }, // Fre 28 aug
@@ -687,18 +710,31 @@ export default function HealthByJasmin() {
             <div className="section-inner">
               <div className="booking-location-grid">
 
-                {/* Söndagar – Birkagatan 23 (tillfälligt pausad) */}
-                <div className="booking-location-card paused">
+                {/* Torsdagar – Birkagatan 23 */}
+                <div className={`booking-location-card${activeLocation === "birka" ? " active" : ""}`}>
                   <div className="booking-location-card-header">
                     <div className="booking-location-info">
-                      <span className="booking-location-day">{b.sondagar}</span>
+                      <span className="booking-location-day">{b.torsdagar}</span>
                       <span className="booking-location-address">Birkagatan 23, Stockholm</span>
-                      <span className="booking-location-times">09:00–09:55 &nbsp;·&nbsp; 10:10–11:05</span>
+                      <span className="booking-location-times">18:30–19:25</span>
                       <span className="booking-location-meta">{b.duration} &nbsp;·&nbsp; {b.pris}</span>
                       <span className="booking-location-no-shower">{b.ingenDusch}</span>
                     </div>
-                    <span className="booking-paused-badge">{b.pausad}</span>
+                    <button
+                      className={`boka-behandling-btn${activeLocation === "birka" ? " open" : ""}`}
+                      onClick={() => toggleLocation("birka")}
+                    >
+                      {activeLocation === "birka" ? b.stangBokning : b.bokaBehandling}
+                    </button>
                   </div>
+                  {activeLocation === "birka" && (
+                    <Booking
+                      t={t}
+                      entries={TORSDAG_ENTRIES}
+                      address="Birkagatan 23, Stockholm"
+                      slotPrefix="birka-massage"
+                    />
+                  )}
                 </div>
 
                 {/* Kvällstider – Åsögatan 166 */}
