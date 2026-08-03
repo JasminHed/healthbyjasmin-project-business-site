@@ -17,7 +17,8 @@ const EMAILJS_PUBLIC_KEY = "y7Yu8QbgFj3NM0VeM";
 // ── Booking dates & slots (language-neutral) ───────────────────────────────────
 
 
-// Torsdagar 18:30 — Birkagatan 23
+// Torsdagar 18:30 — Birkagatan 23 (pausad, återanvänds när bokning öppnar)
+// eslint-disable-next-line no-unused-vars
 const TORSDAG_ENTRIES = [
   { date: new Date(2026, 7, 20),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 20 aug
   { date: new Date(2026, 7, 27),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 27 aug
@@ -706,8 +707,8 @@ export default function HealthByJasmin() {
             <div className="section-inner">
               <div className="booking-location-grid">
 
-                {/* Torsdagar – Birkagatan 23 */}
-                <div className={`booking-location-card${activeLocation === "birka" ? " active" : ""}`}>
+                {/* Torsdagar – Birkagatan 23 (tillfälligt pausad) */}
+                <div className="booking-location-card paused">
                   <div className="booking-location-card-header">
                     <div className="booking-location-info">
                       <span className="booking-location-day">{b.torsdagar}</span>
@@ -716,21 +717,8 @@ export default function HealthByJasmin() {
                       <span className="booking-location-meta">{b.duration} &nbsp;·&nbsp; {b.pris}</span>
                       <span className="booking-location-no-shower">{b.ingenDusch}</span>
                     </div>
-                    <button
-                      className={`boka-behandling-btn${activeLocation === "birka" ? " open" : ""}`}
-                      onClick={() => toggleLocation("birka")}
-                    >
-                      {activeLocation === "birka" ? b.stangBokning : b.bokaBehandling}
-                    </button>
+                    <span className="booking-paused-badge">{b.pausad}</span>
                   </div>
-                  {activeLocation === "birka" && (
-                    <Booking
-                      t={t}
-                      entries={TORSDAG_ENTRIES}
-                      address="Birkagatan 23, Stockholm"
-                      slotPrefix="birka-massage"
-                    />
-                  )}
                 </div>
 
                 {/* Kvällstider – Åsögatan 166 */}
