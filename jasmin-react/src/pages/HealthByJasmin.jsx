@@ -19,36 +19,36 @@ const EMAILJS_PUBLIC_KEY = "y7Yu8QbgFj3NM0VeM";
 
 // Torsdagar — Birkagatan 23. Varje kväll två tider: 18:30 och 21:15.
 const TORSDAG_ENTRIES = [
-  { date: new Date(2026, 7, 20),  slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 7, 20),  slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 7, 27),  slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 7, 27),  slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 8, 3),   slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 8, 3),   slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 8, 10),  slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 8, 10),  slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 8, 17),  slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 8, 17),  slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 8, 24),  slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 8, 24),  slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 9, 1),   slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 9, 1),   slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 9, 8),   slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 9, 8),   slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 9, 15),  slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 9, 15),  slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 9, 22),  slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 9, 22),  slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 9, 29),  slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 9, 29),  slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 10, 5),  slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 10, 5),  slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 10, 12), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 10, 12), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 10, 19), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 10, 19), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 10, 26), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 10, 26), slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2026, 7, 20),  slots: [{ t: "18:30", e: "19:20" }] },
+  { date: new Date(2026, 7, 20),  slots: [{ t: "21:15", e: "22:05" }] },
+  { date: new Date(2026, 7, 27),  slots: [{ t: "18:30", e: "19:20" }] },
+  { date: new Date(2026, 7, 27),  slots: [{ t: "21:15", e: "22:05" }] },
+  { date: new Date(2026, 8, 3),   slots: [{ t: "18:30", e: "19:20" }] },
+  { date: new Date(2026, 8, 3),   slots: [{ t: "21:15", e: "22:05" }] },
+  { date: new Date(2026, 8, 10),  slots: [{ t: "18:30", e: "19:20" }] },
+  { date: new Date(2026, 8, 10),  slots: [{ t: "21:15", e: "22:05" }] },
+  { date: new Date(2026, 8, 17),  slots: [{ t: "18:30", e: "19:20" }] },
+  { date: new Date(2026, 8, 17),  slots: [{ t: "21:15", e: "22:05" }] },
+  { date: new Date(2026, 8, 24),  slots: [{ t: "18:30", e: "19:20" }] },
+  { date: new Date(2026, 8, 24),  slots: [{ t: "21:15", e: "22:05" }] },
+  { date: new Date(2026, 9, 1),   slots: [{ t: "18:30", e: "19:20" }] },
+  { date: new Date(2026, 9, 1),   slots: [{ t: "21:15", e: "22:05" }] },
+  { date: new Date(2026, 9, 8),   slots: [{ t: "18:30", e: "19:20" }] },
+  { date: new Date(2026, 9, 8),   slots: [{ t: "21:15", e: "22:05" }] },
+  { date: new Date(2026, 9, 15),  slots: [{ t: "18:30", e: "19:20" }] },
+  { date: new Date(2026, 9, 15),  slots: [{ t: "21:15", e: "22:05" }] },
+  { date: new Date(2026, 9, 22),  slots: [{ t: "18:30", e: "19:20" }] },
+  { date: new Date(2026, 9, 22),  slots: [{ t: "21:15", e: "22:05" }] },
+  { date: new Date(2026, 9, 29),  slots: [{ t: "18:30", e: "19:20" }] },
+  { date: new Date(2026, 9, 29),  slots: [{ t: "21:15", e: "22:05" }] },
+  { date: new Date(2026, 10, 5),  slots: [{ t: "18:30", e: "19:20" }] },
+  { date: new Date(2026, 10, 5),  slots: [{ t: "21:15", e: "22:05" }] },
+  { date: new Date(2026, 10, 12), slots: [{ t: "18:30", e: "19:20" }] },
+  { date: new Date(2026, 10, 12), slots: [{ t: "21:15", e: "22:05" }] },
+  { date: new Date(2026, 10, 19), slots: [{ t: "18:30", e: "19:20" }] },
+  { date: new Date(2026, 10, 19), slots: [{ t: "21:15", e: "22:05" }] },
+  { date: new Date(2026, 10, 26), slots: [{ t: "18:30", e: "19:20" }] },
+  { date: new Date(2026, 10, 26), slots: [{ t: "21:15", e: "22:05" }] },
 ];
 
 // Fredagar 17:30 · Onsdagar 18:00 — Åsögatan 166 (pausad, återanvänds när bokning öppnar)
@@ -128,7 +128,7 @@ const TRANSLATIONS = {
       email: "E-post", emailPh: "din@email.se",
       phone: "Telefon", phonePh: "07X XXX XX XX",
       betalning: "Betalning", betalningTitle: "Faktura via Frilans Finans", betalningDesc: "Du faktureras efter behandlingen",
-      fullbooked: "Fullbokad", duration: "55 min", pris: "750 kr", rowPris: "Pris",
+      fullbooked: "Fullbokad", duration: "50 min", pris: "750 kr", rowPris: "Pris",
       confirmTitle: "Bokning bekräftad",
       confirmSub: (name) => `Tack ${name}! Din bokning är registrerad.`,
       rowBehandling: "Behandling", rowDatum: "Datum", rowTid: "Tid",
@@ -177,15 +177,15 @@ const TRANSLATIONS = {
     },
     weekSchedule: {
       items: [
-        { day: "Torsdag", time: "18:30–19:25", type: "Ayurvedisk massage",       loc: "Birkagatan 23", booking: true },
+        { day: "Torsdag", time: "18:30–19:20", type: "Ayurvedisk massage",       loc: "Birkagatan 23", booking: true },
         { day: "Torsdag", time: "20:00–21:00", type: "Yoga & Ayurveda klass",   loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
-        { day: "Torsdag", time: "21:15–22:10", type: "Ayurvedisk massage",       loc: "Birkagatan 23", booking: true },
+        { day: "Torsdag", time: "21:15–22:05", type: "Ayurvedisk massage",       loc: "Birkagatan 23", booking: true },
         { day: "Söndag",  time: "12:15–13:15", type: "Yin Yoga klass",           loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
       ],
       bookLabel: "Boka",
       closeLabel: "Stäng",
     },
-    courses: { title: "Kurser", soon: "Kommer snart" },
+    courses: { title: "Retreat", soon: "Kommer snart" },
     footer: { location: "Vasastan, Stockholm" },
   },
 
@@ -247,7 +247,7 @@ const TRANSLATIONS = {
       email: "Email", emailPh: "your@email.com",
       phone: "Phone", phonePh: "07X XXX XX XX",
       betalning: "Payment", betalningTitle: "Invoice via Frilans Finans", betalningDesc: "You will be invoiced after the treatment",
-      fullbooked: "Fully booked", duration: "55 min", pris: "750 kr", rowPris: "Price",
+      fullbooked: "Fully booked", duration: "50 min", pris: "750 kr", rowPris: "Price",
       confirmTitle: "Booking confirmed",
       confirmSub: (name) => `Thank you ${name}! Your booking is registered.`,
       rowBehandling: "Treatment", rowDatum: "Date", rowTid: "Time",
@@ -296,15 +296,15 @@ const TRANSLATIONS = {
     },
     weekSchedule: {
       items: [
-        { day: "Thursday", time: "18:30–19:25", type: "Ayurvedic massage",       loc: "Birkagatan 23", booking: true },
+        { day: "Thursday", time: "18:30–19:20", type: "Ayurvedic massage",       loc: "Birkagatan 23", booking: true },
         { day: "Thursday", time: "20:00–21:00", type: "Yoga & Ayurveda class",  loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
-        { day: "Thursday", time: "21:15–22:10", type: "Ayurvedic massage",       loc: "Birkagatan 23", booking: true },
+        { day: "Thursday", time: "21:15–22:05", type: "Ayurvedic massage",       loc: "Birkagatan 23", booking: true },
         { day: "Sunday",   time: "12:15–13:15", type: "Yin Yoga class",          loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
       ],
       bookLabel: "Book",
       closeLabel: "Close",
     },
-    courses: { title: "Courses", soon: "Coming soon" },
+    courses: { title: "Retreat", soon: "Coming soon" },
     footer: { location: "Vasastan, Stockholm" },
   },
 };
@@ -424,7 +424,7 @@ function Booking({ t, entries, address, slotPrefix }) {
       if (error) throw error;
 
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_JASMIN, {
-        treatment: `${treatmentName} (55 min)`,
+        treatment: `${treatmentName} (50 min)`,
         date: dateStr, time: timeStr,
         customer_name: fullName, customer_email: form.email, customer_phone: form.phone,
         booking_id: ins.booking_id,
@@ -434,7 +434,7 @@ function Booking({ t, entries, address, slotPrefix }) {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CUSTOMER, {
         customer_name: form.firstName,
         customer_email: form.email,
-        treatment: `${treatmentName} (55 min)`,
+        treatment: `${treatmentName} (50 min)`,
         date: dateStr,
         time: timeStr,
         address,
@@ -519,7 +519,7 @@ function Booking({ t, entries, address, slotPrefix }) {
               <div className="booking-form-summary">
                 <div>
                   <span className="booking-form-summary-label">
-                    {t.treatments.find((tr) => tr.id === treatment)?.name} &middot; 55 min
+                    {t.treatments.find((tr) => tr.id === treatment)?.name} &middot; 50 min
                   </span>
                   <span className="booking-form-summary-value">
                     {selectedDate.getDate()} {t.months[selectedDate.getMonth()]} &middot; {slot.t}–{slot.e}
@@ -562,7 +562,7 @@ function Booking({ t, entries, address, slotPrefix }) {
           <p className="booking-confirm-sub">{b.confirmSub(form.firstName)}</p>
           <div className="booking-confirm-rows">
             {[
-              [b.rowBehandling, `${t.treatments.find((tr) => tr.id === treatment)?.name} · 55 min`],
+              [b.rowBehandling, `${t.treatments.find((tr) => tr.id === treatment)?.name} · 50 min`],
               [b.rowDatum, `${selectedDate.getDate()} ${t.months[selectedDate.getMonth()]} 2026`],
               [b.rowTid, `${slot.t}–${slot.e}`],
               [b.rowPlats, address],
@@ -778,7 +778,7 @@ export default function HealthByJasmin() {
         {/* Kurser */}
         <section className="retreat-section">
           <article className="retreat">
-            <img src="/assets/retreat.jpg" alt="Kurser och workshops inom yoga och ayurveda" />
+            <img src="/assets/retreat.jpg" alt="Retreat med yoga och ayurveda" />
             <h2>{t.courses.title}</h2>
             <span>{t.courses.soon}</span>
           </article>
