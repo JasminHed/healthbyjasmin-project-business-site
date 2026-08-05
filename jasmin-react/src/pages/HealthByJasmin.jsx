@@ -17,27 +17,42 @@ const EMAILJS_PUBLIC_KEY = "y7Yu8QbgFj3NM0VeM";
 // ── Booking dates & slots (language-neutral) ───────────────────────────────────
 
 
-// Torsdagar 18:30 — Birkagatan 23 (pausad, återanvänds när bokning öppnar)
-// eslint-disable-next-line no-unused-vars
+// Torsdagar — Birkagatan 23. Varje kväll två tider: 18:30 och 21:15.
 const TORSDAG_ENTRIES = [
-  { date: new Date(2026, 7, 20),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 20 aug
-  { date: new Date(2026, 7, 27),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 27 aug
-  { date: new Date(2026, 8, 3),   slots: [{ t: "18:30", e: "19:25" }] }, // Tor  3 sep
-  { date: new Date(2026, 8, 10),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 10 sep
-  { date: new Date(2026, 8, 17),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 17 sep
-  { date: new Date(2026, 8, 24),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 24 sep
-  { date: new Date(2026, 9, 1),   slots: [{ t: "18:30", e: "19:25" }] }, // Tor  1 okt
-  { date: new Date(2026, 9, 8),   slots: [{ t: "18:30", e: "19:25" }] }, // Tor  8 okt
-  { date: new Date(2026, 9, 15),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 15 okt
-  { date: new Date(2026, 9, 22),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 22 okt
-  { date: new Date(2026, 9, 29),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor 29 okt
-  { date: new Date(2026, 10, 5),  slots: [{ t: "18:30", e: "19:25" }] }, // Tor  5 nov
-  { date: new Date(2026, 10, 12), slots: [{ t: "18:30", e: "19:25" }] }, // Tor 12 nov
-  { date: new Date(2026, 10, 19), slots: [{ t: "18:30", e: "19:25" }] }, // Tor 19 nov
-  { date: new Date(2026, 10, 26), slots: [{ t: "18:30", e: "19:25" }] }, // Tor 26 nov
+  { date: new Date(2026, 7, 20),  slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2026, 7, 20),  slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2026, 7, 27),  slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2026, 7, 27),  slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2026, 8, 3),   slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2026, 8, 3),   slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2026, 8, 10),  slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2026, 8, 10),  slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2026, 8, 17),  slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2026, 8, 17),  slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2026, 8, 24),  slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2026, 8, 24),  slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2026, 9, 1),   slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2026, 9, 1),   slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2026, 9, 8),   slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2026, 9, 8),   slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2026, 9, 15),  slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2026, 9, 15),  slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2026, 9, 22),  slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2026, 9, 22),  slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2026, 9, 29),  slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2026, 9, 29),  slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2026, 10, 5),  slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2026, 10, 5),  slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2026, 10, 12), slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2026, 10, 12), slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2026, 10, 19), slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2026, 10, 19), slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2026, 10, 26), slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2026, 10, 26), slots: [{ t: "21:15", e: "22:10" }] },
 ];
 
-// Fredagar 17:30 · Onsdagar 18:00 — ett slot per datum
+// Fredagar 17:30 · Onsdagar 18:00 — Åsögatan 166 (pausad, återanvänds när bokning öppnar)
+// eslint-disable-next-line no-unused-vars
 const KVALL_ENTRIES = [
   { date: new Date(2026, 7, 28),  slots: [{ t: "17:30", e: "18:25" }] }, // Fre 28 aug
   { date: new Date(2026, 8, 18),  slots: [{ t: "17:30", e: "18:25" }] }, // Fre 18 sep
@@ -160,6 +175,15 @@ const TRANSLATIONS = {
         { q: "Passar yoga för alla nivåer?", a: "Ja, yoga anpassas utifrån varje persons förmåga. Meddela gärna läraren om skador eller annat att ta hänsyn till när du kommer till klass. Annars utförs alla positioner utifrån din egen kropps förmåga och på dina villkor." },
       ],
     },
+    weekSchedule: {
+      items: [
+        { day: "Torsdag", time: "18:30–19:25", type: "Ayurvedisk massage", loc: "Birkagatan 23", href: "#boka" },
+        { day: "Torsdag", time: "20:00–21:00", type: "Yoga & Ayurveda",    loc: "via studio",    href: "https://www.homeinyoga.com/schedule" },
+        { day: "Torsdag", time: "21:15–22:10", type: "Ayurvedisk massage", loc: "Birkagatan 23", href: "#boka" },
+        { day: "Söndag",  time: "12:15–13:15", type: "Yin Yoga",           loc: "via studio",    href: "https://www.homeinyoga.com/schedule" },
+      ],
+      bookLabel: "Boka",
+    },
     courses: { title: "Kurser", soon: "Kommer snart" },
     footer: { location: "Vasastan, Stockholm" },
   },
@@ -268,6 +292,15 @@ const TRANSLATIONS = {
         { q: "What does the massage include?", a: "The massage is performed with warm sesame oil and includes the head, face, front and back of the body and feet. You are towelled off after the treatment, but we recommend showering thoroughly at home afterwards, both hair and body." },
         { q: "Is yoga suitable for all levels?", a: "Yes, yoga is adapted to each person's ability. Please let the teacher know about any injuries or other considerations when you arrive for class. All positions are otherwise performed based on your own body's capacity and on your own terms." },
       ],
+    },
+    weekSchedule: {
+      items: [
+        { day: "Thursday", time: "18:30–19:25", type: "Ayurvedic massage", loc: "Birkagatan 23", href: "#boka" },
+        { day: "Thursday", time: "20:00–21:00", type: "Yoga & Ayurveda",   loc: "via studio",   href: "https://www.homeinyoga.com/schedule" },
+        { day: "Thursday", time: "21:15–22:10", type: "Ayurvedic massage", loc: "Birkagatan 23", href: "#boka" },
+        { day: "Sunday",   time: "12:15–13:15", type: "Yin Yoga",          loc: "via studio",   href: "https://www.homeinyoga.com/schedule" },
+      ],
+      bookLabel: "Book",
     },
     courses: { title: "Courses", soon: "Coming soon" },
     footer: { location: "Vasastan, Stockholm" },
@@ -707,8 +740,8 @@ export default function HealthByJasmin() {
             <div className="section-inner">
               <div className="booking-location-grid">
 
-                {/* Torsdagar – Birkagatan 23 (tillfälligt pausad) */}
-                <div className="booking-location-card paused">
+                {/* Torsdagar – Birkagatan 23 */}
+                <div className={`booking-location-card${activeLocation === "birka" ? " active" : ""}`}>
                   <div className="booking-location-card-header">
                     <div className="booking-location-info">
                       <span className="booking-location-day">{b.torsdagar}</span>
@@ -717,12 +750,25 @@ export default function HealthByJasmin() {
                       <span className="booking-location-meta">{b.duration} &nbsp;·&nbsp; {b.pris}</span>
                       <span className="booking-location-no-shower">{b.ingenDusch}</span>
                     </div>
-                    <span className="booking-paused-badge">{b.pausad}</span>
+                    <button
+                      className={`boka-behandling-btn${activeLocation === "birka" ? " open" : ""}`}
+                      onClick={() => toggleLocation("birka")}
+                    >
+                      {activeLocation === "birka" ? b.stangBokning : b.bokaBehandling}
+                    </button>
                   </div>
+                  {activeLocation === "birka" && (
+                    <Booking
+                      t={t}
+                      entries={TORSDAG_ENTRIES}
+                      address="Birkagatan 23, Stockholm"
+                      slotPrefix="birka-massage"
+                    />
+                  )}
                 </div>
 
-                {/* Kvällstider – Åsögatan 166 */}
-                <div className={`booking-location-card${activeLocation === "thu" ? " active" : ""}`}>
+                {/* Kvällstider – Åsögatan 166 (tillfälligt pausad) */}
+                <div className="booking-location-card paused">
                   <div className="booking-location-card-header">
                     <div className="booking-location-info">
                       <span className="booking-location-day">{b.kvallstider}</span>
@@ -731,21 +777,8 @@ export default function HealthByJasmin() {
                       <span className="booking-location-meta">{b.duration} &nbsp;·&nbsp; {b.pris}</span>
                       <span className="booking-location-shower-ok">{b.duschFinns}</span>
                     </div>
-                    <button
-                      className={`boka-behandling-btn${activeLocation === "thu" ? " open" : ""}`}
-                      onClick={() => toggleLocation("thu")}
-                    >
-                      {activeLocation === "thu" ? b.stangBokning : b.bokaBehandling}
-                    </button>
+                    <span className="booking-paused-badge">{b.pausad}</span>
                   </div>
-                  {activeLocation === "thu" && (
-                    <Booking
-                      t={t}
-                      entries={KVALL_ENTRIES}
-                      address="Åsögatan 166, Stockholm"
-                      slotPrefix="thu-massage"
-                    />
-                  )}
                 </div>
 
               </div>
