@@ -145,8 +145,8 @@ const TRANSLATIONS = {
       stangBokning: "Stäng",
     },
     treatments: [
-      { id: "abhyanga", name: "Abhyanga", description: "Helkroppsmassage med varm sesamolja. Fokus djup återhämtning och vila." },
-      { id: "vishesh",  name: "Vishesh",  description: "Djupare helkroppsmassage med varm sesamolja. Fokus spänningar och balans." },
+      { id: "abhyanga", name: "Abhyanga", description: "Helkroppsmassage med varm sesamolja och mjuka, värmande rörelser. Fokus djup återhämtning och vila." },
+      { id: "vishesh",  name: "Vishesh",  description: "Helkroppsmassage med varm sesamolja och mer tryck än abhyanga. Fokus spänningar och balans." },
     ],
     months: ["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"],
     days: ["Sön","Mån","Tis","Ons","Tor","Fre","Lör"],
@@ -177,10 +177,10 @@ const TRANSLATIONS = {
     },
     weekSchedule: {
       items: [
-        { day: "Torsdag", time: "18:30–19:25", type: "Ayurvedisk massage", loc: "Birkagatan 23", booking: true },
-        { day: "Torsdag", time: "20:00–21:00", type: "Yoga & Ayurveda",    loc: "via studio",    href: "https://www.homeinyoga.com/schedule" },
-        { day: "Torsdag", time: "21:15–22:10", type: "Ayurvedisk massage", loc: "Birkagatan 23", booking: true },
-        { day: "Söndag",  time: "12:15–13:15", type: "Yin Yoga",           loc: "via studio",    href: "https://www.homeinyoga.com/schedule" },
+        { day: "Torsdag", time: "18:30–19:25", type: "Ayurvedisk massage",       loc: "Birkagatan 23", booking: true },
+        { day: "Torsdag", time: "20:00–21:00", type: "Yoga & Ayurveda klass",   loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
+        { day: "Torsdag", time: "21:15–22:10", type: "Ayurvedisk massage",       loc: "Birkagatan 23", booking: true },
+        { day: "Söndag",  time: "12:15–13:15", type: "Yin Yoga klass",           loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
       ],
       bookLabel: "Boka",
       closeLabel: "Stäng",
@@ -264,8 +264,8 @@ const TRANSLATIONS = {
       stangBokning: "Close",
     },
     treatments: [
-      { id: "abhyanga", name: "Abhyanga", description: "Full-body massage with warm sesame oil. Focus on deep recovery and rest." },
-      { id: "vishesh",  name: "Vishesh",  description: "Deeper full-body massage with warm sesame oil. Focus on tension and balance." },
+      { id: "abhyanga", name: "Abhyanga", description: "Full-body massage with warm sesame oil and soft, warming strokes. Focus on deep recovery and rest." },
+      { id: "vishesh",  name: "Vishesh",  description: "Full-body massage with warm sesame oil and more pressure than abhyanga. Focus on tension and balance." },
     ],
     months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
     days: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
@@ -296,10 +296,10 @@ const TRANSLATIONS = {
     },
     weekSchedule: {
       items: [
-        { day: "Thursday", time: "18:30–19:25", type: "Ayurvedic massage", loc: "Birkagatan 23", booking: true },
-        { day: "Thursday", time: "20:00–21:00", type: "Yoga & Ayurveda",   loc: "via studio",   href: "https://www.homeinyoga.com/schedule" },
-        { day: "Thursday", time: "21:15–22:10", type: "Ayurvedic massage", loc: "Birkagatan 23", booking: true },
-        { day: "Sunday",   time: "12:15–13:15", type: "Yin Yoga",          loc: "via studio",   href: "https://www.homeinyoga.com/schedule" },
+        { day: "Thursday", time: "18:30–19:25", type: "Ayurvedic massage",       loc: "Birkagatan 23", booking: true },
+        { day: "Thursday", time: "20:00–21:00", type: "Yoga & Ayurveda class",  loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
+        { day: "Thursday", time: "21:15–22:10", type: "Ayurvedic massage",       loc: "Birkagatan 23", booking: true },
+        { day: "Sunday",   time: "12:15–13:15", type: "Yin Yoga class",          loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
       ],
       bookLabel: "Book",
       closeLabel: "Close",
@@ -772,17 +772,6 @@ export default function HealthByJasmin() {
               </div>
             </div>
 
-            <div className="yoga-shared-btns">
-              <div className="yoga-col-btns">
-                <a href="https://www.homeinyoga.com/schedule" target="_blank" rel="noopener noreferrer" className="yoga-row-btn">
-                  {t.booking.bokaNYoga}
-                </a>
-                <a href="https://www.homeinyoga.com/pricing" target="_blank" rel="noopener noreferrer" className="yoga-row-btn">
-                  {t.yoga.yinPricing}
-                </a>
-              </div>
-              <span className="yoga-col-via">{t.yoga.yinBookVia}</span>
-            </div>
           </div>
         </section>
 

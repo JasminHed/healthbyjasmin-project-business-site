@@ -1115,6 +1115,8 @@ header {
 
 .week-schedule-row:first-child { border-top: 0.5px solid #d8e4e8; }
 .week-schedule-row:hover { background: #edf3f5; text-decoration: none; }
+.week-schedule-row.wsr-active { background: #edf3f5; }
+button.week-schedule-row { width: 100%; text-align: left; background: none; border: none; cursor: pointer; font: inherit; }
 
 .wsr-day {
   font-size: 11px;
@@ -1163,6 +1165,16 @@ header {
     grid-template-rows: auto auto;
   }
   .wsr-btn { display: none; }
+}
+
+.week-schedule-booking {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 28px 0 8px;
+}
+
+.week-schedule-booking .booking-wrap {
+  max-width: 100%;
 }
 
 .retreat-section { display: flex; justify-content: center; margin: 60px auto; padding: 0 16px; }
