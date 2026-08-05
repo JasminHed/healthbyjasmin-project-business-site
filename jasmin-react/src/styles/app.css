@@ -1089,6 +1089,82 @@ header {
 .journal-post p { margin: 0; font-size: clamp(12px, 2vw, 14px); }
 
 /* ── Retreat section ── */
+/* ── Veckoschema ── */
+.week-schedule-section {
+  background: #f5f8f9;
+  padding: clamp(40px, 6vw, 64px) 0;
+}
+
+.week-schedule-rows {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.week-schedule-row {
+  display: grid;
+  grid-template-columns: 90px 110px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 0.5px solid #d8e4e8;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s;
+  border-radius: 4px;
+}
+
+.week-schedule-row:first-child { border-top: 0.5px solid #d8e4e8; }
+.week-schedule-row:hover { background: #edf3f5; text-decoration: none; }
+
+.wsr-day {
+  font-size: 11px;
+  font-weight: 600;
+  color: #8aabb8;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.wsr-time {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3F5B6B;
+  white-space: nowrap;
+}
+
+.wsr-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wsr-type {
+  font-size: 14px;
+  color: #333;
+}
+
+.wsr-loc {
+  font-size: 11px;
+  color: #999;
+}
+
+.wsr-btn {
+  font-size: 12px;
+  font-weight: 500;
+  color: #5C7C8A;
+  border: 0.5px solid #b0c4cc;
+  border-radius: 6px;
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+
+@media (max-width: 500px) {
+  .week-schedule-row {
+    grid-template-columns: 70px 90px 1fr;
+    grid-template-rows: auto auto;
+  }
+  .wsr-btn { display: none; }
+}
+
 .retreat-section { display: flex; justify-content: center; margin: 60px auto; padding: 0 16px; }
 .retreat { width: 100%; max-width: 900px; background-color: #faf4ef; padding: 15px 20px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); text-align: center; }
 .retreat img { width: 100%; height: clamp(180px, 30vw, 300px); object-fit: cover; border-radius: 12px; margin-bottom: 20px; }

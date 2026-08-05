@@ -669,7 +669,96 @@ export default function HealthByJasmin() {
           </div>
         </section>
 
-        <div className="img-divider" style={{ backgroundImage: "url(/assets/last.jpeg)" }} role="presentation" />
+        {/* Ayurveda */}
+        <section id="ayurveda" className="content-section">
+          <div className="section-inner editorial-grid">
+            <div className="editorial-media">
+              <img src="/assets/ayurveda.jpg" alt="Ayurvediska örter och oljor" className="editorial-img" />
+            </div>
+            <div className="editorial-text">
+              <span className="section-label">{t.ayurveda.label}</span>
+              <h2>Ayurveda</h2>
+              <p>{t.ayurveda.p1}</p>
+              <p>{t.ayurveda.p2}</p>
+              <h3>{t.ayurveda.massageTitle}</h3>
+              <p>{t.ayurveda.massageP1}</p>
+              <p>{t.ayurveda.massageP2}</p>
+            </div>
+          </div>
+          <div id="boka" className="ayurveda-booking-area">
+            <div className="section-inner">
+              <div className="booking-location-grid">
+
+                {/* Torsdagar – Birkagatan 23 */}
+                <div className={`booking-location-card${activeLocation === "birka" ? " active" : ""}`}>
+                  <div className="booking-location-card-header">
+                    <div className="booking-location-info">
+                      <span className="booking-location-day">{b.torsdagar}</span>
+                      <span className="booking-location-address">Birkagatan 23, Stockholm</span>
+                      <span className="booking-location-times">18:30 &nbsp;·&nbsp; 21:15</span>
+                      <span className="booking-location-meta">{b.duration} &nbsp;·&nbsp; {b.pris}</span>
+                      <span className="booking-location-no-shower">{b.ingenDusch}</span>
+                    </div>
+                    <button
+                      className={`boka-behandling-btn${activeLocation === "birka" ? " open" : ""}`}
+                      onClick={() => toggleLocation("birka")}
+                    >
+                      {activeLocation === "birka" ? b.stangBokning : b.bokaBehandling}
+                    </button>
+                  </div>
+                  {activeLocation === "birka" && (
+                    <Booking
+                      t={t}
+                      entries={TORSDAG_ENTRIES}
+                      address="Birkagatan 23, Stockholm"
+                      slotPrefix="birka-massage"
+                    />
+                  )}
+                </div>
+
+                {/* Kvällstider – Åsögatan 166 (tillfälligt pausad) */}
+                <div className="booking-location-card paused">
+                  <div className="booking-location-card-header">
+                    <div className="booking-location-info">
+                      <span className="booking-location-day">{b.kvallstider}</span>
+                      <span className="booking-location-address">Åsögatan 166, Stockholm</span>
+                      <span className="booking-location-times">Fre 17:30 &nbsp;·&nbsp; Ons 18:00</span>
+                      <span className="booking-location-meta">{b.duration} &nbsp;·&nbsp; {b.pris}</span>
+                      <span className="booking-location-shower-ok">{b.duschFinns}</span>
+                    </div>
+                    <span className="booking-paused-badge">{b.pausad}</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Veckoschema */}
+        <section className="week-schedule-section">
+          <div className="section-inner">
+            <div className="week-schedule-rows">
+              {t.weekSchedule.items.map((row, i) => (
+                <a
+                  key={i}
+                  href={row.href}
+                  className="week-schedule-row"
+                  target={row.href.startsWith("http") ? "_blank" : undefined}
+                  rel={row.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                >
+                  <span className="wsr-day">{row.day}</span>
+                  <span className="wsr-time">{row.time}</span>
+                  <span className="wsr-info">
+                    <span className="wsr-type">{row.type}</span>
+                    <span className="wsr-loc">{row.loc}</span>
+                  </span>
+                  <span className="wsr-btn">{t.weekSchedule.bookLabel} →</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* Yoga */}
         <section id="yoga" className="content-section yoga-text-section">
@@ -716,72 +805,6 @@ export default function HealthByJasmin() {
                 </a>
               </div>
               <span className="yoga-col-via">{t.yoga.yinBookVia}</span>
-            </div>
-          </div>
-        </section>
-
-        {/* Ayurveda */}
-        <section id="ayurveda" className="content-section">
-          <div className="section-inner editorial-grid">
-            <div className="editorial-media">
-              <img src="/assets/ayurveda.jpg" alt="Ayurvediska örter och oljor" className="editorial-img" />
-            </div>
-            <div className="editorial-text">
-              <span className="section-label">{t.ayurveda.label}</span>
-              <h2>Ayurveda</h2>
-              <p>{t.ayurveda.p1}</p>
-              <p>{t.ayurveda.p2}</p>
-              <h3>{t.ayurveda.massageTitle}</h3>
-              <p>{t.ayurveda.massageP1}</p>
-              <p>{t.ayurveda.massageP2}</p>
-            </div>
-          </div>
-          <div id="boka" className="ayurveda-booking-area">
-            <div className="section-inner">
-              <div className="booking-location-grid">
-
-                {/* Torsdagar – Birkagatan 23 */}
-                <div className={`booking-location-card${activeLocation === "birka" ? " active" : ""}`}>
-                  <div className="booking-location-card-header">
-                    <div className="booking-location-info">
-                      <span className="booking-location-day">{b.torsdagar}</span>
-                      <span className="booking-location-address">Birkagatan 23, Stockholm</span>
-                      <span className="booking-location-times">18:30–19:25</span>
-                      <span className="booking-location-meta">{b.duration} &nbsp;·&nbsp; {b.pris}</span>
-                      <span className="booking-location-no-shower">{b.ingenDusch}</span>
-                    </div>
-                    <button
-                      className={`boka-behandling-btn${activeLocation === "birka" ? " open" : ""}`}
-                      onClick={() => toggleLocation("birka")}
-                    >
-                      {activeLocation === "birka" ? b.stangBokning : b.bokaBehandling}
-                    </button>
-                  </div>
-                  {activeLocation === "birka" && (
-                    <Booking
-                      t={t}
-                      entries={TORSDAG_ENTRIES}
-                      address="Birkagatan 23, Stockholm"
-                      slotPrefix="birka-massage"
-                    />
-                  )}
-                </div>
-
-                {/* Kvällstider – Åsögatan 166 (tillfälligt pausad) */}
-                <div className="booking-location-card paused">
-                  <div className="booking-location-card-header">
-                    <div className="booking-location-info">
-                      <span className="booking-location-day">{b.kvallstider}</span>
-                      <span className="booking-location-address">Åsögatan 166, Stockholm</span>
-                      <span className="booking-location-times">Fre 17:30 &nbsp;·&nbsp; Ons 18:00</span>
-                      <span className="booking-location-meta">{b.duration} &nbsp;·&nbsp; {b.pris}</span>
-                      <span className="booking-location-shower-ok">{b.duschFinns}</span>
-                    </div>
-                    <span className="booking-paused-badge">{b.pausad}</span>
-                  </div>
-                </div>
-
-              </div>
             </div>
           </div>
         </section>
