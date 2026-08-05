@@ -163,7 +163,7 @@ const TRANSLATIONS = {
     faq: {
       label: "Vanliga frågor", title: "FAQ",
       items: [
-        { q: "Var hålls klasser och behandlingar?", a: "Alla yogaklasser hålls i Vasastan på Birkagatan 23. Ayurvediska behandlingar hålls på kvällstid på två ställen: torsdagskvällar i Vasastan (Birkagatan 23) och onsdag- och fredagskvällar på Södermalm (Åsögatan 166). Se bokningssektionen ovan för aktuella tider." },
+        { q: "Var hålls klasser och behandlingar?", a: "Alla yogaklasser hålls i Vasastan på Birkagatan 23. Ayurvediska behandlingar hålls torsdagskvällar på Birkagatan 23 i Vasastan. Se bokningssektionen ovan för aktuella tider." },
         { q: "Hur bokar jag yoga?", a: "Yoga bokas via länken i yogasektionen ovan." },
         { q: "Hur bokar jag ayurvedisk behandling?", a: "Behandlingar bokas direkt via formuläret ovan. Välj plats, datum och tid direkt på sidan." },
         { q: "Vad gäller vid avbokning?", a: "Avbokning av behandling görs senast 24 timmar innan. Mejla healthbyjasmin@gmail.com. För yogaklasser gäller studiots avbokningsregler." },
@@ -282,7 +282,7 @@ const TRANSLATIONS = {
     faq: {
       label: "Frequently asked questions", title: "FAQ",
       items: [
-        { q: "Where are classes and treatments held?", a: "All yoga classes are held in Vasastan at Birkagatan 23. Ayurvedic treatments are held in the evenings at two locations: Thursday evenings in Vasastan (Birkagatan 23) and Wednesday and Friday evenings in Södermalm (Åsögatan 166). See the booking section above for current times." },
+        { q: "Where are classes and treatments held?", a: "All yoga classes are held in Vasastan at Birkagatan 23. Ayurvedic treatments are held Thursday evenings at Birkagatan 23 in Vasastan. See the booking section above for current times." },
         { q: "How do I book yoga?", a: "Yoga is booked via the link in the yoga section above." },
         { q: "How do I book an ayurvedic treatment?", a: "Treatments are booked via the form above. Choose your location, date and time directly on the page." },
         { q: "What is the cancellation policy?", a: "Treatments must be cancelled no later than 24 hours in advance. Email healthbyjasmin@gmail.com. For yoga classes, the studio's cancellation policy applies." },
@@ -349,8 +349,8 @@ function Navbar({ t, lang, setLang }) {
       </button>
       <ul className={`nav-links${menuOpen ? " nav-active" : ""}`}>
         <li><a href="#om-mig" onClick={close}>{t.nav.aboutMe}</a></li>
-        <li><a href="#yoga" onClick={close}>{t.nav.yoga}</a></li>
         <li><a href="#ayurveda" onClick={close}>{t.nav.ayurveda}</a></li>
+        <li><a href="#yoga" onClick={close}>{t.nav.yoga}</a></li>
         <li><a href="#boka" onClick={close}>{t.nav.book}</a></li>
       </ul>
       <button className="lang-toggle" onClick={toggleLang} aria-label="Switch language">
