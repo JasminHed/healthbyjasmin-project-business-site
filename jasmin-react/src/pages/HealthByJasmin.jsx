@@ -177,12 +177,13 @@ const TRANSLATIONS = {
     },
     weekSchedule: {
       items: [
-        { day: "Torsdag", time: "18:30–19:25", type: "Ayurvedisk massage", loc: "Birkagatan 23", href: "#boka" },
+        { day: "Torsdag", time: "18:30–19:25", type: "Ayurvedisk massage", loc: "Birkagatan 23", booking: true },
         { day: "Torsdag", time: "20:00–21:00", type: "Yoga & Ayurveda",    loc: "via studio",    href: "https://www.homeinyoga.com/schedule" },
-        { day: "Torsdag", time: "21:15–22:10", type: "Ayurvedisk massage", loc: "Birkagatan 23", href: "#boka" },
+        { day: "Torsdag", time: "21:15–22:10", type: "Ayurvedisk massage", loc: "Birkagatan 23", booking: true },
         { day: "Söndag",  time: "12:15–13:15", type: "Yin Yoga",           loc: "via studio",    href: "https://www.homeinyoga.com/schedule" },
       ],
       bookLabel: "Boka",
+      closeLabel: "Stäng",
     },
     courses: { title: "Kurser", soon: "Kommer snart" },
     footer: { location: "Vasastan, Stockholm" },
@@ -295,12 +296,13 @@ const TRANSLATIONS = {
     },
     weekSchedule: {
       items: [
-        { day: "Thursday", time: "18:30–19:25", type: "Ayurvedic massage", loc: "Birkagatan 23", href: "#boka" },
+        { day: "Thursday", time: "18:30–19:25", type: "Ayurvedic massage", loc: "Birkagatan 23", booking: true },
         { day: "Thursday", time: "20:00–21:00", type: "Yoga & Ayurveda",   loc: "via studio",   href: "https://www.homeinyoga.com/schedule" },
-        { day: "Thursday", time: "21:15–22:10", type: "Ayurvedic massage", loc: "Birkagatan 23", href: "#boka" },
+        { day: "Thursday", time: "21:15–22:10", type: "Ayurvedic massage", loc: "Birkagatan 23", booking: true },
         { day: "Sunday",   time: "12:15–13:15", type: "Yin Yoga",          loc: "via studio",   href: "https://www.homeinyoga.com/schedule" },
       ],
       bookLabel: "Book",
+      closeLabel: "Close",
     },
     courses: { title: "Courses", soon: "Coming soon" },
     footer: { location: "Vasastan, Stockholm" },
@@ -590,13 +592,8 @@ function Booking({ t, entries, address, slotPrefix }) {
 
 export default function HealthByJasmin() {
   const [lang, setLang] = useState("sv");
-  const [activeLocation, setActiveLocation] = useState(null);
+  const [bookingOpen, setBookingOpen] = useState(false);
   const t = TRANSLATIONS[lang];
-  const b = t.booking;
-
-  function toggleLocation(loc) {
-    setActiveLocation((prev) => (prev === loc ? null : loc));
-  }
 
   useEffect(() => {
     const els = document.querySelectorAll(".fade-up");
@@ -685,78 +682,58 @@ export default function HealthByJasmin() {
               <p>{t.ayurveda.massageP2}</p>
             </div>
           </div>
-          <div id="boka" className="ayurveda-booking-area">
-            <div className="section-inner">
-              <div className="booking-location-grid">
-
-                {/* Torsdagar – Birkagatan 23 */}
-                <div className={`booking-location-card${activeLocation === "birka" ? " active" : ""}`}>
-                  <div className="booking-location-card-header">
-                    <div className="booking-location-info">
-                      <span className="booking-location-day">{b.torsdagar}</span>
-                      <span className="booking-location-address">Birkagatan 23, Stockholm</span>
-                      <span className="booking-location-times">18:30 &nbsp;·&nbsp; 21:15</span>
-                      <span className="booking-location-meta">{b.duration} &nbsp;·&nbsp; {b.pris}</span>
-                      <span className="booking-location-no-shower">{b.ingenDusch}</span>
-                    </div>
-                    <button
-                      className={`boka-behandling-btn${activeLocation === "birka" ? " open" : ""}`}
-                      onClick={() => toggleLocation("birka")}
-                    >
-                      {activeLocation === "birka" ? b.stangBokning : b.bokaBehandling}
-                    </button>
-                  </div>
-                  {activeLocation === "birka" && (
-                    <Booking
-                      t={t}
-                      entries={TORSDAG_ENTRIES}
-                      address="Birkagatan 23, Stockholm"
-                      slotPrefix="birka-massage"
-                    />
-                  )}
-                </div>
-
-                {/* Kvällstider – Åsögatan 166 (tillfälligt pausad) */}
-                <div className="booking-location-card paused">
-                  <div className="booking-location-card-header">
-                    <div className="booking-location-info">
-                      <span className="booking-location-day">{b.kvallstider}</span>
-                      <span className="booking-location-address">Åsögatan 166, Stockholm</span>
-                      <span className="booking-location-times">Fre 17:30 &nbsp;·&nbsp; Ons 18:00</span>
-                      <span className="booking-location-meta">{b.duration} &nbsp;·&nbsp; {b.pris}</span>
-                      <span className="booking-location-shower-ok">{b.duschFinns}</span>
-                    </div>
-                    <span className="booking-paused-badge">{b.pausad}</span>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
         </section>
 
-        {/* Veckoschema */}
-        <section className="week-schedule-section">
+        {/* Veckoschema + bokning */}
+        <section className="week-schedule-section" id="boka">
           <div className="section-inner">
             <div className="week-schedule-rows">
-              {t.weekSchedule.items.map((row, i) => (
-                <a
-                  key={i}
-                  href={row.href}
-                  className="week-schedule-row"
-                  target={row.href.startsWith("http") ? "_blank" : undefined}
-                  rel={row.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                >
-                  <span className="wsr-day">{row.day}</span>
-                  <span className="wsr-time">{row.time}</span>
-                  <span className="wsr-info">
-                    <span className="wsr-type">{row.type}</span>
-                    <span className="wsr-loc">{row.loc}</span>
-                  </span>
-                  <span className="wsr-btn">{t.weekSchedule.bookLabel} →</span>
-                </a>
-              ))}
+              {t.weekSchedule.items.map((row, i) =>
+                row.booking ? (
+                  <button
+                    key={i}
+                    className={`week-schedule-row${bookingOpen ? " wsr-active" : ""}`}
+                    onClick={() => setBookingOpen((o) => !o)}
+                  >
+                    <span className="wsr-day">{row.day}</span>
+                    <span className="wsr-time">{row.time}</span>
+                    <span className="wsr-info">
+                      <span className="wsr-type">{row.type}</span>
+                      <span className="wsr-loc">{row.loc}</span>
+                    </span>
+                    <span className="wsr-btn">
+                      {bookingOpen ? t.weekSchedule.closeLabel : t.weekSchedule.bookLabel} →
+                    </span>
+                  </button>
+                ) : (
+                  <a
+                    key={i}
+                    href={row.href}
+                    className="week-schedule-row"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span className="wsr-day">{row.day}</span>
+                    <span className="wsr-time">{row.time}</span>
+                    <span className="wsr-info">
+                      <span className="wsr-type">{row.type}</span>
+                      <span className="wsr-loc">{row.loc}</span>
+                    </span>
+                    <span className="wsr-btn">{t.weekSchedule.bookLabel} →</span>
+                  </a>
+                )
+              )}
             </div>
+            {bookingOpen && (
+              <div className="week-schedule-booking">
+                <Booking
+                  t={t}
+                  entries={TORSDAG_ENTRIES}
+                  address="Birkagatan 23, Stockholm"
+                  slotPrefix="birka-massage"
+                />
+              </div>
+            )}
           </div>
         </section>
 
