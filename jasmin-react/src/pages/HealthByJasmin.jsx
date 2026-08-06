@@ -146,7 +146,7 @@ const TRANSLATIONS = {
     },
     treatments: [
       { id: "abhyanga", name: "Abhyanga", description: "Helkroppsmassage med varm sesamolja i långa, svepande rörelser. Ger värme, grundning och närvaro. Ett sätt för kropp och sinne att sakta ned och landa." },
-      { id: "vishesh",  name: "Vishesh",  description: "Helkroppsmassage med varm sesamolja i långa drag med mer tryck. Mjukar upp muskler, frigör spänningar och ger kroppen lätthet. Du lämnar med en känsla av rörlighet." },
+      { id: "vishesh",  name: "Vishesh",  description: "Helkroppsmassage med varm sesamolja i långa drag med mer tryck. Mjukar upp muskler, frigör spänningar och ger kroppen lätthet. Du lämnar lättare och klarare i kropp och sinne." },
     ],
     months: ["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"],
     days: ["Sön","Mån","Tis","Ons","Tor","Fre","Lör"],
@@ -170,7 +170,7 @@ const TRANSLATIONS = {
         { q: "Vad gäller vid avbokning?", a: "Avbokning av behandling görs senast 24 timmar innan. Mejla healthbyjasmin@gmail.com. För yogaklasser gäller studiots avbokningsregler." },
         { q: "Hur betalas behandlingen?", a: "Betalning sker via Swish genom Frilans Finans efter genomförd behandling." },
         { q: "Blir man oljig av massagen?", a: "Ja, oljan är en viktig del av behandlingen. Det finns dusch på plats med handduk, schampo och duschcreme." },
-        { q: "Vilken massage ska jag välja?", a: "Abhyanga ges i långa, svepande rörelser med varm sesamolja. Den ger värme, grundning och närvaro. Kropp och sinne bjuds in att sakta ned. Känslan efteråt är samlad och landad. Vishesh ges med mer tryck i långa, djupgående drag. Den mjukar upp muskler, frigör spänningar och ger kroppen lätthet. Du lämnar med en känsla av rörlighet. Vid Vishesh inkluderas även säte och vader." },
+        { q: "Vilken massage ska jag välja?", a: "Abhyanga ges i långa, svepande rörelser med varm sesamolja. Den ger värme, grundning och närvaro. Kropp och sinne bjuds in att sakta ned. Känslan efteråt är samlad och landad. Vishesh ges med mer tryck i långa, djupgående drag. Den mjukar upp muskler, frigör spänningar och ger kroppen lätthet. Du lämnar lättare och klarare i kropp och sinne. Vid Vishesh inkluderas även säte och vader." },
         { q: "Vad ska jag ha med mig till massagen?", a: "Ta med eller kom i oömma kläder och ombyte. Underkläder behövs under behandlingen." },
         { q: "Vad ingår i massagebehandlingen?", a: "Massagen utförs med varm sesamolja och inkluderar huvud, ansikte, kropp fram och baksida samt fötter. Du torkas av med handduk efter behandlingen, men vi rekommenderar att du duschar ordentligt hemma efteråt, både hår och kropp." },
         { q: "Passar yoga för alla nivåer?", a: "Ja, yoga anpassas utifrån varje persons förmåga. Meddela gärna läraren om skador eller annat att ta hänsyn till när du kommer till klass. Annars utförs alla positioner utifrån din egen kropps förmåga och på dina villkor." },
@@ -266,7 +266,7 @@ const TRANSLATIONS = {
     },
     treatments: [
       { id: "abhyanga", name: "Abhyanga", description: "Full-body massage with warm sesame oil using long, sweeping strokes. Brings warmth, grounding and presence. A way for body and mind to slow down and settle." },
-      { id: "vishesh",  name: "Vishesh",  description: "Full-body massage with warm sesame oil using long strokes with more pressure. Softens muscles, releases tension and brings lightness to the body. You leave feeling at ease and free." },
+      { id: "vishesh",  name: "Vishesh",  description: "Full-body massage with warm sesame oil using long strokes with more pressure. Softens muscles, releases tension and brings lightness to the body. You leave lighter and clearer in body and mind." },
     ],
     months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
     days: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
