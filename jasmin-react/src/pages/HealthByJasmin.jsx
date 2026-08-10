@@ -777,7 +777,7 @@ export default function HealthByJasmin() {
         {/* Kurser */}
         <section className="retreat-section">
           <article className="retreat">
-            <img src="/assets/retreat-hero.jpg" alt="Studio för stadsretreat" />
+            <img src="/assets/retreat.jpg" alt="Stadsretreat" />
             <h2>{t.courses.title}</h2>
             <p className="retreat-intro">{t.courses.intro}</p>
             <span>{t.courses.soon}</span>
