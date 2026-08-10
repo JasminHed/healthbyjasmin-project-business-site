@@ -115,6 +115,8 @@ const TRANSLATIONS = {
       massageTitle: "Ayurvedisk massage",
       massageP1: "En av de finaste delarna av Ayurveda är behandlingarna, framförallt massagerna. De är ofta värmande och djupt lugnande, med varm sesamolja. Den är gynnsam för alla doshor: vata, pitta och kapha.",
       massageP2: "Ayurvediska massager utförs med varm sesamolja och vid specifika behandlingar används varmvattenpåsar. Vi masserar huvud, ansikte, fram- och baksida av kroppen inklusive fötter.",
+      radgivningTitle: "Ayurvedisk rådgivning",
+      radgivningP1: "En individuell konsultation där vi tillsammans tittar på din kroppskonstitution och livssituation. Utifrån det får du konkreta råd om kost, rutiner och behandlingar som passar just dig.",
     },
     booking: {
       title: "Boka",
@@ -237,6 +239,8 @@ const TRANSLATIONS = {
       massageTitle: "Ayurvedic massage",
       massageP1: "One of the most beautiful parts of Ayurveda is the treatments, especially the massages. They are often warming and deeply soothing, using warm sesame oil. It is beneficial for all doshas: vata, pitta and kapha.",
       massageP2: "Ayurvedic massages are performed with warm sesame oil and for specific treatments warm water bags are used. We massage the head, face, front and back of the body including the feet.",
+      radgivningTitle: "Ayurvedic consultation",
+      radgivningP1: "An individual consultation where we look at your body constitution and life situation together. Based on that, you receive concrete advice on diet, routines and treatments that suit you.",
     },
     booking: {
       title: "Book",
@@ -647,23 +651,6 @@ export default function HealthByJasmin() {
         </section>
 
         {/* Servicekort */}
-        <section className="service-cards-section">
-          <div className="service-cards-inner">
-            <a href="#ayurveda" className="service-card">
-              <span className="service-card-label">{t.cards.massageLabel}</span>
-              <h3>{t.cards.massageTitle}</h3>
-            </a>
-            <a href="#yoga" className="service-card">
-              <span className="service-card-label">{t.cards.yogaLabel}</span>
-              <h3>{t.cards.yogaTitle}</h3>
-            </a>
-            <a href="#boka" className="service-card">
-              <span className="service-card-label">{t.cards.coursesLabel}</span>
-              <h3>{t.cards.coursesTitle}</h3>
-            </a>
-          </div>
-        </section>
-
         {/* Om mig */}
         <section id="om-mig" className="content-section about-bg">
           <div className="section-inner">
@@ -695,6 +682,8 @@ export default function HealthByJasmin() {
             <h3>{t.ayurveda.massageTitle}</h3>
             <p>{t.ayurveda.massageP1}</p>
             <p>{t.ayurveda.massageP2}</p>
+            <h3>{t.ayurveda.radgivningTitle}</h3>
+            <p>{t.ayurveda.radgivningP1}</p>
           </div>
 
           {/* Rad 2: Yoga text | Yoga bild */}
@@ -702,26 +691,20 @@ export default function HealthByJasmin() {
             <span className="section-label">{t.yoga.label}</span>
             <h2>Yoga</h2>
             <p className="yoga-intro">{t.yoga.intro}</p>
-            <div className="cb-yoga-cards">
-              <div className="cb-yoga-card">
-                <h3>{t.yoga.yinTitle}</h3>
-                <p>{t.yoga.yinP1}</p>
-                <span className="yoga-col-schedule">{t.yoga.yinSchedule}</span>
-              </div>
-              <div className="cb-yoga-card">
-                <h3>{t.yoga.yogaAyurvedaTitle}</h3>
-                <p>{t.yoga.yogaAyurvedaP1}</p>
-                <span className="yoga-col-schedule">{t.yoga.yogaAyurvedaSub}</span>
-              </div>
-              <div className="cb-yoga-card">
-                <h3>{t.yoga.ashtangaTitle}</h3>
-                <p>{t.yoga.ashtangaP1}</p>
-                <span className="yoga-coming-soon">{t.yoga.ashtangaSoon}</span>
-              </div>
-            </div>
+            <h3>{t.yoga.yinTitle}</h3>
+            <p>{t.yoga.yinP1}</p>
+            <span className="yoga-col-schedule">{t.yoga.yinSchedule}</span>
+            <h3>{t.yoga.yogaAyurvedaTitle}</h3>
+            <p>{t.yoga.yogaAyurvedaP1}</p>
+            <p>{t.yoga.yogaAyurvedaP2}</p>
+            <span className="yoga-col-schedule">{t.yoga.yogaAyurvedaSub}</span>
+            <h3>{t.yoga.ashtangaTitle}</h3>
+            <p>{t.yoga.ashtangaP1}</p>
+            <p>{t.yoga.ashtangaP2}</p>
+            <span className="yoga-coming-soon">{t.yoga.ashtangaSoon}</span>
           </div>
           <div className="cb-cell cb-img">
-            <img src="/assets/yoga.jpg" alt="Yogaklass" className="cb-img-fill" />
+            <img src="/assets/ashtanga.jpeg" alt="Yoga" className="cb-img-fill" />
           </div>
         </section>
 

@@ -1230,8 +1230,7 @@ header {
 }
 
 .week-schedule-row {
-  display: grid;
-  grid-template-columns: 90px 110px 1fr auto;
+  display: flex;
   align-items: center;
   gap: 12px;
   padding: 16px 0;
@@ -1240,14 +1239,17 @@ header {
   color: inherit;
   transition: background 0.15s;
   border-radius: 4px;
+  width: 100%;
 }
 
 .week-schedule-row:first-child { border-top: 0.5px solid #d8e4e8; }
 .week-schedule-row:hover { background: #edf3f5; text-decoration: none; }
 .week-schedule-row.wsr-active { background: #edf3f5; }
-button.week-schedule-row { width: 100%; text-align: left; background: none; border: none; cursor: pointer; font: inherit; }
+button.week-schedule-row { text-align: left; background: none; border: none; cursor: pointer; font: inherit; }
 
 .wsr-day {
+  flex-shrink: 0;
+  width: 90px;
   font-size: 11px;
   font-weight: 600;
   color: #8aabb8;
@@ -1256,6 +1258,8 @@ button.week-schedule-row { width: 100%; text-align: left; background: none; bord
 }
 
 .wsr-time {
+  flex-shrink: 0;
+  width: 110px;
   font-size: 14px;
   font-weight: 600;
   color: #3F5B6B;
@@ -1263,6 +1267,8 @@ button.week-schedule-row { width: 100%; text-align: left; background: none; bord
 }
 
 .wsr-info {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 2px;
