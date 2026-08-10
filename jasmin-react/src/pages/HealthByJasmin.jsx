@@ -152,7 +152,7 @@ const TRANSLATIONS = {
     days: ["Sön","Mån","Tis","Ons","Tor","Fre","Lör"],
     quote: '"Rörelse är medicin för kroppen, stillhet är medicin för sinnet."',
     reviews: {
-      label: "Recensioner", title: "Vad andra säger",
+      label: "Recensioner", title: "Vad våra kunder säger",
       items: [
         { text: '"Den ayurvediska massagen var precis vad jag behövde. Djup avslappning och en verkligt professionell behandling. Jag lämnade med en känsla av fullständig återhämtning."', author: "Frida" },
         { text: '"Yin yogaklassen med Jasmin är en av veckorutinens höjdpunkter. Lugn, inkluderande och meningsfull. Jag märker skillnaden i kroppen direkt efteråt."', author: "Anna" },
@@ -185,6 +185,8 @@ const TRANSLATIONS = {
       ],
       bookLabel: "Boka",
       closeLabel: "Stäng",
+      label: "Schema & bokning",
+      title: "Veckans behandlingar och klasser",
     },
     courses: { title: "Retreat", soon: "Kommer snart" },
     footer: { location: "Vasastan, Stockholm" },
@@ -272,7 +274,7 @@ const TRANSLATIONS = {
     days: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
     quote: '"Movement is medicine for the body, stillness is medicine for the mind."',
     reviews: {
-      label: "Reviews", title: "What others say",
+      label: "Reviews", title: "What our clients say",
       items: [
         { text: '"The ayurvedic massage was exactly what I needed. Deep relaxation and a truly professional treatment. I left with a feeling of complete recovery."', author: "Frida" },
         { text: '"The yin yoga class with Jasmin is one of the highlights of my weekly routine. Calm, inclusive and meaningful. I notice the difference in my body right after."', author: "Anna" },
@@ -305,6 +307,8 @@ const TRANSLATIONS = {
       ],
       bookLabel: "Book",
       closeLabel: "Close",
+      label: "Schedule & booking",
+      title: "This week's treatments and classes",
     },
     courses: { title: "Retreat", soon: "Coming soon" },
     footer: { location: "Vasastan, Stockholm" },
@@ -678,26 +682,54 @@ export default function HealthByJasmin() {
         </section>
 
         {/* Ayurveda */}
-        <section id="ayurveda" className="content-section">
-          <div className="section-inner editorial-grid">
-            <div className="editorial-media">
-              <img src="/assets/ayurveda.jpg" alt="Ayurvediska örter och oljor" className="editorial-img" />
+        <section className="checkerboard-section" id="ayurveda">
+          {/* Rad 1: Ayurveda bild | Ayurveda text */}
+          <div className="cb-cell cb-img">
+            <img src="/assets/ayurveda.jpg" alt="Ayurvediska örter och oljor" className="cb-img-fill" />
+          </div>
+          <div className="cb-cell cb-text fade-up">
+            <span className="section-label">{t.ayurveda.label}</span>
+            <h2>Ayurveda</h2>
+            <p>{t.ayurveda.p1}</p>
+            <p>{t.ayurveda.p2}</p>
+            <h3>{t.ayurveda.massageTitle}</h3>
+            <p>{t.ayurveda.massageP1}</p>
+            <p>{t.ayurveda.massageP2}</p>
+          </div>
+
+          {/* Rad 2: Yoga text | Yoga bild */}
+          <div className="cb-cell cb-text cb-text-alt fade-up" id="yoga">
+            <span className="section-label">{t.yoga.label}</span>
+            <h2>Yoga</h2>
+            <p className="yoga-intro">{t.yoga.intro}</p>
+            <div className="cb-yoga-cards">
+              <div className="cb-yoga-card">
+                <h3>{t.yoga.yinTitle}</h3>
+                <p>{t.yoga.yinP1}</p>
+                <span className="yoga-col-schedule">{t.yoga.yinSchedule}</span>
+              </div>
+              <div className="cb-yoga-card">
+                <h3>{t.yoga.yogaAyurvedaTitle}</h3>
+                <p>{t.yoga.yogaAyurvedaP1}</p>
+                <span className="yoga-col-schedule">{t.yoga.yogaAyurvedaSub}</span>
+              </div>
+              <div className="cb-yoga-card">
+                <h3>{t.yoga.ashtangaTitle}</h3>
+                <p>{t.yoga.ashtangaP1}</p>
+                <span className="yoga-coming-soon">{t.yoga.ashtangaSoon}</span>
+              </div>
             </div>
-            <div className="editorial-text">
-              <span className="section-label">{t.ayurveda.label}</span>
-              <h2>Ayurveda</h2>
-              <p>{t.ayurveda.p1}</p>
-              <p>{t.ayurveda.p2}</p>
-              <h3>{t.ayurveda.massageTitle}</h3>
-              <p>{t.ayurveda.massageP1}</p>
-              <p>{t.ayurveda.massageP2}</p>
-            </div>
+          </div>
+          <div className="cb-cell cb-img">
+            <img src="/assets/yoga.jpg" alt="Yogaklass" className="cb-img-fill" />
           </div>
         </section>
 
         {/* Veckoschema + bokning */}
         <section className="week-schedule-section" id="boka">
           <div className="section-inner">
+            <span className="section-label">{t.weekSchedule.label}</span>
+            <h2 className="week-schedule-title">{t.weekSchedule.title}</h2>
             <div className="week-schedule-rows">
               {t.weekSchedule.items.map((row, i) =>
                 row.booking ? (
@@ -748,43 +780,6 @@ export default function HealthByJasmin() {
           </div>
         </section>
 
-        {/* Yoga */}
-        <section id="yoga" className="content-section yoga-text-section">
-          <div className="section-inner">
-            <div className="yoga-split-top fade-up">
-              <span className="section-label">{t.yoga.label}</span>
-              <h2>Yoga</h2>
-              <p className="yoga-intro">{t.yoga.intro}</p>
-            </div>
-            <div className="yoga-cards-grid fade-up">
-              <div className="yoga-card">
-                <h3>{t.yoga.ashtangaTitle}</h3>
-                <p>{t.yoga.ashtangaP1}</p>
-                <p>{t.yoga.ashtangaP2}</p>
-                <div className="yoga-card-footer">
-                  <span className="yoga-coming-soon">{t.yoga.ashtangaSoon}</span>
-                </div>
-              </div>
-              <div className="yoga-card">
-                <h3>{t.yoga.yinTitle}</h3>
-                <p>{t.yoga.yinP1}</p>
-                <div className="yoga-card-footer">
-                  <span className="yoga-col-schedule">{t.yoga.yinSchedule}</span>
-                </div>
-              </div>
-              <div className="yoga-card">
-                <h3>{t.yoga.yogaAyurvedaTitle}</h3>
-                <p>{t.yoga.yogaAyurvedaP1}</p>
-                <p>{t.yoga.yogaAyurvedaP2}</p>
-                {t.yoga.yogaAyurvedaP3 && <p>{t.yoga.yogaAyurvedaP3}</p>}
-                <div className="yoga-card-footer">
-                  <span className="yoga-col-schedule">{t.yoga.yogaAyurvedaSub}</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </section>
 
         {/* Kurser */}
         <section className="retreat-section">
