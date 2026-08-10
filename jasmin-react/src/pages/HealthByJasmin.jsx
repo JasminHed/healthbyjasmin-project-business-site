@@ -116,7 +116,7 @@ const TRANSLATIONS = {
       massageP1: "En av de finaste delarna av Ayurveda är behandlingarna, framförallt massagerna. De är ofta värmande och djupt lugnande, med varm sesamolja. Den är gynnsam för alla doshor: vata, pitta och kapha.",
       massageP2: "Ayurvediska massager utförs med varm sesamolja och vid specifika behandlingar används varmvattenpåsar. Vi masserar huvud, ansikte, fram- och baksida av kroppen inklusive fötter.",
       radgivningTitle: "Ayurvedisk rådgivning",
-      radgivningP1: "En individuell konsultation där vi tillsammans tittar på din kroppskonstitution och livssituation. Utifrån det får du konkreta råd om kost, rutiner och behandlingar som passar just dig.",
+      radgivningP1: "En individuell konsultation där vi läser pulsen och undersöker egenskaper som tillhör vata, pitta och kapha. Utifrån det samtalar vi om ditt välmående, din kropp och din livssituation. Du får sedan egna råd och tips som stödjer eventuella obalanser och som är anpassade efter just dig. Det kan handla om rutiner, sömn, dygnsrytm, mat och mycket mer.",
     },
     booking: {
       title: "Boka",
@@ -181,8 +181,8 @@ const TRANSLATIONS = {
     weekSchedule: {
       items: [
         { day: "Torsdag", time: "18:30–19:25", type: "Ayurvedisk massage",       loc: "Birkagatan 23", booking: true },
-        { day: "Torsdag", time: "20:00–21:00", type: "Yoga & Ayurveda klass",   loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
         { day: "Torsdag", time: "21:15–22:10", type: "Ayurvedisk massage",       loc: "Birkagatan 23", booking: true },
+        { day: "Torsdag", time: "20:00–21:00", type: "Yoga & Ayurveda klass",   loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
         { day: "Söndag",  time: "12:15–13:15", type: "Yin Yoga klass",           loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
       ],
       bookLabel: "Boka",
@@ -240,7 +240,7 @@ const TRANSLATIONS = {
       massageP1: "One of the most beautiful parts of Ayurveda is the treatments, especially the massages. They are often warming and deeply soothing, using warm sesame oil. It is beneficial for all doshas: vata, pitta and kapha.",
       massageP2: "Ayurvedic massages are performed with warm sesame oil and for specific treatments warm water bags are used. We massage the head, face, front and back of the body including the feet.",
       radgivningTitle: "Ayurvedic consultation",
-      radgivningP1: "An individual consultation where we look at your body constitution and life situation together. Based on that, you receive concrete advice on diet, routines and treatments that suit you.",
+      radgivningP1: "An individual consultation where we read the pulse and look for qualities belonging to vata, pitta and kapha. Based on that, we talk about your wellbeing, your body and your life situation. You then receive personal advice and tips tailored to support any imbalances and adapted to you specifically. This may include routines, sleep, daily rhythm, food and much more.",
     },
     booking: {
       title: "Book",
@@ -305,8 +305,8 @@ const TRANSLATIONS = {
     weekSchedule: {
       items: [
         { day: "Thursday", time: "18:30–19:25", type: "Ayurvedic massage",       loc: "Birkagatan 23", booking: true },
-        { day: "Thursday", time: "20:00–21:00", type: "Yoga & Ayurveda class",  loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
         { day: "Thursday", time: "21:15–22:10", type: "Ayurvedic massage",       loc: "Birkagatan 23", booking: true },
+        { day: "Thursday", time: "20:00–21:00", type: "Yoga & Ayurveda class",  loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
         { day: "Sunday",   time: "12:15–13:15", type: "Yin Yoga class",          loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
       ],
       bookLabel: "Book",
