@@ -190,7 +190,11 @@ const TRANSLATIONS = {
       label: "Schema & bokning",
       title: "Veckans behandlingar och klasser",
     },
-    courses: { title: "Retreat", soon: "Kommer snart" },
+    courses: {
+      title: "Stadsretreat",
+      soon: "Kommer snart",
+      intro: "En helg i staden där yoga och ayurveda möts. Vi börjar med rörelse och andning, går igenom ayurvedans grundprinciper, läser pulsen och diskuterar hur du kan stödja din hälsa i vardagen. Avslutar med Yin och tid för integration. Allt på ett och samma ställe, utan att behöva lämna Stockholm.",
+    },
     footer: { location: "Vasastan, Stockholm" },
   },
 
@@ -314,7 +318,11 @@ const TRANSLATIONS = {
       label: "Schedule & booking",
       title: "This week's treatments and classes",
     },
-    courses: { title: "Retreat", soon: "Coming soon" },
+    courses: {
+      title: "City retreat",
+      soon: "Coming soon",
+      intro: "A weekend in the city where yoga and ayurveda meet. We start with movement and breath, go through the basic principles of ayurveda, read the pulse and discuss how you can support your health in everyday life. We end with Yin and time for integration. All in one place, without leaving Stockholm.",
+    },
     footer: { location: "Vasastan, Stockholm" },
   },
 };
@@ -769,6 +777,7 @@ export default function HealthByJasmin() {
           <article className="retreat">
             <img src="/assets/retreat.jpg" alt="Retreat med yoga och ayurveda" />
             <h2>{t.courses.title}</h2>
+            <p className="retreat-intro">{t.courses.intro}</p>
             <span>{t.courses.soon}</span>
           </article>
         </section>

@@ -1320,6 +1320,7 @@ button.week-schedule-row { text-align: left; background: none; border: none; cur
 .retreat { width: 100%; max-width: 900px; background-color: #faf4ef; padding: 15px 20px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); text-align: center; }
 .retreat img { width: 100%; height: clamp(180px, 30vw, 300px); object-fit: cover; border-radius: 12px; margin-bottom: 20px; }
 .retreat a { display: inline-block; padding: 10px 20px; background-color: #3F5B6B; color: white; border-radius: 8px; }
+.retreat-intro { font-size: clamp(14px, 1.8vw, 16px); color: #555; line-height: 1.75; max-width: 620px; margin: 0 auto 20px; }
 
 /* ── Instagram CTA ── */
 .instagram-cta {
