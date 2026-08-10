@@ -186,6 +186,7 @@ const TRANSLATIONS = {
         { day: "Söndag",  time: "12:15–13:15", type: "Yin Yoga klass",           loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
       ],
       bookLabel: "Boka",
+      bookViaLabel: "Boka via studio",
       closeLabel: "Stäng",
       label: "Schema & bokning",
       title: "Veckans behandlingar och klasser",
@@ -314,6 +315,7 @@ const TRANSLATIONS = {
         { day: "Sunday",   time: "12:15–13:15", type: "Yin Yoga class",          loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
       ],
       bookLabel: "Book",
+      bookViaLabel: "Book via studio",
       closeLabel: "Close",
       label: "Schedule & booking",
       title: "This week's treatments and classes",
@@ -736,7 +738,7 @@ export default function HealthByJasmin() {
                       <span className="wsr-loc">{row.loc}</span>
                     </span>
                     <span className="wsr-btn">
-                      {bookingOpen ? t.weekSchedule.closeLabel : t.weekSchedule.bookLabel} →
+                      {bookingOpen ? t.weekSchedule.closeLabel : t.weekSchedule.bookLabel}
                     </span>
                   </button>
                 ) : (
@@ -753,7 +755,7 @@ export default function HealthByJasmin() {
                       <span className="wsr-type">{row.type}</span>
                       <span className="wsr-loc">{row.loc}</span>
                     </span>
-                    <span className="wsr-btn">{t.weekSchedule.bookLabel} →</span>
+                    <span className="wsr-btn">{t.weekSchedule.bookViaLabel}</span>
                   </a>
                 )
               )}
