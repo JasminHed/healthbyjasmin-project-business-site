@@ -1,6 +1,6 @@
 import emailjs from "@emailjs/browser";
 import { createClient } from "@supabase/supabase-js";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import "../styles/app.css";
 
@@ -596,6 +596,15 @@ export default function HealthByJasmin() {
   const [lang, setLang] = useState("sv");
   const [bookingOpen, setBookingOpen] = useState(false);
   const t = TRANSLATIONS[lang];
+  const shelfRef = useRef(null);
+
+  function scrollShelf(dir) {
+    const el = shelfRef.current;
+    if (!el) return;
+    const card = el.querySelector(".testimonial-card");
+    const cardW = card ? card.offsetWidth + 20 : 300;
+    el.scrollBy({ left: dir * cardW, behavior: "smooth" });
+  }
 
   useEffect(() => {
     const els = document.querySelectorAll(".fade-up");
@@ -796,13 +805,17 @@ export default function HealthByJasmin() {
           <div className="section-inner">
             <span className="section-label">{t.reviews.label}</span>
             <h2>{t.reviews.title}</h2>
-            <div className="testimonials-grid fade-up">
-              {t.reviews.items.map((r) => (
-                <div key={r.author} className="testimonial-card">
-                  <p className="testimonial-text">{r.text}</p>
-                  <span className="testimonial-author">{r.author}</span>
-                </div>
-              ))}
+            <div className="testimonials-shelf-wrap">
+              <button className="shelf-arrow shelf-arrow-prev" onClick={() => scrollShelf(-1)} aria-label="Föregående">&#8249;</button>
+              <div className="testimonials-shelf fade-up" ref={shelfRef}>
+                {t.reviews.items.map((r) => (
+                  <div key={r.author} className="testimonial-card">
+                    <p className="testimonial-text">{r.text}</p>
+                    <span className="testimonial-author">{r.author}</span>
+                  </div>
+                ))}
+              </div>
+              <button className="shelf-arrow shelf-arrow-next" onClick={() => scrollShelf(1)} aria-label="Nästa">&#8250;</button>
             </div>
             <div className="instagram-cta">
               <a href="https://www.instagram.com/healthbyjasmin/" target="_blank" rel="noopener noreferrer" className="instagram-btn">

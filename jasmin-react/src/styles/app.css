@@ -301,12 +301,45 @@ header {
   line-height: 1.12;
 }
 
-.testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+.testimonials-shelf-wrap {
+  position: relative;
   margin-top: clamp(32px, 5vw, 56px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
+
+.testimonials-shelf {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 4px;
+}
+
+.testimonials-shelf::-webkit-scrollbar { display: none; }
+.testimonials-shelf { -ms-overflow-style: none; scrollbar-width: none; }
+
+.shelf-arrow {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #d0dde3;
+  background: #fff;
+  color: #5C7C8A;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s;
+  padding: 0;
+}
+.shelf-arrow:hover { background: #f0f5f7; border-color: #5C7C8A; }
 
 .testimonial-card {
   background: #fff;
@@ -318,6 +351,10 @@ header {
   justify-content: space-between;
   gap: 20px;
   transition: background 0.2s ease, border-color 0.2s ease;
+  flex-shrink: 0;
+  width: calc((100% - 40px) / 2.5);
+  min-width: 260px;
+  scroll-snap-align: start;
 }
 .testimonial-card:hover {
   background: #f0f5f7;
@@ -1465,7 +1502,7 @@ footer a:hover { color: #2D4A5D; }
   .service-cards-inner { grid-template-columns: 1fr; }
   .service-card { border-right: none; border-bottom: 1px solid #e5e8e9; }
   .service-card:last-child { border-bottom: none; }
-  .testimonials-grid { grid-template-columns: 1fr; }
+  .shelf-arrow { display: none; }
 
   /* FAQ */
   .faq-grid { grid-template-columns: 1fr; }
@@ -1525,7 +1562,7 @@ footer a:hover { color: #2D4A5D; }
   .about-split { grid-template-columns: 1fr 1.5fr; gap: 48px; }
   .yoga-split-grid { gap: 36px; }
   .editorial-grid { gap: 36px; }
-  .testimonials-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .testimonial-card { width: calc((100% - 40px) / 2.5); }
   .service-cards-inner { grid-template-columns: repeat(3, 1fr); }
   .content-section { padding: clamp(56px, 8vw, 100px) 0; }
 
