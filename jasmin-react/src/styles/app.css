@@ -739,10 +739,30 @@ a.week-schedule-row { text-align: left; }
   white-space: nowrap;
 }
 
-@media (max-width: 500px) {
-  .wsr-day { width: 64px; }
-  .wsr-time { width: 88px; font-size: 13px; }
-  .wsr-btn { font-size: 11px; padding: 4px 8px; }
+@media (max-width: 640px) {
+  /* Week schedule: button wraps to its own line */
+  .week-schedule-row {
+    flex-wrap: wrap;
+    gap: 4px 10px;
+    padding: 12px 4px;
+    align-items: flex-start;
+  }
+  .wsr-day { width: 58px; font-size: 10px; }
+  .wsr-time { width: 98px; font-size: 13px; }
+  .wsr-info { flex: 1; min-width: 0; }
+  .wsr-btn {
+    width: 100%;
+    text-align: center;
+    margin-top: 6px;
+    display: block;
+    padding: 7px 12px;
+  }
+
+  /* Testimonial cards: nearly full shelf width so they don't overflow */
+  .testimonial-card {
+    width: calc(100% - 16px);
+    min-width: 0;
+  }
 }
 
 .week-schedule-booking {
