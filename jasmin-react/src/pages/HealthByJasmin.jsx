@@ -51,18 +51,6 @@ const TORSDAG_ENTRIES = [
   { date: new Date(2026, 10, 26), slots: [{ t: "21:15", e: "22:10" }] },
 ];
 
-// Fredagar 17:30 · Onsdagar 18:00 — Åsögatan 166 (pausad, återanvänds när bokning öppnar)
-// eslint-disable-next-line no-unused-vars
-const KVALL_ENTRIES = [
-  { date: new Date(2026, 7, 28),  slots: [{ t: "17:30", e: "18:25" }] }, // Fre 28 aug
-  { date: new Date(2026, 8, 18),  slots: [{ t: "17:30", e: "18:25" }] }, // Fre 18 sep
-  { date: new Date(2026, 8, 30),  slots: [{ t: "18:00", e: "18:55" }] }, // Ons 30 sep
-  { date: new Date(2026, 9, 16),  slots: [{ t: "17:30", e: "18:25" }] }, // Fre 16 okt
-  { date: new Date(2026, 9, 23),  slots: [{ t: "17:30", e: "18:25" }] }, // Fre 23 okt
-  { date: new Date(2026, 10, 4),  slots: [{ t: "18:00", e: "18:55" }] }, // Ons 4 nov
-  { date: new Date(2026, 10, 18), slots: [{ t: "18:00", e: "18:55" }] }, // Ons 18 nov
-  { date: new Date(2026, 11, 4),  slots: [{ t: "18:00", e: "18:55" }] }, // Ons 4 dec
-];
 
 // Swedish months always used in emails to Jasmin
 const SV_MONTHS = ["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"];
@@ -78,11 +66,6 @@ const TRANSLATIONS = {
       eyebrow: "Yoga & Ayurveda · Stockholm · 2015",
       sub: "Välkommen. Genom yoga och ayurveda erbjuder jag verktyg för att stärka, återhämta och hitta balans i vardagen.",
       scrollLabel: "Scrolla ned",
-    },
-    cards: {
-      massageLabel: "Behandling", massageTitle: "Ayurveda",
-      yogaLabel: "Klass", yogaTitle: "Yoga",
-      coursesLabel: "Kommande", coursesTitle: "Kurser",
     },
     about: {
       label: "Om mig",
@@ -100,13 +83,10 @@ const TRANSLATIONS = {
       yinTitle: "Yin Yoga",
       yinP1: "Yin yoga är en långsam, stilla praktik där positioner hålls i flera minuter. Det arbetar djupt in i bindväv, ligament och leder snarare än musklerna, vilket ökar rörligheten och ger bättre ledfunktion. Praktiken har en lugnande effekt på nervsystemet och fungerar som ett bra komplement till mer aktiva träningsformer.",
       yinSchedule: "60 min · Söndagar · 12:15–13:15",
-      yinBookVia: "Bokas via Home in Yoga",
-      yinPricing: "Priser",
       yogaAyurvedaTitle: "Yoga & Ayurveda",
       yogaAyurvedaSub: "60 min · Torsdagar · 20:00–21:00",
       yogaAyurvedaP1: "En klass i två delar. Vi börjar med ayurveda, ett tema, ett ämne eller ett tips från traditionen. Det kan handla om doshor, sömn, mat, dygnsrytm eller något annat ur ayurvedans värld.",
       yogaAyurvedaP2: "Andra delen är yoga med positioner som gynnar alla doshor. Klassen rör sig genom flöde, stående och sittande positioner och avslutas med vila eller meditation.",
-      yogaAyurvedaP3: "",
     },
     ayurveda: {
       label: "Hälsa & välmående",
@@ -123,7 +103,7 @@ const TRANSLATIONS = {
       plats: "Plats", dag: "Dag", sondagar: "Söndagar", torsdagar: "Torsdagar kväll", kvallstider: "Ons & fre kväll",
       pausad: "Tillfälligt pausad", ingenDusch: "Dusch ej tillgänglig på denna plats", duschFinns: "Dusch finns tillgänglig",
       valjBehandling: "Välj behandling", valjDatum: "Välj datum",
-      gaVidare: "Gå vidare", andra: "Ändra", tillbaka: "Tillbaka",
+      andra: "Ändra", tillbaka: "Tillbaka",
       bekrafta: "Bekräfta bokning", skickar: "Skickar...", gorNyBokning: "Gör en ny bokning",
       firstName: "Förnamn", firstNamePh: "Ditt förnamn",
       lastName: "Efternamn", lastNamePh: "Ditt efternamn",
@@ -140,11 +120,7 @@ const TRANSLATIONS = {
       info3: "Dusch finns med handduk, schampo och duschcreme.",
       info4pre: "Avbokning senast 24 timmar innan via",
       errorMsg: "Något gick fel. Kontakta healthbyjasmin@gmail.com",
-      yogaLabel: "Yoga", yogaBookSub: "Bokas direkt via Home in Yoga",
-      yogaInfo: "Yin Yoga · 60 min · 12:15–13:15 · Söndagar", bokaNYoga: "Boka",
       behandlingHint: "Välj en behandling ovan för att gå vidare.",
-      bokaBehandling: "Boka behandling",
-      stangBokning: "Stäng",
     },
     treatments: [
       { id: "abhyanga", name: "Abhyanga", description: "Helkroppsmassage med varm sesamolja i långa, svepande rörelser. Ger värme, grundning och närvaro. Ett sätt för kropp och sinne att sakta ned och landa." },
@@ -208,11 +184,6 @@ const TRANSLATIONS = {
       sub: "Welcome. Through yoga and ayurveda I offer tools to strengthen, recover and find balance in everyday life.",
       scrollLabel: "Scroll down",
     },
-    cards: {
-      massageLabel: "Treatment", massageTitle: "Ayurveda",
-      yogaLabel: "Class", yogaTitle: "Yoga",
-      coursesLabel: "Upcoming", coursesTitle: "Courses",
-    },
     about: {
       label: "About me",
       p1: "I am Jasmin, the person behind Health by Jasmin, a sole proprietorship based in Stockholm, Sweden. I have practised Ashtanga yoga and Ayurveda for almost 17 years. Yin yoga was added along the way. What first drew me to both yoga and ayurveda was the structure, the rhythm and the way both practices bring things into focus, sometimes gently, sometimes with force.",
@@ -229,13 +200,10 @@ const TRANSLATIONS = {
       yinTitle: "Yin Yoga",
       yinP1: "Yin yoga is a slow, still practice where poses are held for several minutes. It works deep into the connective tissue, ligaments and joints rather than the muscles, increasing flexibility and improving joint function. The practice has a calming effect on the nervous system and works well as a complement to more active forms of exercise.",
       yinSchedule: "60 min · Sundays · 12:15–13:15",
-      yinBookVia: "Book via Home in Yoga",
-      yinPricing: "Pricing",
       yogaAyurvedaTitle: "Yoga & Ayurveda",
       yogaAyurvedaSub: "60 min · Thursdays · 20:00–21:00",
       yogaAyurvedaP1: "A class in two parts. We begin with ayurveda, a theme, a topic or a tip from the tradition. It might be about doshas, sleep, food, the body's daily rhythm or something else from the world of ayurveda.",
       yogaAyurvedaP2: "The second part is yoga with poses that benefit all doshas. The class moves through flow, standing and seated positions and ends with rest or meditation.",
-      yogaAyurvedaP3: "",
     },
     ayurveda: {
       label: "Health & wellbeing",
@@ -252,7 +220,7 @@ const TRANSLATIONS = {
       plats: "Location", dag: "Day", sondagar: "Sundays", torsdagar: "Thursday evenings", kvallstider: "Wed & Fri evenings",
       pausad: "Temporarily paused", ingenDusch: "Shower not available at this location", duschFinns: "Shower available",
       valjBehandling: "Choose treatment", valjDatum: "Choose date",
-      gaVidare: "Continue", andra: "Change", tillbaka: "Back",
+      andra: "Change", tillbaka: "Back",
       bekrafta: "Confirm booking", skickar: "Sending...", gorNyBokning: "Make a new booking",
       firstName: "First name", firstNamePh: "Your first name",
       lastName: "Last name", lastNamePh: "Your last name",
@@ -269,11 +237,7 @@ const TRANSLATIONS = {
       info3: "Shower available with towel, shampoo and shower gel.",
       info4pre: "Cancellation no later than 24 hours before via",
       errorMsg: "Something went wrong. Contact healthbyjasmin@gmail.com",
-      yogaLabel: "Yoga", yogaBookSub: "Book directly via Home in Yoga",
-      yogaInfo: "Yin Yoga · 60 min · 12:15–13:15 · Sundays", bokaNYoga: "Book",
       behandlingHint: "Choose a treatment above to continue.",
-      bokaBehandling: "Book treatment",
-      stangBokning: "Close",
     },
     treatments: [
       { id: "abhyanga", name: "Abhyanga", description: "Full-body massage with warm sesame oil using long, sweeping strokes. Brings warmth, grounding and presence. A way for body and mind to slow down and settle." },
@@ -795,7 +759,9 @@ export default function HealthByJasmin() {
             <span className="section-label">{t.reviews.label}</span>
             <h2>{t.reviews.title}</h2>
             <div className="testimonials-shelf-wrap">
-              <button className="shelf-arrow shelf-arrow-prev" onClick={() => scrollShelf(-1)} aria-label="Föregående">&#8249;</button>
+              <button className="shelf-arrow shelf-arrow-prev" onClick={() => scrollShelf(-1)} aria-label="Föregående">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width="18" height="18"><polyline points="15 18 9 12 15 6" /></svg>
+              </button>
               <div className="testimonials-shelf fade-up" ref={shelfRef}>
                 {t.reviews.items.map((r) => (
                   <div key={r.author} className="testimonial-card">
@@ -804,7 +770,9 @@ export default function HealthByJasmin() {
                   </div>
                 ))}
               </div>
-              <button className="shelf-arrow shelf-arrow-next" onClick={() => scrollShelf(1)} aria-label="Nästa">&#8250;</button>
+              <button className="shelf-arrow shelf-arrow-next" onClick={() => scrollShelf(1)} aria-label="Nästa">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width="18" height="18"><polyline points="9 18 15 12 9 6" /></svg>
+              </button>
             </div>
             <div className="instagram-cta">
               <a href="https://www.instagram.com/healthbyjasmin/" target="_blank" rel="noopener noreferrer" className="instagram-btn">
