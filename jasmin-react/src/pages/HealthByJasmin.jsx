@@ -170,7 +170,7 @@ const TRANSLATIONS = {
     courses: {
       title: "Stadsretreat",
       soon: "Kommer snart",
-      intro: "En helg i Stockholm där yoga och ayurveda varvas med teori, praktik och tid för reflektion. Lördag: dynamisk yoga, lättare brunch och föreläsning om ayurvedans grunder, doshorna och vad balans och obalans innebär. I workshopen får du svara på ett frågeformulär utan att veta vilken dosha varje svar tillhör — sedan analyserar ni det tillsammans i grupp utifrån vad ni just lärt er. Dagen avslutas med yin yoga och journaling. Söndag: dynamisk yoga, brunch och föreläsning om dygnsrytm, mat och rutiner. I workshopen skriver var och en sin egen morgon- och kvällsrutin, sedan delar man i grupp — vad tar du med dig hem? Helgen avslutas med yin yoga och tid för integration. Allt på samma ställe, utan att lämna Stockholm.",
+      intro: "En helg i Stockholm där yoga och ayurveda varvas med teori, praktik och tid för reflektion. Lördag: dynamisk yoga, lättare brunch, föreläsning om ayurvedans grunder och doshorna samt en kort workshop. Dagen avslutas med yin yoga och journaling. Söndag: dynamisk yoga, brunch, föreläsning om dygnsrytm, mat och rutiner samt en kort workshop. Helgen avslutas med yin yoga och tid för integration. Allt på samma ställe, utan att lämna Stockholm.",
     },
     footer: { location: "Vasastan, Stockholm" },
   },
@@ -287,7 +287,7 @@ const TRANSLATIONS = {
     courses: {
       title: "City retreat",
       soon: "Coming soon",
-      intro: "A weekend in Stockholm where yoga and ayurveda blend with theory, practice and time for reflection. Saturday: dynamic yoga, a light brunch and a talk on the foundations of ayurveda, the doshas and what balance and imbalance mean. In the workshop you answer a questionnaire without knowing which dosha each answer belongs to — then the group analyses the results together based on what you just learned. The day ends with yin yoga and journaling. Sunday: dynamic yoga, brunch and a talk on daily rhythm, food and routines. In the workshop each person writes their own morning and evening routine, then shares with the group — what do you take home with you? The weekend closes with yin yoga and time for integration. All in one place, without leaving Stockholm.",
+      intro: "A weekend in Stockholm where yoga and ayurveda blend with theory, practice and time for reflection. Saturday: dynamic yoga, a light brunch, a talk on the foundations of ayurveda and the doshas, and a short workshop. The day ends with yin yoga and journaling. Sunday: dynamic yoga, brunch, a talk on daily rhythm, food and routines, and a short workshop. The weekend closes with yin yoga and time for integration. All in one place, without leaving Stockholm.",
     },
     footer: { location: "Vasastan, Stockholm" },
   },
