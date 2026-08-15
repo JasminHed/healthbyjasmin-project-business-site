@@ -294,10 +294,6 @@ header {
   min-width: 260px;
   scroll-snap-align: start;
 }
-.testimonial-card:hover {
-  background: #f0f5f7;
-  border-color: #b0c4cc;
-}
 
 .testimonial-text {
   font-size: clamp(13px, 1.7vw, 15px);

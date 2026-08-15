@@ -158,8 +158,8 @@ const TRANSLATIONS = {
       items: [
         { day: "Torsdag", time: "18:30–19:25", type: "Ayurvedisk massage",       loc: "Birkagatan 23", booking: true },
         { day: "Torsdag", time: "21:15–22:10", type: "Ayurvedisk massage",       loc: "Birkagatan 23", booking: true },
-        { day: "Torsdag", time: "20:00–21:00", type: "Yoga & Ayurveda klass",   loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
-        { day: "Söndag",  time: "12:15–13:15", type: "Yin Yoga klass",           loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
+        { day: "Torsdag", time: "20:00–21:00", type: "Yoga & Ayurveda klass",   loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
+        { day: "Söndag",  time: "12:15–13:15", type: "Yin Yoga klass",           loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
       ],
       bookLabel: "Boka",
       bookViaLabel: "Boka via studio",
@@ -275,8 +275,8 @@ const TRANSLATIONS = {
       items: [
         { day: "Thursday", time: "18:30–19:25", type: "Ayurvedic massage",       loc: "Birkagatan 23", booking: true },
         { day: "Thursday", time: "21:15–22:10", type: "Ayurvedic massage",       loc: "Birkagatan 23", booking: true },
-        { day: "Thursday", time: "20:00–21:00", type: "Yoga & Ayurveda class",  loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
-        { day: "Sunday",   time: "12:15–13:15", type: "Yin Yoga class",          loc: "Birkagatan 23", href: "https://www.homeinyoga.com/schedule" },
+        { day: "Thursday", time: "20:00–21:00", type: "Yoga & Ayurveda class",  loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
+        { day: "Sunday",   time: "12:15–13:15", type: "Yin Yoga class",          loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
       ],
       bookLabel: "Book",
       bookViaLabel: "Book via studio",
@@ -579,6 +579,13 @@ export default function HealthByJasmin() {
   const [bookingOpen, setBookingOpen] = useState(false);
   const t = TRANSLATIONS[lang];
   const shelfRef = useRef(null);
+  const bookingRef = useRef(null);
+
+  useEffect(() => {
+    if (bookingOpen && bookingRef.current) {
+      bookingRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [bookingOpen]);
 
   function scrollShelf(dir) {
     const el = shelfRef.current;
@@ -725,7 +732,7 @@ export default function HealthByJasmin() {
               )}
             </div>
             {bookingOpen && (
-              <div className="week-schedule-booking">
+              <div className="week-schedule-booking" ref={bookingRef}>
                 <Booking
                   t={t}
                   entries={TORSDAG_ENTRIES}
