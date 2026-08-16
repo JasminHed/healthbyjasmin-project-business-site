@@ -1,9 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./index.css";
 
-import Avboka from "./pages/Avboka";
 import HealthByJasmin from "./pages/HealthByJasmin";
+import Avboka from "./pages/Avboka";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

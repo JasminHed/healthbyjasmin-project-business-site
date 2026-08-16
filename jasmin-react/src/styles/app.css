@@ -45,43 +45,6 @@ p {
   font-size: clamp(14px, 2.5vw, 16px);
 }
 
-/* ── Summer Banner ── */
-.summer-banner {
-  width: 100%;
-  background: linear-gradient(145deg, #5C7C8A 0%, #6B94A4 50%, #7BA8B8 100%);
-  color: #fff;
-  text-align: center;
-  padding: 10px 44px 10px 16px;
-  font-size: clamp(12px, 2vw, 14px);
-  font-family: "Plus Jakarta Sans", sans-serif;
-  line-height: 1.5;
-  position: relative;
-  z-index: 200;
-}
-
-.summer-banner span {
-  display: inline-block;
-}
-
-.summer-banner-close {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-size: 14px;
-  cursor: pointer;
-  opacity: 0.8;
-  padding: 4px 8px;
-  line-height: 1;
-}
-
-.summer-banner-close:hover {
-  opacity: 1;
-}
-
 /* ── Header (sub-pages) ── */
 header {
   background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),

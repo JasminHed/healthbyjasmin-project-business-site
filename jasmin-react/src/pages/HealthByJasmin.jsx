@@ -59,8 +59,6 @@ const SV_MONTHS = ["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","
 
 const TRANSLATIONS = {
   sv: {
-    banner: "Nya tider ute för yoga och ayurveda, boka din tid nedan!",
-    bannerClose: "Stäng",
     nav: { aboutMe: "Om mig", yoga: "Yoga", ayurveda: "Ayurveda", book: "Boka" },
     hero: {
       eyebrow: "Yoga & Ayurveda · Stockholm · 2015",
@@ -176,8 +174,6 @@ const TRANSLATIONS = {
   },
 
   en: {
-    banner: "New times available for yoga and ayurveda, book your spot below!",
-    bannerClose: "Close",
     nav: { aboutMe: "About me", yoga: "Yoga", ayurveda: "Ayurveda", book: "Book" },
     hero: {
       eyebrow: "Yoga & Ayurveda · Stockholm · 2015",
@@ -292,25 +288,6 @@ const TRANSLATIONS = {
     footer: { location: "Vasastan, Stockholm" },
   },
 };
-
-// ── Summer Banner ─────────────────────────────────────────────────────────────
-
-function SummerBanner({ t }) {
-  const [visible, setVisible] = useState(true);
-  if (!visible) return null;
-  return (
-    <div className="summer-banner">
-      <span>{t.banner}</span>
-      <button
-        className="summer-banner-close"
-        onClick={() => setVisible(false)}
-        aria-label={t.bannerClose}
-      >
-        x
-      </button>
-    </div>
-  );
-}
 
 // ── Navbar ────────────────────────────────────────────────────────────────────
 
@@ -610,8 +587,6 @@ export default function HealthByJasmin() {
 
   return (
     <>
-      <SummerBanner t={t} />
-
       <header className="site-header">
         <Navbar t={t} lang={lang} setLang={setLang} />
       </header>
