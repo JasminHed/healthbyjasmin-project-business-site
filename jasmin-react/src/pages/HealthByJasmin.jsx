@@ -111,12 +111,7 @@ const TRANSLATIONS = {
       fullbooked: "Fullbokad", duration: "55 min", pris: "750 kr", rowPris: "Pris",
       confirmTitle: "Bokning bekräftad",
       confirmSub: (name) => `Tack ${name}! Din bokning är registrerad.`,
-      rowBehandling: "Behandling", rowDatum: "Datum", rowTid: "Tid",
-      rowPlats: "Plats", rowBetalning: "Betalning", rowFaktura: "Swish eller faktura",
-      info1: "Kom gärna 10 min innan behandlingen.",
-      info2: "Ta med eller kom i oömma kläder och underkläder.",
-      info3: "Dusch finns med handduk, schampo och duschcreme.",
-      info4pre: "Avbokning senast 24 timmar innan via",
+      confirmEmailNote: "Du har fått ett bekräftelsemejl till den e-postadress du angav i bokningen.",
       errorMsg: "Något gick fel. Kontakta healthbyjasmin@gmail.com",
       behandlingHint: "Välj en behandling ovan för att gå vidare.",
     },
@@ -164,6 +159,7 @@ const TRANSLATIONS = {
       closeLabel: "Stäng",
       label: "Schema & bokning",
       title: "Veckans behandlingar och klasser",
+      classTip: "Tips: Torsdagar finns också Yoga & Ayurveda klass kl 20:00–21:00. Passar bra att kombinera med en massage samma kväll.",
     },
     courses: {
       title: "Stadsretreat",
@@ -226,12 +222,7 @@ const TRANSLATIONS = {
       fullbooked: "Fully booked", duration: "55 min", pris: "750 kr", rowPris: "Price",
       confirmTitle: "Booking confirmed",
       confirmSub: (name) => `Thank you ${name}! Your booking is registered.`,
-      rowBehandling: "Treatment", rowDatum: "Date", rowTid: "Time",
-      rowPlats: "Location", rowBetalning: "Payment", rowFaktura: "Swish or invoice",
-      info1: "Please arrive 10 minutes before your treatment.",
-      info2: "Wear loose, comfortable clothes. Underwear is needed during the treatment.",
-      info3: "Shower available with towel, shampoo and shower gel.",
-      info4pre: "Cancellation no later than 24 hours before via",
+      confirmEmailNote: "A confirmation email has been sent to the email address you provided.",
       errorMsg: "Something went wrong. Contact healthbyjasmin@gmail.com",
       behandlingHint: "Choose a treatment above to continue.",
     },
@@ -279,6 +270,7 @@ const TRANSLATIONS = {
       closeLabel: "Close",
       label: "Schedule & booking",
       title: "This week's treatments and classes",
+      classTip: "Tip: There is also a Yoga & Ayurveda class on Thursdays at 20:00–21:00. A great way to combine with a massage the same evening.",
     },
     courses: {
       title: "City retreat",
@@ -521,27 +513,7 @@ function Booking({ t, entries, address, slotPrefix }) {
         <div className="booking-confirm">
           <p className="booking-confirm-title">{b.confirmTitle}</p>
           <p className="booking-confirm-sub">{b.confirmSub(form.firstName)}</p>
-          <div className="booking-confirm-rows">
-            {[
-              [b.rowBehandling, `${t.treatments.find((tr) => tr.id === treatment)?.name} · 55 min`],
-              [b.rowDatum, `${selectedDate.getDate()} ${t.months[selectedDate.getMonth()]} 2026`],
-              [b.rowTid, `${slot.t}–${slot.e}`],
-              [b.rowPlats, address],
-              [b.rowPris, b.pris],
-              [b.rowBetalning, b.rowFaktura],
-            ].map(([k, v]) => (
-              <div key={k} className="summary-row">
-                <span className="summary-key">{k}</span>
-                <span className="summary-val">{v}</span>
-              </div>
-            ))}
-          </div>
-          <div className="booking-confirm-info">
-            <p>{b.info1}</p>
-            <p>{b.info2}</p>
-            <p>{b.info3}</p>
-            <p>{b.info4pre} <a href="mailto:healthbyjasmin@gmail.com">healthbyjasmin@gmail.com</a></p>
-          </div>
+          <p className="booking-confirm-email-note">{b.confirmEmailNote}</p>
           <button className="booking-btn-next" onClick={reset}>{b.gorNyBokning}</button>
         </div>
       )}
@@ -706,6 +678,7 @@ export default function HealthByJasmin() {
                 )
               )}
             </div>
+            <p className="wsr-class-tip">{t.weekSchedule.classTip}</p>
             {bookingOpen && (
               <div className="week-schedule-booking" ref={bookingRef}>
                 <Booking

@@ -497,26 +497,8 @@ header {
 .booking-confirm-title { font-size: 18px; font-weight: 500; color: #2a3a44; margin-bottom: 6px; }
 .booking-confirm-sub { font-size: 14px; color: #666; margin-bottom: 24px; }
 
-.booking-confirm-rows { border-top: 0.5px solid #e8eef1; margin-bottom: 20px; }
 
-.booking-confirm-info {
-  background: #f6f8f9;
-  border-radius: 8px;
-  padding: 14px 16px;
-  margin-bottom: 20px;
-}
-
-.booking-confirm-info p {
-  font-size: 13px;
-  color: #555;
-  margin: 0 0 6px;
-  line-height: 1.5;
-  max-width: 100%;
-  text-align: left;
-}
-
-.booking-confirm-info p:last-child { margin-bottom: 0; }
-.booking-confirm-info a { color: #5C7C8A; text-decoration: underline; }
+.booking-confirm-email-note { font-size: 13px; color: #666; margin-bottom: 24px; line-height: 1.5; }
 
 /* ── Navbar ── */
 .navbar {
@@ -734,6 +716,17 @@ a.week-schedule-row { text-align: left; }
   max-width: 100%;
 }
 
+.wsr-class-tip {
+  font-size: 13px;
+  color: #5C7C8A;
+  margin: 14px 0 0;
+  padding: 10px 14px;
+  background: #f0f5f7;
+  border-left: 2px solid #5C7C8A;
+  border-radius: 0 6px 6px 0;
+  line-height: 1.55;
+}
+
 .retreat-section { display: flex; justify-content: center; margin: 60px auto; padding: 0 16px; }
 .retreat { width: 100%; max-width: 900px; background-color: #faf4ef; padding: 15px 20px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); text-align: center; }
 .retreat img { width: 100%; height: clamp(180px, 30vw, 300px); object-fit: cover; border-radius: 12px; margin-bottom: 20px; }
@@ -874,11 +867,6 @@ footer a:hover { color: #2D4A5D; }
 .booking-btn-back { height: clamp(40px, 7vw, 46px); padding: 0 16px; background: #fff; border: 0.5px solid #b0c4cc; border-radius: 10px; font-size: clamp(13px, 2vw, 15px); font-weight: 500; cursor: pointer; color: #5C7C8A; white-space: nowrap; transition: background 0.15s; }
 .booking-btn-back:hover { background: #f0f5f7; }
 
-/* Summary rows */
-.summary-row { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; border-bottom: 0.5px solid #e0e9ed; gap: 8px; }
-.summary-row:last-child { border-bottom: none; padding-top: 12px; }
-.summary-key { font-size: clamp(11px, 1.8vw, 13px); color: #888; min-width: 60px; flex-shrink: 0; }
-.summary-val { font-size: clamp(12px, 2vw, 14px); color: #333; text-align: right; word-break: break-word; }
 .send-error { margin-top: 10px; font-size: 13px; color: #c0392b; text-align: center; }
 
 /* ════════════════════════════════════════
@@ -948,8 +936,6 @@ footer a:hover { color: #2D4A5D; }
   .grid-journal { grid-template-columns: 1fr; }
   .section-inner { padding: 0 16px; }
   .service-card { padding: 20px 16px; }
-  .summary-row { flex-direction: column; align-items: flex-start; gap: 2px; }
-  .summary-val { text-align: left; }
 }
 
 /* ── Tablet (668 – 1024 px) ── */
