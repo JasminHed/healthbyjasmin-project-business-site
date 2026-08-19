@@ -163,6 +163,8 @@ const TRANSLATIONS = {
       closeLabel: "Stäng",
       label: "Schema & bokning",
       title: "Veckans behandlingar och klasser",
+      colMassage: "Behandlingar",
+      colKlasser: "Klasser",
       classTip: "Tips: Torsdagar finns också Yoga & Ayurveda klass kl 20:00–21:00. Passar bra att kombinera med en massage samma kväll.",
     },
     courses: {
@@ -274,6 +276,8 @@ const TRANSLATIONS = {
       closeLabel: "Close",
       label: "Schedule & booking",
       title: "This week's treatments and classes",
+      colMassage: "Treatments",
+      colKlasser: "Classes",
       classTip: "Tip: There is also a Yoga & Ayurveda class on Thursdays at 20:00–21:00. A great way to combine with a massage the same evening.",
     },
     courses: {
@@ -328,9 +332,16 @@ function Booking({ t, entries, address, slotPrefix }) {
   const [step, setStep] = useState("select");
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState(false);
+  const formRef = useRef(null);
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+
+  useEffect(() => {
+    if (step === "form" && formRef.current) {
+      formRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [step]);
 
   useEffect(() => {
     supabase
@@ -488,7 +499,7 @@ function Booking({ t, entries, address, slotPrefix }) {
 
           {/* Bokningsformulär */}
           {step === "form" && selectedDate && slot && (
-            <div className="booking-form-wrap">
+            <div className="booking-form-wrap" ref={formRef}>
               <div className="booking-form-summary">
                 <div>
                   <span className="booking-form-summary-label">
@@ -661,42 +672,51 @@ export default function HealthByJasmin() {
           <div className="section-inner">
             <span className="section-label">{t.weekSchedule.label}</span>
             <h2 className="week-schedule-title">{t.weekSchedule.title}</h2>
-            <div className="week-schedule-rows">
-              {t.weekSchedule.items.map((row, i) =>
-                row.booking ? (
-                  <button
-                    key={i}
-                    className={`week-schedule-row${bookingOpen ? " wsr-active" : ""}`}
-                    onClick={() => setBookingOpen((o) => !o)}
-                  >
-                    <span className="wsr-day">{row.day}</span>
-                    <span className="wsr-time">{row.time}</span>
-                    <span className="wsr-info">
-                      <span className="wsr-type">{row.type}</span>
-                      <span className="wsr-loc">{row.loc}</span>
-                    </span>
-                    <span className="wsr-btn">
-                      {bookingOpen ? t.weekSchedule.closeLabel : t.weekSchedule.bookLabel}
-                    </span>
-                  </button>
-                ) : (
-                  <a
-                    key={i}
-                    href={row.href}
-                    className="week-schedule-row"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span className="wsr-day">{row.day}</span>
-                    <span className="wsr-time">{row.time}</span>
-                    <span className="wsr-info">
-                      <span className="wsr-type">{row.type}</span>
-                      <span className="wsr-loc">{row.loc}</span>
-                    </span>
-                    <span className="wsr-btn">{t.weekSchedule.bookViaLabel}</span>
-                  </a>
-                )
-              )}
+            <div className="wsr-columns">
+              <div className="wsr-col">
+                <p className="wsr-col-label">{t.weekSchedule.colMassage}</p>
+                <div className="week-schedule-rows">
+                  {t.weekSchedule.items.filter(r => r.booking).map((row, i) => (
+                    <button
+                      key={i}
+                      className={`week-schedule-row${bookingOpen ? " wsr-active" : ""}`}
+                      onClick={() => setBookingOpen((o) => !o)}
+                    >
+                      <span className="wsr-day">{row.day}</span>
+                      <span className="wsr-time">{row.time}</span>
+                      <span className="wsr-info">
+                        <span className="wsr-type">{row.type}</span>
+                        <span className="wsr-loc">{row.loc}</span>
+                      </span>
+                      <span className="wsr-btn">
+                        {bookingOpen ? t.weekSchedule.closeLabel : t.weekSchedule.bookLabel}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="wsr-col">
+                <p className="wsr-col-label">{t.weekSchedule.colKlasser}</p>
+                <div className="week-schedule-rows">
+                  {t.weekSchedule.items.filter(r => r.href).map((row, i) => (
+                    <a
+                      key={i}
+                      href={row.href}
+                      className="week-schedule-row"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span className="wsr-day">{row.day}</span>
+                      <span className="wsr-time">{row.time}</span>
+                      <span className="wsr-info">
+                        <span className="wsr-type">{row.type}</span>
+                        <span className="wsr-loc">{row.loc}</span>
+                      </span>
+                      <span className="wsr-btn">{t.weekSchedule.bookViaLabel}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
             <p className="wsr-class-tip">{t.weekSchedule.classTip}</p>
             {bookingOpen && (
