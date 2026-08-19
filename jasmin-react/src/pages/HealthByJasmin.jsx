@@ -457,6 +457,9 @@ function Booking({ t, entries, address, slotPrefix }) {
                 </button>
               ))}
             </div>
+            {dateIdx !== null && step === "select" && !treatment && (
+              <p className="booking-treatment-hint">{b.behandlingHint}</p>
+            )}
           </div>
 
           {/* Datumväljare */}
@@ -498,9 +501,6 @@ function Booking({ t, entries, address, slotPrefix }) {
                 );
               })}
             </div>
-            {dateIdx !== null && step === "select" && !treatment && (
-              <p style={{ fontSize: "13px", color: "#888", margin: "0.75rem 0 0" }}>{b.behandlingHint}</p>
-            )}
           </div>
 
           {/* Bokningsformulär */}

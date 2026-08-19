@@ -421,6 +421,7 @@ header {
 
 /* Treatment pick cards (step 1 of booking) */
 .booking-treatments { margin-bottom: 24px; }
+.booking-treatment-hint { font-size: 13px; color: #888; margin: 10px 0 0; }
 
 .treatment-pick-grid {
   display: grid;
