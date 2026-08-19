@@ -388,7 +388,7 @@ header {
   margin: 0 auto;
 }
 
-.booking-dates { margin-bottom: 28px; }
+.booking-dates { margin-bottom: 28px; scroll-margin-top: 80px; }
 .booking-row-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #888; font-weight: 500; margin-bottom: 12px; }
 
 /* Yoga column CTAs */
@@ -457,6 +457,7 @@ header {
   background: #fff;
   padding: 22px;
   margin-bottom: 1rem;
+  scroll-margin-top: 80px;
 }
 
 .booking-form-summary {
@@ -609,10 +610,23 @@ header {
   line-height: 1.12;
 }
 
-.week-schedule-rows {
-  max-width: 680px;
-  margin: 0 auto;
+.wsr-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 40px;
+  align-items: start;
 }
+
+.wsr-col-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8aabb8;
+  margin-bottom: 4px;
+}
+
+.week-schedule-rows {}
 
 .week-schedule-row {
   display: flex;
@@ -681,6 +695,7 @@ a.week-schedule-row { text-align: left; }
 }
 
 @media (max-width: 640px) {
+  .wsr-columns { grid-template-columns: 1fr; gap: 24px 0; }
   /* Week schedule: button wraps to its own line */
   .week-schedule-row {
     flex-wrap: wrap;

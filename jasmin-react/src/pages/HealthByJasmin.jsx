@@ -333,6 +333,8 @@ function Booking({ t, entries, address, slotPrefix }) {
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState(false);
   const formRef = useRef(null);
+  const datesRef = useRef(null);
+  const prevStep = useRef(null);
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -341,6 +343,10 @@ function Booking({ t, entries, address, slotPrefix }) {
     if (step === "form" && formRef.current) {
       formRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+    if (step === "select" && prevStep.current === "form" && datesRef.current) {
+      datesRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    prevStep.current = step;
   }, [step]);
 
   useEffect(() => {
@@ -454,7 +460,7 @@ function Booking({ t, entries, address, slotPrefix }) {
           </div>
 
           {/* Datumväljare */}
-          <div className="booking-dates">
+          <div className="booking-dates" ref={datesRef}>
             <p className="booking-row-label">{b.valjDatum}</p>
             <div className="dates-grid">
               {Array.from({ length: Math.ceil(entries.length / 2) }, (_, rowIdx) => {
