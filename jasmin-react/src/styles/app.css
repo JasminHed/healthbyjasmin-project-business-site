@@ -832,19 +832,18 @@ footer p { color: #333333; text-align: center; }
 footer a { color: #333333; }
 footer a:hover { color: #2D4A5D; }
 
-.dates-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 1rem; -webkit-overflow-scrolling: touch; }
-.dates-scroll::-webkit-scrollbar { height: 3px; }
-.dates-scroll::-webkit-scrollbar-thumb { background: #b0c4cc; border-radius: 2px; }
-.date-btn { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; width: clamp(52px, 9vw, 64px); height: clamp(72px, 12vw, 84px); border: 1.5px solid #d0dde3; border-radius: 10px; cursor: pointer; background: #fff; transition: border-color 0.2s, box-shadow 0.2s; gap: 1px; }
-.date-btn:hover { border-color: #5C7C8A; box-shadow: 0 2px 8px rgba(92,124,138,0.12); }
-.date-btn.selected { border-color: #3F5B6B; border-width: 2px; background: #deeaf0; }
-.date-btn.disabled { opacity: 0.35; cursor: not-allowed; }
-.date-wd { font-size: clamp(9px, 1.5vw, 11px); color: #888; }
-.date-dd { font-size: clamp(14px, 2.5vw, 18px); font-weight: 500; color: #3F5B6B; }
-.date-mo { font-size: clamp(9px, 1.5vw, 11px); color: #888; }
-.date-time { font-size: clamp(8px, 1.4vw, 10px); color: #5C7C8A; font-weight: 600; letter-spacing: 0.02em; margin-top: 1px; }
-.date-btn.selected .date-wd, .date-btn.selected .date-dd, .date-btn.selected .date-mo { color: #3F5B6B; }
-.date-btn.selected .date-time { color: #3F5B6B; }
+.dates-grid { display: flex; flex-direction: column; gap: 5px; margin-bottom: 1rem; }
+.dates-grid-row { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 5px; align-items: stretch; }
+.dates-grid-label { display: flex; align-items: center; gap: 5px; padding: 10px 10px; background: #f6f8f9; border-radius: 8px; }
+.dgr-wd { font-size: 11px; color: #888; }
+.dgr-dd { font-size: 16px; font-weight: 600; color: #3F5B6B; }
+.dgr-mo { font-size: 11px; color: #888; }
+.dgr-slot { display: flex; align-items: center; justify-content: center; min-height: 46px; border: 1.5px solid #d0dde3; border-radius: 8px; cursor: pointer; background: #fff; transition: border-color 0.2s, box-shadow 0.2s; font-family: inherit; padding: 10px; }
+.dgr-slot:hover:not(:disabled) { border-color: #5C7C8A; box-shadow: 0 2px 8px rgba(92,124,138,0.12); }
+.dgr-slot.selected { border-color: #3F5B6B; border-width: 2px; background: #deeaf0; }
+.dgr-slot.disabled { opacity: 0.38; cursor: not-allowed; }
+.dgr-time { font-size: 14px; font-weight: 500; color: #3F5B6B; }
+.dgr-slot.selected .dgr-time { color: #2a3a44; }
 
 /* Form */
 .massage-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; text-align: left; }
@@ -911,7 +910,6 @@ footer a:hover { color: #2D4A5D; }
   .booking-form-wrap { padding: 16px 14px; }
   .booking-confirm { padding: 20px 14px; }
   .booking-place { gap: 12px 32px; }
-  .dates-scroll { gap: 4px; }
   .booking-form-summary { flex-direction: column; align-items: flex-start; gap: 10px; }
   .booking-btn-row { flex-direction: column; }
   .booking-btn-next, .booking-btn-back { width: 100%; }
@@ -929,9 +927,9 @@ footer a:hover { color: #2D4A5D; }
   .service-row { padding: 12px 10px; }
   .booking-form-wrap { padding: 12px 10px; }
   .booking-confirm { padding: 14px 10px; }
-  .date-btn { width: 50px; height: 70px; }
-  .date-dd { font-size: 14px; }
-  .date-time { font-size: 9px; }
+  .dates-grid-row { grid-template-columns: 72px 1fr 1fr; }
+  .dgr-dd { font-size: 14px; }
+  .dgr-time { font-size: 13px; }
   .booking-btn-next, .booking-btn-back { font-size: 13px; }
   .grid-journal { grid-template-columns: 1fr; }
   .section-inner { padding: 0 16px; }
