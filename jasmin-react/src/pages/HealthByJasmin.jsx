@@ -108,7 +108,7 @@ const TRANSLATIONS = {
       email: "E-post", emailPh: "din@email.se",
       phone: "Telefon", phonePh: "07X XXX XX XX",
       betalning: "Betalning", betalningTitle: "Swish eller faktura", betalningDesc: "Betalning sker via Swish eller faktura. Faktura finns för dig som vill använda friskvårdsbidrag.",
-      fullbooked: "Fullbokad", duration: "55 min", pris: "750 kr", rowPris: "Pris",
+      fullbooked: "Fullbokad", stangd: "Stängd", duration: "55 min", pris: "750 kr", rowPris: "Pris",
       confirmTitle: "Bokning bekräftad",
       confirmSub: (name) => `Tack ${name}! Din bokning är registrerad.`,
       confirmEmailNote: "Du har fått ett bekräftelsemejl till den e-postadress du angav i bokningen.",
@@ -219,7 +219,7 @@ const TRANSLATIONS = {
       email: "Email", emailPh: "your@email.com",
       phone: "Phone", phonePh: "07X XXX XX XX",
       betalning: "Payment", betalningTitle: "Swish or invoice", betalningDesc: "Payment via Swish or invoice. Invoice is available for those who want to use their wellness benefit (friskvårdsbidrag).",
-      fullbooked: "Fully booked", duration: "55 min", pris: "750 kr", rowPris: "Price",
+      fullbooked: "Fully booked", stangd: "Closed", duration: "55 min", pris: "750 kr", rowPris: "Price",
       confirmTitle: "Booking confirmed",
       confirmSub: (name) => `Thank you ${name}! Your booking is registered.`,
       confirmEmailNote: "A confirmation email has been sent to the email address you provided.",
@@ -446,17 +446,22 @@ function Booking({ t, entries, address, slotPrefix }) {
                 const isPast = date < today;
                 const slotKey = `${slotPrefix}-${i}-${slots[0].t}`;
                 const isBooked = bookedSlots.includes(slotKey);
+                const slotDt = new Date(date);
+                const [h, m] = slots[0].t.split(":").map(Number);
+                slotDt.setHours(h, m, 0, 0);
+                const isTooSoon = slotDt - Date.now() < 24 * 60 * 60 * 1000;
+                const unavailable = isPast || isBooked || isTooSoon;
                 return (
                   <button
                     key={i}
-                    className={`date-btn${isPast || isBooked ? " disabled" : ""}${dateIdx === i ? " selected" : ""}`}
-                    disabled={isPast || isBooked}
+                    className={`date-btn${unavailable ? " disabled" : ""}${dateIdx === i ? " selected" : ""}`}
+                    disabled={unavailable}
                     onClick={() => handleDate(i)}
                   >
                     <span className="date-wd">{t.days[date.getDay()]}</span>
                     <span className="date-dd">{date.getDate()}</span>
                     <span className="date-mo">{t.months[date.getMonth()]}</span>
-                    <span className="date-time">{isBooked ? b.fullbooked : slots[0].t}</span>
+                    <span className="date-time">{isBooked ? b.fullbooked : isTooSoon ? b.stangd : slots[0].t}</span>
                   </button>
                 );
               })}
