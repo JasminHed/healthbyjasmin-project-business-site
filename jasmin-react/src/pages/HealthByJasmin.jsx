@@ -112,7 +112,7 @@ const TRANSLATIONS = {
       email: "E-post", emailPh: "din@email.se",
       phone: "Telefon", phonePh: "07X XXX XX XX",
       betalning: "Betalning", betalningTitle: "Swish eller faktura", betalningDesc: "Betalning sker via Swish eller faktura. Faktura finns för dig som vill använda friskvårdsbidrag.",
-      fullbooked: "Bokad", duration: "55 min", pris: "750 kr", rowPris: "Pris",
+      fullbooked: "Bokad", duration: "55 min",
       confirmTitle: "Bokning bekräftad",
       confirmSub: (name) => `Tack ${name}! Din bokning är registrerad.`,
       confirmEmailNote: "Du har fått ett bekräftelsemejl till den e-postadress du angav i bokningen.",
@@ -120,8 +120,9 @@ const TRANSLATIONS = {
       behandlingHint: "Välj en behandling ovan för att gå vidare.",
     },
     treatments: [
-      { id: "abhyanga", name: "Abhyanga", description: "Helkroppsmassage med varm sesamolja i långa, svepande rörelser. Ger värme, grundning och närvaro. Ett sätt för kropp och sinne att sakta ned och landa." },
-      { id: "vishesh",  name: "Vishesh",  description: "Helkroppsmassage med varm sesamolja i långa drag med mer tryck. Mjukar upp muskler, frigör spänningar och ger kroppen lätthet. Du lämnar lättare och klarare i kropp och sinne." },
+      { id: "abhyanga",       name: "Abhyanga",                      price: "750 kr", description: "Helkroppsmassage med varm sesamolja i långa, svepande rörelser. Ger värme, grundning och närvaro. Ett sätt för kropp och sinne att sakta ned och landa." },
+      { id: "vishesh",        name: "Vishesh",                       price: "750 kr", description: "Helkroppsmassage med varm sesamolja i långa drag med mer tryck. Mjukar upp muskler, frigör spänningar och ger kroppen lätthet. Du lämnar lättare och klarare i kropp och sinne." },
+      { id: "halsradgivning", name: "Ayurvedisk hälsorådgivning",    price: "600 kr", description: "Individuell rådgivning baserad på din ayurvediska konstitution. Vi tittar på hur du mår, dina vanor och din vardag – och sätter ihop konkreta råd för kost, rutiner och livsstil anpassade för dig." },
     ],
     months: ["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"],
     days: ["Sön","Mån","Tis","Ons","Tor","Fre","Lör"],
@@ -225,7 +226,7 @@ const TRANSLATIONS = {
       email: "Email", emailPh: "your@email.com",
       phone: "Phone", phonePh: "07X XXX XX XX",
       betalning: "Payment", betalningTitle: "Swish or invoice", betalningDesc: "Payment via Swish or invoice. Invoice is available for those who want to use their wellness benefit (friskvårdsbidrag).",
-      fullbooked: "Booked", duration: "55 min", pris: "750 kr", rowPris: "Price",
+      fullbooked: "Booked", duration: "55 min",
       confirmTitle: "Booking confirmed",
       confirmSub: (name) => `Thank you ${name}! Your booking is registered.`,
       confirmEmailNote: "A confirmation email has been sent to the email address you provided.",
@@ -233,8 +234,9 @@ const TRANSLATIONS = {
       behandlingHint: "Choose a treatment above to continue.",
     },
     treatments: [
-      { id: "abhyanga", name: "Abhyanga", description: "Full-body massage with warm sesame oil using long, sweeping strokes. Brings warmth, grounding and presence. A way for body and mind to slow down and settle." },
-      { id: "vishesh",  name: "Vishesh",  description: "Full-body massage with warm sesame oil using long strokes with more pressure. Softens muscles, releases tension and brings lightness to the body. You leave lighter and clearer in body and mind." },
+      { id: "abhyanga",       name: "Abhyanga",                      price: "750 kr", description: "Full-body massage with warm sesame oil using long, sweeping strokes. Brings warmth, grounding and presence. A way for body and mind to slow down and settle." },
+      { id: "vishesh",        name: "Vishesh",                       price: "750 kr", description: "Full-body massage with warm sesame oil using long strokes with more pressure. Softens muscles, releases tension and brings lightness to the body. You leave lighter and clearer in body and mind." },
+      { id: "halsradgivning", name: "Ayurvedic health consultation", price: "600 kr", description: "Individual consultation based on your ayurvedic constitution. We look at how you feel, your habits and daily life – and put together concrete advice on diet, routines and lifestyle tailored to you." },
     ],
     months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
     days: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
@@ -453,7 +455,7 @@ function Booking({ t, entries, address, slotPrefix }) {
                 >
                   <span className="treatment-pick-name">{tr.name}</span>
                   <span className="treatment-pick-desc">{tr.description}</span>
-                  <span className="treatment-pick-price">{b.pris}</span>
+                  <span className="treatment-pick-price">{tr.price}</span>
                 </button>
               ))}
             </div>
