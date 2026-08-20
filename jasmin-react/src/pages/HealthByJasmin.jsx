@@ -112,7 +112,7 @@ const TRANSLATIONS = {
       email: "E-post", emailPh: "din@email.se",
       phone: "Telefon", phonePh: "07X XXX XX XX",
       betalning: "Betalning", betalningTitle: "Swish eller faktura", betalningDesc: "Betalning sker via Swish eller faktura. Faktura finns för dig som vill använda friskvårdsbidrag.",
-      fullbooked: "Bokad", stangd: "Stängd", duration: "55 min", pris: "750 kr", rowPris: "Pris",
+      fullbooked: "Bokad", duration: "55 min", pris: "750 kr", rowPris: "Pris",
       confirmTitle: "Bokning bekräftad",
       confirmSub: (name) => `Tack ${name}! Din bokning är registrerad.`,
       confirmEmailNote: "Du har fått ett bekräftelsemejl till den e-postadress du angav i bokningen.",
@@ -225,7 +225,7 @@ const TRANSLATIONS = {
       email: "Email", emailPh: "your@email.com",
       phone: "Phone", phonePh: "07X XXX XX XX",
       betalning: "Payment", betalningTitle: "Swish or invoice", betalningDesc: "Payment via Swish or invoice. Invoice is available for those who want to use their wellness benefit (friskvårdsbidrag).",
-      fullbooked: "Booked", stangd: "Closed", duration: "55 min", pris: "750 kr", rowPris: "Price",
+      fullbooked: "Booked", duration: "55 min", pris: "750 kr", rowPris: "Price",
       confirmTitle: "Booking confirmed",
       confirmSub: (name) => `Thank you ${name}! Your booking is registered.`,
       confirmEmailNote: "A confirmation email has been sent to the email address you provided.",
@@ -493,7 +493,7 @@ function Booking({ t, entries, address, slotPrefix }) {
                           disabled={unavailable}
                           onClick={() => handleDate(i)}
                         >
-                          <span className="dgr-time">{isBooked ? b.fullbooked : isTooSoon ? b.stangd : slots[0].t}</span>
+                          <span className="dgr-time">{isBooked || isTooSoon ? b.fullbooked : slots[0].t}</span>
                         </button>
                       );
                     })}
