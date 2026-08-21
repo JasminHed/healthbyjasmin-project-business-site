@@ -575,6 +575,18 @@ export default function HealthByJasmin() {
   const shelfRef = useRef(null);
   const bookingRef = useRef(null);
   const radgivningRef = useRef(null);
+  const scheduleSectionRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (scheduleSectionRef.current && !scheduleSectionRef.current.contains(e.target)) {
+        setBookingOpen(false);
+        setRadgivningOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     if (bookingOpen && bookingRef.current) {
@@ -689,7 +701,7 @@ export default function HealthByJasmin() {
         </section>
 
         {/* Veckoschema + bokning */}
-        <section className="week-schedule-section" id="boka">
+        <section className="week-schedule-section" id="boka" ref={scheduleSectionRef}>
           <div className="section-inner">
             <span className="section-label">{t.weekSchedule.label}</span>
             <h2 className="week-schedule-title">{t.weekSchedule.title}</h2>
