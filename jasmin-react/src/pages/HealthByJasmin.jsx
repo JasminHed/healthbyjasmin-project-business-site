@@ -153,19 +153,26 @@ const TRANSLATIONS = {
       ],
     },
     weekSchedule: {
-      items: [
-        { day: "Torsdag", time: "18:30–19:25", type: "Ayurvedisk massage",       loc: "Birkagatan 23", booking: true },
-        { day: "Torsdag", time: "21:15–22:10", type: "Ayurvedisk massage",       loc: "Birkagatan 23", booking: true },
-        { day: "Torsdag", time: "20:00–21:00", type: "Yoga & Ayurveda klass",   loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
-        { day: "Söndag",  time: "12:15–13:15", type: "Yin Yoga klass",           loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
+      massageItems: [
+        { day: "Torsdag", time: "18:30–19:25", type: "Ayurvedisk massage", loc: "Birkagatan 23" },
+        { day: "Torsdag", time: "21:15–22:10", type: "Ayurvedisk massage", loc: "Birkagatan 23" },
+      ],
+      klasserItems: [
+        { day: "Torsdag", time: "20:00–21:00", type: "Yoga & Ayurveda klass", loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
+        { day: "Söndag",  time: "12:15–13:15", type: "Yin Yoga klass",        loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
+      ],
+      radgivningItems: [
+        { day: "Torsdag", time: "18:30–19:25", type: "Ayurvedisk hälsorådgivning", loc: "Birkagatan 23" },
+        { day: "Torsdag", time: "21:15–22:10", type: "Ayurvedisk hälsorådgivning", loc: "Birkagatan 23" },
       ],
       bookLabel: "Boka",
       bookViaLabel: "Boka via studio",
       closeLabel: "Stäng",
       label: "Schema & bokning",
       title: "Veckans behandlingar och klasser",
-      colMassage: "Behandlingar",
+      colMassage: "Massage",
       colKlasser: "Klasser",
+      colRadgivning: "Hälsorådgivning",
       classTip: "Tips: Torsdagar finns också Yoga & Ayurveda klass kl 20:00–21:00. Passar bra att kombinera med en massage samma kväll.",
     },
     courses: {
@@ -267,19 +274,26 @@ const TRANSLATIONS = {
       ],
     },
     weekSchedule: {
-      items: [
-        { day: "Thursday", time: "18:30–19:25", type: "Ayurvedic massage",       loc: "Birkagatan 23", booking: true },
-        { day: "Thursday", time: "21:15–22:10", type: "Ayurvedic massage",       loc: "Birkagatan 23", booking: true },
-        { day: "Thursday", time: "20:00–21:00", type: "Yoga & Ayurveda class",  loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
-        { day: "Sunday",   time: "12:15–13:15", type: "Yin Yoga class",          loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
+      massageItems: [
+        { day: "Thursday", time: "18:30–19:25", type: "Ayurvedic massage", loc: "Birkagatan 23" },
+        { day: "Thursday", time: "21:15–22:10", type: "Ayurvedic massage", loc: "Birkagatan 23" },
+      ],
+      klasserItems: [
+        { day: "Thursday", time: "20:00–21:00", type: "Yoga & Ayurveda class", loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
+        { day: "Sunday",   time: "12:15–13:15", type: "Yin Yoga class",        loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
+      ],
+      radgivningItems: [
+        { day: "Thursday", time: "18:30–19:25", type: "Ayurvedic health consultation", loc: "Birkagatan 23" },
+        { day: "Thursday", time: "21:15–22:10", type: "Ayurvedic health consultation", loc: "Birkagatan 23" },
       ],
       bookLabel: "Book",
       bookViaLabel: "Book via studio",
       closeLabel: "Close",
       label: "Schedule & booking",
       title: "This week's treatments and classes",
-      colMassage: "Treatments",
+      colMassage: "Massage",
       colKlasser: "Classes",
+      colRadgivning: "Health consultation",
       classTip: "Tip: There is also a Yoga & Ayurveda class on Thursdays at 20:00–21:00. A great way to combine with a massage the same evening.",
     },
     courses: {
@@ -325,7 +339,8 @@ function Navbar({ t, lang, setLang }) {
 
 // ── Booking ───────────────────────────────────────────────────────────────────
 
-function Booking({ t, entries, address, slotPrefix }) {
+function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
+  const treatments = treatmentIds ? t.treatments.filter(tr => treatmentIds.includes(tr.id)) : t.treatments;
   const [dateIdx, setDateIdx] = useState(null);
   const [slot, setSlot] = useState(null);
   const [treatment, setTreatment] = useState(null);
@@ -389,7 +404,7 @@ function Booking({ t, entries, address, slotPrefix }) {
     const dateStr = `${d.getDate()} ${SV_MONTHS[d.getMonth()]} 2026`;
     const timeStr = `${slot.t}–${slot.e}`;
     const fullName = `${form.firstName} ${form.lastName}`;
-    const treatmentName = t.treatments.find((tr) => tr.id === treatment).name;
+    const treatmentName = treatments.find((tr) => tr.id === treatment).name;
 
     try {
       const { data: ins, error } = await supabase
@@ -444,7 +459,7 @@ function Booking({ t, entries, address, slotPrefix }) {
           <div className="booking-treatments">
             <p className="booking-row-label">{b.valjBehandling}</p>
             <div className="treatment-pick-grid">
-              {t.treatments.map((tr) => (
+              {treatments.map((tr) => (
                 <button
                   key={tr.id}
                   className={`treatment-pick-card${treatment === tr.id ? " selected" : ""}`}
@@ -511,7 +526,7 @@ function Booking({ t, entries, address, slotPrefix }) {
               <div className="booking-form-summary">
                 <div>
                   <span className="booking-form-summary-label">
-                    {t.treatments.find((tr) => tr.id === treatment)?.name} &middot; 55 min
+                    {treatments.find((tr) => tr.id === treatment)?.name} &middot; 55 min
                   </span>
                   <span className="booking-form-summary-value">
                     {selectedDate.getDate()} {t.months[selectedDate.getMonth()]} &middot; {slot.t}–{slot.e}
@@ -565,15 +580,23 @@ function Booking({ t, entries, address, slotPrefix }) {
 export default function HealthByJasmin() {
   const [lang, setLang] = useState("sv");
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [radgivningOpen, setRadgivningOpen] = useState(false);
   const t = TRANSLATIONS[lang];
   const shelfRef = useRef(null);
   const bookingRef = useRef(null);
+  const radgivningRef = useRef(null);
 
   useEffect(() => {
     if (bookingOpen && bookingRef.current) {
       bookingRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [bookingOpen]);
+
+  useEffect(() => {
+    if (radgivningOpen && radgivningRef.current) {
+      radgivningRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [radgivningOpen]);
 
   function scrollShelf(dir) {
     const el = shelfRef.current;
@@ -684,11 +707,11 @@ export default function HealthByJasmin() {
               <div className="wsr-col">
                 <p className="wsr-col-label">{t.weekSchedule.colMassage}</p>
                 <div className="week-schedule-rows">
-                  {t.weekSchedule.items.filter(r => r.booking).map((row, i) => (
+                  {t.weekSchedule.massageItems.map((row, i) => (
                     <button
                       key={i}
                       className={`week-schedule-row${bookingOpen ? " wsr-active" : ""}`}
-                      onClick={() => setBookingOpen((o) => !o)}
+                      onClick={() => { setBookingOpen(o => !o); setRadgivningOpen(false); }}
                     >
                       <span className="wsr-day">{row.day}</span>
                       <span className="wsr-time">{row.time}</span>
@@ -706,7 +729,7 @@ export default function HealthByJasmin() {
               <div className="wsr-col">
                 <p className="wsr-col-label">{t.weekSchedule.colKlasser}</p>
                 <div className="week-schedule-rows">
-                  {t.weekSchedule.items.filter(r => r.href).map((row, i) => (
+                  {t.weekSchedule.klasserItems.map((row, i) => (
                     <a
                       key={i}
                       href={row.href}
@@ -726,6 +749,30 @@ export default function HealthByJasmin() {
                 </div>
               </div>
             </div>
+
+            <div className="wsr-col wsr-col-full">
+              <p className="wsr-col-label">{t.weekSchedule.colRadgivning}</p>
+              <div className="week-schedule-rows">
+                {t.weekSchedule.radgivningItems.map((row, i) => (
+                  <button
+                    key={i}
+                    className={`week-schedule-row${radgivningOpen ? " wsr-active" : ""}`}
+                    onClick={() => { setRadgivningOpen(o => !o); setBookingOpen(false); }}
+                  >
+                    <span className="wsr-day">{row.day}</span>
+                    <span className="wsr-time">{row.time}</span>
+                    <span className="wsr-info">
+                      <span className="wsr-type">{row.type}</span>
+                      <span className="wsr-loc">{row.loc}</span>
+                    </span>
+                    <span className="wsr-btn">
+                      {radgivningOpen ? t.weekSchedule.closeLabel : t.weekSchedule.bookLabel}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <p className="wsr-class-tip">{t.weekSchedule.classTip}</p>
             {bookingOpen && (
               <div className="week-schedule-booking" ref={bookingRef}>
@@ -734,6 +781,18 @@ export default function HealthByJasmin() {
                   entries={TORSDAG_ENTRIES}
                   address="Birkagatan 23, Stockholm"
                   slotPrefix="birka-massage"
+                  treatmentIds={["abhyanga", "vishesh"]}
+                />
+              </div>
+            )}
+            {radgivningOpen && (
+              <div className="week-schedule-booking" ref={radgivningRef}>
+                <Booking
+                  t={t}
+                  entries={TORSDAG_ENTRIES}
+                  address="Birkagatan 23, Stockholm"
+                  slotPrefix="birka-massage"
+                  treatmentIds={["halsradgivning"]}
                 />
               </div>
             )}
