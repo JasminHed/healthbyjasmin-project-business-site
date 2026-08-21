@@ -153,26 +153,21 @@ const TRANSLATIONS = {
       ],
     },
     weekSchedule: {
-      massageItems: [
-        { day: "Torsdag", time: "18:30–19:25", type: "Ayurvedisk massage", loc: "Birkagatan 23" },
-        { day: "Torsdag", time: "21:15–22:10", type: "Ayurvedisk massage", loc: "Birkagatan 23" },
+      behandlingarItems: [
+        { day: "Torsdag", time: "18:30 & 21:15", type: "Ayurvedisk massage",        loc: "Birkagatan 23", id: "massage" },
+        { day: "Torsdag", time: "18:30 & 21:15", type: "Ayurvedisk hälsorådgivning", loc: "Birkagatan 23", id: "radgivning" },
       ],
       klasserItems: [
         { day: "Torsdag", time: "20:00–21:00", type: "Yoga & Ayurveda klass", loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
         { day: "Söndag",  time: "12:15–13:15", type: "Yin Yoga klass",        loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
-      ],
-      radgivningItems: [
-        { day: "Torsdag", time: "18:30–19:25", type: "Ayurvedisk hälsorådgivning", loc: "Birkagatan 23" },
-        { day: "Torsdag", time: "21:15–22:10", type: "Ayurvedisk hälsorådgivning", loc: "Birkagatan 23" },
       ],
       bookLabel: "Boka",
       bookViaLabel: "Boka via studio",
       closeLabel: "Stäng",
       label: "Schema & bokning",
       title: "Veckans behandlingar och klasser",
-      colMassage: "Massage",
+      colBehandlingar: "Behandlingar",
       colKlasser: "Klasser",
-      colRadgivning: "Hälsorådgivning",
       classTip: "Tips: Torsdagar finns också Yoga & Ayurveda klass kl 20:00–21:00. Passar bra att kombinera med en massage samma kväll.",
     },
     courses: {
@@ -274,26 +269,21 @@ const TRANSLATIONS = {
       ],
     },
     weekSchedule: {
-      massageItems: [
-        { day: "Thursday", time: "18:30–19:25", type: "Ayurvedic massage", loc: "Birkagatan 23" },
-        { day: "Thursday", time: "21:15–22:10", type: "Ayurvedic massage", loc: "Birkagatan 23" },
+      behandlingarItems: [
+        { day: "Thursday", time: "18:30 & 21:15", type: "Ayurvedic massage",            loc: "Birkagatan 23", id: "massage" },
+        { day: "Thursday", time: "18:30 & 21:15", type: "Ayurvedic health consultation", loc: "Birkagatan 23", id: "radgivning" },
       ],
       klasserItems: [
         { day: "Thursday", time: "20:00–21:00", type: "Yoga & Ayurveda class", loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
         { day: "Sunday",   time: "12:15–13:15", type: "Yin Yoga class",        loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
-      ],
-      radgivningItems: [
-        { day: "Thursday", time: "18:30–19:25", type: "Ayurvedic health consultation", loc: "Birkagatan 23" },
-        { day: "Thursday", time: "21:15–22:10", type: "Ayurvedic health consultation", loc: "Birkagatan 23" },
       ],
       bookLabel: "Book",
       bookViaLabel: "Book via studio",
       closeLabel: "Close",
       label: "Schedule & booking",
       title: "This week's treatments and classes",
-      colMassage: "Massage",
+      colBehandlingar: "Treatments",
       colKlasser: "Classes",
-      colRadgivning: "Health consultation",
       classTip: "Tip: There is also a Yoga & Ayurveda class on Thursdays at 20:00–21:00. A great way to combine with a massage the same evening.",
     },
     courses: {
@@ -705,25 +695,31 @@ export default function HealthByJasmin() {
             <h2 className="week-schedule-title">{t.weekSchedule.title}</h2>
             <div className="wsr-columns">
               <div className="wsr-col">
-                <p className="wsr-col-label">{t.weekSchedule.colMassage}</p>
+                <p className="wsr-col-label">{t.weekSchedule.colBehandlingar}</p>
                 <div className="week-schedule-rows">
-                  {t.weekSchedule.massageItems.map((row, i) => (
-                    <button
-                      key={i}
-                      className={`week-schedule-row${bookingOpen ? " wsr-active" : ""}`}
-                      onClick={() => { setBookingOpen(o => !o); setRadgivningOpen(false); }}
-                    >
-                      <span className="wsr-day">{row.day}</span>
-                      <span className="wsr-time">{row.time}</span>
-                      <span className="wsr-info">
-                        <span className="wsr-type">{row.type}</span>
-                        <span className="wsr-loc">{row.loc}</span>
-                      </span>
-                      <span className="wsr-btn">
-                        {bookingOpen ? t.weekSchedule.closeLabel : t.weekSchedule.bookLabel}
-                      </span>
-                    </button>
-                  ))}
+                  {t.weekSchedule.behandlingarItems.map((row) => {
+                    const isOpen = row.id === "massage" ? bookingOpen : radgivningOpen;
+                    const toggle = row.id === "massage"
+                      ? () => { setBookingOpen(o => !o); setRadgivningOpen(false); }
+                      : () => { setRadgivningOpen(o => !o); setBookingOpen(false); };
+                    return (
+                      <button
+                        key={row.id}
+                        className={`week-schedule-row${isOpen ? " wsr-active" : ""}`}
+                        onClick={toggle}
+                      >
+                        <span className="wsr-day">{row.day}</span>
+                        <span className="wsr-time">{row.time}</span>
+                        <span className="wsr-info">
+                          <span className="wsr-type">{row.type}</span>
+                          <span className="wsr-loc">{row.loc}</span>
+                        </span>
+                        <span className="wsr-btn">
+                          {isOpen ? t.weekSchedule.closeLabel : t.weekSchedule.bookLabel}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
               <div className="wsr-col">
@@ -747,29 +743,6 @@ export default function HealthByJasmin() {
                     </a>
                   ))}
                 </div>
-              </div>
-            </div>
-
-            <div className="wsr-col wsr-col-full">
-              <p className="wsr-col-label">{t.weekSchedule.colRadgivning}</p>
-              <div className="week-schedule-rows">
-                {t.weekSchedule.radgivningItems.map((row, i) => (
-                  <button
-                    key={i}
-                    className={`week-schedule-row${radgivningOpen ? " wsr-active" : ""}`}
-                    onClick={() => { setRadgivningOpen(o => !o); setBookingOpen(false); }}
-                  >
-                    <span className="wsr-day">{row.day}</span>
-                    <span className="wsr-time">{row.time}</span>
-                    <span className="wsr-info">
-                      <span className="wsr-type">{row.type}</span>
-                      <span className="wsr-loc">{row.loc}</span>
-                    </span>
-                    <span className="wsr-btn">
-                      {radgivningOpen ? t.weekSchedule.closeLabel : t.weekSchedule.bookLabel}
-                    </span>
-                  </button>
-                ))}
               </div>
             </div>
 
