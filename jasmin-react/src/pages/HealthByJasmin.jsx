@@ -18,6 +18,14 @@ async function hashPassword(pwd) {
   return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
+const CONTENT_KEY = "hbj_content_v2";
+function loadLocalContent() {
+  try { return JSON.parse(localStorage.getItem(CONTENT_KEY) || "null"); } catch { return null; }
+}
+function persistLocal(content) {
+  try { localStorage.setItem(CONTENT_KEY, JSON.stringify(content)); } catch (e) { console.warn("localStorage save failed", e); }
+}
+
 function deepMerge(base, overrides) {
   if (!overrides || typeof overrides !== "object") return base;
   // Array base + object override with numeric string keys → merge into array slots
@@ -687,6 +695,7 @@ export default function HealthByJasmin() {
   const [adminPwd, setAdminPwd] = useState("");
   const [adminError, setAdminError] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState(false);
 
   const t = deepMerge(TRANSLATIONS[lang], textOverrides[lang] || {});
 
@@ -739,19 +748,77 @@ export default function HealthByJasmin() {
     return () => observer.disconnect();
   }, [lang]);
 
-  // ── Admin: load from Supabase ────────────────────────────────────────────────
+  // ── Admin: apply a content snapshot to all state ────────────────────────────
+  function applyContent(c) {
+    if (!c) return;
+    if (c.textOverrides) setTextOverrides(c.textOverrides);
+    if (c.imageOverrides) setImageOverrides(c.imageOverrides);
+    if (c.fontOverrides) { setFontOverrides(c.fontOverrides); applyFonts(c.fontOverrides); }
+    if (c.slotsOverride) setSlotsOverride(c.slotsOverride);
+    if (c.scheduleOverride) setScheduleOverride(c.scheduleOverride);
+    if (c.treatmentsOverride) setTreatmentsOverride(c.treatmentsOverride);
+  }
+
+  // ── Admin: build content snapshot from current state ─────────────────────────
+  function buildSnapshot(overrides = {}) {
+    return {
+      textOverrides:     overrides.textOverrides     ?? textOverrides,
+      imageOverrides:    overrides.imageOverrides    ?? imageOverrides,
+      fontOverrides:     overrides.fontOverrides     ?? fontOverrides,
+      slotsOverride:     overrides.slotsOverride     !== undefined ? overrides.slotsOverride     : slotsOverride,
+      scheduleOverride:  overrides.scheduleOverride  !== undefined ? overrides.scheduleOverride  : scheduleOverride,
+      treatmentsOverride:overrides.treatmentsOverride!== undefined ? overrides.treatmentsOverride: treatmentsOverride,
+    };
+  }
+
+  // ── Admin: save to Supabase ───────────────────────────────────────────────────
+  async function saveToSupabase(snap) {
+    const { error } = await supabase.from("site_content").upsert({
+      id: "main",
+      sv_text:             snap.textOverrides?.sv || {},
+      en_text:             snap.textOverrides?.en || {},
+      images:              snap.imageOverrides || {},
+      fonts:               snap.fontOverrides || {},
+      slots:               snap.slotsOverride || [],
+      schedule:            snap.scheduleOverride || {},
+      treatments_override: snap.treatmentsOverride || [],
+    });
+    return error;
+  }
+
+  // ── Admin: load – localStorage first (instant), then Supabase (authoritative)
   useEffect(() => {
+    const local = loadLocalContent();
+    if (local) applyContent(local);
+
     supabase.from("site_content").select("*").eq("id", "main").single().then(({ data }) => {
       if (!data) return;
-      if (data.sv_text) setTextOverrides(prev => ({ ...prev, sv: data.sv_text }));
-      if (data.en_text) setTextOverrides(prev => ({ ...prev, en: data.en_text }));
-      if (data.images)  setImageOverrides(data.images);
-      if (data.fonts)   { setFontOverrides(data.fonts); applyFonts(data.fonts); }
-      if (data.slots && data.slots.length > 0) setSlotsOverride(data.slots);
-      if (data.schedule) setScheduleOverride(data.schedule);
-      if (data.treatments_override && data.treatments_override.length > 0) setTreatmentsOverride(data.treatments_override);
+      const fromDb = {
+        textOverrides:      { sv: data.sv_text || {}, en: data.en_text || {} },
+        imageOverrides:     data.images || {},
+        fontOverrides:      data.fonts  || { heading: "", body: "" },
+        slotsOverride:      data.slots?.length > 0 ? data.slots : null,
+        scheduleOverride:   data.schedule && Object.keys(data.schedule).length > 0 ? data.schedule : null,
+        treatmentsOverride: data.treatments_override?.length > 0 ? data.treatments_override : null,
+      };
+      applyContent(fromDb);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // ── Admin: auto-save to localStorage on every change ─────────────────────────
+  useEffect(() => {
+    persistLocal(buildSnapshot());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [textOverrides, imageOverrides, fontOverrides, slotsOverride, scheduleOverride, treatmentsOverride]);
+
+  // ── Admin: warn before leaving with unsaved Supabase changes ─────────────────
+  useEffect(() => {
+    if (!hasUnsaved) return;
+    const handler = e => { e.preventDefault(); e.returnValue = ""; };
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [hasUnsaved]);
 
   // Convert flat slot rows [{dateStr,time}] → Booking entries [{date,slots}]
   function slotsToEntries(rows) {
@@ -777,11 +844,14 @@ export default function HealthByJasmin() {
   async function handleImageUpload(imgKey, file) {
     const ext = file.name.split(".").pop();
     const path = `${imgKey}-${Date.now()}.${ext}`;
-    const { error } = await supabase.storage.from("site-images").upload(path, file, { upsert: true });
-    if (error) { console.error(error); return; }
+    const { error: upErr } = await supabase.storage.from("site-images").upload(path, file, { upsert: true });
+    if (upErr) { console.error(upErr); return; }
     const { data: urlData } = supabase.storage.from("site-images").getPublicUrl(path);
-    setImageOverrides(prev => ({ ...prev, [imgKey]: urlData.publicUrl }));
-    setHasUnsaved(true);
+    const newImages = { ...imageOverrides, [imgKey]: urlData.publicUrl };
+    setImageOverrides(newImages);
+    // Immediately persist the new image URL to Supabase
+    saveToSupabase(buildSnapshot({ imageOverrides: newImages }));
+    setHasUnsaved(false);
   }
 
   function handleFontChange(type, name) {
@@ -793,18 +863,16 @@ export default function HealthByJasmin() {
 
   async function handleSave() {
     setSaving(true);
-    await supabase.from("site_content").upsert({
-      id: "main",
-      sv_text: textOverrides.sv || {},
-      en_text: textOverrides.en || {},
-      images: imageOverrides,
-      fonts: fontOverrides,
-      slots: slotsOverride || [],
-      schedule: scheduleOverride || {},
-      treatments_override: treatmentsOverride || [],
-    });
+    setSaveError(false);
+    const err = await saveToSupabase(buildSnapshot());
     setSaving(false);
-    setHasUnsaved(false);
+    if (err) {
+      setSaveError(true);
+      console.error("Supabase save error:", err);
+    } else {
+      setHasUnsaved(false);
+      setSaveError(false);
+    }
   }
 
   function openSlotsModal() {
@@ -822,7 +890,8 @@ export default function HealthByJasmin() {
     const sorted = [...editSlots].sort((a, b) => a.dateStr.localeCompare(b.dateStr) || a.time.localeCompare(b.time));
     setSlotsOverride(sorted);
     setSlotsModalOpen(false);
-    setHasUnsaved(true);
+    setHasUnsaved(false);
+    saveToSupabase(buildSnapshot({ slotsOverride: sorted }));
   }
 
   function openScheduleModal() {
@@ -839,10 +908,12 @@ export default function HealthByJasmin() {
   }
 
   function saveSchedule() {
-    setScheduleOverride({ behandlingar: editBehandlingar, klasser: editKlasser });
+    const newSchedule = { behandlingar: editBehandlingar, klasser: editKlasser };
+    setScheduleOverride(newSchedule);
     setTreatmentsOverride(editTreatments);
     setScheduleModalOpen(false);
-    setHasUnsaved(true);
+    setHasUnsaved(false);
+    saveToSupabase(buildSnapshot({ scheduleOverride: newSchedule, treatmentsOverride: editTreatments }));
   }
 
   async function handleAdminLogin(e) {
@@ -1138,8 +1209,8 @@ export default function HealthByJasmin() {
           <div className="admin-bar-right">
             <button className="admin-slots-btn" onClick={openSlotsModal}>Redigera tider</button>
             <button className="admin-slots-btn" onClick={openScheduleModal}>Schema &amp; Behandlingar</button>
-            <button className="admin-save-btn" onClick={handleSave} disabled={saving}>
-              {saving ? "Sparar…" : hasUnsaved ? "Spara ändringar ●" : "Sparat"}
+            <button className="admin-save-btn" onClick={handleSave} disabled={saving} style={saveError ? { background: "#c00" } : {}}>
+              {saving ? "Sparar…" : saveError ? "Fel – försök igen" : hasUnsaved ? "Spara ändringar ●" : "Sparat ✓"}
             </button>
             <button className="admin-logout-btn" onClick={handleAdminLogout}>Logga ut</button>
           </div>
