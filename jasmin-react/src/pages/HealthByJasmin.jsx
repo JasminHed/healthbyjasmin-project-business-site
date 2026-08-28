@@ -1,6 +1,7 @@
 import emailjs from "@emailjs/browser";
 import { createClient } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { QRCodeSVG } from "qrcode.react";
 
 import "../styles/app.css";
 
@@ -19,6 +20,19 @@ async function hashPassword(pwd) {
 
 function deepMerge(base, overrides) {
   if (!overrides || typeof overrides !== "object") return base;
+  // Array base + object override with numeric string keys → merge into array slots
+  if (Array.isArray(base) && !Array.isArray(overrides)) {
+    const result = [...base];
+    for (const key of Object.keys(overrides)) {
+      const idx = Number(key);
+      if (!isNaN(idx)) {
+        result[idx] = (overrides[key] && typeof overrides[key] === "object" && result[idx] && typeof result[idx] === "object")
+          ? deepMerge(result[idx], overrides[key])
+          : overrides[key];
+      }
+    }
+    return result;
+  }
   const result = { ...base };
   for (const key of Object.keys(overrides)) {
     if (typeof overrides[key] === "object" && overrides[key] !== null && !Array.isArray(overrides[key]) && typeof base[key] === "object" && base[key] !== null && !Array.isArray(base[key])) {
@@ -397,10 +411,10 @@ function Navbar({ t, lang, setLang }) {
         <span /><span /><span />
       </button>
       <ul className={`nav-links${menuOpen ? " nav-active" : ""}`}>
-        <li><a href="#om-mig" onClick={close}>{t.nav.aboutMe}</a></li>
-        <li><a href="#ayurveda" onClick={close}>{t.nav.ayurveda}</a></li>
-        <li><a href="#yoga" onClick={close}>{t.nav.yoga}</a></li>
-        <li><a href="#boka" onClick={close}>{t.nav.book}</a></li>
+        <li><a href="#om-mig" onClick={close}><EditableText path="nav.aboutMe" value={t.nav.aboutMe} /></a></li>
+        <li><a href="#ayurveda" onClick={close}><EditableText path="nav.ayurveda" value={t.nav.ayurveda} /></a></li>
+        <li><a href="#yoga" onClick={close}><EditableText path="nav.yoga" value={t.nav.yoga} /></a></li>
+        <li><a href="#boka" onClick={close}><EditableText path="nav.book" value={t.nav.book} /></a></li>
       </ul>
       <button className="lang-toggle" onClick={toggleLang} aria-label="Switch language">
         {lang === "sv" ? "EN" : "SV"}
@@ -662,6 +676,12 @@ export default function HealthByJasmin() {
   const [slotsOverride, setSlotsOverride] = useState(null); // null = use TORSDAG_ENTRIES default
   const [slotsModalOpen, setSlotsModalOpen] = useState(false);
   const [editSlots, setEditSlots] = useState([]); // working copy inside modal
+  const [scheduleOverride, setScheduleOverride] = useState(null); // {behandlingar:[...], klasser:[...]}
+  const [treatmentsOverride, setTreatmentsOverride] = useState(null); // [...] or null
+  const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
+  const [editBehandlingar, setEditBehandlingar] = useState([]);
+  const [editKlasser, setEditKlasser] = useState([]);
+  const [editTreatments, setEditTreatments] = useState([]);
   const [hasUnsaved, setHasUnsaved] = useState(false);
   const [adminLoginOpen, setAdminLoginOpen] = useState(false);
   const [adminPwd, setAdminPwd] = useState("");
@@ -728,6 +748,8 @@ export default function HealthByJasmin() {
       if (data.images)  setImageOverrides(data.images);
       if (data.fonts)   { setFontOverrides(data.fonts); applyFonts(data.fonts); }
       if (data.slots && data.slots.length > 0) setSlotsOverride(data.slots);
+      if (data.schedule) setScheduleOverride(data.schedule);
+      if (data.treatments_override && data.treatments_override.length > 0) setTreatmentsOverride(data.treatments_override);
     });
   }, []);
 
@@ -778,6 +800,8 @@ export default function HealthByJasmin() {
       images: imageOverrides,
       fonts: fontOverrides,
       slots: slotsOverride || [],
+      schedule: scheduleOverride || {},
+      treatments_override: treatmentsOverride || [],
     });
     setSaving(false);
     setHasUnsaved(false);
@@ -798,6 +822,26 @@ export default function HealthByJasmin() {
     const sorted = [...editSlots].sort((a, b) => a.dateStr.localeCompare(b.dateStr) || a.time.localeCompare(b.time));
     setSlotsOverride(sorted);
     setSlotsModalOpen(false);
+    setHasUnsaved(true);
+  }
+
+  function openScheduleModal() {
+    setEditBehandlingar(scheduleOverride?.behandlingar
+      ? [...scheduleOverride.behandlingar]
+      : t.weekSchedule.behandlingarItems.map(r => ({ ...r })));
+    setEditKlasser(scheduleOverride?.klasser
+      ? [...scheduleOverride.klasser]
+      : t.weekSchedule.klasserItems.map(r => ({ ...r })));
+    setEditTreatments(treatmentsOverride
+      ? [...treatmentsOverride]
+      : (t.treatments || []).map(r => ({ ...r })));
+    setScheduleModalOpen(true);
+  }
+
+  function saveSchedule() {
+    setScheduleOverride({ behandlingar: editBehandlingar, klasser: editKlasser });
+    setTreatmentsOverride(editTreatments);
+    setScheduleModalOpen(false);
     setHasUnsaved(true);
   }
 
@@ -868,33 +912,33 @@ export default function HealthByJasmin() {
             <EditableImage imgKey="ayurveda" src={imgSrc("ayurveda", "/assets/ayurveda.jpg")} alt="Ayurvediska örter och oljor" className="cb-img-fill" wrapStyle={{ height: "100%", display: "block" }} />
           </div>
           <div className="cb-cell cb-text fade-up">
-            <span className="section-label">{t.ayurveda.label}</span>
+            <EditableText path="ayurveda.label" value={t.ayurveda.label} tag="span" className="section-label" />
             <h2>Ayurveda</h2>
             <EditableText path="ayurveda.p1" value={t.ayurveda.p1} tag="p" />
             <EditableText path="ayurveda.p2" value={t.ayurveda.p2} tag="p" />
-            <h3>{t.ayurveda.massageTitle}</h3>
+            <EditableText path="ayurveda.massageTitle" value={t.ayurveda.massageTitle} tag="h3" />
             <EditableText path="ayurveda.massageP1" value={t.ayurveda.massageP1} tag="p" />
             <EditableText path="ayurveda.massageP2" value={t.ayurveda.massageP2} tag="p" />
-            <h3>{t.ayurveda.radgivningTitle}</h3>
+            <EditableText path="ayurveda.radgivningTitle" value={t.ayurveda.radgivningTitle} tag="h3" />
             <EditableText path="ayurveda.radgivningP1" value={t.ayurveda.radgivningP1} tag="p" />
           </div>
 
           {/* Rad 2: Yoga text | Yoga bild */}
           <div className="cb-cell cb-text cb-text-alt fade-up" id="yoga">
-            <span className="section-label">{t.yoga.label}</span>
+            <EditableText path="yoga.label" value={t.yoga.label} tag="span" className="section-label" />
             <h2>Yoga</h2>
             <EditableText path="yoga.intro" value={t.yoga.intro} tag="p" className="yoga-intro" />
-            <h3>{t.yoga.yinTitle}</h3>
+            <EditableText path="yoga.yinTitle" value={t.yoga.yinTitle} tag="h3" />
             <EditableText path="yoga.yinP1" value={t.yoga.yinP1} tag="p" />
-            <span className="yoga-col-schedule">{t.yoga.yinSchedule}</span>
-            <h3>{t.yoga.yogaAyurvedaTitle}</h3>
+            <EditableText path="yoga.yinSchedule" value={t.yoga.yinSchedule} tag="span" className="yoga-col-schedule" />
+            <EditableText path="yoga.yogaAyurvedaTitle" value={t.yoga.yogaAyurvedaTitle} tag="h3" />
             <EditableText path="yoga.yogaAyurvedaP1" value={t.yoga.yogaAyurvedaP1} tag="p" />
             <EditableText path="yoga.yogaAyurvedaP2" value={t.yoga.yogaAyurvedaP2} tag="p" />
-            <span className="yoga-col-schedule">{t.yoga.yogaAyurvedaSub}</span>
-            <h3>{t.yoga.ashtangaTitle}</h3>
+            <EditableText path="yoga.yogaAyurvedaSub" value={t.yoga.yogaAyurvedaSub} tag="span" className="yoga-col-schedule" />
+            <EditableText path="yoga.ashtangaTitle" value={t.yoga.ashtangaTitle} tag="h3" />
             <EditableText path="yoga.ashtangaP1" value={t.yoga.ashtangaP1} tag="p" />
             <EditableText path="yoga.ashtangaP2" value={t.yoga.ashtangaP2} tag="p" />
-            <span className="yoga-coming-soon">{t.yoga.ashtangaSoon}</span>
+            <EditableText path="yoga.ashtangaSoon" value={t.yoga.ashtangaSoon} tag="span" className="yoga-coming-soon" />
           </div>
           <div className="cb-cell cb-img">
             <EditableImage imgKey="ashtanga" src={imgSrc("ashtanga", "/assets/ashtanga.jpeg")} alt="Yoga" className="cb-img-fill" wrapStyle={{ height: "100%", display: "block" }} />
@@ -904,13 +948,13 @@ export default function HealthByJasmin() {
         {/* Veckoschema + bokning */}
         <section className="week-schedule-section" id="boka" ref={scheduleSectionRef}>
           <div className="section-inner">
-            <span className="section-label">{t.weekSchedule.label}</span>
-            <h2 className="week-schedule-title">{t.weekSchedule.title}</h2>
+            <EditableText path="weekSchedule.label" value={t.weekSchedule.label} tag="span" className="section-label" />
+            <EditableText path="weekSchedule.title" value={t.weekSchedule.title} tag="h2" className="week-schedule-title" />
             <div className="wsr-columns">
               <div className="wsr-col">
-                <p className="wsr-col-label">{t.weekSchedule.colBehandlingar}</p>
+                <EditableText path="weekSchedule.colBehandlingar" value={t.weekSchedule.colBehandlingar} tag="p" className="wsr-col-label" />
                 <div className="week-schedule-rows">
-                  {t.weekSchedule.behandlingarItems.map((row) => {
+                  {(scheduleOverride?.behandlingar || t.weekSchedule.behandlingarItems).map((row) => {
                     const isOpen = row.id === "massage" ? bookingOpen : radgivningOpen;
                     const toggle = row.id === "massage"
                       ? () => { setBookingOpen(o => !o); setRadgivningOpen(false); }
@@ -936,9 +980,9 @@ export default function HealthByJasmin() {
                 </div>
               </div>
               <div className="wsr-col">
-                <p className="wsr-col-label">{t.weekSchedule.colKlasser}</p>
+                <EditableText path="weekSchedule.colKlasser" value={t.weekSchedule.colKlasser} tag="p" className="wsr-col-label" />
                 <div className="week-schedule-rows">
-                  {t.weekSchedule.klasserItems.map((row, i) => (
+                  {(scheduleOverride?.klasser || t.weekSchedule.klasserItems).map((row, i) => (
                     <a
                       key={i}
                       href={row.href}
@@ -959,13 +1003,13 @@ export default function HealthByJasmin() {
               </div>
             </div>
 
-            <p className="wsr-class-tip">{t.weekSchedule.classTip}</p>
+            <EditableText path="weekSchedule.classTip" value={t.weekSchedule.classTip} tag="p" className="wsr-class-tip" />
             {bookingOpen && (
               <div className="week-schedule-booking" ref={bookingRef}>
                 <Booking
-                  t={t}
+                  t={treatmentsOverride ? { ...t, treatments: treatmentsOverride } : t}
                   entries={activeEntries}
-                  address="Birkagatan 23, Stockholm"
+                  address={(scheduleOverride?.behandlingar?.[0]?.loc || "Birkagatan 23") + ", Stockholm"}
                   slotPrefix="birka-massage"
                   treatmentIds={["abhyanga", "vishesh"]}
                 />
@@ -974,9 +1018,9 @@ export default function HealthByJasmin() {
             {radgivningOpen && (
               <div className="week-schedule-booking" ref={radgivningRef}>
                 <Booking
-                  t={t}
+                  t={treatmentsOverride ? { ...t, treatments: treatmentsOverride } : t}
                   entries={activeEntries}
-                  address="Birkagatan 23, Stockholm"
+                  address={(scheduleOverride?.behandlingar?.[0]?.loc || "Birkagatan 23") + ", Stockholm"}
                   slotPrefix="birka-massage"
                   treatmentIds={["halsradgivning"]}
                 />
@@ -1023,9 +1067,9 @@ export default function HealthByJasmin() {
               </button>
             </div>
             <div className="instagram-cta">
-              <a href="https://www.instagram.com/healthbyjasmin/" target="_blank" rel="noopener noreferrer" className="instagram-btn">
-                <i className="fab fa-instagram" />
-                {t.reviews.instagram}
+              <a href="https://www.instagram.com/healthbyjasmin/" target="_blank" rel="noopener noreferrer" className="instagram-qr-wrap" aria-label="Instagram @healthbyjasmin">
+                <QRCodeSVG value="https://www.instagram.com/healthbyjasmin/" size={96} fgColor="#4a6b7c" bgColor="transparent" />
+                <span className="instagram-qr-label">Instagram</span>
               </a>
             </div>
           </div>
@@ -1056,7 +1100,7 @@ export default function HealthByJasmin() {
             <i className="fab fa-instagram" />
           </a>
         </div>
-        <p>{t.footer.location}</p>
+        <EditableText path="footer.location" value={t.footer.location} tag="p" />
         <p><a href="mailto:healthbyjasmin@gmail.com">healthbyjasmin@gmail.com</a></p>
         <button className="admin-lock-btn" onClick={() => isAdmin ? handleAdminLogout() : setAdminLoginOpen(true)} title={isAdmin ? "Logga ut admin" : "Admin"}>
           {isAdmin ? "🔓" : "🔒"}
@@ -1093,6 +1137,7 @@ export default function HealthByJasmin() {
           </div>
           <div className="admin-bar-right">
             <button className="admin-slots-btn" onClick={openSlotsModal}>Redigera tider</button>
+            <button className="admin-slots-btn" onClick={openScheduleModal}>Schema &amp; Behandlingar</button>
             <button className="admin-save-btn" onClick={handleSave} disabled={saving}>
               {saving ? "Sparar…" : hasUnsaved ? "Spara ändringar ●" : "Sparat"}
             </button>
@@ -1100,6 +1145,68 @@ export default function HealthByJasmin() {
           </div>
         </div>
       )}
+      {/* Admin: schema & behandlingar modal */}
+      {scheduleModalOpen && (
+        <div className="admin-login-modal" onClick={e => { if (e.target === e.currentTarget) setScheduleModalOpen(false); }}>
+          <div className="admin-slots-box" style={{ width: "min(680px,96vw)" }}>
+            <h3>Schema &amp; Behandlingar</h3>
+
+            <p className="admin-slots-hint" style={{ fontWeight: 600, color: "#333", marginBottom: 0 }}>Behandlingsrader (massage &amp; rådgivning)</p>
+            <div className="admin-slots-list">
+              <div className="admin-slots-header" style={{ gridTemplateColumns: "80px 110px 1fr 1fr 32px" }}>
+                <span>Dag</span><span>Tid</span><span>Typ</span><span>Lokal</span><span></span>
+              </div>
+              {editBehandlingar.map((row, i) => (
+                <div key={i} className="admin-slots-row" style={{ gridTemplateColumns: "80px 110px 1fr 1fr 32px" }}>
+                  <input className="admin-slots-input" value={row.day} onChange={e => setEditBehandlingar(p => p.map((r,j)=>j===i?{...r,day:e.target.value}:r))} placeholder="Dag" />
+                  <input className="admin-slots-input" value={row.time} onChange={e => setEditBehandlingar(p => p.map((r,j)=>j===i?{...r,time:e.target.value}:r))} placeholder="Tid" />
+                  <input className="admin-slots-input" value={row.type} onChange={e => setEditBehandlingar(p => p.map((r,j)=>j===i?{...r,type:e.target.value}:r))} placeholder="Typ" />
+                  <input className="admin-slots-input" value={row.loc} onChange={e => setEditBehandlingar(p => p.map((r,j)=>j===i?{...r,loc:e.target.value}:r))} placeholder="Lokal" />
+                  <button className="admin-slots-del" onClick={() => setEditBehandlingar(p => p.filter((_,j)=>j!==i))}>×</button>
+                </div>
+              ))}
+              <button className="admin-slots-add" onClick={() => setEditBehandlingar(p => [...p, { day: "Torsdag", time: "18:30", type: "", loc: "", id: `behandling-${Date.now()}` }])}>+ Lägg till behandlingsrad</button>
+            </div>
+
+            <p className="admin-slots-hint" style={{ fontWeight: 600, color: "#333", marginBottom: 0, marginTop: 8 }}>Yogaklasser</p>
+            <div className="admin-slots-list">
+              <div className="admin-slots-header" style={{ gridTemplateColumns: "80px 110px 1fr 1fr 1fr 32px" }}>
+                <span>Dag</span><span>Tid</span><span>Typ</span><span>Studio</span><span>Länk</span><span></span>
+              </div>
+              {editKlasser.map((row, i) => (
+                <div key={i} className="admin-slots-row" style={{ gridTemplateColumns: "80px 110px 1fr 1fr 1fr 32px" }}>
+                  <input className="admin-slots-input" value={row.day} onChange={e => setEditKlasser(p => p.map((r,j)=>j===i?{...r,day:e.target.value}:r))} placeholder="Dag" />
+                  <input className="admin-slots-input" value={row.time} onChange={e => setEditKlasser(p => p.map((r,j)=>j===i?{...r,time:e.target.value}:r))} placeholder="Tid" />
+                  <input className="admin-slots-input" value={row.type} onChange={e => setEditKlasser(p => p.map((r,j)=>j===i?{...r,type:e.target.value}:r))} placeholder="Typ" />
+                  <input className="admin-slots-input" value={row.loc} onChange={e => setEditKlasser(p => p.map((r,j)=>j===i?{...r,loc:e.target.value}:r))} placeholder="Studio" />
+                  <input className="admin-slots-input" value={row.href} onChange={e => setEditKlasser(p => p.map((r,j)=>j===i?{...r,href:e.target.value}:r))} placeholder="https://..." />
+                  <button className="admin-slots-del" onClick={() => setEditKlasser(p => p.filter((_,j)=>j!==i))}>×</button>
+                </div>
+              ))}
+              <button className="admin-slots-add" onClick={() => setEditKlasser(p => [...p, { day: "", time: "", type: "", loc: "", href: "" }])}>+ Lägg till klass</button>
+            </div>
+
+            <p className="admin-slots-hint" style={{ fontWeight: 600, color: "#333", marginBottom: 0, marginTop: 8 }}>Behandlingar (priser &amp; beskrivningar)</p>
+            <div className="admin-slots-list">
+              {editTreatments.map((tr, i) => (
+                <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 90px 32px", gap: 6, marginBottom: 4 }}>
+                  <input className="admin-slots-input" value={tr.name} onChange={e => setEditTreatments(p => p.map((r,j)=>j===i?{...r,name:e.target.value}:r))} placeholder="Namn" />
+                  <input className="admin-slots-input" value={tr.price} onChange={e => setEditTreatments(p => p.map((r,j)=>j===i?{...r,price:e.target.value}:r))} placeholder="Pris" />
+                  <button className="admin-slots-del" onClick={() => setEditTreatments(p => p.filter((_,j)=>j!==i))}>×</button>
+                  <textarea className="admin-slots-input" style={{ gridColumn: "1/3", resize: "vertical", minHeight: 48 }} value={tr.description} onChange={e => setEditTreatments(p => p.map((r,j)=>j===i?{...r,description:e.target.value}:r))} placeholder="Beskrivning" />
+                </div>
+              ))}
+              <button className="admin-slots-add" onClick={() => setEditTreatments(p => [...p, { id: `t-${Date.now()}`, name: "", price: "", description: "" }])}>+ Lägg till behandling</button>
+            </div>
+
+            <div className="admin-slots-actions">
+              <button className="admin-logout-btn" onClick={() => setScheduleModalOpen(false)}>Avbryt</button>
+              <button className="admin-save-btn" onClick={saveSchedule}>Spara schema</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Admin: tider/datum modal */}
       {slotsModalOpen && (
         <div className="admin-login-modal" onClick={e => { if (e.target === e.currentTarget) setSlotsModalOpen(false); }}>

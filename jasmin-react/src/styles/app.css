@@ -1119,3 +1119,16 @@ footer a:hover { color: #2D4A5D; }
   display: flex; justify-content: flex-end; gap: 10px;
   margin-top: 4px;
 }
+
+/* Instagram QR code */
+.instagram-qr-wrap {
+  display: inline-flex; flex-direction: column; align-items: center; gap: 8px;
+  text-decoration: none; color: #4a6b7c;
+  padding: 16px 20px; border: 1px solid #dde4e8; border-radius: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.instagram-qr-wrap:hover { border-color: #4a6b7c; box-shadow: 0 2px 12px rgba(74,107,124,0.15); }
+.instagram-qr-label {
+  font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+  font-weight: 600; opacity: 0.7;
+}
