@@ -1,6 +1,6 @@
 import emailjs from "@emailjs/browser";
 import { createClient } from "@supabase/supabase-js";
-import { useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 import "../styles/app.css";
 
@@ -8,6 +8,88 @@ const supabase = createClient(
   "https://besnxjxiadkapxgmabdz.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJlc254anhpYWRrYXB4Z21hYmR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzY0OTIsImV4cCI6MjA5NDI1MjQ5Mn0.VEH6QtlFEieEYtQTuWvXPNPVwAB_Lw19wk-NGYz0oNY"
 );
+
+// ── Admin ──────────────────────────────────────────────────────────────────────
+const ADMIN_HASH = "eadafb9d02781f44fe2b2664c65b8c934ace9e9dc3d59ea345d5b6c7dbebb0e7";
+
+async function hashPassword(pwd) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(pwd));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+function deepMerge(base, overrides) {
+  if (!overrides || typeof overrides !== "object") return base;
+  const result = { ...base };
+  for (const key of Object.keys(overrides)) {
+    if (typeof overrides[key] === "object" && overrides[key] !== null && !Array.isArray(overrides[key]) && typeof base[key] === "object" && base[key] !== null && !Array.isArray(base[key])) {
+      result[key] = deepMerge(base[key], overrides[key]);
+    } else {
+      result[key] = overrides[key];
+    }
+  }
+  return result;
+}
+
+function setNestedValue(obj, path, value) {
+  const keys = path.split(".");
+  let cur = obj;
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (!cur[keys[i]] || typeof cur[keys[i]] !== "object") cur[keys[i]] = {};
+    cur = cur[keys[i]];
+  }
+  cur[keys[keys.length - 1]] = value;
+}
+
+const HEADING_FONTS = ["Cormorant Garamond", "Playfair Display", "Lora", "Libre Baskerville", "DM Serif Display", "Montserrat"];
+const BODY_FONTS = ["Inter", "DM Sans", "Lato", "Nunito", "Raleway", "Source Sans 3"];
+
+function loadGoogleFont(name) {
+  if (!name) return;
+  const id = "gf-" + name.replace(/\s+/g, "-").toLowerCase();
+  if (document.getElementById(id)) return;
+  const link = document.createElement("link");
+  link.id = id; link.rel = "stylesheet";
+  link.href = `https://fonts.googleapis.com/css2?family=${name.replace(/ /g, "+")}:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap`;
+  document.head.appendChild(link);
+}
+
+function applyFonts({ heading, body }) {
+  let el = document.getElementById("admin-font-override");
+  if (!el) { el = document.createElement("style"); el.id = "admin-font-override"; document.head.appendChild(el); }
+  const rules = [];
+  if (heading) { loadGoogleFont(heading); rules.push(`h1,h2,h3,h4{font-family:'${heading}',serif!important}`); }
+  if (body)    { loadGoogleFont(body);    rules.push(`body,p,li,span,button,input,select,textarea{font-family:'${body}',sans-serif!important}`); }
+  el.textContent = rules.join("\n");
+}
+
+const AdminCtx = createContext({ isAdmin: false, onEdit: () => {}, onImageUpload: () => {} });
+
+function EditableText({ path, value, tag: Tag = "span", className }) {
+  const { isAdmin, onEdit } = useContext(AdminCtx);
+  if (!isAdmin) return className ? <Tag className={className}>{value}</Tag> : <Tag>{value}</Tag>;
+  return (
+    <Tag
+      className={(className ? className + " " : "") + "admin-editable"}
+      contentEditable suppressContentEditableWarning spellCheck={false}
+      onBlur={e => { const v = e.currentTarget.innerText.trim(); if (v !== value) onEdit(path, v); }}
+      dangerouslySetInnerHTML={{ __html: value }}
+    />
+  );
+}
+
+function EditableImage({ imgKey, src, alt, className, wrapStyle }) {
+  const { isAdmin, onImageUpload } = useContext(AdminCtx);
+  const inputRef = useRef(null);
+  if (!isAdmin) return <img src={src} alt={alt} className={className} />;
+  return (
+    <div className="admin-img-wrap" style={wrapStyle} onClick={() => inputRef.current?.click()} title="Klicka för att byta bild">
+      <img src={src} alt={alt} className={className} />
+      <div className="admin-img-overlay"><span>Byt bild</span></div>
+      <input ref={inputRef} type="file" accept="image/*" style={{ display: "none" }}
+        onChange={e => { if (e.target.files[0]) onImageUpload(imgKey, e.target.files[0]); }} />
+    </div>
+  );
+}
 
 const EMAILJS_SERVICE_ID = "service_mjw4cpb";
 const EMAILJS_TEMPLATE_JASMIN = "template_m9afbud";
@@ -122,7 +204,7 @@ const TRANSLATIONS = {
     treatments: [
       { id: "abhyanga",       name: "Abhyanga",                      price: "750 kr", description: "Helkroppsmassage med varm sesamolja i långa, svepande rörelser. Ger värme, grundning och närvaro. Ett sätt för kropp och sinne att sakta ned och landa." },
       { id: "vishesh",        name: "Vishesh",                       price: "750 kr", description: "Helkroppsmassage med varm sesamolja i långa drag med mer tryck. Mjukar upp muskler, frigör spänningar och ger kroppen lätthet. Du lämnar lättare och klarare i kropp och sinne." },
-      { id: "halsradgivning", name: "Ayurvedisk hälsorådgivning",    price: "600 kr", description: "Individuell rådgivning baserad på din ayurvediska konstitution. Vi tittar på hur du mår, dina vanor och din vardag – och sätter ihop konkreta råd för kost, rutiner och livsstil anpassade för dig." },
+      { id: "halsradgivning", name: "Ayurvedisk hälsorådgivning",    price: "695 kr", description: "Individuell rådgivning baserad på din ayurvediska konstitution. Vi tittar på hur du mår, dina vanor och din vardag – och sätter ihop konkreta råd för kost, rutiner och livsstil anpassade för dig." },
     ],
     months: ["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"],
     days: ["Sön","Mån","Tis","Ons","Tor","Fre","Lör"],
@@ -238,7 +320,7 @@ const TRANSLATIONS = {
     treatments: [
       { id: "abhyanga",       name: "Abhyanga",                      price: "750 kr", description: "Full-body massage with warm sesame oil using long, sweeping strokes. Brings warmth, grounding and presence. A way for body and mind to slow down and settle." },
       { id: "vishesh",        name: "Vishesh",                       price: "750 kr", description: "Full-body massage with warm sesame oil using long strokes with more pressure. Softens muscles, releases tension and brings lightness to the body. You leave lighter and clearer in body and mind." },
-      { id: "halsradgivning", name: "Ayurvedic health consultation", price: "600 kr", description: "Individual consultation based on your ayurvedic constitution. We look at how you feel, your habits and daily life – and put together concrete advice on diet, routines and lifestyle tailored to you." },
+      { id: "halsradgivning", name: "Ayurvedic health consultation", price: "695 kr", description: "Individual consultation based on your ayurvedic constitution. We look at how you feel, your habits and daily life – and put together concrete advice on diet, routines and lifestyle tailored to you." },
     ],
     months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
     days: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
@@ -571,7 +653,23 @@ export default function HealthByJasmin() {
   const [lang, setLang] = useState("sv");
   const [bookingOpen, setBookingOpen] = useState(false);
   const [radgivningOpen, setRadgivningOpen] = useState(false);
-  const t = TRANSLATIONS[lang];
+
+  // ── Admin state ──────────────────────────────────────────────────────────────
+  const [isAdmin, setIsAdmin] = useState(() => localStorage.getItem("hbj_admin") === "1");
+  const [textOverrides, setTextOverrides] = useState({ sv: {}, en: {} });
+  const [imageOverrides, setImageOverrides] = useState({});
+  const [fontOverrides, setFontOverrides] = useState({ heading: "", body: "" });
+  const [slotsOverride, setSlotsOverride] = useState(null); // null = use TORSDAG_ENTRIES default
+  const [slotsModalOpen, setSlotsModalOpen] = useState(false);
+  const [editSlots, setEditSlots] = useState([]); // working copy inside modal
+  const [hasUnsaved, setHasUnsaved] = useState(false);
+  const [adminLoginOpen, setAdminLoginOpen] = useState(false);
+  const [adminPwd, setAdminPwd] = useState("");
+  const [adminError, setAdminError] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  const t = deepMerge(TRANSLATIONS[lang], textOverrides[lang] || {});
+
   const shelfRef = useRef(null);
   const bookingRef = useRef(null);
   const radgivningRef = useRef(null);
@@ -621,19 +719,122 @@ export default function HealthByJasmin() {
     return () => observer.disconnect();
   }, [lang]);
 
+  // ── Admin: load from Supabase ────────────────────────────────────────────────
+  useEffect(() => {
+    supabase.from("site_content").select("*").eq("id", "main").single().then(({ data }) => {
+      if (!data) return;
+      if (data.sv_text) setTextOverrides(prev => ({ ...prev, sv: data.sv_text }));
+      if (data.en_text) setTextOverrides(prev => ({ ...prev, en: data.en_text }));
+      if (data.images)  setImageOverrides(data.images);
+      if (data.fonts)   { setFontOverrides(data.fonts); applyFonts(data.fonts); }
+      if (data.slots && data.slots.length > 0) setSlotsOverride(data.slots);
+    });
+  }, []);
+
+  // Convert flat slot rows [{dateStr,time}] → Booking entries [{date,slots}]
+  function slotsToEntries(rows) {
+    return rows.map(r => {
+      const [y, m, d] = r.dateStr.split("-").map(Number);
+      return { date: new Date(y, m - 1, d), slots: [{ t: r.time, e: "" }] };
+    }).sort((a, b) => a.date - b.date || a.slots[0].t.localeCompare(b.slots[0].t));
+  }
+
+  const activeEntries = slotsOverride ? slotsToEntries(slotsOverride) : TORSDAG_ENTRIES;
+
+  function imgSrc(key, fallback) { return imageOverrides[key] || fallback; }
+
+  function handleEdit(path, value) {
+    setTextOverrides(prev => {
+      const lo = JSON.parse(JSON.stringify(prev[lang] || {}));
+      setNestedValue(lo, path, value);
+      return { ...prev, [lang]: lo };
+    });
+    setHasUnsaved(true);
+  }
+
+  async function handleImageUpload(imgKey, file) {
+    const ext = file.name.split(".").pop();
+    const path = `${imgKey}-${Date.now()}.${ext}`;
+    const { error } = await supabase.storage.from("site-images").upload(path, file, { upsert: true });
+    if (error) { console.error(error); return; }
+    const { data: urlData } = supabase.storage.from("site-images").getPublicUrl(path);
+    setImageOverrides(prev => ({ ...prev, [imgKey]: urlData.publicUrl }));
+    setHasUnsaved(true);
+  }
+
+  function handleFontChange(type, name) {
+    const updated = { ...fontOverrides, [type]: name };
+    setFontOverrides(updated);
+    applyFonts(updated);
+    setHasUnsaved(true);
+  }
+
+  async function handleSave() {
+    setSaving(true);
+    await supabase.from("site_content").upsert({
+      id: "main",
+      sv_text: textOverrides.sv || {},
+      en_text: textOverrides.en || {},
+      images: imageOverrides,
+      fonts: fontOverrides,
+      slots: slotsOverride || [],
+    });
+    setSaving(false);
+    setHasUnsaved(false);
+  }
+
+  function openSlotsModal() {
+    const rows = slotsOverride
+      ? [...slotsOverride]
+      : TORSDAG_ENTRIES.map(e => ({
+          dateStr: `${e.date.getFullYear()}-${String(e.date.getMonth() + 1).padStart(2, "0")}-${String(e.date.getDate()).padStart(2, "0")}`,
+          time: e.slots[0].t,
+        }));
+    setEditSlots(rows);
+    setSlotsModalOpen(true);
+  }
+
+  function saveSlots() {
+    const sorted = [...editSlots].sort((a, b) => a.dateStr.localeCompare(b.dateStr) || a.time.localeCompare(b.time));
+    setSlotsOverride(sorted);
+    setSlotsModalOpen(false);
+    setHasUnsaved(true);
+  }
+
+  async function handleAdminLogin(e) {
+    e.preventDefault();
+    const hash = await hashPassword(adminPwd);
+    if (hash === ADMIN_HASH) {
+      setIsAdmin(true); localStorage.setItem("hbj_admin", "1");
+      setAdminLoginOpen(false); setAdminPwd(""); setAdminError(false);
+    } else { setAdminError(true); }
+  }
+
+  function handleAdminLogout() {
+    setIsAdmin(false); localStorage.removeItem("hbj_admin"); setHasUnsaved(false);
+  }
+
+  const adminCtxValue = { isAdmin, onEdit: handleEdit, onImageUpload: handleImageUpload };
+
   return (
-    <>
+    <AdminCtx.Provider value={adminCtxValue}>
       <header className="site-header">
         <Navbar t={t} lang={lang} setLang={setLang} />
       </header>
 
       <main>
         {/* Hero */}
-        <section id="top" className="page-hero">
+        <section id="top" className="page-hero" style={imageOverrides.header ? { backgroundImage: `url(${imageOverrides.header})` } : undefined}>
+          {isAdmin && (
+            <label className="admin-hero-img-btn" title="Byt bakgrundsbild">
+              Byt bakgrundsbild
+              <input type="file" accept="image/*" style={{ display: "none" }} onChange={e => { if (e.target.files[0]) handleImageUpload("header", e.target.files[0]); }} />
+            </label>
+          )}
           <div className="page-hero-inner">
-            <span className="hero-eyebrow">{t.hero.eyebrow}</span>
+            <EditableText path="hero.eyebrow" value={t.hero.eyebrow} tag="span" className="hero-eyebrow" />
             <h1 className="hero-title">Health by Jasmin</h1>
-            <p className="hero-sub">{t.hero.sub}</p>
+            <EditableText path="hero.sub" value={t.hero.sub} tag="p" className="hero-sub" />
             <a href="#om-mig" className="hero-scroll-arrow" aria-label={t.hero.scrollLabel}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="6 9 12 15 18 9" />
@@ -652,9 +853,9 @@ export default function HealthByJasmin() {
                 <h2>Jasmin<br />Hedlund</h2>
               </div>
               <div className="about-split-body">
-                <p>{t.about.p1}</p>
-                <p>{t.about.p2}</p>
-                <p>{t.about.p3}</p>
+                <EditableText path="about.p1" value={t.about.p1} tag="p" />
+                <EditableText path="about.p2" value={t.about.p2} tag="p" />
+                <EditableText path="about.p3" value={t.about.p3} tag="p" />
               </div>
             </div>
           </div>
@@ -664,39 +865,39 @@ export default function HealthByJasmin() {
         <section className="checkerboard-section" id="ayurveda">
           {/* Rad 1: Ayurveda bild | Ayurveda text */}
           <div className="cb-cell cb-img">
-            <img src="/assets/ayurveda.jpg" alt="Ayurvediska örter och oljor" className="cb-img-fill" />
+            <EditableImage imgKey="ayurveda" src={imgSrc("ayurveda", "/assets/ayurveda.jpg")} alt="Ayurvediska örter och oljor" className="cb-img-fill" wrapStyle={{ height: "100%", display: "block" }} />
           </div>
           <div className="cb-cell cb-text fade-up">
             <span className="section-label">{t.ayurveda.label}</span>
             <h2>Ayurveda</h2>
-            <p>{t.ayurveda.p1}</p>
-            <p>{t.ayurveda.p2}</p>
+            <EditableText path="ayurveda.p1" value={t.ayurveda.p1} tag="p" />
+            <EditableText path="ayurveda.p2" value={t.ayurveda.p2} tag="p" />
             <h3>{t.ayurveda.massageTitle}</h3>
-            <p>{t.ayurveda.massageP1}</p>
-            <p>{t.ayurveda.massageP2}</p>
+            <EditableText path="ayurveda.massageP1" value={t.ayurveda.massageP1} tag="p" />
+            <EditableText path="ayurveda.massageP2" value={t.ayurveda.massageP2} tag="p" />
             <h3>{t.ayurveda.radgivningTitle}</h3>
-            <p>{t.ayurveda.radgivningP1}</p>
+            <EditableText path="ayurveda.radgivningP1" value={t.ayurveda.radgivningP1} tag="p" />
           </div>
 
           {/* Rad 2: Yoga text | Yoga bild */}
           <div className="cb-cell cb-text cb-text-alt fade-up" id="yoga">
             <span className="section-label">{t.yoga.label}</span>
             <h2>Yoga</h2>
-            <p className="yoga-intro">{t.yoga.intro}</p>
+            <EditableText path="yoga.intro" value={t.yoga.intro} tag="p" className="yoga-intro" />
             <h3>{t.yoga.yinTitle}</h3>
-            <p>{t.yoga.yinP1}</p>
+            <EditableText path="yoga.yinP1" value={t.yoga.yinP1} tag="p" />
             <span className="yoga-col-schedule">{t.yoga.yinSchedule}</span>
             <h3>{t.yoga.yogaAyurvedaTitle}</h3>
-            <p>{t.yoga.yogaAyurvedaP1}</p>
-            <p>{t.yoga.yogaAyurvedaP2}</p>
+            <EditableText path="yoga.yogaAyurvedaP1" value={t.yoga.yogaAyurvedaP1} tag="p" />
+            <EditableText path="yoga.yogaAyurvedaP2" value={t.yoga.yogaAyurvedaP2} tag="p" />
             <span className="yoga-col-schedule">{t.yoga.yogaAyurvedaSub}</span>
             <h3>{t.yoga.ashtangaTitle}</h3>
-            <p>{t.yoga.ashtangaP1}</p>
-            <p>{t.yoga.ashtangaP2}</p>
+            <EditableText path="yoga.ashtangaP1" value={t.yoga.ashtangaP1} tag="p" />
+            <EditableText path="yoga.ashtangaP2" value={t.yoga.ashtangaP2} tag="p" />
             <span className="yoga-coming-soon">{t.yoga.ashtangaSoon}</span>
           </div>
           <div className="cb-cell cb-img">
-            <img src="/assets/ashtanga.jpeg" alt="Yoga" className="cb-img-fill" />
+            <EditableImage imgKey="ashtanga" src={imgSrc("ashtanga", "/assets/ashtanga.jpeg")} alt="Yoga" className="cb-img-fill" wrapStyle={{ height: "100%", display: "block" }} />
           </div>
         </section>
 
@@ -763,7 +964,7 @@ export default function HealthByJasmin() {
               <div className="week-schedule-booking" ref={bookingRef}>
                 <Booking
                   t={t}
-                  entries={TORSDAG_ENTRIES}
+                  entries={activeEntries}
                   address="Birkagatan 23, Stockholm"
                   slotPrefix="birka-massage"
                   treatmentIds={["abhyanga", "vishesh"]}
@@ -774,7 +975,7 @@ export default function HealthByJasmin() {
               <div className="week-schedule-booking" ref={radgivningRef}>
                 <Booking
                   t={t}
-                  entries={TORSDAG_ENTRIES}
+                  entries={activeEntries}
                   address="Birkagatan 23, Stockholm"
                   slotPrefix="birka-massage"
                   treatmentIds={["halsradgivning"]}
@@ -788,16 +989,16 @@ export default function HealthByJasmin() {
         {/* Kurser */}
         <section className="retreat-section">
           <article className="retreat">
-            <img src="/assets/retreat.jpg" alt="Stadsretreat" />
+            <EditableImage imgKey="retreat" src={imgSrc("retreat", "/assets/retreat.jpg")} alt="Stadsretreat" />
             <h2>{t.courses.title}</h2>
-            <p className="retreat-intro">{t.courses.intro}</p>
+            <EditableText path="courses.intro" value={t.courses.intro} tag="p" className="retreat-intro" />
             <span>{t.courses.soon}</span>
           </article>
         </section>
 
         {/* Quote */}
         <section className="quote-section">
-          <p>{t.quote}</p>
+          <EditableText path="quote" value={t.quote} tag="p" />
         </section>
 
         {/* Recensioner */}
@@ -857,7 +1058,86 @@ export default function HealthByJasmin() {
         </div>
         <p>{t.footer.location}</p>
         <p><a href="mailto:healthbyjasmin@gmail.com">healthbyjasmin@gmail.com</a></p>
+        <button className="admin-lock-btn" onClick={() => isAdmin ? handleAdminLogout() : setAdminLoginOpen(true)} title={isAdmin ? "Logga ut admin" : "Admin"}>
+          {isAdmin ? "🔓" : "🔒"}
+        </button>
       </footer>
-    </>
+
+      {/* Admin: inloggningsmodal */}
+      {adminLoginOpen && (
+        <div className="admin-login-modal" onClick={e => { if (e.target === e.currentTarget) setAdminLoginOpen(false); }}>
+          <form className="admin-login-box" onSubmit={handleAdminLogin}>
+            <h3>Admin</h3>
+            <input className="admin-login-input" type="password" placeholder="Lösenord" value={adminPwd} onChange={e => setAdminPwd(e.target.value)} autoFocus />
+            {adminError && <p className="admin-login-error">Fel lösenord.</p>}
+            <button className="admin-login-btn" type="submit">Logga in</button>
+          </form>
+        </div>
+      )}
+
+      {/* Admin: verktygsfält */}
+      {isAdmin && (
+        <div className="admin-bar">
+          <div className="admin-font-row">
+            <span className="admin-font-label">Rubrikfont</span>
+            <select className="admin-font-select" value={fontOverrides.heading} onChange={e => handleFontChange("heading", e.target.value)}>
+              <option value="">Standard</option>
+              {HEADING_FONTS.map(f => <option key={f} value={f}>{f}</option>)}
+            </select>
+            <span className="admin-font-label">Brödtextfont</span>
+            <select className="admin-font-select" value={fontOverrides.body} onChange={e => handleFontChange("body", e.target.value)}>
+              <option value="">Standard</option>
+              {BODY_FONTS.map(f => <option key={f} value={f}>{f}</option>)}
+            </select>
+            <span className="admin-font-label" style={{ marginLeft: 8 }}>Klicka på text för att redigera · Klicka på bild för att byta</span>
+          </div>
+          <div className="admin-bar-right">
+            <button className="admin-slots-btn" onClick={openSlotsModal}>Redigera tider</button>
+            <button className="admin-save-btn" onClick={handleSave} disabled={saving}>
+              {saving ? "Sparar…" : hasUnsaved ? "Spara ändringar ●" : "Sparat"}
+            </button>
+            <button className="admin-logout-btn" onClick={handleAdminLogout}>Logga ut</button>
+          </div>
+        </div>
+      )}
+      {/* Admin: tider/datum modal */}
+      {slotsModalOpen && (
+        <div className="admin-login-modal" onClick={e => { if (e.target === e.currentTarget) setSlotsModalOpen(false); }}>
+          <div className="admin-slots-box">
+            <h3>Redigera tider &amp; datum</h3>
+            <p className="admin-slots-hint">Lägg till eller ta bort datum och tider för ayurvedisk massage och hälsorådgivning.</p>
+            <div className="admin-slots-list">
+              <div className="admin-slots-header">
+                <span>Datum (ÅÅÅÅ-MM-DD)</span>
+                <span>Tid (TT:MM)</span>
+                <span></span>
+              </div>
+              {editSlots.map((row, i) => (
+                <div key={i} className="admin-slots-row">
+                  <input
+                    className="admin-slots-input"
+                    type="date"
+                    value={row.dateStr}
+                    onChange={e => setEditSlots(prev => prev.map((r, j) => j === i ? { ...r, dateStr: e.target.value } : r))}
+                  />
+                  <input
+                    className="admin-slots-input admin-slots-time"
+                    type="time"
+                    value={row.time}
+                    onChange={e => setEditSlots(prev => prev.map((r, j) => j === i ? { ...r, time: e.target.value } : r))}
+                  />
+                  <button className="admin-slots-del" onClick={() => setEditSlots(prev => prev.filter((_, j) => j !== i))} title="Ta bort">×</button>
+                </div>
+              ))}
+            </div>
+            <button className="admin-slots-add" onClick={() => setEditSlots(prev => [...prev, { dateStr: "", time: "18:30" }])}>+ Lägg till tid</button>
+            <div className="admin-slots-actions">
+              <button className="admin-logout-btn" onClick={() => setSlotsModalOpen(false)}>Avbryt</button>
+              <button className="admin-save-btn" onClick={saveSlots}>Spara tider</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </AdminCtx.Provider>
   );
 }
