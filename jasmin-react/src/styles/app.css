@@ -1231,3 +1231,73 @@ footer a:hover { color: #2D4A5D; }
 
 .next-slot-btn:disabled { opacity: 0.35; cursor: default; transform: none; }
 .next-slot-btn:disabled:hover { border-color: #d8e3e9; background: #fff; }
+
+/* ─── Navbar: Boka-knapp ────────────────────────────────── */
+.nav-book-btn {
+  display: inline-flex; align-items: center;
+  background: #4a6b7c; color: #fff !important;
+  padding: 8px 18px; border-radius: 6px;
+  font-size: 0.82rem; font-weight: 600;
+  letter-spacing: 0.04em; text-decoration: none !important;
+  transition: background 0.2s, transform 0.15s;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+.nav-book-btn:hover { background: #3a5a6a; transform: translateY(-1px); text-decoration: none !important; }
+@media (max-width: 768px) {
+  .nav-book-btn { display: none; }
+}
+
+/* ─── Hero slideshow ────────────────────────────────────── */
+.page-hero { position: relative; overflow: hidden; }
+.hero-slide {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+.hero-slide::after {
+  content: ""; position: absolute; inset: 0;
+  background: rgba(0,0,0,0.42);
+}
+.hero-slide-active { opacity: 1; }
+.page-hero-inner { position: relative; z-index: 1; }
+
+/* ─── Week schedule: pris ───────────────────────────────── */
+.wsr-price {
+  font-size: 0.78rem; font-weight: 600;
+  color: #4a6b7c; white-space: nowrap;
+  padding: 2px 8px; border-radius: 20px;
+  background: rgba(74,107,124,0.1);
+  align-self: center;
+}
+
+/* ─── Recensioner: stjärnor ─────────────────────────────── */
+.testimonial-stars {
+  font-size: 0.85rem; color: #c8a84b;
+  letter-spacing: 2px; margin-bottom: 4px;
+}
+
+/* ─── Behandlingskort: hover ────────────────────────────── */
+.treatment-pick-card {
+  transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;
+}
+.treatment-pick-card:hover:not(.selected) {
+  box-shadow: 0 4px 20px rgba(74,107,124,0.15);
+  transform: translateY(-2px);
+  border-color: #4a6b7c;
+}
+.treatment-pick-card.selected {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(74,107,124,0.2);
+}
+
+/* ─── Mer luft på mobil ─────────────────────────────────── */
+@media (max-width: 640px) {
+  .content-section { padding: clamp(52px, 12vw, 80px) 0; }
+  .section-inner { padding: 0 clamp(18px, 6vw, 28px); }
+  .checkerboard-section .cb-cell { min-height: clamp(260px, 60vw, 400px); }
+  .booking-wrap { padding: 20px 0; }
+  .week-schedule-section .section-inner { padding: 0 clamp(16px, 5vw, 24px); }
+  .testimonial-card { padding: clamp(18px, 5vw, 24px); }
+}

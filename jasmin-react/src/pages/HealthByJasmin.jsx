@@ -422,8 +422,11 @@ function Navbar({ t, lang, setLang }) {
         <li><a href="#om-mig" onClick={close}><EditableText path="nav.aboutMe" value={t.nav.aboutMe} /></a></li>
         <li><a href="#ayurveda" onClick={close}><EditableText path="nav.ayurveda" value={t.nav.ayurveda} /></a></li>
         <li><a href="#yoga" onClick={close}><EditableText path="nav.yoga" value={t.nav.yoga} /></a></li>
-        <li><a href="#boka" onClick={close}><EditableText path="nav.book" value={t.nav.book} /></a></li>
+        <li><a href="#faq" onClick={close}>FAQ</a></li>
       </ul>
+      <a href="#boka" className="nav-book-btn" onClick={close}>
+        <EditableText path="nav.book" value={t.nav.book} />
+      </a>
       <button className="lang-toggle" onClick={toggleLang} aria-label="Switch language">
         {lang === "sv" ? "EN" : "SV"}
       </button>
@@ -768,6 +771,9 @@ export default function HealthByJasmin() {
 
   const t = deepMerge(TRANSLATIONS[lang], textOverrides[lang] || {});
 
+  const [heroImg, setHeroImg] = useState(0);
+  const HERO_IMAGES = ["/assets/header.jpeg", "/assets/ayurveda.jpg", "/assets/ashtanga.jpeg"];
+
   const shelfRef = useRef(null);
   const bookingRef = useRef(null);
   const radgivningRef = useRef(null);
@@ -880,6 +886,13 @@ export default function HealthByJasmin() {
     persistLocal(buildSnapshot());
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [textOverrides, imageOverrides, fontOverrides, slotsOverride, scheduleOverride, treatmentsOverride]);
+
+  // ── Hero slideshow ────────────────────────────────────────────────────────────
+  useEffect(() => {
+    if (imageOverrides.header) return; // don't cycle if admin set a custom image
+    const id = setInterval(() => setHeroImg(i => (i + 1) % HERO_IMAGES.length), 5000);
+    return () => clearInterval(id);
+  }, [imageOverrides.header]);
 
   // ── Admin: warn before leaving with unsaved Supabase changes ─────────────────
   useEffect(() => {
@@ -1008,7 +1021,14 @@ export default function HealthByJasmin() {
 
       <main>
         {/* Hero */}
-        <section id="top" className="page-hero" style={imageOverrides.header ? { backgroundImage: `url(${imageOverrides.header})` } : undefined}>
+        <section id="top" className="page-hero">
+          {/* Slideshow layers */}
+          {imageOverrides.header
+            ? <div className="hero-slide hero-slide-active" style={{ backgroundImage: `url(${imageOverrides.header})` }} />
+            : HERO_IMAGES.map((src, i) => (
+                <div key={src} className={`hero-slide${heroImg === i ? " hero-slide-active" : ""}`} style={{ backgroundImage: `url(${src})` }} />
+              ))
+          }
           {isAdmin && (
             <label className="admin-hero-img-btn" title="Byt bakgrundsbild">
               Byt bakgrundsbild
@@ -1099,6 +1119,7 @@ export default function HealthByJasmin() {
                     const toggle = row.id === "massage"
                       ? () => { setBookingOpen(o => !o); setRadgivningOpen(false); }
                       : () => { setRadgivningOpen(o => !o); setBookingOpen(false); };
+                    const price = row.id === "massage" ? "750 kr" : row.id === "radgivning" ? "695 kr" : "";
                     return (
                       <button
                         key={row.id}
@@ -1111,6 +1132,7 @@ export default function HealthByJasmin() {
                           <span className="wsr-type">{row.type}</span>
                           <span className="wsr-loc">{row.loc}</span>
                         </span>
+                        {price && <span className="wsr-price">{price}</span>}
                         <span className="wsr-btn">
                           {isOpen ? t.weekSchedule.closeLabel : t.weekSchedule.bookLabel}
                         </span>
@@ -1197,6 +1219,7 @@ export default function HealthByJasmin() {
               <div className="testimonials-shelf fade-up" ref={shelfRef}>
                 {t.reviews.items.map((r) => (
                   <div key={r.author} className="testimonial-card">
+                    <div className="testimonial-stars">★★★★★</div>
                     <p className="testimonial-text">{r.text}</p>
                     <span className="testimonial-author">{r.author}</span>
                   </div>
