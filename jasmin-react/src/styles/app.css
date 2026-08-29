@@ -1132,3 +1132,99 @@ footer a:hover { color: #2D4A5D; }
   font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
   font-weight: 600; opacity: 0.7;
 }
+
+/* ─── Booking UX v2 ─────────────────────────────────────── */
+
+/* Step indicator */
+.booking-stepper {
+  display: flex; align-items: center; gap: 0;
+  margin-bottom: 28px;
+}
+.bks-step {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  flex: 0 0 auto;
+}
+.bks-num {
+  width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 700;
+  border: 2px solid #ccc; color: #aaa;
+  transition: all 0.2s;
+}
+.bks-label {
+  font-size: 0.7rem; color: #aaa; white-space: nowrap;
+  transition: color 0.2s;
+}
+.bks-step.bks-active .bks-num { border-color: #4a6b7c; color: #4a6b7c; background: #f0f5f8; }
+.bks-step.bks-active .bks-label { color: #4a6b7c; font-weight: 600; }
+.bks-step.bks-done .bks-num { border-color: #4a6b7c; background: #4a6b7c; color: #fff; }
+.bks-step.bks-done .bks-label { color: #4a6b7c; }
+.bks-line {
+  flex: 1; height: 2px; background: #ddd; margin: 0 8px; margin-bottom: 20px;
+  transition: background 0.2s;
+}
+
+/* Treatment cards — cleaner layout with price upfront */
+.tpc-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 8px; margin-bottom: 6px;
+}
+.treatment-pick-card .treatment-pick-name {
+  font-size: 0.95rem; font-weight: 700; color: #2c3e50; line-height: 1.3;
+}
+.treatment-pick-card .treatment-pick-price {
+  font-size: 0.9rem; font-weight: 700; color: #4a6b7c;
+  white-space: nowrap; flex-shrink: 0;
+}
+.treatment-pick-card .treatment-pick-desc {
+  font-size: 0.78rem; color: #666; line-height: 1.5;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.treatment-pick-card.selected .treatment-pick-name,
+.treatment-pick-card.selected .treatment-pick-desc { color: inherit; }
+
+/* Next available slots */
+.booking-next-slots { margin-bottom: 20px; }
+.next-slot-row {
+  display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;
+}
+.next-slot-btn {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 3px; padding: 12px 16px; min-width: 90px;
+  border: 2px solid #d8e3e9; border-radius: 10px;
+  background: #fff; cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+}
+.next-slot-btn:hover { border-color: #4a6b7c; background: #f5f9fb; transform: translateY(-1px); }
+.next-slot-btn.selected { border-color: #4a6b7c; background: #4a6b7c; color: #fff; }
+.nsb-day { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; }
+.nsb-date { font-size: 0.85rem; font-weight: 700; }
+.nsb-time { font-size: 0.9rem; font-weight: 600; }
+.next-slot-btn.selected .nsb-day { opacity: 0.85; }
+
+/* Show all dates toggle */
+.booking-show-all {
+  background: none; border: none; cursor: pointer;
+  font-size: 0.82rem; color: #4a6b7c; text-decoration: underline;
+  padding: 8px 0; margin-top: 4px; display: block;
+}
+.booking-show-all:hover { opacity: 0.75; }
+
+/* No slots message */
+.booking-no-slots {
+  font-size: 0.85rem; color: #888; font-style: italic; margin: 8px 0;
+}
+
+/* Confirmation icon */
+.booking-confirm-icon {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: #4a6b7c; color: #fff;
+  font-size: 1.4rem; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 12px;
+}
+
+/* Mobile tweaks */
+@media (max-width: 480px) {
+  .next-slot-btn { min-width: 76px; padding: 10px 10px; }
+  .bks-label { font-size: 0.62rem; }
+}

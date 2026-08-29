@@ -437,12 +437,13 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
   const treatments = treatmentIds ? t.treatments.filter(tr => treatmentIds.includes(tr.id)) : t.treatments;
   const [dateIdx, setDateIdx] = useState(null);
   const [slot, setSlot] = useState(null);
-  const [treatment, setTreatment] = useState(null);
+  const [treatment, setTreatment] = useState(() => treatments.length === 1 ? treatments[0].id : null);
   const [form, setForm] = useState({ firstName: "", lastName: "", email: "", phone: "" });
   const [bookedSlots, setBookedSlots] = useState([]);
   const [step, setStep] = useState("select");
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState(false);
+  const [showAllDates, setShowAllDates] = useState(false);
   const formRef = useRef(null);
   const datesRef = useRef(null);
   const prevStep = useRef(null);
@@ -461,13 +462,31 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
   }, [step]);
 
   useEffect(() => {
-    supabase
-      .from("bookings")
-      .select("slot_key")
-      .then(({ data }) => {
-        if (data) setBookedSlots(data.map((r) => r.slot_key));
-      });
+    supabase.from("bookings").select("slot_key").then(({ data }) => {
+      if (data) setBookedSlots(data.map((r) => r.slot_key));
+    });
   }, []);
+
+  // Compute next 4 available slots for the "Nästa lediga" section
+  const nextAvailable = (() => {
+    const now = Date.now();
+    const result = [];
+    for (let i = 0; i < entries.length && result.length < 4; i++) {
+      const { date, slots } = entries[i];
+      if (date < today) continue;
+      const slotTime = slots[0].t;
+      const key = `${slotPrefix}-${i}-${slotTime}`;
+      if (bookedSlots.includes(key)) continue;
+      const slotDt = new Date(date);
+      const [h, m] = slotTime.split(":").map(Number);
+      slotDt.setHours(h, m, 0, 0);
+      if (slotDt - now < 24 * 60 * 60 * 1000) continue;
+      result.push({ i, date, slotTime });
+    }
+    return result;
+  })();
+
+  const currentStep = step === "form" ? 3 : treatment === null ? 1 : 2;
 
   const formValid =
     form.firstName.trim() &&
@@ -484,6 +503,11 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
     setSlot(available ? s : null);
     if (available && treatment !== null) setStep("form");
     else if (step === "form") setStep("select");
+  }
+
+  function selectTreatment(id) {
+    setTreatment(id);
+    if (dateIdx !== null && slot !== null) setStep("form");
   }
 
   function handleField(e) {
@@ -536,9 +560,11 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
   }
 
   function reset() {
-    setDateIdx(null); setSlot(null); setTreatment(null);
+    setDateIdx(null); setSlot(null);
+    setTreatment(treatments.length === 1 ? treatments[0].id : null);
     setForm({ firstName: "", lastName: "", email: "", phone: "" });
     setStep("select");
+    setShowAllDates(false);
   }
 
   const selectedDate = dateIdx !== null ? entries[dateIdx].date : null;
@@ -549,72 +575,113 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
 
       {step !== "done" && (
         <>
-          {/* Behandlingsval */}
-          <div className="booking-treatments">
-            <p className="booking-row-label">{b.valjBehandling}</p>
-            <div className="treatment-pick-grid">
-              {treatments.map((tr) => (
-                <button
-                  key={tr.id}
-                  className={`treatment-pick-card${treatment === tr.id ? " selected" : ""}`}
-                  onClick={() => {
-                    setTreatment(tr.id);
-                    if (dateIdx !== null && slot !== null) setStep("form");
-                  }}
-                >
-                  <span className="treatment-pick-name">{tr.name}</span>
-                  <span className="treatment-pick-desc">{tr.description}</span>
-                  <span className="treatment-pick-price">{tr.price}</span>
-                </button>
-              ))}
+          {/* ── Stegindikator ── */}
+          <div className="booking-stepper">
+            <div className={`bks-step${currentStep >= 1 ? " bks-active" : ""}${currentStep > 1 ? " bks-done" : ""}`}>
+              <span className="bks-num">{currentStep > 1 ? "✓" : "1"}</span>
+              <span className="bks-label">Behandling</span>
             </div>
-            {dateIdx !== null && step === "select" && !treatment && (
-              <p className="booking-treatment-hint">{b.behandlingHint}</p>
-            )}
+            <div className="bks-line" />
+            <div className={`bks-step${currentStep >= 2 ? " bks-active" : ""}${currentStep > 2 ? " bks-done" : ""}`}>
+              <span className="bks-num">{currentStep > 2 ? "✓" : "2"}</span>
+              <span className="bks-label">Välj tid</span>
+            </div>
+            <div className="bks-line" />
+            <div className={`bks-step${currentStep >= 3 ? " bks-active" : ""}`}>
+              <span className="bks-num">3</span>
+              <span className="bks-label">Uppgifter</span>
+            </div>
           </div>
 
-          {/* Datumväljare */}
-          <div className="booking-dates" ref={datesRef}>
-            <p className="booking-row-label">{b.valjDatum}</p>
-            <div className="dates-grid">
-              {Array.from({ length: Math.ceil(entries.length / 2) }, (_, rowIdx) => {
-                const pair = entries.slice(rowIdx * 2, rowIdx * 2 + 2);
-                const date = pair[0].date;
-                const isPast = date < today;
-                return (
-                  <div key={rowIdx} className="dates-grid-row">
-                    <div className="dates-grid-label">
-                      <span className="dgr-wd">{t.days[date.getDay()]}</span>
-                      <span className="dgr-dd">{date.getDate()}</span>
-                      <span className="dgr-mo">{t.months[date.getMonth()]}</span>
+          {/* ── Behandlingsval (bara om >1 behandling) ── */}
+          {treatments.length > 1 && step !== "form" && (
+            <div className="booking-treatments">
+              <div className="treatment-pick-grid">
+                {treatments.map((tr) => (
+                  <button
+                    key={tr.id}
+                    className={`treatment-pick-card${treatment === tr.id ? " selected" : ""}`}
+                    onClick={() => selectTreatment(tr.id)}
+                  >
+                    <div className="tpc-top">
+                      <span className="treatment-pick-name">{tr.name}</span>
+                      <span className="treatment-pick-price">{tr.price}</span>
                     </div>
-                    {pair.map(({ slots }, flatIdx) => {
-                      const i = rowIdx * 2 + flatIdx;
-                      const slotKey = `${slotPrefix}-${i}-${slots[0].t}`;
-                      const isBooked = bookedSlots.includes(slotKey);
-                      const slotDt = new Date(date);
-                      const [h, m] = slots[0].t.split(":").map(Number);
-                      slotDt.setHours(h, m, 0, 0);
-                      const isTooSoon = slotDt - Date.now() < 24 * 60 * 60 * 1000;
-                      const unavailable = isPast || isBooked || isTooSoon;
-                      return (
-                        <button
-                          key={i}
-                          className={`dgr-slot${unavailable ? " disabled" : ""}${dateIdx === i ? " selected" : ""}`}
-                          disabled={unavailable}
-                          onClick={() => handleDate(i)}
-                        >
-                          <span className="dgr-time">{isBooked || isTooSoon ? b.fullbooked : slots[0].t}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                );
-              })}
+                    <span className="treatment-pick-desc">{tr.description}</span>
+                  </button>
+                ))}
+              </div>
+              {!treatment && <p className="booking-treatment-hint">{b.behandlingHint}</p>}
             </div>
-          </div>
+          )}
 
-          {/* Bokningsformulär */}
+          {/* ── Nästa lediga tider ── */}
+          {step !== "form" && (
+            <div className="booking-next-slots" ref={datesRef}>
+              <p className="booking-row-label">Nästa lediga tider</p>
+              {nextAvailable.length === 0
+                ? <p className="booking-no-slots">Inga lediga tider just nu – hör av dig på Instagram eller mail.</p>
+                : (
+                  <div className="next-slot-row">
+                    {nextAvailable.map(({ i, date, slotTime }) => (
+                      <button
+                        key={i}
+                        className={`next-slot-btn${dateIdx === i ? " selected" : ""}`}
+                        onClick={() => handleDate(i)}
+                      >
+                        <span className="nsb-day">{t.days[date.getDay()]}</span>
+                        <span className="nsb-date">{date.getDate()} {t.months[date.getMonth()]}</span>
+                        <span className="nsb-time">{slotTime}</span>
+                      </button>
+                    ))}
+                  </div>
+                )
+              }
+              <button className="booking-show-all" onClick={() => setShowAllDates(p => !p)}>
+                {showAllDates ? "Dölj alla datum ↑" : "Visa alla datum ↓"}
+              </button>
+              {showAllDates && (
+                <div className="dates-grid" style={{ marginTop: "1rem" }}>
+                  {Array.from({ length: Math.ceil(entries.length / 2) }, (_, rowIdx) => {
+                    const pair = entries.slice(rowIdx * 2, rowIdx * 2 + 2);
+                    const date = pair[0].date;
+                    const isPast = date < today;
+                    return (
+                      <div key={rowIdx} className="dates-grid-row">
+                        <div className="dates-grid-label">
+                          <span className="dgr-wd">{t.days[date.getDay()]}</span>
+                          <span className="dgr-dd">{date.getDate()}</span>
+                          <span className="dgr-mo">{t.months[date.getMonth()]}</span>
+                        </div>
+                        {pair.map(({ slots }, flatIdx) => {
+                          const i = rowIdx * 2 + flatIdx;
+                          const slotKey = `${slotPrefix}-${i}-${slots[0].t}`;
+                          const isBooked = bookedSlots.includes(slotKey);
+                          const slotDt = new Date(date);
+                          const [h, m] = slots[0].t.split(":").map(Number);
+                          slotDt.setHours(h, m, 0, 0);
+                          const isTooSoon = slotDt - Date.now() < 24 * 60 * 60 * 1000;
+                          const unavailable = isPast || isBooked || isTooSoon;
+                          return (
+                            <button
+                              key={i}
+                              className={`dgr-slot${unavailable ? " disabled" : ""}${dateIdx === i ? " selected" : ""}`}
+                              disabled={unavailable}
+                              onClick={() => handleDate(i)}
+                            >
+                              <span className="dgr-time">{isBooked || isTooSoon ? b.fullbooked : slots[0].t}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ── Bokningsformulär ── */}
           {step === "form" && selectedDate && slot && (
             <div className="booking-form-wrap" ref={formRef}>
               <div className="booking-form-summary">
@@ -623,7 +690,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
                     {treatments.find((tr) => tr.id === treatment)?.name} &middot; 55 min
                   </span>
                   <span className="booking-form-summary-value">
-                    {selectedDate.getDate()} {t.months[selectedDate.getMonth()]} &middot; {slot.t}–{slot.e}
+                    {selectedDate.getDate()} {t.months[selectedDate.getMonth()]} &middot; {slot.t}
                   </span>
                 </div>
                 <button className="booking-change-btn" onClick={() => setStep("select")}>{b.andra}</button>
@@ -656,9 +723,10 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
         </>
       )}
 
-      {/* Bekräftelse */}
+      {/* ── Bekräftelse ── */}
       {step === "done" && selectedDate && slot && (
         <div className="booking-confirm">
+          <div className="booking-confirm-icon">✓</div>
           <p className="booking-confirm-title">{b.confirmTitle}</p>
           <p className="booking-confirm-sub">{b.confirmSub(form.firstName)}</p>
           <p className="booking-confirm-email-note">{b.confirmEmailNote}</p>
