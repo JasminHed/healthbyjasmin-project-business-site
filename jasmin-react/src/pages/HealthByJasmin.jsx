@@ -252,7 +252,7 @@ const TRANSLATIONS = {
             { q: "Hur betalas behandlingen?", a: "Betalning sker via Swish eller faktura. Väljer du faktura kan du använda friskvårdsbidraget." },
             { q: "Kan jag använda friskvårdsbidrag?", a: "Ja. Välj faktura som betalningsalternativ i bokningen så skickas en faktura som du kan använda för att ansöka om friskvårdsbidrag via din arbetsgivare." },
             { q: "Vad gäller vid avbokning?", a: "Avbokning av behandling görs senast 24 timmar innan. Mejla healthbyjasmin@gmail.com. För yogaklasser gäller studiots avbokningsregler." },
-            { q: "Var hålls behandlingar och klasser?", a: "Ayurvediska massager och hälsorådgivning hålls torsdagskvällar på Birkagatan 23 i Vasastan. Yogaklasser hålls på samma adress. Se schemat ovan för aktuella tider." },
+            { q: "Var hålls behandlingar och klasser?", a: "Ayurvediska massager och hälsorådgivning hålls torsdagskvällar på Birkagatan 23 i Stockholm. Yogaklasser hålls på samma adress. Se schemat ovan för aktuella tider." },
           ],
         },
         {
@@ -293,14 +293,14 @@ const TRANSLATIONS = {
       title: "Veckans behandlingar och klasser",
       colBehandlingar: "Behandlingar",
       colKlasser: "Klasser",
-      classTip: "Tips: Torsdagar finns också Yoga & Ayurveda klass kl 20:00–21:00. Passar bra att kombinera med en massage samma kväll.",
+      classTip: "",
     },
     courses: {
       title: "Stadsretreat",
       soon: "Kommer snart",
       intro: "En helg i Stockholm där yoga och ayurveda varvas med teori, praktik och tid för reflektion. Lördag: dynamisk yoga, lättare brunch, föreläsning om ayurvedans grunder och doshorna samt en kort workshop. Dagen avslutas med mjuk yoga och journaling. Söndag: dynamisk yoga, brunch, föreläsning om dygnsrytm, mat och rutiner samt en kort workshop. Helgen avslutas med mjuk yoga och tid för integration. Allt på samma ställe, utan att lämna Stockholm.",
     },
-    footer: { location: "Vasastan, Stockholm" },
+    footer: { location: "Stockholm" },
   },
 
   en: {
@@ -389,7 +389,7 @@ const TRANSLATIONS = {
             { q: "How is payment handled?", a: "Payment via Swish or invoice. If you choose invoice you can use your wellness benefit (friskvårdsbidrag)." },
             { q: "Can I use my wellness benefit (friskvårdsbidrag)?", a: "Yes. Choose invoice as your payment option and a invoice will be sent that you can submit to your employer to claim your wellness benefit." },
             { q: "What is the cancellation policy?", a: "Treatments must be cancelled no later than 24 hours in advance. Email healthbyjasmin@gmail.com. For yoga classes, the studio's cancellation policy applies." },
-            { q: "Where are treatments and classes held?", a: "Ayurvedic massages and health consultations are held Thursday evenings at Birkagatan 23 in Vasastan. Yoga classes are at the same address. See the schedule above for current times." },
+            { q: "Where are treatments and classes held?", a: "Ayurvedic massages and health consultations are held Thursday evenings at Birkagatan 23 in Stockholm. Yoga classes are at the same address. See the schedule above for current times." },
           ],
         },
         {
@@ -430,14 +430,14 @@ const TRANSLATIONS = {
       title: "This week's treatments and classes",
       colBehandlingar: "Treatments",
       colKlasser: "Classes",
-      classTip: "Tip: There is also a Yoga & Ayurveda class on Thursdays at 20:00–21:00. A great way to combine with a massage the same evening.",
+      classTip: "",
     },
     courses: {
       title: "City retreat",
       soon: "Coming soon",
       intro: "A weekend in Stockholm where yoga and ayurveda blend with theory, practice and time for reflection. Saturday: dynamic yoga, a light brunch, a talk on the foundations of ayurveda and the doshas, and a short workshop. The day ends with gentle yoga and journaling. Sunday: dynamic yoga, brunch, a talk on daily rhythm, food and routines, and a short workshop. The weekend closes with gentle yoga and time for integration. All in one place, without leaving Stockholm.",
     },
-    footer: { location: "Vasastan, Stockholm" },
+    footer: { location: "Stockholm" },
   },
 };
 
@@ -1248,7 +1248,6 @@ export default function HealthByJasmin() {
               </div>
             </div>
 
-            <EditableText path="weekSchedule.classTip" value={t.weekSchedule.classTip} tag="p" className="wsr-class-tip" />
             {bookingOpen && (
               <div className="week-schedule-booking" ref={bookingRef}>
                 <Booking
@@ -1351,7 +1350,7 @@ export default function HealthByJasmin() {
         </div>
 
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} Health by Jasmin</span>
+          <span>© 2015 Health by Jasmin</span>
           <button className="admin-lock-btn" onClick={() => isAdmin ? handleAdminLogout() : setAdminLoginOpen(true)} title={isAdmin ? "Logga ut admin" : "Admin"}>
             {isAdmin ? "🔓" : "🔒"}
           </button>
