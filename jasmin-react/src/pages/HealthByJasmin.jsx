@@ -243,17 +243,38 @@ const TRANSLATIONS = {
     },
     faq: {
       label: "Vanliga frågor", title: "FAQ",
-      items: [
-        { q: "Var hålls klasser och behandlingar?", a: "Alla yogaklasser hålls i Vasastan på Birkagatan 23. Ayurvediska behandlingar hålls torsdagskvällar på Birkagatan 23 i Vasastan. Se bokningssektionen ovan för aktuella tider." },
-        { q: "Hur bokar jag yoga?", a: "Yoga bokas via länken i yogasektionen ovan." },
-        { q: "Hur bokar jag ayurvedisk behandling?", a: "Behandlingar bokas direkt via formuläret ovan. Välj plats, datum och tid direkt på sidan." },
-        { q: "Vad gäller vid avbokning?", a: "Avbokning av behandling görs senast 24 timmar innan. Mejla healthbyjasmin@gmail.com. För yogaklasser gäller studiots avbokningsregler." },
-        { q: "Hur betalas behandlingen?", a: "Betalning sker via Swish eller faktura. Faktura finns för dig som vill använda friskvårdsbidrag." },
-        { q: "Blir man oljig av massagen?", a: "Ja, oljan är en viktig del av behandlingen. Det finns dusch på plats med handduk, schampo och duschcreme." },
-        { q: "Vilken massage ska jag välja?", a: "Abhyanga ges i långa, svepande rörelser med varm sesamolja. Den ger värme, grundning och närvaro. Kropp och sinne bjuds in att sakta ned. Känslan efteråt är samlad och landad. Vishesh ges med mer tryck i långa, djupgående drag. Den mjukar upp muskler, frigör spänningar och ger kroppen lätthet. Du lämnar lättare och klarare i kropp och sinne. Vid Vishesh inkluderas även säte och vader." },
-        { q: "Vad ska jag ha med mig till massagen?", a: "Ta med eller kom i oömma kläder och ombyte. Underkläder behövs under behandlingen." },
-        { q: "Vad ingår i massagebehandlingen?", a: "Massagen utförs med varm sesamolja och inkluderar huvud, ansikte, kropp fram och baksida samt fötter. Du torkas av med handduk efter behandlingen, men vi rekommenderar att du duschar ordentligt hemma efteråt, både hår och kropp." },
-        { q: "Passar yoga för alla nivåer?", a: "Ja, yoga anpassas utifrån varje persons förmåga. Meddela gärna läraren om skador eller annat att ta hänsyn till när du kommer till klass. Annars utförs alla positioner utifrån din egen kropps förmåga och på dina villkor." },
+      categories: [
+        {
+          label: "Bokning & betalning",
+          items: [
+            { q: "Hur bokar jag en massage eller hälsorådgivning?", a: "Du bokar direkt på den här sidan. Klicka på 'Boka' i schemat, välj behandling, välj en av de närmaste lediga tiderna och fyll i dina uppgifter. Klart på under en minut." },
+            { q: "Hur bokar jag yoga?", a: "Yogaklasser bokas via länken i yogasektionen ovan – du dirigeras till studiots bokningssida." },
+            { q: "Hur betalas behandlingen?", a: "Betalning sker via Swish eller faktura. Väljer du faktura kan du använda friskvårdsbidraget." },
+            { q: "Kan jag använda friskvårdsbidrag?", a: "Ja. Välj faktura som betalningsalternativ i bokningen så skickas en faktura som du kan använda för att ansöka om friskvårdsbidrag via din arbetsgivare." },
+            { q: "Vad gäller vid avbokning?", a: "Avbokning av behandling görs senast 24 timmar innan. Mejla healthbyjasmin@gmail.com. För yogaklasser gäller studiots avbokningsregler." },
+            { q: "Var hålls behandlingar och klasser?", a: "Ayurvediska massager och hälsorådgivning hålls torsdagskvällar på Birkagatan 23 i Vasastan. Yogaklasser hålls på samma adress. Se schemat ovan för aktuella tider." },
+          ],
+        },
+        {
+          label: "Massage & rådgivning",
+          items: [
+            { q: "Vilken massage ska jag välja?", a: "Abhyanga ges i långa, svepande rörelser med varm sesamolja – den ger värme, grundning och närvaro, känslan efteråt är samlad och landad. Vishesh ges med mer tryck i djupgående drag – den mjukar upp muskler, frigör spänningar och ger kroppen lätthet. Osäker? Boka Abhyanga som ett första steg." },
+            { q: "Hur lång är en massage?", a: "En massagebehandling är 55 minuter. Räkna med att vara på plats lite i förväg för att landa ordentligt." },
+            { q: "Vad ingår i massagen?", a: "Massagen utförs med varm sesamolja och inkluderar huvud, ansikte, kropp fram och baksida samt fötter. Du torkas av med handduk efter behandlingen." },
+            { q: "Blir man oljig av massagen?", a: "Ja, oljan är en viktig del av behandlingen och sitter kvar i huden. Det finns dusch på plats med handduk, schampo och duschcreme. Vi rekommenderar också att duscha ordentligt hemma efteråt." },
+            { q: "Vad ska jag ha med mig?", a: "Ta med eller kom i oömma kläder och ett ombyte. Underkläder används under behandlingen." },
+            { q: "Kan jag boka massage om jag är gravid?", a: "Ayurvedisk massage rekommenderas inte under de tre första månaderna. Kontakta gärna healthbyjasmin@gmail.com så kan vi hitta ett alternativ som passar dig." },
+            { q: "Vad är en ayurvedisk hälsorådgivning?", a: "En individuell konsultation på ca 60 minuter där vi läser pulsen och undersöker din konstitution (dosha). Utifrån det samtalar vi om din hälsa, dina vanor och din vardag och du får konkreta råd om kost, rutiner, sömn och livsstil anpassade just för dig." },
+          ],
+        },
+        {
+          label: "Yoga",
+          items: [
+            { q: "Passar yoga för nybörjare?", a: "Ja, alla klasser anpassas utifrån varje persons förmåga. Meddela gärna läraren om skador eller saker att ta hänsyn till när du kommer. Alla positioner utförs på dina egna villkor." },
+            { q: "Vad är skillnaden mellan Yin Yoga och Yoga & Ayurveda?", a: "Yin yoga är en lugn, stilla praktik där positioner hålls länge – den arbetar djupt in i bindväv och leder och ger en lugnande effekt på nervsystemet. Yoga & Ayurveda är en klass i två delar: första halvan är teori från ayurvedans värld, andra halvan är en mer aktiv yogaklass med flöde och stående positioner." },
+            { q: "Vad är Ashtanga yoga?", a: "Ashtanga är en dynamisk praktik där andning och rörelse är synkroniserade. Den följer en fast sekvens av positioner. Klasser för detta kommer snart – håll utkik!" },
+          ],
+        },
       ],
     },
     weekSchedule: {
@@ -359,17 +380,38 @@ const TRANSLATIONS = {
     },
     faq: {
       label: "Frequently asked questions", title: "FAQ",
-      items: [
-        { q: "Where are classes and treatments held?", a: "All yoga classes are held in Vasastan at Birkagatan 23. Ayurvedic treatments are held Thursday evenings at Birkagatan 23 in Vasastan. See the booking section above for current times." },
-        { q: "How do I book yoga?", a: "Yoga is booked via the link in the yoga section above." },
-        { q: "How do I book an ayurvedic treatment?", a: "Treatments are booked via the form above. Choose your location, date and time directly on the page." },
-        { q: "What is the cancellation policy?", a: "Treatments must be cancelled no later than 24 hours in advance. Email healthbyjasmin@gmail.com. For yoga classes, the studio's cancellation policy applies." },
-        { q: "How is payment handled?", a: "Payment via Swish or invoice. Invoice is available for those who want to use their wellness benefit (friskvårdsbidrag)." },
-        { q: "Will I be oily after the massage?", a: "Yes, the oil is an important part of the treatment. There is a shower on site with towel, shampoo and shower gel." },
-        { q: "Which massage should I choose?", a: "Abhyanga uses long, sweeping strokes with warm sesame oil. It brings warmth, grounding and presence, an invitation for body and mind to slow down and settle. The feeling afterwards is gathered and calm. Vishesh uses more pressure in long, deeper strokes. It softens muscles, releases tension and brings lightness and ease to the body. You leave feeling free and mobile. Vishesh also includes the glutes and calves." },
-        { q: "What should I bring to the massage?", a: "Bring or wear comfortable clothes and a change of clothes. Underwear is needed during the treatment." },
-        { q: "What does the massage include?", a: "The massage is performed with warm sesame oil and includes the head, face, front and back of the body and feet. You are towelled off after the treatment, but we recommend showering thoroughly at home afterwards, both hair and body." },
-        { q: "Is yoga suitable for all levels?", a: "Yes, yoga is adapted to each person's ability. Please let the teacher know about any injuries or other considerations when you arrive for class. All positions are otherwise performed based on your own body's capacity and on your own terms." },
+      categories: [
+        {
+          label: "Booking & payment",
+          items: [
+            { q: "How do I book a massage or consultation?", a: "Book directly on this page. Click 'Book' in the schedule, choose a treatment, pick one of the next available slots and fill in your details. Done in under a minute." },
+            { q: "How do I book yoga?", a: "Yoga classes are booked via the link in the yoga section above — you'll be taken to the studio's booking page." },
+            { q: "How is payment handled?", a: "Payment via Swish or invoice. If you choose invoice you can use your wellness benefit (friskvårdsbidrag)." },
+            { q: "Can I use my wellness benefit (friskvårdsbidrag)?", a: "Yes. Choose invoice as your payment option and a invoice will be sent that you can submit to your employer to claim your wellness benefit." },
+            { q: "What is the cancellation policy?", a: "Treatments must be cancelled no later than 24 hours in advance. Email healthbyjasmin@gmail.com. For yoga classes, the studio's cancellation policy applies." },
+            { q: "Where are treatments and classes held?", a: "Ayurvedic massages and health consultations are held Thursday evenings at Birkagatan 23 in Vasastan. Yoga classes are at the same address. See the schedule above for current times." },
+          ],
+        },
+        {
+          label: "Massage & consultation",
+          items: [
+            { q: "Which massage should I choose?", a: "Abhyanga uses long, sweeping strokes with warm sesame oil — it brings warmth, grounding and presence, and the feeling afterwards is calm and settled. Vishesh uses more pressure in longer, deeper strokes — it softens muscles, releases tension and leaves you lighter. Not sure? Book Abhyanga as a first step." },
+            { q: "How long is a massage?", a: "Each massage treatment is 55 minutes. Allow a little extra time to arrive and settle in." },
+            { q: "What does the massage include?", a: "The massage is performed with warm sesame oil and includes the head, face, front and back of the body and feet. You are towelled off after the treatment." },
+            { q: "Will I be oily afterwards?", a: "Yes, the oil is an important part of the treatment and stays in the skin. There is a shower on site with towels, shampoo and shower gel. We also recommend showering thoroughly at home afterwards." },
+            { q: "What should I bring?", a: "Bring or wear comfortable clothes and a change of clothes. Underwear is needed during the treatment." },
+            { q: "Can I book a massage if I am pregnant?", a: "Ayurvedic massage is not recommended during the first trimester. Feel free to email healthbyjasmin@gmail.com and we can find an alternative that suits you." },
+            { q: "What is an ayurvedic health consultation?", a: "An individual session of around 60 minutes where we read your pulse and examine your constitution (dosha). Based on this we discuss your health, habits and daily life and you receive concrete, personalised advice on diet, routines, sleep and lifestyle." },
+          ],
+        },
+        {
+          label: "Yoga",
+          items: [
+            { q: "Is yoga suitable for beginners?", a: "Yes, all classes are adapted to each person's ability. Let the teacher know about any injuries or things to keep in mind when you arrive. All postures are performed within your own body's capacity and on your own terms." },
+            { q: "What is the difference between Yin Yoga and Yoga & Ayurveda?", a: "Yin yoga is a calm, still practice where poses are held for longer — it works deep into connective tissue and joints and has a soothing effect on the nervous system. Yoga & Ayurveda is a two-part class: the first half is ayurvedic theory, the second half is a more active yoga class with flow and standing postures." },
+            { q: "What is Ashtanga yoga?", a: "Ashtanga is a dynamic practice where breath and movement are synchronised, following a fixed sequence of postures. Classes for this are coming soon — stay tuned!" },
+          ],
+        },
       ],
     },
     weekSchedule: {
@@ -423,8 +465,9 @@ function Navbar({ t, lang, setLang }) {
         <li><a href="#ayurveda" onClick={close}><EditableText path="nav.ayurveda" value={t.nav.ayurveda} /></a></li>
         <li><a href="#yoga" onClick={close}><EditableText path="nav.yoga" value={t.nav.yoga} /></a></li>
         <li><a href="#faq" onClick={close}>FAQ</a></li>
+        <li className="nav-book-mobile"><a href="#boka" onClick={close} className="nav-book-btn" style={{ display: "inline-flex" }}><EditableText path="nav.book" value={t.nav.book} /></a></li>
       </ul>
-      <a href="#boka" className="nav-book-btn" onClick={close}>
+      <a href="#boka" className="nav-book-btn nav-book-desktop" onClick={close}>
         <EditableText path="nav.book" value={t.nav.book} />
       </a>
       <button className="lang-toggle" onClick={toggleLang} aria-label="Switch language">
@@ -738,6 +781,46 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
         </div>
       )}
     </div>
+  );
+}
+
+// ── FAQ accordion ────────────────────────────────────────────────────────────
+
+function FaqSection({ t }) {
+  const [openKey, setOpenKey] = useState(null);
+  const cats = t.faq.categories || [{ label: "", items: t.faq.items || [] }];
+
+  return (
+    <section id="faq" className="faq-section content-section">
+      <div className="section-inner">
+        <span className="section-label">{t.faq.label}</span>
+        <h2 className="faq-title">{t.faq.title}</h2>
+        <div className="faq-cats fade-up">
+          {cats.map((cat) => (
+            <div key={cat.label} className="faq-cat">
+              {cat.label && <p className="faq-cat-label">{cat.label}</p>}
+              <div className="faq-accordion">
+                {cat.items.map(({ q, a }, i) => {
+                  const key = `${cat.label}-${i}`;
+                  const open = openKey === key;
+                  return (
+                    <div key={key} className={`faq-acc-item${open ? " open" : ""}`}>
+                      <button className="faq-acc-q" onClick={() => setOpenKey(open ? null : key)}>
+                        <span>{q}</span>
+                        <span className="faq-acc-icon">{open ? "−" : "+"}</span>
+                      </button>
+                      <div className="faq-acc-body">
+                        <div className="faq-acc-inner"><p>{a}</p></div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -1239,35 +1322,40 @@ export default function HealthByJasmin() {
         </section>
 
         {/* FAQ */}
-        <section id="faq" className="content-section faq-section">
-          <div className="section-inner">
-            <span className="section-label">{t.faq.label}</span>
-            <h2>{t.faq.title}</h2>
-            <div className="faq-grid fade-up">
-              {t.faq.items.map(({ q, a }) => (
-                <div key={q} className="faq-item">
-                  <h3>{q}</h3>
-                  <p>{a}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <FaqSection t={t} />
       </main>
 
-      <section className="second-image" aria-hidden="true" />
+      <footer className="site-footer">
+        <div className="footer-inner">
+          <div className="footer-brand">
+            <img src="/assets/lightlogo.png" alt="Health by Jasmin" className="footer-logo" />
+            <p className="footer-tagline">Yoga &amp; Ayurveda · Stockholm</p>
+          </div>
 
-      <footer>
-        <div>
-          <a href="https://www.instagram.com/healthbyjasmin/" aria-label="Instagram">
-            <i className="fab fa-instagram" />
-          </a>
+          <div className="footer-links">
+            <a href="#om-mig">Om mig</a>
+            <a href="#ayurveda">Ayurveda</a>
+            <a href="#yoga">Yoga</a>
+            <a href="#boka">Boka</a>
+            <a href="#faq">FAQ</a>
+          </div>
+
+          <div className="footer-contact">
+            <EditableText path="footer.location" value={t.footer.location} tag="span" className="footer-loc" />
+            <a href="mailto:healthbyjasmin@gmail.com" className="footer-email">healthbyjasmin@gmail.com</a>
+            <a href="https://www.instagram.com/healthbyjasmin/" target="_blank" rel="noopener noreferrer" className="footer-ig" aria-label="Instagram">
+              <i className="fab fa-instagram" />
+              @healthbyjasmin
+            </a>
+          </div>
         </div>
-        <EditableText path="footer.location" value={t.footer.location} tag="p" />
-        <p><a href="mailto:healthbyjasmin@gmail.com">healthbyjasmin@gmail.com</a></p>
-        <button className="admin-lock-btn" onClick={() => isAdmin ? handleAdminLogout() : setAdminLoginOpen(true)} title={isAdmin ? "Logga ut admin" : "Admin"}>
-          {isAdmin ? "🔓" : "🔒"}
-        </button>
+
+        <div className="footer-bottom">
+          <span>© {new Date().getFullYear()} Health by Jasmin</span>
+          <button className="admin-lock-btn" onClick={() => isAdmin ? handleAdminLogout() : setAdminLoginOpen(true)} title={isAdmin ? "Logga ut admin" : "Admin"}>
+            {isAdmin ? "🔓" : "🔒"}
+          </button>
+        </div>
       </footer>
 
       {/* Admin: inloggningsmodal */}

@@ -774,53 +774,76 @@ a.week-schedule-row { text-align: left; }
 .instagram-btn:hover { background: #f0f5f7; text-decoration: none; color: #5C7C8A; }
 .instagram-btn i { font-size: 18px; }
 
-/* ── FAQ section ── */
-.faq-section { background: #fff; }
+/* ── FAQ accordion ── */
+.faq-section { background: #f9f7f4; }
 
-.faq-section h2 {
+.faq-title {
   font-size: clamp(28px, 5vw, 48px);
   font-weight: 300;
   color: #2a3a44;
   letter-spacing: -0.025em;
   margin-top: 0;
-  margin-bottom: clamp(32px, 5vw, 56px);
+  margin-bottom: clamp(28px, 4vw, 48px);
   line-height: 1.12;
 }
 
-.faq-grid {
+.faq-cats {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  border-top: 1px solid #e4eaed;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: clamp(20px, 3vw, 40px);
+  align-items: start;
 }
 
-.faq-item {
-  padding: clamp(24px, 3.5vw, 36px) clamp(20px, 3vw, 40px) clamp(24px, 3.5vw, 36px) 0;
-  border-bottom: 1px solid #e4eaed;
-}
-
-.faq-item:nth-child(even) {
-  padding-left: clamp(20px, 3vw, 40px);
-  padding-right: 0;
-  border-left: 1px solid #e4eaed;
-}
-
-.faq-item h3 {
-  font-size: clamp(13px, 1.8vw, 15px);
-  font-weight: 600;
-  color: #2a3a44;
-  margin: 0 0 10px;
-  text-transform: none;
-  letter-spacing: 0;
-}
-
-.faq-item p {
-  font-size: clamp(13px, 1.7vw, 15px);
-  color: #666;
-  line-height: 1.75;
-  margin: 0;
-  max-width: 100%;
+.faq-cat-label {
+  font-size: 0.68rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: #7BA8B8;
+  font-weight: 600; margin: 0 0 12px;
   text-align: left;
+}
+
+.faq-accordion { display: flex; flex-direction: column; }
+
+.faq-acc-item {
+  border-bottom: 1px solid #dde4e8;
+}
+.faq-acc-item:first-child { border-top: 1px solid #dde4e8; }
+
+.faq-acc-q {
+  width: 100%; display: flex; justify-content: space-between;
+  align-items: flex-start; gap: 12px;
+  padding: 16px 0; background: none; border: none; cursor: pointer;
+  font-size: clamp(13px, 1.6vw, 14px); font-weight: 500;
+  color: #2a3a44; text-align: left; line-height: 1.45;
+}
+.faq-acc-q:hover { color: #4a6b7c; }
+
+.faq-acc-icon {
+  flex-shrink: 0; font-size: 1.1rem;
+  color: #7BA8B8; line-height: 1;
+  transition: transform 0.25s;
+  margin-top: 1px;
+}
+.faq-acc-item.open .faq-acc-icon { transform: rotate(0deg); color: #4a6b7c; }
+
+.faq-acc-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.28s ease;
+}
+.faq-acc-item.open .faq-acc-body { grid-template-rows: 1fr; }
+
+.faq-acc-inner { overflow: hidden; }
+.faq-acc-inner p {
+  font-size: clamp(13px, 1.6vw, 14px); color: #666;
+  line-height: 1.75; margin: 0 0 16px; text-align: left;
+  max-width: 100%;
+}
+
+@media (max-width: 900px) {
+  .faq-cats { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .faq-cats { grid-template-columns: 1fr; }
 }
 
 /* ── Quote section ── */
@@ -844,10 +867,67 @@ a.week-schedule-row { text-align: left; }
 }
 
 /* ── Footer ── */
-footer { margin-top: 20px; padding: 0 16px 20px; }
-footer p { color: #333333; text-align: center; }
-footer a { color: #333333; }
-footer a:hover { color: #2D4A5D; }
+.site-footer {
+  background: #1e2d35;
+  color: rgba(255,255,255,0.75);
+  padding: 0;
+  margin-top: 0;
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: clamp(48px,7vw,80px) clamp(20px,5vw,56px) clamp(36px,5vw,56px);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: clamp(32px,5vw,64px);
+  align-items: start;
+}
+.footer-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.footer-logo { height: 36px; opacity: 0.9; filter: brightness(2); }
+.footer-tagline { font-size: 0.78rem; color: rgba(255,255,255,0.45); letter-spacing: 0.06em; margin: 0; text-align: left; }
+
+.footer-links {
+  display: flex; flex-direction: column; gap: 10px;
+  align-items: center;
+}
+.footer-links a {
+  font-size: 0.82rem; color: rgba(255,255,255,0.65);
+  text-decoration: none; letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: #fff; text-decoration: none; }
+
+.footer-contact { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
+.footer-loc { font-size: 0.82rem; color: rgba(255,255,255,0.55); text-align: right; }
+.footer-email, .footer-ig {
+  font-size: 0.82rem; color: rgba(255,255,255,0.65);
+  text-decoration: none; transition: color 0.2s;
+  display: flex; align-items: center; gap: 6px;
+}
+.footer-email:hover, .footer-ig:hover { color: #fff; text-decoration: none; }
+.footer-ig i { font-size: 1rem; }
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  max-width: 1200px; margin: 0 auto;
+  padding: 16px clamp(20px,5vw,56px);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.75rem; color: rgba(255,255,255,0.3);
+}
+.admin-lock-btn { color: rgba(255,255,255,0.3); }
+.admin-lock-btn:hover { opacity: 1; color: #fff; }
+
+@media (max-width: 720px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 28px;
+  }
+  .footer-brand { align-items: center; }
+  .footer-tagline { text-align: center; }
+  .footer-links { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 12px 20px; }
+  .footer-contact { align-items: center; }
+  .footer-loc { text-align: center; }
+}
 
 .dates-grid { display: flex; flex-direction: column; gap: 5px; margin-bottom: 1rem; }
 .dates-grid-row { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 5px; align-items: stretch; }
@@ -915,9 +995,8 @@ footer a:hover { color: #2D4A5D; }
   /* Testimonials */
   .shelf-arrow { width: 30px; height: 30px; }
 
-  /* FAQ */
-  .faq-grid { grid-template-columns: 1fr; }
-  .faq-item:nth-child(even) { padding-left: 0; border-left: none; }
+  /* FAQ accordion — already single column on small screens */
+  .faq-cats { grid-template-columns: 1fr; }
 
   /* Booking */
   .treatment-pick-grid { grid-template-columns: 1fr; }
@@ -1244,8 +1323,11 @@ footer a:hover { color: #2D4A5D; }
   margin-left: 8px;
 }
 .nav-book-btn:hover { background: #3a5a6a; transform: translateY(-1px); text-decoration: none !important; }
-@media (max-width: 768px) {
-  .nav-book-btn { display: none; }
+@media (max-width: 1024px) {
+  .nav-book-desktop { display: none; }
+}
+@media (min-width: 1025px) {
+  .nav-book-mobile { display: none; }
 }
 
 /* ─── Hero slideshow ────────────────────────────────────── */
