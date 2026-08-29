@@ -788,29 +788,34 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
 
 function FaqSection({ t }) {
   const [openKey, setOpenKey] = useState(null);
+  const { isAdmin } = useContext(AdminCtx);
   const cats = t.faq.categories || [{ label: "", items: t.faq.items || [] }];
 
   return (
     <section id="faq" className="faq-section content-section">
       <div className="section-inner">
-        <span className="section-label">{t.faq.label}</span>
-        <h2 className="faq-title">{t.faq.title}</h2>
+        <EditableText path="faq.label" value={t.faq.label} tag="span" className="section-label" />
+        <EditableText path="faq.title" value={t.faq.title} tag="h2" className="faq-title" />
         <div className="faq-cats fade-up">
-          {cats.map((cat) => (
-            <div key={cat.label} className="faq-cat">
-              {cat.label && <p className="faq-cat-label">{cat.label}</p>}
+          {cats.map((cat, catIdx) => (
+            <div key={catIdx} className="faq-cat">
+              {cat.label && (
+                <EditableText path={`faq.categories.${catIdx}.label`} value={cat.label} tag="p" className="faq-cat-label" />
+              )}
               <div className="faq-accordion">
                 {cat.items.map(({ q, a }, i) => {
-                  const key = `${cat.label}-${i}`;
+                  const key = `${catIdx}-${i}`;
                   const open = openKey === key;
                   return (
                     <div key={key} className={`faq-acc-item${open ? " open" : ""}`}>
-                      <button className="faq-acc-q" onClick={() => setOpenKey(open ? null : key)}>
-                        <span>{q}</span>
-                        <span className="faq-acc-icon">{open ? "−" : "+"}</span>
+                      <button className="faq-acc-q" onClick={() => !isAdmin && setOpenKey(open ? null : key)}>
+                        <EditableText path={`faq.categories.${catIdx}.items.${i}.q`} value={q} tag="span" />
+                        {!isAdmin && <span className="faq-acc-icon">{open ? "−" : "+"}</span>}
                       </button>
-                      <div className="faq-acc-body">
-                        <div className="faq-acc-inner"><p>{a}</p></div>
+                      <div className={`faq-acc-body${open || isAdmin ? " open" : ""}`}>
+                        <div className="faq-acc-inner">
+                          <EditableText path={`faq.categories.${catIdx}.items.${i}.a`} value={a} tag="p" />
+                        </div>
                       </div>
                     </div>
                   );

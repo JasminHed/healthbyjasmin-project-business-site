@@ -877,7 +877,7 @@ a.week-schedule-row { text-align: left; }
   max-width: 1200px; margin: 0 auto;
   padding: clamp(48px,7vw,80px) clamp(20px,5vw,56px) clamp(36px,5vw,56px);
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr minmax(160px, auto) 1fr;
   gap: clamp(32px,5vw,64px);
   align-items: start;
 }
@@ -1349,8 +1349,6 @@ a.week-schedule-row { text-align: left; }
 .wsr-price {
   font-size: 0.78rem; font-weight: 600;
   color: #4a6b7c; white-space: nowrap;
-  padding: 2px 8px; border-radius: 20px;
-  background: rgba(74,107,124,0.1);
   align-self: center;
 }
 
