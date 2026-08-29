@@ -626,7 +626,8 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
                     {nextAvailable.map(({ i, date, slotTime }) => (
                       <button
                         key={i}
-                        className={`next-slot-btn${dateIdx === i ? " selected" : ""}`}
+                        className={`next-slot-btn${dateIdx === i ? " selected" : ""}${!treatment ? " no-treatment" : ""}`}
+                        disabled={!treatment}
                         onClick={() => handleDate(i)}
                       >
                         <span className="nsb-day">{t.days[date.getDay()]}</span>
@@ -661,7 +662,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
                           const [h, m] = slots[0].t.split(":").map(Number);
                           slotDt.setHours(h, m, 0, 0);
                           const isTooSoon = slotDt - Date.now() < 24 * 60 * 60 * 1000;
-                          const unavailable = isPast || isBooked || isTooSoon;
+                          const unavailable = isPast || isBooked || isTooSoon || !treatment;
                           return (
                             <button
                               key={i}

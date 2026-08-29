@@ -1198,8 +1198,8 @@ footer a:hover { color: #2D4A5D; }
 .next-slot-btn:hover { border-color: #4a6b7c; background: #f5f9fb; transform: translateY(-1px); }
 .next-slot-btn.selected { border-color: #4a6b7c; background: #4a6b7c; color: #fff; }
 .nsb-day { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; }
-.nsb-date { font-size: 0.85rem; font-weight: 700; }
-.nsb-time { font-size: 0.9rem; font-weight: 600; }
+.nsb-date { font-size: 0.85rem; font-weight: 400; }
+.nsb-time { font-size: 0.9rem; font-weight: 400; }
 .next-slot-btn.selected .nsb-day { opacity: 0.85; }
 
 /* Show all dates toggle */
@@ -1228,3 +1228,6 @@ footer a:hover { color: #2D4A5D; }
   .next-slot-btn { min-width: 76px; padding: 10px 10px; }
   .bks-label { font-size: 0.62rem; }
 }
+
+.next-slot-btn:disabled { opacity: 0.35; cursor: default; transform: none; }
+.next-slot-btn:disabled:hover { border-color: #d8e3e9; background: #fff; }
