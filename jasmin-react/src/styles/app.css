@@ -941,6 +941,7 @@ a.week-schedule-row { text-align: left; }
 .dgr-slot.disabled { opacity: 0.38; cursor: not-allowed; }
 .dgr-time { font-size: 14px; font-weight: 500; color: #3F5B6B; }
 .dgr-slot.selected .dgr-time { color: #2a3a44; }
+.dgr-slot-spacer { min-height: 46px; }
 
 /* Form */
 .massage-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; text-align: left; }

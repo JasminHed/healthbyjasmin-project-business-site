@@ -160,6 +160,17 @@ const TORSDAG_ENTRIES = [
 ];
 
 
+// Torsdagar — Åsögatan 166. Tid 17:45–18:40. Bara massage (ej rådgivning).
+const ASOGATAN_ENTRIES = [
+  { date: new Date(2026, 8, 17),  slots: [{ t: "17:45", e: "18:40" }], booked: true  },
+  { date: new Date(2026, 8, 24),  slots: [{ t: "17:45", e: "18:40" }] },
+  { date: new Date(2026, 9, 22),  slots: [{ t: "17:45", e: "18:40" }], booked: true  },
+  { date: new Date(2026, 10, 12), slots: [{ t: "17:45", e: "18:40" }] },
+  { date: new Date(2026, 10, 19), slots: [{ t: "17:45", e: "18:40" }] },
+  { date: new Date(2026, 10, 26), slots: [{ t: "17:45", e: "18:40" }], booked: true  },
+  { date: new Date(2026, 11, 3),  slots: [{ t: "17:45", e: "18:40" }] },
+];
+
 // Swedish months always used in emails to Jasmin
 const SV_MONTHS = ["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"];
 
@@ -252,7 +263,7 @@ const TRANSLATIONS = {
             { q: "Hur betalas behandlingen?", a: "Betalning sker via Swish eller faktura. Väljer du faktura kan du använda friskvårdsbidraget." },
             { q: "Kan jag använda friskvårdsbidrag?", a: "Ja. Välj faktura som betalningsalternativ i bokningen så skickas en faktura som du kan använda för att ansöka om friskvårdsbidrag via din arbetsgivare." },
             { q: "Vad gäller vid avbokning?", a: "Avbokning av behandling görs senast 24 timmar innan. Mejla healthbyjasmin@gmail.com. För yogaklasser gäller studiots avbokningsregler." },
-            { q: "Var hålls behandlingar och klasser?", a: "Ayurvediska massager och hälsorådgivning hålls torsdagskvällar på Birkagatan 23 i Stockholm. Yogaklasser hålls på samma adress. Se schemat ovan för aktuella tider." },
+            { q: "Var hålls behandlingar och klasser?", a: "Ayurvediska massager hålls torsdagskvällar på två adresser: Birkagatan 23 (ej dusch, 18:30 & 21:15) och Åsögatan 166 (dusch finns, 17:45). Hälsorådgivning hålls på Birkagatan 23. Yogaklasser hålls på Birkagatan 23. Se schemat ovan för aktuella tider." },
           ],
         },
         {
@@ -279,8 +290,9 @@ const TRANSLATIONS = {
     },
     weekSchedule: {
       behandlingarItems: [
-        { day: "Torsdag", time: "18:30 & 21:15", type: "Ayurvedisk massage",        loc: "Birkagatan 23", id: "massage" },
-        { day: "Torsdag", time: "18:30 & 21:15", type: "Ayurvedisk hälsorådgivning", loc: "Birkagatan 23", id: "radgivning" },
+        { day: "Torsdag", time: "18:30 & 21:15", type: "Ayurvedisk massage",         loc: "Birkagatan 23 (ej dusch)", id: "massage" },
+        { day: "Torsdag", time: "17:45–18:40",   type: "Ayurvedisk massage",         loc: "Åsögatan 166 (dusch)",     id: "massage-aso" },
+        { day: "Torsdag", time: "18:30 & 21:15", type: "Ayurvedisk hälsorådgivning", loc: "Birkagatan 23",            id: "radgivning" },
       ],
       klasserItems: [
         { day: "Torsdag", time: "20:00–21:00", type: "Yoga & Ayurveda klass", loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
@@ -389,7 +401,7 @@ const TRANSLATIONS = {
             { q: "How is payment handled?", a: "Payment via Swish or invoice. If you choose invoice you can use your wellness benefit (friskvårdsbidrag)." },
             { q: "Can I use my wellness benefit (friskvårdsbidrag)?", a: "Yes. Choose invoice as your payment option and a invoice will be sent that you can submit to your employer to claim your wellness benefit." },
             { q: "What is the cancellation policy?", a: "Treatments must be cancelled no later than 24 hours in advance. Email healthbyjasmin@gmail.com. For yoga classes, the studio's cancellation policy applies." },
-            { q: "Where are treatments and classes held?", a: "Ayurvedic massages and health consultations are held Thursday evenings at Birkagatan 23 in Stockholm. Yoga classes are at the same address. See the schedule above for current times." },
+            { q: "Where are treatments and classes held?", a: "Ayurvedic massages are held Thursday evenings at two locations: Birkagatan 23 (no shower, 18:30 & 21:15) and Åsögatan 166 (shower available, 17:45). Health consultations and yoga classes are held at Birkagatan 23. See the schedule above for current times." },
           ],
         },
         {
@@ -416,8 +428,9 @@ const TRANSLATIONS = {
     },
     weekSchedule: {
       behandlingarItems: [
-        { day: "Thursday", time: "18:30 & 21:15", type: "Ayurvedic massage",            loc: "Birkagatan 23", id: "massage" },
-        { day: "Thursday", time: "18:30 & 21:15", type: "Ayurvedic health consultation", loc: "Birkagatan 23", id: "radgivning" },
+        { day: "Thursday", time: "18:30 & 21:15", type: "Ayurvedic massage",             loc: "Birkagatan 23 (no shower)", id: "massage" },
+        { day: "Thursday", time: "17:45–18:40",   type: "Ayurvedic massage",             loc: "Åsögatan 166 (shower)",     id: "massage-aso" },
+        { day: "Thursday", time: "18:30 & 21:15", type: "Ayurvedic health consultation", loc: "Birkagatan 23",             id: "radgivning" },
       ],
       klasserItems: [
         { day: "Thursday", time: "20:00–21:00", type: "Yoga & Ayurveda class", loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
@@ -522,7 +535,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
       if (date < today) continue;
       const slotTime = slots[0].t;
       const key = `${slotPrefix}-${i}-${slotTime}`;
-      if (bookedSlots.includes(key)) continue;
+      if (bookedSlots.includes(key) || entries[i].booked) continue;
       const slotDt = new Date(date);
       const [h, m] = slotTime.split(":").map(Number);
       slotDt.setHours(h, m, 0, 0);
@@ -544,7 +557,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
   function handleDate(i) {
     const s = entries[i].slots[0];
     const key = `${slotPrefix}-${i}-${s.t}`;
-    const available = !bookedSlots.includes(key);
+    const available = !bookedSlots.includes(key) && !entries[i]?.booked;
     setDateIdx(i);
     setSlot(available ? s : null);
     if (available && treatment !== null) setStep("form");
@@ -689,40 +702,47 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
               </button>
               {showAllDates && (
                 <div className="dates-grid" style={{ marginTop: "1rem" }}>
-                  {Array.from({ length: Math.ceil(entries.length / 2) }, (_, rowIdx) => {
-                    const pair = entries.slice(rowIdx * 2, rowIdx * 2 + 2);
-                    const date = pair[0].date;
-                    const isPast = date < today;
-                    return (
-                      <div key={rowIdx} className="dates-grid-row">
-                        <div className="dates-grid-label">
-                          <span className="dgr-wd">{t.days[date.getDay()]}</span>
-                          <span className="dgr-dd">{date.getDate()}</span>
-                          <span className="dgr-mo">{t.months[date.getMonth()]}</span>
+                  {(() => {
+                    const grouped = [];
+                    const seen = new Map();
+                    entries.forEach(({ date, slots, booked: preBooked }, i) => {
+                      const dk = date.toDateString();
+                      if (!seen.has(dk)) { seen.set(dk, grouped.length); grouped.push({ date, items: [] }); }
+                      grouped[seen.get(dk)].items.push({ slots, i, preBooked });
+                    });
+                    return grouped.map(({ date, items }) => {
+                      const isPast = date < today;
+                      return (
+                        <div key={date.toDateString()} className="dates-grid-row">
+                          <div className="dates-grid-label">
+                            <span className="dgr-wd">{t.days[date.getDay()]}</span>
+                            <span className="dgr-dd">{date.getDate()}</span>
+                            <span className="dgr-mo">{t.months[date.getMonth()]}</span>
+                          </div>
+                          {items.map(({ slots, i, preBooked }) => {
+                            const slotKey = `${slotPrefix}-${i}-${slots[0].t}`;
+                            const isBooked = bookedSlots.includes(slotKey) || preBooked;
+                            const slotDt = new Date(date);
+                            const [h, m] = slots[0].t.split(":").map(Number);
+                            slotDt.setHours(h, m, 0, 0);
+                            const isTooSoon = slotDt - Date.now() < 24 * 60 * 60 * 1000;
+                            const unavailable = isPast || isBooked || isTooSoon || !treatment;
+                            return (
+                              <button
+                                key={i}
+                                className={`dgr-slot${unavailable ? " disabled" : ""}${dateIdx === i ? " selected" : ""}`}
+                                disabled={unavailable}
+                                onClick={() => handleDate(i)}
+                              >
+                                <span className="dgr-time">{isBooked || isTooSoon ? b.fullbooked : slots[0].t}</span>
+                              </button>
+                            );
+                          })}
+                          {items.length === 1 && <div className="dgr-slot-spacer" />}
                         </div>
-                        {pair.map(({ slots }, flatIdx) => {
-                          const i = rowIdx * 2 + flatIdx;
-                          const slotKey = `${slotPrefix}-${i}-${slots[0].t}`;
-                          const isBooked = bookedSlots.includes(slotKey);
-                          const slotDt = new Date(date);
-                          const [h, m] = slots[0].t.split(":").map(Number);
-                          slotDt.setHours(h, m, 0, 0);
-                          const isTooSoon = slotDt - Date.now() < 24 * 60 * 60 * 1000;
-                          const unavailable = isPast || isBooked || isTooSoon || !treatment;
-                          return (
-                            <button
-                              key={i}
-                              className={`dgr-slot${unavailable ? " disabled" : ""}${dateIdx === i ? " selected" : ""}`}
-                              disabled={unavailable}
-                              onClick={() => handleDate(i)}
-                            >
-                              <span className="dgr-time">{isBooked || isTooSoon ? b.fullbooked : slots[0].t}</span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    );
-                  })}
+                      );
+                    });
+                  })()}
                 </div>
               )}
             </div>
@@ -834,6 +854,7 @@ function FaqSection({ t }) {
 export default function HealthByJasmin() {
   const [lang, setLang] = useState("sv");
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [asogBookingOpen, setAsogBookingOpen] = useState(false);
   const [radgivningOpen, setRadgivningOpen] = useState(false);
 
   // ── Admin state ──────────────────────────────────────────────────────────────
@@ -864,6 +885,7 @@ export default function HealthByJasmin() {
 
   const shelfRef = useRef(null);
   const bookingRef = useRef(null);
+  const asogBookingRef = useRef(null);
   const radgivningRef = useRef(null);
   const scheduleSectionRef = useRef(null);
 
@@ -871,6 +893,7 @@ export default function HealthByJasmin() {
     function handleClickOutside(e) {
       if (scheduleSectionRef.current && !scheduleSectionRef.current.contains(e.target)) {
         setBookingOpen(false);
+        setAsogBookingOpen(false);
         setRadgivningOpen(false);
       }
     }
@@ -883,6 +906,12 @@ export default function HealthByJasmin() {
       bookingRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [bookingOpen]);
+
+  useEffect(() => {
+    if (asogBookingOpen && asogBookingRef.current) {
+      asogBookingRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [asogBookingOpen]);
 
   useEffect(() => {
     if (radgivningOpen && radgivningRef.current) {
@@ -1203,10 +1232,12 @@ export default function HealthByJasmin() {
                 <EditableText path="weekSchedule.colBehandlingar" value={t.weekSchedule.colBehandlingar} tag="p" className="wsr-col-label" />
                 <div className="week-schedule-rows">
                   {(scheduleOverride?.behandlingar || t.weekSchedule.behandlingarItems).map((row) => {
-                    const isOpen = row.id === "massage" ? bookingOpen : radgivningOpen;
+                    const isOpen = row.id === "massage" ? bookingOpen : row.id === "massage-aso" ? asogBookingOpen : radgivningOpen;
                     const toggle = row.id === "massage"
-                      ? () => { setBookingOpen(o => !o); setRadgivningOpen(false); }
-                      : () => { setRadgivningOpen(o => !o); setBookingOpen(false); };
+                      ? () => { setBookingOpen(o => !o); setAsogBookingOpen(false); setRadgivningOpen(false); }
+                      : row.id === "massage-aso"
+                      ? () => { setAsogBookingOpen(o => !o); setBookingOpen(false); setRadgivningOpen(false); }
+                      : () => { setRadgivningOpen(o => !o); setBookingOpen(false); setAsogBookingOpen(false); };
                     const price = row.id === "massage" ? "750 kr" : row.id === "radgivning" ? "695 kr" : "";
                     return (
                       <button
@@ -1258,8 +1289,19 @@ export default function HealthByJasmin() {
                 <Booking
                   t={treatmentsOverride ? { ...t, treatments: treatmentsOverride } : t}
                   entries={activeEntries}
-                  address={(scheduleOverride?.behandlingar?.[0]?.loc || "Birkagatan 23") + ", Stockholm"}
+                  address="Birkagatan 23, Stockholm (ej dusch)"
                   slotPrefix="birka-massage"
+                  treatmentIds={["abhyanga", "vishesh"]}
+                />
+              </div>
+            )}
+            {asogBookingOpen && (
+              <div className="week-schedule-booking" ref={asogBookingRef}>
+                <Booking
+                  t={treatmentsOverride ? { ...t, treatments: treatmentsOverride } : t}
+                  entries={ASOGATAN_ENTRIES}
+                  address="Åsögatan 166, Stockholm (dusch finns)"
+                  slotPrefix="aso-massage"
                   treatmentIds={["abhyanga", "vishesh"]}
                 />
               </div>
