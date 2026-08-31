@@ -502,6 +502,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
   const [step, setStep] = useState("select");
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState(false);
+  const [slotTaken, setSlotTaken] = useState(false);
   const [showAllDates, setShowAllDates] = useState(false);
   const formRef = useRef(null);
   const datesRef = useRef(null);
@@ -576,6 +577,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
   async function submit() {
     setSending(true);
     setSendError(false);
+    setSlotTaken(false);
     const key = `${slotPrefix}-${dateIdx}-${slot.t}`;
     const d = entries[dateIdx].date;
     const dateStr = `${d.getDate()} ${SV_MONTHS[d.getMonth()]} 2026`;
@@ -584,6 +586,19 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
     const treatmentName = treatments.find((tr) => tr.id === treatment).name;
 
     try {
+      // Re-check slot availability right before inserting to prevent race conditions
+      const { data: existing } = await supabase
+        .from("bookings")
+        .select("slot_key")
+        .eq("slot_key", key)
+        .maybeSingle();
+      if (existing) {
+        setBookedSlots((prev) => [...prev, key]);
+        setSlotTaken(true);
+        setSending(false);
+        return;
+      }
+
       const { data: ins, error } = await supabase
         .from("bookings")
         .insert({ slot_key: key, customer_email: form.email, customer_name: fullName, treatment: treatmentName, date: dateStr, time: timeStr })
@@ -784,6 +799,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
                   {sending ? b.skickar : b.bekrafta}
                 </button>
               </div>
+              {slotTaken && <p className="send-error">Den här tiden bokades precis av någon annan. Välj en annan tid.</p>}
               {sendError && <p className="send-error">{b.errorMsg}</p>}
             </div>
           )}
@@ -1249,7 +1265,10 @@ export default function HealthByJasmin() {
                         <span className="wsr-time">{row.time}</span>
                         <span className="wsr-info">
                           <span className="wsr-type">{row.type}</span>
-                          <span className="wsr-loc">{row.loc}</span>
+                          <span className="wsr-loc">{(() => {
+                            const m = row.loc.match(/^(.*?)(\(.*\))$/);
+                            return m ? <>{m[1]}<strong>{m[2]}</strong></> : row.loc;
+                          })()}</span>
                         </span>
                         {price && <span className="wsr-price">{price}</span>}
                         <span className="wsr-btn">
