@@ -1254,7 +1254,7 @@ export default function HealthByJasmin() {
                       : row.id === "massage-aso"
                       ? () => { setAsogBookingOpen(o => !o); setBookingOpen(false); setRadgivningOpen(false); }
                       : () => { setRadgivningOpen(o => !o); setBookingOpen(false); setAsogBookingOpen(false); };
-                    const price = row.id === "massage" ? "750 kr" : row.id === "radgivning" ? "695 kr" : "";
+                    const price = (row.id === "massage" || row.id === "massage-aso") ? "750 kr" : row.id === "radgivning" ? "695 kr" : "";
                     return (
                       <button
                         key={row.id}
