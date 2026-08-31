@@ -695,6 +695,21 @@ a.week-schedule-row { text-align: left; }
   padding: 5px 12px;
   white-space: nowrap;
 }
+.wsr-no-link { cursor: default; }
+.wsr-no-link:hover { background: none; }
+.wsr-book-via-btn {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #5C7C8A;
+  border: 0.5px solid #b0c4cc;
+  border-radius: 8px;
+  padding: 8px 20px;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.wsr-book-via-btn:hover { background: #edf3f5; color: #3a5a6a; text-decoration: none; }
 
 @media (max-width: 640px) {
   .wsr-columns { grid-template-columns: 1fr; gap: 24px 0; }

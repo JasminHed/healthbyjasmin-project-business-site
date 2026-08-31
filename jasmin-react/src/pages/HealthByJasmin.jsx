@@ -1283,23 +1283,25 @@ export default function HealthByJasmin() {
                 <EditableText path="weekSchedule.colKlasser" value={t.weekSchedule.colKlasser} tag="p" className="wsr-col-label" />
                 <div className="week-schedule-rows">
                   {(scheduleOverride?.klasser || t.weekSchedule.klasserItems).map((row, i) => (
-                    <a
-                      key={i}
-                      href={row.href}
-                      className="week-schedule-row"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <div key={i} className="week-schedule-row wsr-no-link">
                       <span className="wsr-day">{row.day}</span>
                       <span className="wsr-time">{row.time}</span>
                       <span className="wsr-info">
                         <span className="wsr-type">{row.type}</span>
                         <span className="wsr-loc">{row.loc}</span>
                       </span>
-                      <span className="wsr-btn">{t.weekSchedule.bookViaLabel}</span>
-                    </a>
+                    </div>
                   ))}
                 </div>
+                {(() => {
+                  const klasser = scheduleOverride?.klasser || t.weekSchedule.klasserItems;
+                  const href = klasser[0]?.href;
+                  return href ? (
+                    <a href={href} className="wsr-book-via-btn" target="_blank" rel="noopener noreferrer">
+                      {t.weekSchedule.bookViaLabel}
+                    </a>
+                  ) : null;
+                })()}
               </div>
             </div>
 
