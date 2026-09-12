@@ -169,6 +169,7 @@ const ASOGATAN_ENTRIES = [
   { date: new Date(2026, 10, 19), slots: [{ t: "17:45", e: "18:40" }] },
   { date: new Date(2026, 10, 26), slots: [{ t: "17:45", e: "18:40" }], booked: true  },
   { date: new Date(2026, 11, 3),  slots: [{ t: "17:45", e: "18:40" }] },
+  { date: new Date(2026, 11, 10), slots: [{ t: "17:45", e: "18:45" }] },
 ];
 
 // Swedish months always used in emails to Jasmin
@@ -492,13 +493,14 @@ function Navbar({ t, lang, setLang }) {
 
 // ── Booking ───────────────────────────────────────────────────────────────────
 
-function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
+function Booking({ t, entries, address, slotPrefix, treatmentIds, sessionBooked, onBooked }) {
   const treatments = treatmentIds ? t.treatments.filter(tr => treatmentIds.includes(tr.id)) : t.treatments;
   const [dateIdx, setDateIdx] = useState(null);
   const [slot, setSlot] = useState(null);
   const [treatment, setTreatment] = useState(() => treatments.length === 1 ? treatments[0].id : null);
   const [form, setForm] = useState({ firstName: "", lastName: "", email: "", phone: "" });
   const [bookedSlots, setBookedSlots] = useState([]);
+  const [bookedDates, setBookedDates] = useState(new Set());
   const [step, setStep] = useState("select");
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState(false);
@@ -522,10 +524,20 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
   }, [step]);
 
   useEffect(() => {
-    supabase.from("bookings").select("slot_key").then(({ data }) => {
-      if (data) setBookedSlots(data.map((r) => r.slot_key));
+    supabase.from("bookings").select("slot_key, date").then(({ data }) => {
+      if (data) {
+        setBookedSlots(data.map((r) => r.slot_key));
+        setBookedDates(new Set(data.map((r) => r.date).filter(Boolean)));
+      }
     });
   }, []);
+
+  function fmtDate(d) {
+    return `${d.getDate()} ${SV_MONTHS[d.getMonth()]} 2026`;
+  }
+  function isDateBooked(d) {
+    return bookedDates.has(fmtDate(d));
+  }
 
   // Compute next 4 available slots for the "Nästa lediga" section
   const nextAvailable = (() => {
@@ -536,7 +548,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
       if (date < today) continue;
       const slotTime = slots[0].t;
       const key = `${slotPrefix}-${i}-${slotTime}`;
-      if (bookedSlots.includes(key) || entries[i].booked) continue;
+      if (bookedSlots.includes(key) || entries[i].booked || isDateBooked(date)) continue;
       const slotDt = new Date(date);
       const [h, m] = slotTime.split(":").map(Number);
       slotDt.setHours(h, m, 0, 0);
@@ -558,7 +570,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
   function handleDate(i) {
     const s = entries[i].slots[0];
     const key = `${slotPrefix}-${i}-${s.t}`;
-    const available = !bookedSlots.includes(key) && !entries[i]?.booked;
+    const available = !bookedSlots.includes(key) && !entries[i]?.booked && !isDateBooked(entries[i].date);
     setDateIdx(i);
     setSlot(available ? s : null);
     if (available && treatment !== null) setStep("form");
@@ -624,7 +636,9 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
       }, EMAILJS_PUBLIC_KEY);
 
       setBookedSlots((prev) => [...prev, key]);
+      setBookedDates((prev) => new Set([...prev, dateStr]));
       setStep("done");
+      onBooked?.(entries[dateIdx].date);
     } catch (err) {
       console.error(err);
       setSendError(true);
@@ -643,6 +657,17 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
 
   const selectedDate = dateIdx !== null ? entries[dateIdx].date : null;
   const b = t.booking;
+
+  if (sessionBooked && step !== "done") {
+    return (
+      <div className="booking-wrap">
+        <div className="session-booked-msg">
+          <span className="booking-confirm-icon">✓</span>
+          <p>Du har redan en bokning. Vid frågor, hör av dig på <a href="mailto:healthbyjasmin@gmail.com">healthbyjasmin@gmail.com</a>.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="booking-wrap">
@@ -736,7 +761,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
                           </div>
                           {items.map(({ slots, i, preBooked }) => {
                             const slotKey = `${slotPrefix}-${i}-${slots[0].t}`;
-                            const isBooked = bookedSlots.includes(slotKey) || preBooked;
+                            const isBooked = bookedSlots.includes(slotKey) || preBooked || isDateBooked(date);
                             const slotDt = new Date(date);
                             const [h, m] = slots[0].t.split(":").map(Number);
                             slotDt.setHours(h, m, 0, 0);
@@ -872,6 +897,15 @@ export default function HealthByJasmin() {
   const [bookingOpen, setBookingOpen] = useState(false);
   const [asogBookingOpen, setAsogBookingOpen] = useState(false);
   const [radgivningOpen, setRadgivningOpen] = useState(false);
+  const [sessionBooked, setSessionBooked] = useState(() => {
+    try {
+      const stored = localStorage.getItem("hbj_session_booked");
+      if (!stored) return false;
+      const bookedDate = new Date(stored);
+      const today = new Date(); today.setHours(0,0,0,0);
+      return bookedDate >= today;
+    } catch { return false; }
+  });
 
   // ── Admin state ──────────────────────────────────────────────────────────────
   const [isAdmin, setIsAdmin] = useState(() => localStorage.getItem("hbj_admin") === "1");
@@ -934,6 +968,14 @@ export default function HealthByJasmin() {
       radgivningRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [radgivningOpen]);
+
+  function handleBooked(date) {
+    setSessionBooked(true);
+    setBookingOpen(false);
+    setAsogBookingOpen(false);
+    setRadgivningOpen(false);
+    try { localStorage.setItem("hbj_session_booked", date.toISOString()); } catch {}
+  }
 
   function scrollShelf(dir) {
     const el = shelfRef.current;
@@ -1313,6 +1355,8 @@ export default function HealthByJasmin() {
                   address="Birkagatan 23, Stockholm (ej dusch)"
                   slotPrefix="birka-massage"
                   treatmentIds={["abhyanga", "vishesh"]}
+                  sessionBooked={sessionBooked}
+                  onBooked={handleBooked}
                 />
               </div>
             )}
@@ -1324,6 +1368,8 @@ export default function HealthByJasmin() {
                   address="Åsögatan 166, Stockholm (dusch finns)"
                   slotPrefix="aso-massage"
                   treatmentIds={["abhyanga", "vishesh"]}
+                  sessionBooked={sessionBooked}
+                  onBooked={handleBooked}
                 />
               </div>
             )}
@@ -1335,6 +1381,8 @@ export default function HealthByJasmin() {
                   address={(scheduleOverride?.behandlingar?.[0]?.loc || "Birkagatan 23") + ", Stockholm"}
                   slotPrefix="birka-massage"
                   treatmentIds={["halsradgivning"]}
+                  sessionBooked={sessionBooked}
+                  onBooked={handleBooked}
                 />
               </div>
             )}

@@ -980,6 +980,10 @@ a.week-schedule-row { text-align: left; }
 .booking-btn-back:hover { background: #f0f5f7; }
 
 .send-error { margin-top: 10px; font-size: 13px; color: #c0392b; text-align: center; }
+.session-booked-msg { display: flex; align-items: center; gap: 14px; padding: 20px 24px; background: #f0f7f4; border-radius: 12px; border: 1px solid #b8ddd0; }
+.session-booked-msg p { font-size: 14px; color: #2d5a4a; margin: 0; }
+.session-booked-msg a { color: #3a7a64; }
+.session-booked-msg .booking-confirm-icon { flex-shrink: 0; }
 
 /* ════════════════════════════════════════
    MEDIA QUERIES
