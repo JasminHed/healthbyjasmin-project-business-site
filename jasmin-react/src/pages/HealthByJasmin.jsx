@@ -157,6 +157,17 @@ const TORSDAG_ENTRIES = [
   { date: new Date(2026, 11, 3),  slots: [{ t: "21:15", e: "22:10" }] },
   { date: new Date(2026, 11, 10), slots: [{ t: "18:30", e: "19:25" }] },
   { date: new Date(2026, 11, 10), slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2026, 11, 17), slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2026, 11, 17), slots: [{ t: "21:15", e: "22:10" }] },
+  // 24 dec = julafton, 31 dec = nyårsafton — hoppas över
+  { date: new Date(2027, 0, 7),  slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2027, 0, 7),  slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2027, 0, 14), slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2027, 0, 14), slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2027, 0, 21), slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2027, 0, 21), slots: [{ t: "21:15", e: "22:10" }] },
+  { date: new Date(2027, 0, 28), slots: [{ t: "18:30", e: "19:25" }] },
+  { date: new Date(2027, 0, 28), slots: [{ t: "21:15", e: "22:10" }] },
 ];
 
 
@@ -533,7 +544,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, sessionBooked,
   }, []);
 
   function fmtDate(d) {
-    return `${d.getDate()} ${SV_MONTHS[d.getMonth()]} 2026`;
+    return `${d.getDate()} ${SV_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
   }
   function isDateBooked(d) {
     return bookedDates.has(fmtDate(d));
@@ -592,7 +603,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, sessionBooked,
     setSlotTaken(false);
     const key = `${slotPrefix}-${dateIdx}-${slot.t}`;
     const d = entries[dateIdx].date;
-    const dateStr = `${d.getDate()} ${SV_MONTHS[d.getMonth()]} 2026`;
+    const dateStr = `${d.getDate()} ${SV_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
     const timeStr = `${slot.t}–${slot.e}`;
     const fullName = `${form.firstName} ${form.lastName}`;
     const treatmentName = treatments.find((tr) => tr.id === treatment).name;
