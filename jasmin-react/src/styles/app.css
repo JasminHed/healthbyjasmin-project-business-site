@@ -759,6 +759,12 @@ a.week-schedule-row { text-align: left; }
 .week-schedule-booking .booking-wrap {
   max-width: 100%;
 }
+.booking-locked {
+  opacity: 0.35;
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.25s;
+}
 
 .studio-sections-row {
   display: flex;

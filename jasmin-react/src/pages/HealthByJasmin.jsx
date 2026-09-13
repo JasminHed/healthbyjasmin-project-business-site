@@ -502,7 +502,7 @@ function Navbar({ t, lang, setLang }) {
 
 // ── Booking ───────────────────────────────────────────────────────────────────
 
-function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate }) {
+function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate, onSelectChange, isLocked }) {
   const treatments = treatmentIds ? t.treatments.filter(tr => treatmentIds.includes(tr.id)) : t.treatments;
   const [dateIdx, setDateIdx] = useState(null);
   const [slot, setSlot] = useState(null);
@@ -545,6 +545,10 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate 
     }, 10000);
     return () => clearTimeout(timer);
   }, [step]);
+
+  useEffect(() => {
+    onSelectChange?.(dateIdx !== null);
+  }, [dateIdx]);
 
   useEffect(() => {
     supabase.from("bookings").select("slot_key, date").then(({ data }) => {
@@ -675,7 +679,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate 
   const b = t.booking;
 
   return (
-    <div className="booking-wrap">
+    <div className={`booking-wrap${isLocked ? " booking-locked" : ""}`}>
 
       {step !== "done" && (
         <>
@@ -918,6 +922,7 @@ export default function HealthByJasmin() {
   const [bookingOpen, setBookingOpen] = useState(false);
   const [asogBookingOpen, setAsogBookingOpen] = useState(false);
   const [radgivningOpen, setRadgivningOpen] = useState(false);
+  const [massageActiveStudio, setMassageActiveStudio] = useState(null); // "birka" | "aso" | null
 
   // ── Admin state ──────────────────────────────────────────────────────────────
   const [isAdmin, setIsAdmin] = useState(() => localStorage.getItem("hbj_admin") === "1");
@@ -1282,11 +1287,12 @@ export default function HealthByJasmin() {
                     const toggle = row.id === "massage"
                       ? () => {
                           const wasOpen = bookingOpen || asogBookingOpen;
+                          if (wasOpen) setMassageActiveStudio(null);
                           setBookingOpen(!wasOpen);
                           setAsogBookingOpen(!wasOpen);
                           setRadgivningOpen(false);
                         }
-                      : () => { setRadgivningOpen(o => !o); setBookingOpen(false); setAsogBookingOpen(false); };
+                      : () => { setRadgivningOpen(o => !o); setBookingOpen(false); setAsogBookingOpen(false); setMassageActiveStudio(null); };
                     const price = row.price || "";
                     return (
                       <button
@@ -1348,6 +1354,8 @@ export default function HealthByJasmin() {
                     slotPrefix="birka-massage"
                     treatmentIds={["abhyanga", "vishesh"]}
                     emailTemplate={EMAILJS_TEMPLATE_BIRKA}
+                    onSelectChange={(has) => setMassageActiveStudio(has ? "birka" : null)}
+                    isLocked={massageActiveStudio === "aso"}
                   />
                 </div>
                 <div className="studio-section" ref={asogBookingRef}>
@@ -1359,6 +1367,8 @@ export default function HealthByJasmin() {
                     slotPrefix="aso-massage"
                     treatmentIds={["abhyanga", "vishesh"]}
                     emailTemplate={EMAILJS_TEMPLATE_ASOG}
+                    onSelectChange={(has) => setMassageActiveStudio(has ? "aso" : null)}
+                    isLocked={massageActiveStudio === "birka"}
                   />
                 </div>
                 </div>{/* studio-sections-row */}
