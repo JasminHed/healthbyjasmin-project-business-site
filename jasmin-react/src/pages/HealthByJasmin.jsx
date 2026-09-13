@@ -502,7 +502,7 @@ function Navbar({ t, lang, setLang }) {
 
 // ── Booking ───────────────────────────────────────────────────────────────────
 
-function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate, onSelectChange, isLocked }) {
+function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate, onSelectChange, isLocked, onDone }) {
   const treatments = treatmentIds ? t.treatments.filter(tr => treatmentIds.includes(tr.id)) : t.treatments;
   const [dateIdx, setDateIdx] = useState(null);
   const [slot, setSlot] = useState(null);
@@ -542,6 +542,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate,
       setStep("select");
       setDateIdx(null);
       setSlot(null);
+      onDone?.();
     }, 10000);
     return () => clearTimeout(timer);
   }, [step]);
@@ -1356,6 +1357,7 @@ export default function HealthByJasmin() {
                     emailTemplate={EMAILJS_TEMPLATE_BIRKA}
                     onSelectChange={(has) => setMassageActiveStudio(has ? "birka" : null)}
                     isLocked={massageActiveStudio === "aso"}
+                    onDone={() => { setBookingOpen(false); setAsogBookingOpen(false); setMassageActiveStudio(null); }}
                   />
                 </div>
                 <div className="studio-section" ref={asogBookingRef}>
@@ -1369,6 +1371,7 @@ export default function HealthByJasmin() {
                     emailTemplate={EMAILJS_TEMPLATE_ASOG}
                     onSelectChange={(has) => setMassageActiveStudio(has ? "aso" : null)}
                     isLocked={massageActiveStudio === "birka"}
+                    onDone={() => { setBookingOpen(false); setAsogBookingOpen(false); setMassageActiveStudio(null); }}
                   />
                 </div>
                 </div>{/* studio-sections-row */}
@@ -1383,6 +1386,7 @@ export default function HealthByJasmin() {
                   slotPrefix="birka-radgivning"
                   treatmentIds={["halsradgivning"]}
                   emailTemplate={EMAILJS_TEMPLATE_BIRKA}
+                  onDone={() => setRadgivningOpen(false)}
                 />
               </div>
             )}
