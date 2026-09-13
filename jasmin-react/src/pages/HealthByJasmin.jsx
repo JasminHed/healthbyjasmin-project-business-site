@@ -114,8 +114,8 @@ function EditableImage({ imgKey, src, alt, className, wrapStyle }) {
 }
 
 const EMAILJS_SERVICE_ID = "service_mjw4cpb";
-const EMAILJS_TEMPLATE_JASMIN = "template_m9afbud";
-const EMAILJS_TEMPLATE_CUSTOMER = "template_8rmxsm9";
+const EMAILJS_TEMPLATE_BIRKA = "template_8rmxsm9";
+const EMAILJS_TEMPLATE_ASOG  = "template_m9afbud";
 const EMAILJS_PUBLIC_KEY = "y7Yu8QbgFj3NM0VeM";
 
 // ── Booking dates & slots (language-neutral) ───────────────────────────────────
@@ -502,7 +502,7 @@ function Navbar({ t, lang, setLang }) {
 
 // ── Booking ───────────────────────────────────────────────────────────────────
 
-function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
+function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate }) {
   const treatments = treatmentIds ? t.treatments.filter(tr => treatmentIds.includes(tr.id)) : t.treatments;
   const [dateIdx, setDateIdx] = useState(null);
   const [slot, setSlot] = useState(null);
@@ -534,6 +534,16 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
       confirmRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
     }
     prevStep.current = step;
+  }, [step]);
+
+  useEffect(() => {
+    if (step !== "done") return;
+    const timer = setTimeout(() => {
+      setStep("select");
+      setDateIdx(null);
+      setSlot(null);
+    }, 10000);
+    return () => clearTimeout(timer);
   }, [step]);
 
   useEffect(() => {
@@ -631,21 +641,15 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
         .single();
       if (error) throw error;
 
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_JASMIN, {
-        treatment: `${treatmentName} (55 min)`,
-        date: dateStr, time: timeStr,
-        customer_name: fullName, customer_email: form.email, customer_phone: form.phone,
-        booking_id: ins.booking_id,
-        address,
-      }, EMAILJS_PUBLIC_KEY);
-
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CUSTOMER, {
+      await emailjs.send(EMAILJS_SERVICE_ID, emailTemplate || EMAILJS_TEMPLATE_BIRKA, {
         customer_name: form.firstName,
         customer_email: form.email,
         treatment: `${treatmentName} (55 min)`,
         date: dateStr,
         time: timeStr,
         address,
+        booking_id: ins.booking_id,
+        customer_phone: form.phone,
       }, EMAILJS_PUBLIC_KEY);
 
       setBookedSlots((prev) => [...prev, key]);
@@ -1356,8 +1360,7 @@ export default function HealthByJasmin() {
                     address="Birkagatan 23, Stockholm (ej dusch)"
                     slotPrefix="birka-massage"
                     treatmentIds={["abhyanga", "vishesh"]}
-                    sessionBooked={sessionBooked}
-                    onBooked={handleBooked}
+                    emailTemplate={EMAILJS_TEMPLATE_BIRKA}
                   />
                 </div>
                 <div className="studio-section" ref={asogBookingRef}>
@@ -1368,8 +1371,7 @@ export default function HealthByJasmin() {
                     address="Åsögatan 166, Stockholm (dusch finns)"
                     slotPrefix="aso-massage"
                     treatmentIds={["abhyanga", "vishesh"]}
-                    sessionBooked={sessionBooked}
-                    onBooked={handleBooked}
+                    emailTemplate={EMAILJS_TEMPLATE_ASOG}
                   />
                 </div>
               </div>
@@ -1382,6 +1384,7 @@ export default function HealthByJasmin() {
                   address="Birkagatan 23, Stockholm"
                   slotPrefix="birka-radgivning"
                   treatmentIds={["halsradgivning"]}
+                  emailTemplate={EMAILJS_TEMPLATE_BIRKA}
                 />
               </div>
             )}
