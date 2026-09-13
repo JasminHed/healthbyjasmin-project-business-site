@@ -519,6 +519,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, sessionBooked,
   const [showAllDates, setShowAllDates] = useState(false);
   const formRef = useRef(null);
   const datesRef = useRef(null);
+  const confirmRef = useRef(null);
   const prevStep = useRef(null);
 
   const today = new Date();
@@ -530,6 +531,9 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, sessionBooked,
     }
     if (step === "select" && prevStep.current === "form" && datesRef.current) {
       datesRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    if (step === "done" && confirmRef.current) {
+      confirmRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
     }
     prevStep.current = step;
   }, [step]);
@@ -844,7 +848,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, sessionBooked,
 
       {/* ── Bekräftelse ── */}
       {step === "done" && selectedDate && slot && (
-        <div className="booking-confirm">
+        <div className="booking-confirm" ref={confirmRef}>
           <p className="booking-confirm-title">{b.confirmTitle}</p>
           <p className="booking-confirm-sub">{b.confirmSub(form.firstName)}</p>
           <div className="booking-confirm-details">
@@ -998,9 +1002,6 @@ export default function HealthByJasmin() {
 
   function handleBooked(date) {
     setSessionBooked(true);
-    setBookingOpen(false);
-    setAsogBookingOpen(false);
-    setRadgivningOpen(false);
     try { localStorage.setItem("hbj_session_booked", date.toISOString()); } catch {}
   }
 

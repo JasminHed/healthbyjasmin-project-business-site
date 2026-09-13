@@ -1288,8 +1288,7 @@ a.week-schedule-row { text-align: left; }
   white-space: nowrap; flex-shrink: 0;
 }
 .treatment-pick-card .treatment-pick-desc {
-  font-size: 0.78rem; color: #666; line-height: 1.5;
-  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  font-size: 0.78rem; color: #666; line-height: 1.6;
 }
 .treatment-pick-card.selected .treatment-pick-name,
 .treatment-pick-card.selected .treatment-pick-desc { color: inherit; }
