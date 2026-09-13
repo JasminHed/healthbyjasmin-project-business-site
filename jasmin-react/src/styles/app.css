@@ -760,6 +760,23 @@ a.week-schedule-row { text-align: left; }
   max-width: 100%;
 }
 
+.studio-sections-row {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+.studio-sections-row .studio-section {
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 0;
+}
+@media (max-width: 600px) {
+  .studio-sections-row {
+    flex-direction: column;
+    gap: 32px;
+  }
+}
+
 .studio-section {
   margin-bottom: 40px;
 }
@@ -781,6 +798,12 @@ a.week-schedule-row { text-align: left; }
   color: #888;
   margin-top: 2px;
   display: block;
+}
+.wsr-type-loc {
+  font-size: 0.72rem;
+  color: #8aabb8;
+  display: block;
+  margin-top: 1px;
 }
 
 .wsr-class-tip {

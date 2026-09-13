@@ -963,23 +963,6 @@ export default function HealthByJasmin() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  useEffect(() => {
-    if (bookingOpen && bookingRef.current) {
-      bookingRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [bookingOpen]);
-
-  useEffect(() => {
-    if (asogBookingOpen && asogBookingRef.current) {
-      asogBookingRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [asogBookingOpen]);
-
-  useEffect(() => {
-    if (radgivningOpen && radgivningRef.current) {
-      radgivningRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [radgivningOpen]);
 
   function scrollShelf(dir) {
     const el = shelfRef.current;
@@ -1313,6 +1296,9 @@ export default function HealthByJasmin() {
                       >
                         <span className="wsr-info" style={{ flex: 1 }}>
                           <span className="wsr-type">{row.type}</span>
+                          <span className="wsr-type-loc">
+                            {row.id === "massage" ? "(Vasastan & Södermalm)" : "(Vasastan)"}
+                          </span>
                           <span className="wsr-time-inline">{row.time}</span>
                         </span>
                         {price && <span className="wsr-price">{price}</span>}
@@ -1352,6 +1338,7 @@ export default function HealthByJasmin() {
 
             {(bookingOpen || asogBookingOpen) && (
               <div className="week-schedule-booking" ref={bookingRef}>
+                <div className="studio-sections-row">
                 <div className="studio-section">
                   <p className="studio-label">Birkagatan 23 <span>(ej dusch)</span> · 18:30 & 21:15</p>
                   <Booking
@@ -1374,6 +1361,7 @@ export default function HealthByJasmin() {
                     emailTemplate={EMAILJS_TEMPLATE_ASOG}
                   />
                 </div>
+                </div>{/* studio-sections-row */}
               </div>
             )}
             {radgivningOpen && (
