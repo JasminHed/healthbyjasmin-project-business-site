@@ -302,9 +302,8 @@ const TRANSLATIONS = {
     },
     weekSchedule: {
       behandlingarItems: [
-        { day: "Torsdag", time: "18:30 & 21:15", type: "Ayurvedisk massage",         loc: "Birkagatan 23 (ej dusch)", id: "massage" },
-        { day: "Torsdag", time: "17:45–18:40",   type: "Ayurvedisk massage",         loc: "Åsögatan 166 (dusch)",     id: "massage-aso" },
-        { day: "Torsdag", time: "18:30 & 21:15", type: "Ayurvedisk hälsorådgivning", loc: "Birkagatan 23",            id: "radgivning" },
+        { day: "Torsdag", time: "55 min", type: "Ayurvedisk massage",         price: "750 kr", id: "massage" },
+        { day: "Torsdag", time: "55 min", type: "Ayurvedisk hälsorådgivning", price: "695 kr", id: "radgivning" },
       ],
       klasserItems: [
         { day: "Torsdag", time: "20:00–21:00", type: "Yoga & Ayurveda klass", loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
@@ -440,9 +439,8 @@ const TRANSLATIONS = {
     },
     weekSchedule: {
       behandlingarItems: [
-        { day: "Thursday", time: "18:30 & 21:15", type: "Ayurvedic massage",             loc: "Birkagatan 23 (no shower)", id: "massage" },
-        { day: "Thursday", time: "17:45–18:40",   type: "Ayurvedic massage",             loc: "Åsögatan 166 (shower)",     id: "massage-aso" },
-        { day: "Thursday", time: "18:30 & 21:15", type: "Ayurvedic health consultation", loc: "Birkagatan 23",             id: "radgivning" },
+        { day: "Thursday", time: "55 min", type: "Ayurvedic massage",            price: "750 kr", id: "massage" },
+        { day: "Thursday", time: "55 min", type: "Ayurvedic health consultation", price: "695 kr", id: "radgivning" },
       ],
       klasserItems: [
         { day: "Thursday", time: "20:00–21:00", type: "Yoga & Ayurveda class", loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
@@ -1318,27 +1316,26 @@ export default function HealthByJasmin() {
                 <EditableText path="weekSchedule.colBehandlingar" value={t.weekSchedule.colBehandlingar} tag="p" className="wsr-col-label" />
                 <div className="week-schedule-rows">
                   {(scheduleOverride?.behandlingar || t.weekSchedule.behandlingarItems).map((row) => {
-                    const isOpen = row.id === "massage" ? bookingOpen : row.id === "massage-aso" ? asogBookingOpen : radgivningOpen;
+                    const massageOpen = bookingOpen || asogBookingOpen;
+                    const isOpen = row.id === "massage" ? massageOpen : radgivningOpen;
                     const toggle = row.id === "massage"
-                      ? () => { setBookingOpen(o => !o); setAsogBookingOpen(false); setRadgivningOpen(false); }
-                      : row.id === "massage-aso"
-                      ? () => { setAsogBookingOpen(o => !o); setBookingOpen(false); setRadgivningOpen(false); }
+                      ? () => {
+                          const wasOpen = bookingOpen || asogBookingOpen;
+                          setBookingOpen(!wasOpen);
+                          setAsogBookingOpen(!wasOpen);
+                          setRadgivningOpen(false);
+                        }
                       : () => { setRadgivningOpen(o => !o); setBookingOpen(false); setAsogBookingOpen(false); };
-                    const price = (row.id === "massage" || row.id === "massage-aso") ? "750 kr" : row.id === "radgivning" ? "695 kr" : "";
+                    const price = row.price || "";
                     return (
                       <button
                         key={row.id}
                         className={`week-schedule-row${isOpen ? " wsr-active" : ""}`}
                         onClick={toggle}
                       >
-                        <span className="wsr-day">{row.day}</span>
-                        <span className="wsr-time">{row.time}</span>
-                        <span className="wsr-info">
+                        <span className="wsr-info" style={{ flex: 1 }}>
                           <span className="wsr-type">{row.type}</span>
-                          <span className="wsr-loc">{(() => {
-                            const m = row.loc.match(/^(.*?)(\(.*\))$/);
-                            return m ? <>{m[1]}<strong>{m[2]}</strong></> : row.loc;
-                          })()}</span>
+                          <span className="wsr-time-inline">{row.time}</span>
                         </span>
                         {price && <span className="wsr-price">{price}</span>}
                         <span className="wsr-btn">
@@ -1375,30 +1372,32 @@ export default function HealthByJasmin() {
               </div>
             </div>
 
-            {bookingOpen && (
+            {(bookingOpen || asogBookingOpen) && (
               <div className="week-schedule-booking" ref={bookingRef}>
-                <Booking
-                  t={treatmentsOverride ? { ...t, treatments: treatmentsOverride } : t}
-                  entries={activeEntries}
-                  address="Birkagatan 23, Stockholm (ej dusch)"
-                  slotPrefix="birka-massage"
-                  treatmentIds={["abhyanga", "vishesh"]}
-                  sessionBooked={sessionBooked}
-                  onBooked={handleBooked}
-                />
-              </div>
-            )}
-            {asogBookingOpen && (
-              <div className="week-schedule-booking" ref={asogBookingRef}>
-                <Booking
-                  t={treatmentsOverride ? { ...t, treatments: treatmentsOverride } : t}
-                  entries={ASOGATAN_ENTRIES}
-                  address="Åsögatan 166, Stockholm (dusch finns)"
-                  slotPrefix="aso-massage"
-                  treatmentIds={["abhyanga", "vishesh"]}
-                  sessionBooked={sessionBooked}
-                  onBooked={handleBooked}
-                />
+                <div className="studio-section">
+                  <p className="studio-label">Birkagatan 23 <span>(ej dusch)</span> · 18:30 & 21:15</p>
+                  <Booking
+                    t={treatmentsOverride ? { ...t, treatments: treatmentsOverride } : t}
+                    entries={activeEntries}
+                    address="Birkagatan 23, Stockholm (ej dusch)"
+                    slotPrefix="birka-massage"
+                    treatmentIds={["abhyanga", "vishesh"]}
+                    sessionBooked={sessionBooked}
+                    onBooked={handleBooked}
+                  />
+                </div>
+                <div className="studio-section" ref={asogBookingRef}>
+                  <p className="studio-label">Åsögatan 166 <span>(dusch finns)</span> · 17:45</p>
+                  <Booking
+                    t={treatmentsOverride ? { ...t, treatments: treatmentsOverride } : t}
+                    entries={ASOGATAN_ENTRIES}
+                    address="Åsögatan 166, Stockholm (dusch finns)"
+                    slotPrefix="aso-massage"
+                    treatmentIds={["abhyanga", "vishesh"]}
+                    sessionBooked={sessionBooked}
+                    onBooked={handleBooked}
+                  />
+                </div>
               </div>
             )}
             {radgivningOpen && (
@@ -1406,8 +1405,8 @@ export default function HealthByJasmin() {
                 <Booking
                   t={treatmentsOverride ? { ...t, treatments: treatmentsOverride } : t}
                   entries={activeEntries}
-                  address={(scheduleOverride?.behandlingar?.[0]?.loc || "Birkagatan 23") + ", Stockholm"}
-                  slotPrefix="birka-massage"
+                  address="Birkagatan 23, Stockholm"
+                  slotPrefix="birka-radgivning"
                   treatmentIds={["halsradgivning"]}
                   sessionBooked={sessionBooked}
                   onBooked={handleBooked}
