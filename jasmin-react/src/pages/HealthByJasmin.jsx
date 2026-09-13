@@ -845,11 +845,27 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, sessionBooked,
       {/* ── Bekräftelse ── */}
       {step === "done" && selectedDate && slot && (
         <div className="booking-confirm">
-          <div className="booking-confirm-icon">✓</div>
           <p className="booking-confirm-title">{b.confirmTitle}</p>
           <p className="booking-confirm-sub">{b.confirmSub(form.firstName)}</p>
+          <div className="booking-confirm-details">
+            <div className="bcd-row">
+              <span className="bcd-label">Behandling</span>
+              <span className="bcd-value">{treatments.find(tr => tr.id === treatment)?.name}</span>
+            </div>
+            <div className="bcd-row">
+              <span className="bcd-label">Datum</span>
+              <span className="bcd-value">{selectedDate.getDate()} {t.months[selectedDate.getMonth()]} {selectedDate.getFullYear()}</span>
+            </div>
+            <div className="bcd-row">
+              <span className="bcd-label">Tid</span>
+              <span className="bcd-value">{slot.t}–{slot.e}</span>
+            </div>
+            <div className="bcd-row">
+              <span className="bcd-label">Adress</span>
+              <span className="bcd-value">{address}</span>
+            </div>
+          </div>
           <p className="booking-confirm-email-note">{b.confirmEmailNote}</p>
-          <button className="booking-btn-next" onClick={reset}>{b.gorNyBokning}</button>
         </div>
       )}
     </div>

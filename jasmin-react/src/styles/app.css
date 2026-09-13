@@ -497,10 +497,22 @@ header {
 }
 
 .booking-confirm-title { font-size: 18px; font-weight: 500; color: #2a3a44; margin-bottom: 6px; }
-.booking-confirm-sub { font-size: 14px; color: #666; margin-bottom: 24px; }
+.booking-confirm-sub { font-size: 14px; color: #555; margin-bottom: 20px; }
 
+.booking-confirm-details {
+  border-top: 1px solid #e8eff2;
+  border-bottom: 1px solid #e8eff2;
+  padding: 16px 0;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.bcd-row { display: flex; gap: 12px; font-size: 14px; }
+.bcd-label { min-width: 90px; color: #888; }
+.bcd-value { color: #2a3a44; font-weight: 500; }
 
-.booking-confirm-email-note { font-size: 13px; color: #666; margin-bottom: 24px; line-height: 1.5; }
+.booking-confirm-email-note { font-size: 13px; color: #888; line-height: 1.5; }
 
 /* ── Navbar ── */
 .navbar {
