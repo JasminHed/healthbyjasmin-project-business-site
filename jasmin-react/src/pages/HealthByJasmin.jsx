@@ -502,7 +502,7 @@ function Navbar({ t, lang, setLang }) {
 
 // ── Booking ───────────────────────────────────────────────────────────────────
 
-function Booking({ t, entries, address, slotPrefix, treatmentIds, sessionBooked, onBooked }) {
+function Booking({ t, entries, address, slotPrefix, treatmentIds }) {
   const treatments = treatmentIds ? t.treatments.filter(tr => treatmentIds.includes(tr.id)) : t.treatments;
   const [dateIdx, setDateIdx] = useState(null);
   const [slot, setSlot] = useState(null);
@@ -651,7 +651,6 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, sessionBooked,
       setBookedSlots((prev) => [...prev, key]);
       setBookedDates((prev) => new Set([...prev, dateStr]));
       setStep("done");
-      onBooked?.(entries[dateIdx].date);
     } catch (err) {
       console.error(err);
       setSendError(true);
@@ -670,17 +669,6 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, sessionBooked,
 
   const selectedDate = dateIdx !== null ? entries[dateIdx].date : null;
   const b = t.booking;
-
-  if (sessionBooked && step !== "done") {
-    return (
-      <div className="booking-wrap">
-        <div className="session-booked-msg">
-          <span className="booking-confirm-icon">✓</span>
-          <p>Du har redan en bokning. Vid frågor, hör av dig på <a href="mailto:healthbyjasmin@gmail.com">healthbyjasmin@gmail.com</a>.</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="booking-wrap">
@@ -926,15 +914,6 @@ export default function HealthByJasmin() {
   const [bookingOpen, setBookingOpen] = useState(false);
   const [asogBookingOpen, setAsogBookingOpen] = useState(false);
   const [radgivningOpen, setRadgivningOpen] = useState(false);
-  const [sessionBooked, setSessionBooked] = useState(() => {
-    try {
-      const stored = localStorage.getItem("hbj_session_booked");
-      if (!stored) return false;
-      const bookedDate = new Date(stored);
-      const today = new Date(); today.setHours(0,0,0,0);
-      return bookedDate >= today;
-    } catch { return false; }
-  });
 
   // ── Admin state ──────────────────────────────────────────────────────────────
   const [isAdmin, setIsAdmin] = useState(() => localStorage.getItem("hbj_admin") === "1");
@@ -997,11 +976,6 @@ export default function HealthByJasmin() {
       radgivningRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [radgivningOpen]);
-
-  function handleBooked(date) {
-    setSessionBooked(true);
-    try { localStorage.setItem("hbj_session_booked", date.toISOString()); } catch {}
-  }
 
   function scrollShelf(dir) {
     const el = shelfRef.current;
@@ -1408,8 +1382,6 @@ export default function HealthByJasmin() {
                   address="Birkagatan 23, Stockholm"
                   slotPrefix="birka-radgivning"
                   treatmentIds={["halsradgivning"]}
-                  sessionBooked={sessionBooked}
-                  onBooked={handleBooked}
                 />
               </div>
             )}
