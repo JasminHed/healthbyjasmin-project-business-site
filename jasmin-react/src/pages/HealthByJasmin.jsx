@@ -960,6 +960,22 @@ export default function HealthByJasmin() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // ── Scroll to the right section when arriving via a shared link like #boka ──
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash) return;
+    const id = hash.slice(1);
+    const scrollToHash = () => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+    // The section may not exist yet on first paint, and images loading below
+    // it can shift the layout afterwards — retry once the page has settled.
+    requestAnimationFrame(() => requestAnimationFrame(scrollToHash));
+    window.addEventListener("load", scrollToHash);
+    return () => window.removeEventListener("load", scrollToHash);
+  }, []);
+
 
   function scrollShelf(dir) {
     const el = shelfRef.current;
