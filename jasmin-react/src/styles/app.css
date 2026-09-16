@@ -1014,13 +1014,13 @@ a.week-schedule-row { text-align: left; }
 .dgr-wd { font-size: 11px; color: #888; }
 .dgr-dd { font-size: 16px; font-weight: 600; color: #3F5B6B; }
 .dgr-mo { font-size: 11px; color: #888; }
-.dgr-slot { display: flex; align-items: center; justify-content: center; min-height: 46px; border: 1.5px solid #d0dde3; border-radius: 8px; cursor: pointer; background: #fff; transition: border-color 0.2s, box-shadow 0.2s; font-family: inherit; padding: 10px; }
+.dgr-slot { display: flex; align-items: center; justify-content: center; min-height: 54px; border: 1.5px solid #d0dde3; border-radius: 10px; cursor: pointer; background: #fff; transition: border-color 0.2s, box-shadow 0.2s; font-family: inherit; padding: 10px; }
 .dgr-slot:hover:not(:disabled) { border-color: #5C7C8A; box-shadow: 0 2px 8px rgba(92,124,138,0.12); }
 .dgr-slot.selected { border-color: #3F5B6B; border-width: 2px; background: #deeaf0; }
 .dgr-slot.disabled { opacity: 0.38; cursor: not-allowed; }
-.dgr-time { font-size: 14px; font-weight: 500; color: #3F5B6B; }
+.dgr-time { font-size: 15px; font-weight: 700; color: #3F5B6B; }
 .dgr-slot.selected .dgr-time { color: #2a3a44; }
-.dgr-slot-spacer { min-height: 46px; }
+.dgr-slot-spacer { min-height: 54px; }
 
 /* Form */
 .massage-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; text-align: left; }
@@ -1028,7 +1028,8 @@ a.week-schedule-row { text-align: left; }
 .massage-form input { height: 38px; padding: 0 10px; border: 0.5px solid #b0c4cc; border-radius: 8px; font-size: clamp(13px, 2vw, 14px); background: #fff; color: #333; width: 100%; box-sizing: border-box; }
 .massage-form input:focus { outline: none; border-color: #5C7C8A; }
 .massage-form .payment-section-label,
-.massage-form .payment-opt { grid-column: 1 / -1; }
+.massage-form .payment-opt,
+.massage-form .full-row { grid-column: 1 / -1; }
 .payment-section-label { font-size: clamp(13px, 2vw, 14px); font-weight: 500; color: #3F5B6B; margin-top: 8px; margin-bottom: 8px; }
 .payment-opt { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border: 1.5px solid #5C7C8A; border-radius: 10px; background: linear-gradient(145deg, rgba(92,124,138,0.08) 0%, rgba(123,168,184,0.08) 100%); }
 .payment-opt input[type="radio"] { width: 16px; height: 16px; accent-color: #5C7C8A; flex-shrink: 0; margin-top: 2px; }
@@ -1352,16 +1353,16 @@ a.week-schedule-row { text-align: left; }
 }
 .next-slot-btn {
   display: flex; flex-direction: column; align-items: center;
-  gap: 3px; padding: 12px 16px; min-width: 90px;
-  border: 2px solid #d8e3e9; border-radius: 10px;
+  gap: 4px; padding: 16px 20px; min-width: 108px;
+  border: 2px solid #d8e3e9; border-radius: 14px;
   background: #fff; cursor: pointer;
-  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s, box-shadow 0.15s;
 }
-.next-slot-btn:hover { border-color: #4a6b7c; background: #f5f9fb; transform: translateY(-1px); }
-.next-slot-btn.selected { border-color: #4a6b7c; background: #4a6b7c; color: #fff; }
-.nsb-day { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; }
-.nsb-date { font-size: 0.85rem; font-weight: 400; }
-.nsb-time { font-size: 0.9rem; font-weight: 400; }
+.next-slot-btn:hover { border-color: #4a6b7c; background: #f5f9fb; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(74,107,124,0.15); }
+.next-slot-btn.selected { border-color: #4a6b7c; background: #4a6b7c; color: #fff; box-shadow: 0 4px 14px rgba(74,107,124,0.28); }
+.nsb-day { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; font-weight: 600; }
+.nsb-date { font-size: 0.9rem; font-weight: 500; }
+.nsb-time { font-size: 1.1rem; font-weight: 700; }
 .next-slot-btn.selected .nsb-day { opacity: 0.85; }
 
 /* Show all dates toggle */

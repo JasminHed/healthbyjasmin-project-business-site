@@ -234,8 +234,7 @@ const TRANSLATIONS = {
       valjBehandling: "Välj behandling", valjDatum: "Välj datum",
       andra: "Ändra", tillbaka: "Tillbaka",
       bekrafta: "Bekräfta bokning", skickar: "Skickar...", gorNyBokning: "Gör en ny bokning",
-      firstName: "Förnamn", firstNamePh: "Ditt förnamn",
-      lastName: "Efternamn", lastNamePh: "Ditt efternamn",
+      name: "Namn", namePh: "För- och efternamn",
       email: "E-post", emailPh: "din@email.se",
       phone: "Telefon", phonePh: "07X XXX XX XX",
       betalning: "Betalning", betalningTitle: "Swish eller faktura", betalningDesc: "Betalning sker via Swish eller faktura. Faktura finns för dig som vill använda friskvårdsbidrag.",
@@ -371,8 +370,7 @@ const TRANSLATIONS = {
       valjBehandling: "Choose treatment", valjDatum: "Choose date",
       andra: "Change", tillbaka: "Back",
       bekrafta: "Confirm booking", skickar: "Sending...", gorNyBokning: "Make a new booking",
-      firstName: "First name", firstNamePh: "Your first name",
-      lastName: "Last name", lastNamePh: "Your last name",
+      name: "Name", namePh: "First and last name",
       email: "Email", emailPh: "your@email.com",
       phone: "Phone", phonePh: "07X XXX XX XX",
       betalning: "Payment", betalningTitle: "Swish or invoice", betalningDesc: "Payment via Swish or invoice. Invoice is available for those who want to use their wellness benefit (friskvårdsbidrag).",
@@ -507,7 +505,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate,
   const [dateIdx, setDateIdx] = useState(null);
   const [slot, setSlot] = useState(null);
   const [treatment, setTreatment] = useState(() => treatments.length === 1 ? treatments[0].id : null);
-  const [form, setForm] = useState({ firstName: "", lastName: "", email: "", phone: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "" });
   const [bookedSlots, setBookedSlots] = useState([]);
   const [bookedDates, setBookedDates] = useState(new Set());
   const [step, setStep] = useState("select");
@@ -586,11 +584,10 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate,
     return result;
   })();
 
-  const currentStep = step === "form" ? 3 : treatment === null ? 1 : 2;
+  const currentStep = step === "form" ? 2 : 1;
 
   const formValid =
-    form.firstName.trim() &&
-    form.lastName.trim() &&
+    form.name.trim().length > 1 &&
     form.email.includes("@") &&
     form.phone.trim().length >= 8 &&
     treatment !== null;
@@ -622,7 +619,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate,
     const d = entries[dateIdx].date;
     const dateStr = `${d.getDate()} ${SV_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
     const timeStr = `${slot.t}–${slot.e}`;
-    const fullName = `${form.firstName} ${form.lastName}`;
+    const fullName = form.name.trim();
     const treatmentName = treatments.find((tr) => tr.id === treatment).name;
 
     try {
@@ -647,7 +644,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate,
       if (error) throw error;
 
       await emailjs.send(EMAILJS_SERVICE_ID, emailTemplate || EMAILJS_TEMPLATE_BIRKA, {
-        customer_name: form.firstName,
+        customer_name: fullName,
         customer_email: form.email,
         treatment: `${treatmentName} (55 min)`,
         date: dateStr,
@@ -671,7 +668,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate,
   function reset() {
     setDateIdx(null); setSlot(null);
     setTreatment(treatments.length === 1 ? treatments[0].id : null);
-    setForm({ firstName: "", lastName: "", email: "", phone: "" });
+    setForm({ name: "", email: "", phone: "" });
     setStep("select");
     setShowAllDates(false);
   }
@@ -688,16 +685,11 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate,
           <div className="booking-stepper">
             <div className={`bks-step${currentStep >= 1 ? " bks-active" : ""}${currentStep > 1 ? " bks-done" : ""}`}>
               <span className="bks-num">{currentStep > 1 ? "✓" : "1"}</span>
-              <span className="bks-label">Behandling</span>
+              <span className="bks-label">Behandling &amp; tid</span>
             </div>
             <div className="bks-line" />
-            <div className={`bks-step${currentStep >= 2 ? " bks-active" : ""}${currentStep > 2 ? " bks-done" : ""}`}>
-              <span className="bks-num">{currentStep > 2 ? "✓" : "2"}</span>
-              <span className="bks-label">Välj tid</span>
-            </div>
-            <div className="bks-line" />
-            <div className={`bks-step${currentStep >= 3 ? " bks-active" : ""}`}>
-              <span className="bks-num">3</span>
+            <div className={`bks-step${currentStep >= 2 ? " bks-active" : ""}`}>
+              <span className="bks-num">2</span>
               <span className="bks-label">Uppgifter</span>
             </div>
           </div>
@@ -814,8 +806,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate,
               </div>
 
               <div className="massage-form">
-                <label>{b.firstName}<input type="text" name="firstName" value={form.firstName} onChange={handleField} placeholder={b.firstNamePh} /></label>
-                <label>{b.lastName}<input type="text" name="lastName" value={form.lastName} onChange={handleField} placeholder={b.lastNamePh} /></label>
+                <label className="full-row">{b.name}<input type="text" name="name" value={form.name} onChange={handleField} placeholder={b.namePh} /></label>
                 <label>{b.email}<input type="email" name="email" value={form.email} onChange={handleField} placeholder={b.emailPh} /></label>
                 <label>{b.phone}<input type="tel" name="phone" value={form.phone} onChange={handleField} placeholder={b.phonePh} /></label>
                 <div className="payment-section-label">{b.betalning}</div>
@@ -845,7 +836,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate,
       {step === "done" && selectedDate && slot && (
         <div className="booking-confirm" ref={confirmRef}>
           <p className="booking-confirm-title">{b.confirmTitle}</p>
-          <p className="booking-confirm-sub">{b.confirmSub(form.firstName)}</p>
+          <p className="booking-confirm-sub">{b.confirmSub(form.name.trim().split(" ")[0])}</p>
           <div className="booking-confirm-details">
             <div className="bcd-row">
               <span className="bcd-label">Behandling</span>
