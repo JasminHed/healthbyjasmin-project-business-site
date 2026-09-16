@@ -500,7 +500,7 @@ function Navbar({ t, lang, setLang }) {
 
 // ── Booking ───────────────────────────────────────────────────────────────────
 
-function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate, onSelectChange, isLocked, onDone }) {
+function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate, onDone }) {
   const treatments = treatmentIds ? t.treatments.filter(tr => treatmentIds.includes(tr.id)) : t.treatments;
   const [dateIdx, setDateIdx] = useState(null);
   const [slot, setSlot] = useState(null);
@@ -544,10 +544,6 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate,
     }, 10000);
     return () => clearTimeout(timer);
   }, [step]);
-
-  useEffect(() => {
-    onSelectChange?.(dateIdx !== null);
-  }, [dateIdx]);
 
   useEffect(() => {
     supabase.from("bookings").select("slot_key, date").then(({ data }) => {
@@ -677,7 +673,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate,
   const b = t.booking;
 
   return (
-    <div className={`booking-wrap${isLocked ? " booking-locked" : ""}`}>
+    <div className="booking-wrap">
 
       {step !== "done" && (
         <>
@@ -911,10 +907,9 @@ function FaqSection({ t }) {
 
 export default function HealthByJasmin() {
   const [lang, setLang] = useState("sv");
-  const [bookingOpen, setBookingOpen] = useState(false);
-  const [asogBookingOpen, setAsogBookingOpen] = useState(false);
+  const [massageOpen, setMassageOpen] = useState(false);
+  const [massageStudio, setMassageStudio] = useState("birka"); // "birka" | "aso"
   const [radgivningOpen, setRadgivningOpen] = useState(false);
-  const [massageActiveStudio, setMassageActiveStudio] = useState(null); // "birka" | "aso" | null
 
   // ── Admin state ──────────────────────────────────────────────────────────────
   const [isAdmin, setIsAdmin] = useState(() => localStorage.getItem("hbj_admin") === "1");
@@ -944,15 +939,13 @@ export default function HealthByJasmin() {
 
   const shelfRef = useRef(null);
   const bookingRef = useRef(null);
-  const asogBookingRef = useRef(null);
   const radgivningRef = useRef(null);
   const scheduleSectionRef = useRef(null);
 
   useEffect(() => {
     function handleClickOutside(e) {
       if (scheduleSectionRef.current && !scheduleSectionRef.current.contains(e.target)) {
-        setBookingOpen(false);
-        setAsogBookingOpen(false);
+        setMassageOpen(false);
         setRadgivningOpen(false);
       }
     }
@@ -1086,6 +1079,19 @@ export default function HealthByJasmin() {
   }
 
   const activeEntries = slotsOverride ? slotsToEntries(slotsOverride) : TORSDAG_ENTRIES;
+
+  const MASSAGE_STUDIOS = {
+    birka: {
+      label: "Birkagatan 23", sub: "18:30 & 21:15 · ej dusch",
+      entries: activeEntries, address: "Birkagatan 23, Stockholm (ej dusch)",
+      slotPrefix: "birka-massage", emailTemplate: EMAILJS_TEMPLATE_BIRKA,
+    },
+    aso: {
+      label: "Åsögatan 166", sub: "17:45 · dusch finns",
+      entries: ASOGATAN_ENTRIES, address: "Åsögatan 166, Stockholm (dusch finns)",
+      slotPrefix: "aso-massage", emailTemplate: EMAILJS_TEMPLATE_ASOG,
+    },
+  };
 
   function imgSrc(key, fallback) { return imageOverrides[key] || fallback; }
 
@@ -1290,17 +1296,10 @@ export default function HealthByJasmin() {
                 <EditableText path="weekSchedule.colBehandlingar" value={t.weekSchedule.colBehandlingar} tag="p" className="wsr-col-label" />
                 <div className="week-schedule-rows">
                   {(scheduleOverride?.behandlingar || t.weekSchedule.behandlingarItems).map((row) => {
-                    const massageOpen = bookingOpen || asogBookingOpen;
                     const isOpen = row.id === "massage" ? massageOpen : radgivningOpen;
                     const toggle = row.id === "massage"
-                      ? () => {
-                          const wasOpen = bookingOpen || asogBookingOpen;
-                          if (wasOpen) setMassageActiveStudio(null);
-                          setBookingOpen(!wasOpen);
-                          setAsogBookingOpen(!wasOpen);
-                          setRadgivningOpen(false);
-                        }
-                      : () => { setRadgivningOpen(o => !o); setBookingOpen(false); setAsogBookingOpen(false); setMassageActiveStudio(null); };
+                      ? () => { setMassageOpen(o => !o); setRadgivningOpen(false); }
+                      : () => { setRadgivningOpen(o => !o); setMassageOpen(false); };
                     const price = row.price || "";
                     return (
                       <button
@@ -1350,38 +1349,30 @@ export default function HealthByJasmin() {
               </div>
             </div>
 
-            {(bookingOpen || asogBookingOpen) && (
+            {massageOpen && (
               <div className="week-schedule-booking" ref={bookingRef}>
-                <div className="studio-sections-row">
-                <div className="studio-section">
-                  <p className="studio-label">Birkagatan 23 <span>(ej dusch)</span> · 18:30 & 21:15</p>
-                  <Booking
-                    t={treatmentsOverride ? { ...t, treatments: treatmentsOverride } : t}
-                    entries={activeEntries}
-                    address="Birkagatan 23, Stockholm (ej dusch)"
-                    slotPrefix="birka-massage"
-                    treatmentIds={["abhyanga", "vishesh"]}
-                    emailTemplate={EMAILJS_TEMPLATE_BIRKA}
-                    onSelectChange={(has) => setMassageActiveStudio(has ? "birka" : null)}
-                    isLocked={massageActiveStudio === "aso"}
-                    onDone={() => { setBookingOpen(false); setAsogBookingOpen(false); setMassageActiveStudio(null); }}
-                  />
+                <div className="studio-toggle">
+                  {Object.entries(MASSAGE_STUDIOS).map(([id, s]) => (
+                    <button
+                      key={id}
+                      className={`studio-toggle-btn${massageStudio === id ? " selected" : ""}`}
+                      onClick={() => setMassageStudio(id)}
+                    >
+                      <span className="stb-label">{s.label}</span>
+                      <span className="stb-sub">{s.sub}</span>
+                    </button>
+                  ))}
                 </div>
-                <div className="studio-section" ref={asogBookingRef}>
-                  <p className="studio-label">Åsögatan 166 <span>(dusch finns)</span> · 17:45</p>
-                  <Booking
-                    t={treatmentsOverride ? { ...t, treatments: treatmentsOverride } : t}
-                    entries={ASOGATAN_ENTRIES}
-                    address="Åsögatan 166, Stockholm (dusch finns)"
-                    slotPrefix="aso-massage"
-                    treatmentIds={["abhyanga", "vishesh"]}
-                    emailTemplate={EMAILJS_TEMPLATE_ASOG}
-                    onSelectChange={(has) => setMassageActiveStudio(has ? "aso" : null)}
-                    isLocked={massageActiveStudio === "birka"}
-                    onDone={() => { setBookingOpen(false); setAsogBookingOpen(false); setMassageActiveStudio(null); }}
-                  />
-                </div>
-                </div>{/* studio-sections-row */}
+                <Booking
+                  key={massageStudio}
+                  t={treatmentsOverride ? { ...t, treatments: treatmentsOverride } : t}
+                  entries={MASSAGE_STUDIOS[massageStudio].entries}
+                  address={MASSAGE_STUDIOS[massageStudio].address}
+                  slotPrefix={MASSAGE_STUDIOS[massageStudio].slotPrefix}
+                  treatmentIds={["abhyanga", "vishesh"]}
+                  emailTemplate={MASSAGE_STUDIOS[massageStudio].emailTemplate}
+                  onDone={() => { setMassageOpen(false); setMassageStudio("birka"); }}
+                />
               </div>
             )}
             {radgivningOpen && (
