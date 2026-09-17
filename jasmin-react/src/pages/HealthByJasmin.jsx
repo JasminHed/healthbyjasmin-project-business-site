@@ -208,12 +208,15 @@ const TRANSLATIONS = {
       ashtangaTitle: "Ashtanga Yoga",
       ashtangaP1: "Ashtanga är en praktik där andningen är kärnan, synkroniserad med mjuka, dynamiska rörelser. Metoden kommer från Indien och betraktar hela människan, kropp, sinne och allt däremellan. Vi börjar där vi är och arbetar med det vi har.",
       ashtangaP2: "Det finns två huvudstilar: Mysore, en självpraktik där du i din egen takt lär dig en sekvens av positioner med stöd från en lärare, och den mer välkända guidade klassen där alla rör sig tillsammans med instruktioner.",
-      ashtangaSoon: "Klasser kommer snart",
+      ashtangaSchedule: "Mån–fre 6:15–9:00 (Mysore) · Sön 9:00–12:00 (ledda klasser) · Rullande schema",
+      ashtangaBookAria: "Boka Ashtanga Yoga hos Yogayama (öppnas i ny flik)",
       yinTitle: "Yin Yoga",
       yinP1: "Yin yoga är en långsam, stilla praktik där positioner hålls i flera minuter. Det arbetar djupt in i bindväv, ligament och leder snarare än musklerna, vilket ökar rörligheten och ger bättre ledfunktion. Praktiken har en lugnande effekt på nervsystemet och fungerar som ett bra komplement till mer aktiva träningsformer.",
       yinSchedule: "60 min · Söndagar · 12:15–13:15",
+      yinBookAria: "Boka Yin Yoga hos Home in Yoga (öppnas i ny flik)",
       yogaAyurvedaTitle: "Yoga & Ayurveda",
       yogaAyurvedaSub: "60 min · Torsdagar · 20:00–21:00",
+      yogaAyurvedaBookAria: "Boka Yoga & Ayurveda-klassen hos Home in Yoga (öppnas i ny flik)",
       yogaAyurvedaP1: "En klass i två delar. Vi börjar med ayurveda, ett tema, ett ämne eller ett tips från traditionen. Det kan handla om doshor, sömn, mat, dygnsrytm eller något annat ur ayurvedans värld.",
       yogaAyurvedaP2: "Andra delen är yoga med positioner som gynnar alla doshor. Klassen rör sig genom flöde, stående och sittande positioner och avslutas med vila eller meditation.",
     },
@@ -274,7 +277,7 @@ const TRANSLATIONS = {
             { q: "Hur betalas behandlingen?", a: "Betalning sker via Swish eller faktura. Väljer du faktura kan du använda friskvårdsbidraget." },
             { q: "Kan jag använda friskvårdsbidrag?", a: "Ja. Välj faktura som betalningsalternativ i bokningen så skickas en faktura som du kan använda för att ansöka om friskvårdsbidrag via din arbetsgivare." },
             { q: "Vad gäller vid avbokning?", a: "Avbokning av behandling görs senast 24 timmar innan. Mejla healthbyjasmin@gmail.com. För yogaklasser gäller studiots avbokningsregler." },
-            { q: "Var hålls behandlingar och klasser?", a: "Ayurvediska massager hålls torsdagskvällar på två adresser: Birkagatan 23 (ej dusch, 18:30 & 21:15) och Åsögatan 166 (dusch finns, 17:45). Hälsorådgivning hålls på Birkagatan 23. Yogaklasser hålls på Birkagatan 23. Se schemat ovan för aktuella tider." },
+            { q: "Var hålls behandlingar och klasser?", a: "Ayurvediska massager hålls torsdagskvällar på två adresser: Birkagatan 23 (ej dusch, 18:30 & 21:15) och Åsögatan 166 (dusch finns, 17:45). Hälsorådgivning hålls på Birkagatan 23. Yogaklasser hålls på Birkagatan 23 – se tider och bokningslänk i Yoga-sektionen ovan." },
           ],
         },
         {
@@ -309,12 +312,10 @@ const TRANSLATIONS = {
         { day: "Söndag",  time: "12:15–13:15", type: "Yin Yoga klass",        loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
       ],
       bookLabel: "Boka",
-      bookViaLabel: "Boka via studio",
       closeLabel: "Stäng",
       label: "Schema & bokning",
-      title: "Veckans behandlingar och klasser",
+      title: "Veckans behandlingar",
       colBehandlingar: "Behandlingar",
-      colKlasser: "Klasser",
       classTip: "",
     },
     courses: {
@@ -344,12 +345,15 @@ const TRANSLATIONS = {
       ashtangaTitle: "Ashtanga Yoga",
       ashtangaP1: "Ashtanga is a practice where the breath is the core, synchronised with soft, dynamic movements. The method originates from India and regards the whole person: body, mind and everything in between. We start where we are and work with what we have.",
       ashtangaP2: "There are two main styles: Mysore, a self-practice where you learn a sequence of postures at your own pace with support from a teacher, and the more well-known led class where everyone moves together with instructions.",
-      ashtangaSoon: "Classes coming soon",
+      ashtangaSchedule: "Mon–Fri 6:15–9:00 (Mysore) · Sun 9:00–12:00 (led classes) · Rolling schedule",
+      ashtangaBookAria: "Book Ashtanga Yoga via Yogayama (opens in a new tab)",
       yinTitle: "Yin Yoga",
       yinP1: "Yin yoga is a slow, still practice where poses are held for several minutes. It works deep into the connective tissue, ligaments and joints rather than the muscles, increasing flexibility and improving joint function. The practice has a calming effect on the nervous system and works well as a complement to more active forms of exercise.",
       yinSchedule: "60 min · Sundays · 12:15–13:15",
+      yinBookAria: "Book Yin Yoga via Home in Yoga (opens in a new tab)",
       yogaAyurvedaTitle: "Yoga & Ayurveda",
       yogaAyurvedaSub: "60 min · Thursdays · 20:00–21:00",
+      yogaAyurvedaBookAria: "Book the Yoga & Ayurveda class via Home in Yoga (opens in a new tab)",
       yogaAyurvedaP1: "A class in two parts. We begin with ayurveda, a theme, a topic or a tip from the tradition. It might be about doshas, sleep, food, the body's daily rhythm or something else from the world of ayurveda.",
       yogaAyurvedaP2: "The second part is yoga with poses that benefit all doshas. The class moves through flow, standing and seated positions and ends with rest or meditation.",
     },
@@ -410,7 +414,7 @@ const TRANSLATIONS = {
             { q: "How is payment handled?", a: "Payment via Swish or invoice. If you choose invoice you can use your wellness benefit (friskvårdsbidrag)." },
             { q: "Can I use my wellness benefit (friskvårdsbidrag)?", a: "Yes. Choose invoice as your payment option and a invoice will be sent that you can submit to your employer to claim your wellness benefit." },
             { q: "What is the cancellation policy?", a: "Treatments must be cancelled no later than 24 hours in advance. Email healthbyjasmin@gmail.com. For yoga classes, the studio's cancellation policy applies." },
-            { q: "Where are treatments and classes held?", a: "Ayurvedic massages are held Thursday evenings at two locations: Birkagatan 23 (no shower, 18:30 & 21:15) and Åsögatan 166 (shower available, 17:45). Health consultations and yoga classes are held at Birkagatan 23. See the schedule above for current times." },
+            { q: "Where are treatments and classes held?", a: "Ayurvedic massages are held Thursday evenings at two locations: Birkagatan 23 (no shower, 18:30 & 21:15) and Åsögatan 166 (shower available, 17:45). Health consultations and yoga classes are held at Birkagatan 23 – see times and booking links in the Yoga section above." },
           ],
         },
         {
@@ -445,12 +449,10 @@ const TRANSLATIONS = {
         { day: "Sunday",   time: "12:15–13:15", type: "Yin Yoga class",        loc: "Birkagatan 23", href: "https://www.getmana.app/s/home-in-yoga/schedule" },
       ],
       bookLabel: "Book",
-      bookViaLabel: "Book via studio",
       closeLabel: "Close",
       label: "Schedule & booking",
-      title: "This week's treatments and classes",
+      title: "This week's treatments",
       colBehandlingar: "Treatments",
-      colKlasser: "Classes",
       classTip: "",
     },
     courses: {
@@ -1271,15 +1273,24 @@ export default function HealthByJasmin() {
             <EditableText path="yoga.intro" value={t.yoga.intro} tag="p" className="yoga-intro" />
             <EditableText path="yoga.yinTitle" value={t.yoga.yinTitle} tag="h3" />
             <EditableText path="yoga.yinP1" value={t.yoga.yinP1} tag="p" />
-            <EditableText path="yoga.yinSchedule" value={t.yoga.yinSchedule} tag="span" className="yoga-col-schedule" />
+            <span className="yoga-schedule-row">
+              <EditableText path="yoga.yinSchedule" value={t.yoga.yinSchedule} tag="span" className="yoga-col-schedule" />
+              <a href="https://www.getmana.app/s/home-in-yoga/schedule" target="_blank" rel="noopener noreferrer" className="yoga-schedule-arrow" aria-label={t.yoga.yinBookAria}>↗</a>
+            </span>
             <EditableText path="yoga.yogaAyurvedaTitle" value={t.yoga.yogaAyurvedaTitle} tag="h3" />
             <EditableText path="yoga.yogaAyurvedaP1" value={t.yoga.yogaAyurvedaP1} tag="p" />
             <EditableText path="yoga.yogaAyurvedaP2" value={t.yoga.yogaAyurvedaP2} tag="p" />
-            <EditableText path="yoga.yogaAyurvedaSub" value={t.yoga.yogaAyurvedaSub} tag="span" className="yoga-col-schedule" />
+            <span className="yoga-schedule-row">
+              <EditableText path="yoga.yogaAyurvedaSub" value={t.yoga.yogaAyurvedaSub} tag="span" className="yoga-col-schedule" />
+              <a href="https://www.getmana.app/s/home-in-yoga/schedule" target="_blank" rel="noopener noreferrer" className="yoga-schedule-arrow" aria-label={t.yoga.yogaAyurvedaBookAria}>↗</a>
+            </span>
             <EditableText path="yoga.ashtangaTitle" value={t.yoga.ashtangaTitle} tag="h3" />
             <EditableText path="yoga.ashtangaP1" value={t.yoga.ashtangaP1} tag="p" />
             <EditableText path="yoga.ashtangaP2" value={t.yoga.ashtangaP2} tag="p" />
-            <EditableText path="yoga.ashtangaSoon" value={t.yoga.ashtangaSoon} tag="span" className="yoga-coming-soon" />
+            <span className="yoga-schedule-row">
+              <EditableText path="yoga.ashtangaSchedule" value={t.yoga.ashtangaSchedule} tag="span" className="yoga-col-schedule" />
+              <a href="https://www.yogayama.com/teacher/jamine-hedlund/" target="_blank" rel="noopener noreferrer" className="yoga-schedule-arrow" aria-label={t.yoga.ashtangaBookAria}>↗</a>
+            </span>
           </div>
           <div className="cb-cell cb-img">
             <EditableImage imgKey="ashtanga" src={imgSrc("ashtanga", "/assets/ashtanga.jpeg")} alt="Yoga" className="cb-img-fill" wrapStyle={{ height: "100%", display: "block" }} />
@@ -1291,7 +1302,7 @@ export default function HealthByJasmin() {
           <div className="section-inner">
             <EditableText path="weekSchedule.label" value={t.weekSchedule.label} tag="span" className="section-label" />
             <EditableText path="weekSchedule.title" value={t.weekSchedule.title} tag="h2" className="week-schedule-title" />
-            <div className="wsr-columns">
+            <div className="wsr-columns wsr-columns-single">
               <div className="wsr-col">
                 <EditableText path="weekSchedule.colBehandlingar" value={t.weekSchedule.colBehandlingar} tag="p" className="wsr-col-label" />
                 <div className="week-schedule-rows">
@@ -1322,30 +1333,6 @@ export default function HealthByJasmin() {
                     );
                   })}
                 </div>
-              </div>
-              <div className="wsr-col">
-                <EditableText path="weekSchedule.colKlasser" value={t.weekSchedule.colKlasser} tag="p" className="wsr-col-label" />
-                <div className="week-schedule-rows">
-                  {(scheduleOverride?.klasser || t.weekSchedule.klasserItems).map((row, i) => (
-                    <div key={i} className="week-schedule-row wsr-no-link">
-                      <span className="wsr-day">{row.day}</span>
-                      <span className="wsr-time">{row.time}</span>
-                      <span className="wsr-info">
-                        <span className="wsr-type">{row.type}</span>
-                        <span className="wsr-loc">{row.loc}</span>
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                {(() => {
-                  const klasser = scheduleOverride?.klasser || t.weekSchedule.klasserItems;
-                  const href = klasser[0]?.href;
-                  return href ? (
-                    <a href={href} className="wsr-book-via-btn" target="_blank" rel="noopener noreferrer">
-                      {t.weekSchedule.bookViaLabel}
-                    </a>
-                  ) : null;
-                })()}
               </div>
             </div>
 
