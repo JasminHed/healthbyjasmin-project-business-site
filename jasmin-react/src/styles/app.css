@@ -1118,6 +1118,25 @@ a.week-schedule-row { text-align: left; }
   .hamburger { display: none; }
 }
 /* ─── Admin mode ──────────────────────────────────────────── */
+.main-sections { display: flex; flex-direction: column; }
+
+.admin-hidden-section { position: relative; opacity: 0.45; }
+.admin-hidden-badge {
+  position: absolute;
+  top: 8px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  background: #b47800;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  pointer-events: none;
+}
+
 .admin-editable {
   outline: 2px dashed rgba(180,120,0,0.55);
   border-radius: 3px;
@@ -1263,6 +1282,20 @@ a.week-schedule-row { text-align: left; }
   transition: background 0.15s;
 }
 .admin-slots-add:hover { background: #f5f5f5; }
+.admin-section-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; padding: 8px 10px;
+  border: 1px solid #e5e5e5; border-radius: 6px;
+}
+.admin-section-row-label { font-size: 0.88rem; font-weight: 500; color: #333; }
+.admin-section-row-actions { display: flex; align-items: center; gap: 6px; }
+.admin-section-toggle {
+  border: 1px solid #ccc; border-radius: 5px;
+  background: #f0f7f0; color: #2a7a2a;
+  font-size: 0.78rem; font-weight: 500;
+  padding: 6px 10px; cursor: pointer; white-space: nowrap;
+}
+.admin-section-toggle.is-hidden { background: #fdf1e0; color: #b47800; }
 .admin-slots-actions {
   display: flex; justify-content: flex-end; gap: 10px;
   margin-top: 4px;

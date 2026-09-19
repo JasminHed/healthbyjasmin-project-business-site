@@ -65,6 +65,30 @@ function setNestedValue(obj, path, value) {
 const HEADING_FONTS = ["Cormorant Garamond", "Playfair Display", "Lora", "Libre Baskerville", "DM Serif Display", "Montserrat"];
 const BODY_FONTS = ["Inter", "DM Sans", "Lato", "Nunito", "Raleway", "Source Sans 3"];
 
+const SECTION_DEFS = [
+  { id: "hero", label: "Hero (överst)" },
+  { id: "om-mig", label: "Om mig" },
+  { id: "ayurveda-yoga", label: "Ayurveda & Yoga" },
+  { id: "boka", label: "Schema & bokning" },
+  { id: "retreat", label: "Stadsretreat" },
+  { id: "quote", label: "Citat" },
+  { id: "testimonials", label: "Recensioner" },
+  { id: "faq", label: "FAQ" },
+];
+const DEFAULT_SECTION_ORDER = SECTION_DEFS.map(s => s.id);
+
+function SectionWrap({ id, order, hidden, isAdmin, children }) {
+  const isHidden = hidden.includes(id);
+  if (!isAdmin && isHidden) return null;
+  const idx = order.indexOf(id);
+  return (
+    <div style={{ order: idx === -1 ? 999 : idx }} className={isHidden ? "admin-hidden-section" : undefined}>
+      {isHidden && isAdmin && <div className="admin-hidden-badge">Dold för besökare</div>}
+      {children}
+    </div>
+  );
+}
+
 function loadGoogleFont(name) {
   if (!name) return;
   const id = "gf-" + name.replace(/\s+/g, "-").toLowerCase();
@@ -190,7 +214,7 @@ const SV_MONTHS = ["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","
 
 const TRANSLATIONS = {
   sv: {
-    nav: { aboutMe: "Om mig", yoga: "Yoga", ayurveda: "Ayurveda", book: "Boka" },
+    nav: { aboutMe: "Om mig", yoga: "Yoga", ayurveda: "Ayurveda", book: "Boka", faq: "FAQ" },
     hero: {
       eyebrow: "Yoga & Ayurveda · Stockholm · 2015",
       sub: "Välkommen. Genom yoga och ayurveda erbjuder jag verktyg för att stärka, återhämta och hitta balans i vardagen.",
@@ -247,6 +271,12 @@ const TRANSLATIONS = {
       confirmEmailNote: "Du har fått ett bekräftelsemejl till den e-postadress du angav i bokningen.",
       errorMsg: "Något gick fel. Kontakta healthbyjasmin@gmail.com",
       behandlingHint: "Välj en behandling ovan för att gå vidare.",
+      stepTreatmentTime: "Behandling & tid",
+      stepDetails: "Uppgifter",
+      nextSlotsLabel: "Nästa lediga tider",
+      showAllDates: "Visa alla datum ↓",
+      hideAllDates: "Dölj alla datum ↑",
+      noSlotsMsg: "Inga lediga tider just nu – hör av dig på Instagram eller mail.",
     },
     treatments: [
       { id: "abhyanga",       name: "Abhyanga",                      price: "750 kr", description: "Helkroppsmassage med varm sesamolja i långa, svepande rörelser. Ger värme, grundning och närvaro. Ett sätt för kropp och sinne att sakta ned och landa." },
@@ -323,11 +353,21 @@ const TRANSLATIONS = {
       soon: "Kommer snart",
       intro: "En helg i Stockholm där yoga och ayurveda varvas med teori, praktik och tid för reflektion. Lördag: dynamisk yoga, lättare brunch, föreläsning om ayurvedans grunder och doshorna samt en kort workshop. Dagen avslutas med mjuk yoga och journaling. Söndag: dynamisk yoga, brunch, föreläsning om dygnsrytm, mat och rutiner samt en kort workshop. Helgen avslutas med mjuk yoga och tid för integration. Allt på samma ställe, utan att lämna Stockholm.",
     },
-    footer: { location: "Stockholm" },
+    footer: {
+      location: "Stockholm",
+      tagline: "Yoga & Ayurveda · Stockholm",
+      linkAboutMe: "Om mig",
+      linkAyurveda: "Ayurveda",
+      linkYoga: "Yoga",
+      linkBook: "Boka",
+      linkFaq: "FAQ",
+      copyright: "© 2015 Health by Jasmin",
+      instagramHandle: "@healthbyjasmin",
+    },
   },
 
   en: {
-    nav: { aboutMe: "About me", yoga: "Yoga", ayurveda: "Ayurveda", book: "Book" },
+    nav: { aboutMe: "About me", yoga: "Yoga", ayurveda: "Ayurveda", book: "Book", faq: "FAQ" },
     hero: {
       eyebrow: "Yoga & Ayurveda · Stockholm · 2015",
       sub: "Welcome. Through yoga and ayurveda I offer tools to strengthen, recover and find balance in everyday life.",
@@ -384,6 +424,12 @@ const TRANSLATIONS = {
       confirmEmailNote: "A confirmation email has been sent to the email address you provided.",
       errorMsg: "Something went wrong. Contact healthbyjasmin@gmail.com",
       behandlingHint: "Choose a treatment above to continue.",
+      stepTreatmentTime: "Treatment & time",
+      stepDetails: "Your details",
+      nextSlotsLabel: "Next available times",
+      showAllDates: "Show all dates ↓",
+      hideAllDates: "Hide all dates ↑",
+      noSlotsMsg: "No available times right now – reach out on Instagram or email.",
     },
     treatments: [
       { id: "abhyanga",       name: "Abhyanga",                      price: "750 kr", description: "Full-body massage with warm sesame oil using long, sweeping strokes. Brings warmth, grounding and presence. A way for body and mind to slow down and settle." },
@@ -460,7 +506,17 @@ const TRANSLATIONS = {
       soon: "Coming soon",
       intro: "A weekend in Stockholm where yoga and ayurveda blend with theory, practice and time for reflection. Saturday: dynamic yoga, a light brunch, a talk on the foundations of ayurveda and the doshas, and a short workshop. The day ends with gentle yoga and journaling. Sunday: dynamic yoga, brunch, a talk on daily rhythm, food and routines, and a short workshop. The weekend closes with gentle yoga and time for integration. All in one place, without leaving Stockholm.",
     },
-    footer: { location: "Stockholm" },
+    footer: {
+      location: "Stockholm",
+      tagline: "Yoga & Ayurveda · Stockholm",
+      linkAboutMe: "About me",
+      linkAyurveda: "Ayurveda",
+      linkYoga: "Yoga",
+      linkBook: "Book",
+      linkFaq: "FAQ",
+      copyright: "© 2015 Health by Jasmin",
+      instagramHandle: "@healthbyjasmin",
+    },
   },
 };
 
@@ -487,7 +543,7 @@ function Navbar({ t, lang, setLang }) {
         <li><a href="#om-mig" onClick={close}><EditableText path="nav.aboutMe" value={t.nav.aboutMe} /></a></li>
         <li><a href="#ayurveda" onClick={close}><EditableText path="nav.ayurveda" value={t.nav.ayurveda} /></a></li>
         <li><a href="#yoga" onClick={close}><EditableText path="nav.yoga" value={t.nav.yoga} /></a></li>
-        <li><a href="#faq" onClick={close}>FAQ</a></li>
+        <li><a href="#faq" onClick={close}><EditableText path="nav.faq" value={t.nav.faq} /></a></li>
         <li className="nav-book-mobile"><a href="#boka" onClick={close} className="nav-book-btn" style={{ display: "inline-flex" }}><EditableText path="nav.book" value={t.nav.book} /></a></li>
       </ul>
       <a href="#boka" className="nav-book-btn nav-book-desktop" onClick={close}>
@@ -683,12 +739,12 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate,
           <div className="booking-stepper">
             <div className={`bks-step${currentStep >= 1 ? " bks-active" : ""}${currentStep > 1 ? " bks-done" : ""}`}>
               <span className="bks-num">{currentStep > 1 ? "✓" : "1"}</span>
-              <span className="bks-label">Behandling &amp; tid</span>
+              <EditableText path="booking.stepTreatmentTime" value={b.stepTreatmentTime} tag="span" className="bks-label" />
             </div>
             <div className="bks-line" />
             <div className={`bks-step${currentStep >= 2 ? " bks-active" : ""}`}>
               <span className="bks-num">2</span>
-              <span className="bks-label">Uppgifter</span>
+              <EditableText path="booking.stepDetails" value={b.stepDetails} tag="span" className="bks-label" />
             </div>
           </div>
 
@@ -710,16 +766,16 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate,
                   </button>
                 ))}
               </div>
-              {!treatment && <p className="booking-treatment-hint">{b.behandlingHint}</p>}
+              {!treatment && <EditableText path="booking.behandlingHint" value={b.behandlingHint} tag="p" className="booking-treatment-hint" />}
             </div>
           )}
 
           {/* ── Nästa lediga tider ── */}
           {step !== "form" && (
             <div className="booking-next-slots" ref={datesRef}>
-              <p className="booking-row-label">Nästa lediga tider</p>
+              <EditableText path="booking.nextSlotsLabel" value={b.nextSlotsLabel} tag="p" className="booking-row-label" />
               {nextAvailable.length === 0
-                ? <p className="booking-no-slots">Inga lediga tider just nu – hör av dig på Instagram eller mail.</p>
+                ? <EditableText path="booking.noSlotsMsg" value={b.noSlotsMsg} tag="p" className="booking-no-slots" />
                 : (
                   <div className="next-slot-row">
                     {nextAvailable.map(({ i, date, slotTime }) => (
@@ -738,7 +794,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate,
                 )
               }
               <button className="booking-show-all" onClick={() => setShowAllDates(p => !p)}>
-                {showAllDates ? "Dölj alla datum ↑" : "Visa alla datum ↓"}
+                <EditableText path={showAllDates ? "booking.hideAllDates" : "booking.showAllDates"} value={showAllDates ? b.hideAllDates : b.showAllDates} />
               </button>
               {showAllDates && (
                 <div className="dates-grid" style={{ marginTop: "1rem" }}>
@@ -800,27 +856,27 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, emailTemplate,
                     {selectedDate.getDate()} {t.months[selectedDate.getMonth()]} &middot; {slot.t}
                   </span>
                 </div>
-                <button className="booking-change-btn" onClick={() => setStep("select")}>{b.andra}</button>
+                <button className="booking-change-btn" onClick={() => setStep("select")}><EditableText path="booking.andra" value={b.andra} /></button>
               </div>
 
               <div className="massage-form">
-                <label className="full-row">{b.name}<input type="text" name="name" value={form.name} onChange={handleField} placeholder={b.namePh} /></label>
-                <label>{b.email}<input type="email" name="email" value={form.email} onChange={handleField} placeholder={b.emailPh} /></label>
-                <label>{b.phone}<input type="tel" name="phone" value={form.phone} onChange={handleField} placeholder={b.phonePh} /></label>
-                <div className="payment-section-label">{b.betalning}</div>
+                <label className="full-row"><EditableText path="booking.name" value={b.name} /><input type="text" name="name" value={form.name} onChange={handleField} placeholder={b.namePh} /></label>
+                <label><EditableText path="booking.email" value={b.email} /><input type="email" name="email" value={form.email} onChange={handleField} placeholder={b.emailPh} /></label>
+                <label><EditableText path="booking.phone" value={b.phone} /><input type="tel" name="phone" value={form.phone} onChange={handleField} placeholder={b.phonePh} /></label>
+                <EditableText path="booking.betalning" value={b.betalning} tag="div" className="payment-section-label" />
                 <div className="payment-opt">
                   <input type="radio" name="pay" defaultChecked readOnly />
                   <div>
-                    <div className="payment-opt-title">{b.betalningTitle}</div>
-                    <div className="payment-opt-sub">{b.betalningDesc}</div>
+                    <EditableText path="booking.betalningTitle" value={b.betalningTitle} tag="div" className="payment-opt-title" />
+                    <EditableText path="booking.betalningDesc" value={b.betalningDesc} tag="div" className="payment-opt-sub" />
                   </div>
                 </div>
               </div>
 
               <div className="booking-btn-row" style={{ marginTop: "1.25rem" }}>
-                <button className="booking-btn-back" onClick={() => setStep("select")}>{b.tillbaka}</button>
+                <button className="booking-btn-back" onClick={() => setStep("select")}><EditableText path="booking.tillbaka" value={b.tillbaka} /></button>
                 <button className="booking-btn-next" disabled={!formValid || sending} onClick={submit}>
-                  {sending ? b.skickar : b.bekrafta}
+                  {sending ? <EditableText path="booking.skickar" value={b.skickar} /> : <EditableText path="booking.bekrafta" value={b.bekrafta} />}
                 </button>
               </div>
               {slotTaken && <p className="send-error">Den här tiden bokades precis av någon annan. Välj en annan tid.</p>}
@@ -921,9 +977,10 @@ export default function HealthByJasmin() {
   const [slotsOverride, setSlotsOverride] = useState(null); // null = use TORSDAG_ENTRIES default
   const [slotsModalOpen, setSlotsModalOpen] = useState(false);
   const [editSlots, setEditSlots] = useState([]); // working copy inside modal
-  const [scheduleOverride, setScheduleOverride] = useState(null); // {behandlingar:[...], klasser:[...]}
+  const [scheduleOverride, setScheduleOverride] = useState(null); // {behandlingar:[...], klasser:[...], sectionOrder:[...], hiddenSections:[...]}
   const [treatmentsOverride, setTreatmentsOverride] = useState(null); // [...] or null
   const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
+  const [sectionsModalOpen, setSectionsModalOpen] = useState(false);
   const [editBehandlingar, setEditBehandlingar] = useState([]);
   const [editKlasser, setEditKlasser] = useState([]);
   const [editTreatments, setEditTreatments] = useState([]);
@@ -1173,12 +1230,33 @@ export default function HealthByJasmin() {
   }
 
   function saveSchedule() {
-    const newSchedule = { behandlingar: editBehandlingar, klasser: editKlasser };
+    const newSchedule = { ...(scheduleOverride || {}), behandlingar: editBehandlingar, klasser: editKlasser };
     setScheduleOverride(newSchedule);
     setTreatmentsOverride(editTreatments);
     setScheduleModalOpen(false);
     setHasUnsaved(false);
     saveToSupabase(buildSnapshot({ scheduleOverride: newSchedule, treatmentsOverride: editTreatments }));
+  }
+
+  // ── Admin: section order & visibility (stored inside scheduleOverride) ───────
+  const sectionOrder = scheduleOverride?.sectionOrder || DEFAULT_SECTION_ORDER;
+  const hiddenSections = scheduleOverride?.hiddenSections || [];
+
+  function moveSection(id, dir) {
+    const order = [...sectionOrder];
+    const i = order.indexOf(id);
+    const j = i + dir;
+    if (i === -1 || j < 0 || j >= order.length) return;
+    [order[i], order[j]] = [order[j], order[i]];
+    setScheduleOverride(prev => ({ ...(prev || {}), sectionOrder: order }));
+    setHasUnsaved(true);
+  }
+
+  function toggleSectionHidden(id) {
+    const isHidden = hiddenSections.includes(id);
+    const next = isHidden ? hiddenSections.filter(x => x !== id) : [...hiddenSections, id];
+    setScheduleOverride(prev => ({ ...(prev || {}), hiddenSections: next }));
+    setHasUnsaved(true);
   }
 
   async function handleAdminLogin(e) {
@@ -1194,16 +1272,27 @@ export default function HealthByJasmin() {
     setIsAdmin(false); localStorage.removeItem("hbj_admin"); setHasUnsaved(false);
   }
 
+  // Editable text can sit inside a link or button (nav, footer, booking flow).
+  // While in admin mode, clicking to place the cursor shouldn't also fire that
+  // element's own action (navigate away, submit a booking, etc).
+  function guardAdminEdit(e) {
+    if (isAdmin && e.target.closest(".admin-editable")) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }
+
   const adminCtxValue = { isAdmin, onEdit: handleEdit, onImageUpload: handleImageUpload };
 
   return (
     <AdminCtx.Provider value={adminCtxValue}>
-      <header className="site-header">
+      <header className="site-header" onClickCapture={guardAdminEdit}>
         <Navbar t={t} lang={lang} setLang={setLang} />
       </header>
 
-      <main>
+      <main className="main-sections" onClickCapture={guardAdminEdit}>
         {/* Hero */}
+        <SectionWrap id="hero" order={sectionOrder} hidden={hiddenSections} isAdmin={isAdmin}>
         <section id="top" className="page-hero">
           {/* Slideshow layers */}
           {imageOverrides.header
@@ -1229,14 +1318,15 @@ export default function HealthByJasmin() {
             </a>
           </div>
         </section>
+        </SectionWrap>
 
-        {/* Servicekort */}
         {/* Om mig */}
+        <SectionWrap id="om-mig" order={sectionOrder} hidden={hiddenSections} isAdmin={isAdmin}>
         <section id="om-mig" className="content-section about-bg">
           <div className="section-inner">
             <div className="about-split fade-up">
               <div className="about-split-head">
-                <span className="section-label">{t.about.label}</span>
+                <EditableText path="about.label" value={t.about.label} tag="span" className="section-label" />
                 <h2>Jasmin<br />Hedlund</h2>
               </div>
               <div className="about-split-body">
@@ -1247,8 +1337,10 @@ export default function HealthByJasmin() {
             </div>
           </div>
         </section>
+        </SectionWrap>
 
-        {/* Ayurveda */}
+        {/* Ayurveda & Yoga */}
+        <SectionWrap id="ayurveda-yoga" order={sectionOrder} hidden={hiddenSections} isAdmin={isAdmin}>
         <section className="checkerboard-section" id="ayurveda">
           {/* Rad 1: Ayurveda bild | Ayurveda text */}
           <div className="cb-cell cb-img">
@@ -1296,8 +1388,10 @@ export default function HealthByJasmin() {
             <EditableImage imgKey="ashtanga" src={imgSrc("ashtanga", "/assets/ashtanga.jpeg")} alt="Yoga" className="cb-img-fill" wrapStyle={{ height: "100%", display: "block" }} />
           </div>
         </section>
+        </SectionWrap>
 
         {/* Veckoschema + bokning */}
+        <SectionWrap id="boka" order={sectionOrder} hidden={hiddenSections} isAdmin={isAdmin}>
         <section className="week-schedule-section" id="boka" ref={scheduleSectionRef}>
           <div className="section-inner">
             <EditableText path="weekSchedule.label" value={t.weekSchedule.label} tag="span" className="section-label" />
@@ -1326,9 +1420,12 @@ export default function HealthByJasmin() {
                           <span className="wsr-time-inline">{row.time}</span>
                         </span>
                         {price && <span className="wsr-price">{price}</span>}
-                        <span className="wsr-btn">
-                          {isOpen ? t.weekSchedule.closeLabel : t.weekSchedule.bookLabel}
-                        </span>
+                        <EditableText
+                          path={isOpen ? "weekSchedule.closeLabel" : "weekSchedule.bookLabel"}
+                          value={isOpen ? t.weekSchedule.closeLabel : t.weekSchedule.bookLabel}
+                          tag="span"
+                          className="wsr-btn"
+                        />
                       </button>
                     );
                   })}
@@ -1377,38 +1474,43 @@ export default function HealthByJasmin() {
             )}
           </div>
         </section>
-
+        </SectionWrap>
 
         {/* Kurser */}
+        <SectionWrap id="retreat" order={sectionOrder} hidden={hiddenSections} isAdmin={isAdmin}>
         <section className="retreat-section">
           <article className="retreat">
             <EditableImage imgKey="retreat" src={imgSrc("retreat", "/assets/retreat.jpg")} alt="Stadsretreat" />
-            <h2>{t.courses.title}</h2>
+            <EditableText path="courses.title" value={t.courses.title} tag="h2" />
             <EditableText path="courses.intro" value={t.courses.intro} tag="p" className="retreat-intro" />
-            <span>{t.courses.soon}</span>
+            <EditableText path="courses.soon" value={t.courses.soon} tag="span" />
           </article>
         </section>
+        </SectionWrap>
 
         {/* Quote */}
+        <SectionWrap id="quote" order={sectionOrder} hidden={hiddenSections} isAdmin={isAdmin}>
         <section className="quote-section">
           <EditableText path="quote" value={t.quote} tag="p" />
         </section>
+        </SectionWrap>
 
         {/* Recensioner */}
+        <SectionWrap id="testimonials" order={sectionOrder} hidden={hiddenSections} isAdmin={isAdmin}>
         <section className="testimonials-section">
           <div className="section-inner">
-            <span className="section-label">{t.reviews.label}</span>
-            <h2>{t.reviews.title}</h2>
+            <EditableText path="reviews.label" value={t.reviews.label} tag="span" className="section-label" />
+            <EditableText path="reviews.title" value={t.reviews.title} tag="h2" />
             <div className="testimonials-shelf-wrap">
               <button className="shelf-arrow shelf-arrow-prev" onClick={() => scrollShelf(-1)} aria-label="Föregående">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width="18" height="18"><polyline points="15 18 9 12 15 6" /></svg>
               </button>
               <div className="testimonials-shelf fade-up" ref={shelfRef}>
-                {t.reviews.items.map((r) => (
+                {t.reviews.items.map((r, i) => (
                   <div key={r.author} className="testimonial-card">
                     <div className="testimonial-stars">★★★★★</div>
-                    <p className="testimonial-text">{r.text}</p>
-                    <span className="testimonial-author">{r.author}</span>
+                    <EditableText path={`reviews.items.${i}.text`} value={r.text} tag="p" className="testimonial-text" />
+                    <EditableText path={`reviews.items.${i}.author`} value={r.author} tag="span" className="testimonial-author" />
                   </div>
                 ))}
               </div>
@@ -1424,24 +1526,27 @@ export default function HealthByJasmin() {
             </div>
           </div>
         </section>
+        </SectionWrap>
 
         {/* FAQ */}
+        <SectionWrap id="faq" order={sectionOrder} hidden={hiddenSections} isAdmin={isAdmin}>
         <FaqSection t={t} />
+        </SectionWrap>
       </main>
 
-      <footer className="site-footer">
+      <footer className="site-footer" onClickCapture={guardAdminEdit}>
         <div className="footer-inner">
           <div className="footer-brand">
             <img src="/assets/lightlogo.png" alt="Health by Jasmin" className="footer-logo" />
-            <p className="footer-tagline">Yoga &amp; Ayurveda · Stockholm</p>
+            <EditableText path="footer.tagline" value={t.footer.tagline} tag="p" className="footer-tagline" />
           </div>
 
           <div className="footer-links">
-            <a href="#om-mig">Om mig</a>
-            <a href="#ayurveda">Ayurveda</a>
-            <a href="#yoga">Yoga</a>
-            <a href="#boka">Boka</a>
-            <a href="#faq">FAQ</a>
+            <a href="#om-mig"><EditableText path="footer.linkAboutMe" value={t.footer.linkAboutMe} /></a>
+            <a href="#ayurveda"><EditableText path="footer.linkAyurveda" value={t.footer.linkAyurveda} /></a>
+            <a href="#yoga"><EditableText path="footer.linkYoga" value={t.footer.linkYoga} /></a>
+            <a href="#boka"><EditableText path="footer.linkBook" value={t.footer.linkBook} /></a>
+            <a href="#faq"><EditableText path="footer.linkFaq" value={t.footer.linkFaq} /></a>
           </div>
 
           <div className="footer-contact">
@@ -1449,13 +1554,13 @@ export default function HealthByJasmin() {
             <a href="mailto:healthbyjasmin@gmail.com" className="footer-email">healthbyjasmin@gmail.com</a>
             <a href="https://www.instagram.com/healthbyjasmin/" target="_blank" rel="noopener noreferrer" className="footer-ig" aria-label="Instagram">
               <i className="fab fa-instagram" />
-              @healthbyjasmin
+              <EditableText path="footer.instagramHandle" value={t.footer.instagramHandle} />
             </a>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <span>© 2015 Health by Jasmin</span>
+          <EditableText path="footer.copyright" value={t.footer.copyright} tag="span" />
           <button className="admin-lock-btn" onClick={() => isAdmin ? handleAdminLogout() : setAdminLoginOpen(true)} title={isAdmin ? "Logga ut admin" : "Admin"}>
             {isAdmin ? "🔓" : "🔒"}
           </button>
@@ -1491,6 +1596,7 @@ export default function HealthByJasmin() {
             <span className="admin-font-label" style={{ marginLeft: 8 }}>Klicka på text för att redigera · Klicka på bild för att byta</span>
           </div>
           <div className="admin-bar-right">
+            <button className="admin-slots-btn" onClick={() => setSectionsModalOpen(true)}>Sektioner</button>
             <button className="admin-slots-btn" onClick={openSlotsModal}>Redigera tider</button>
             <button className="admin-slots-btn" onClick={openScheduleModal}>Schema &amp; Behandlingar</button>
             <button className="admin-save-btn" onClick={handleSave} disabled={saving} style={saveError ? { background: "#c00" } : {}}>
@@ -1557,6 +1663,37 @@ export default function HealthByJasmin() {
             <div className="admin-slots-actions">
               <button className="admin-logout-btn" onClick={() => setScheduleModalOpen(false)}>Avbryt</button>
               <button className="admin-save-btn" onClick={saveSchedule}>Spara schema</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Admin: sektioner (visa/dölj & ordning) */}
+      {sectionsModalOpen && (
+        <div className="admin-login-modal" onClick={e => { if (e.target === e.currentTarget) setSectionsModalOpen(false); }}>
+          <div className="admin-slots-box" style={{ width: "min(480px,96vw)" }}>
+            <h3>Sektioner</h3>
+            <p className="admin-slots-hint">Dölj sektioner du inte vill visa, eller flytta dem upp/ner för att ändra ordningen på sidan. Ändringar syns direkt – klicka sedan på "Spara ändringar".</p>
+            <div className="admin-slots-list">
+              {sectionOrder.map((id, i) => {
+                const def = SECTION_DEFS.find(s => s.id === id);
+                const hidden = hiddenSections.includes(id);
+                return (
+                  <div key={id} className="admin-section-row">
+                    <span className="admin-section-row-label">{def?.label || id}</span>
+                    <div className="admin-section-row-actions">
+                      <button className="admin-slots-del" title="Flytta upp" disabled={i === 0} onClick={() => moveSection(id, -1)}>↑</button>
+                      <button className="admin-slots-del" title="Flytta ner" disabled={i === sectionOrder.length - 1} onClick={() => moveSection(id, 1)}>↓</button>
+                      <button className={`admin-section-toggle${hidden ? " is-hidden" : ""}`} onClick={() => toggleSectionHidden(id)}>
+                        {hidden ? "Dold – visa" : "Synlig – dölj"}
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="admin-slots-actions">
+              <button className="admin-logout-btn" onClick={() => setSectionsModalOpen(false)}>Stäng</button>
             </div>
           </div>
         </div>
