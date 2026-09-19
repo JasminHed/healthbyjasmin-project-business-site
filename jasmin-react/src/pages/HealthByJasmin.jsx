@@ -11,7 +11,7 @@ const supabase = createClient(
 );
 
 // ── Admin ──────────────────────────────────────────────────────────────────────
-const ADMIN_HASH = "eadafb9d02781f44fe2b2664c65b8c934ace9e9dc3d59ea345d5b6c7dbebb0e7";
+const ADMIN_HASH = "912c619de98942e7e4466cd5b6cce46e710b60c59f6c0cd2356f256043d9aaf1";
 
 async function hashPassword(pwd) {
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(pwd));
