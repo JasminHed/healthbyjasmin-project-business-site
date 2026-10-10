@@ -334,7 +334,7 @@ const TRANSLATIONS = {
     },
     about: {
       label: "Om mig",
-      p1: "Jag är Jasmin, personen bakom Health by Jasmin, ett enmannaföretag baserat i Stockholm, Sverige. Jag har praktiserat Ayurveda och Ayurveda sedan 2013. Det som först drog mig till både yoga och ayurveda var strukturen, rytmen och sättet som båda praktikerna sätter saker i fokus, ibland mjukt, ibland med kraft.",
+      p1: "Jag är Jasmin, personen bakom Health by Jasmin, ett enmannaföretag baserat i Stockholm, Sverige. Jag har praktiserat Ayurveda och Yoga sedan 2013. Det som först drog mig till både yoga och ayurveda var strukturen, rytmen och sättet som båda praktikerna sätter saker i fokus, ibland mjukt, ibland med kraft.",
       p2: "Jag förälskade mig i deras holistiska förhållningssätt och hur de utmanar dig att se på dig själv och dina vanor från en helt annan vinkel. År 2015/2016 startade jag Health by Jasmin för att skapa ett utrymme där jag kunde dela det som verkligen har resonerat med mig under åren.",
       p3: "Det här gör jag i små doser genom Ayurveda & Yoga kurser, Ayurvediska behandlingar och Retreats där båda får ta plats.",
     },
@@ -343,7 +343,7 @@ const TRANSLATIONS = {
       intro:
         "Lär dig förstå dig själv, din kropp och dina vanor, och rör på dig i en lugn och skön yogaklass.",
       yogaAyurvedaTitle: "Yoga & Ayurveda",
-      yogaAyurvedaSub: "Mer info kommer",
+      yogaAyurvedaSub: "Bokning öppnar snart",
       yogaAyurvedaP1:
         "Ayurveda är en av världens äldsta kunskapstraditioner om hälsa. På den här kursen lär du dig förstå dig själv, din kropp och dina vanor, och får samtidigt röra på dig i en lugn och skön yogaklass.",
       yogaAyurvedaP2Title: "Varje tillfälle är 90 minuter och har två delar:",
@@ -565,8 +565,6 @@ const TRANSLATIONS = {
       linkAboutMe: "Om mig",
       linkAyurveda: "Ayurveda",
       linkYoga: "Yoga",
-      linkBook: "Boka",
-      linkFaq: "FAQ",
       copyright: "© 2015 Health by Jasmin",
       instagramHandle: "@healthbyjasmin",
     },
@@ -587,7 +585,7 @@ const TRANSLATIONS = {
     },
     about: {
       label: "About me",
-      p1: "I am Jasmin, the person behind Health by Jasmin, a sole entrepreunr based in Stockholm, Sweden. I have practised Ayur veda and Yogayoga since 2013. What first drew me to both yoga and ayurveda was the structure, the rhythm and the way both practices bring things into focus, sometimes gently, sometimes with force.",
+      p1: "I am Jasmin, the person behind Health by Jasmin, a sole entrepreneur based in Stockholm, Sweden. I have practised Ayurveda and Yoga since 2013. What first drew me to both yoga and ayurveda was the structure, the rhythm and the way both practices bring things into focus, sometimes gently, sometimes with force.",
       p2: "I fell in love with their holistic approach and how they challenge you to look at yourself and your habits from a completely different angle. In 2015/2016 I started Health by Jasmin to create a space where I could share what has truly resonated with me over the years.",
       p3: "I do this in small doses through Ayurveda and Yoga courses, Ayurvedic treatments and retreats containing them both.",
     },
@@ -819,8 +817,6 @@ const TRANSLATIONS = {
       linkAboutMe: "About me",
       linkAyurveda: "Ayurveda",
       linkYoga: "Ayurveda & Yoga ",
-      linkBook: "Book",
-      linkFaq: "FAQ",
       copyright: "© 2015 Health by Jasmin",
       instagramHandle: "@healthbyjasmin",
     },
