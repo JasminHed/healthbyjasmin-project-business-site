@@ -340,19 +340,20 @@ const TRANSLATIONS = {
       p2: "Jag förälskade mig i deras holistiska förhållningssätt och hur de utmanar dig att se på dig själv och dina vanor från en helt annan vinkel. År 2015/2016 startade jag Health by Jasmin för att skapa ett utrymme där jag kunde dela det som verkligen har resonerat med mig under åren.",
       p3: "Det här gör jag i små doser genom yogaklasser, korta kurser, enstaka retreats och naturligtvis de magiska ayurvediska massagerna. Jag erbjuder också föreläsningar och introduktioner till Ayurveda, för att hjälpa människor få en bättre förståelse för dess grund.",
     },
-    yoga och ayurveda: {
-      label: "Rörelse",
+    yoga: {
+      label: "Kurs",
       intro:
-        "Yoga är mer än rörelse, det är en praktik av närvaro och koppling mellan kropp och sinne.",
+        "Yoga & Ayurveda är mer än rörelse, det är en praktik av närvaro och koppling mellan kropp och sinne.",
 
       yogaAyurvedaTitle: "Yoga & Ayurveda",
-      yogaAyurvedaSub: "60 min · Torsdagar · 20:00–21:00",
-      yogaAyurvedaBookAria:
-        "Boka Yoga & Ayurveda-klassen hos Home in Yoga (öppnas i ny flik)",
+      yogaAyurvedaSub: "Mer info kommer",
+      yogaAyurvedaBookAria: "",
       yogaAyurvedaP1:
-        "En klass i två delar. Vi börjar med ayurveda, ett tema, ett ämne eller ett tips från traditionen. Det kan handla om doshor, sömn, mat, dygnsrytm eller något annat ur ayurvedans värld.",
+        "Ayurveda är en av världens äldsta kunskapstraditioner om hälsa. På den här kursen lär du dig förstå dig själv, din kropp och dina vanor och får samtidigt röra på dig i en lugn och skön yogaklass.",
       yogaAyurvedaP2:
-        "Andra delen är yoga med positioner som gynnar alla doshor. Klassen rör sig genom flöde, stående och sittande positioner och avslutas med vila eller meditation.",
+        "Varje kurstillfälle varar 90 minuter och består av två delar: 30 min ayurveda - Du får lära dig något om ayurveda, en dosha, maten, livets rytmer. 60 min yoga - En flödesklass med stående och sittande positioner som är bra för vata, pitta och kapha (tridoshiskt). Vi avslutar alltid med kroppsscanning.",
+      yogaAyurvedaP3:
+        "Kursens Innehåll: Tillfälle 1: Ayurveda, vad är det?, Tillfälle 2: Doshorna, vårt utseende och våra personligheter, Tillfälle 3: Doshorna, vår fysik och våra sinnen, Tillfälle 4: Livets rytmer, Tillfälle 5: Agni och ama, Tillfälle 6: Mat som medicin",
     },
     ayurveda: {
       label: "Hälsa & välmående",
@@ -458,7 +459,7 @@ const TRANSLATIONS = {
           author: "Frida",
         },
         {
-          text: '"Yin yogaklassen med Jasmin är en av veckorutinens höjdpunkter. Lugn, inkluderande och meningsfull. Jag märker skillnaden i kroppen direkt efteråt."',
+          text: '"Ayurveda & Yoga klassen med Jasmin är en av veckorutinens höjdpunkter. Lugn, och trygg. Jag märker skillnaden i kroppen direkt efteråt."',
           author: "Anna",
         },
         {
