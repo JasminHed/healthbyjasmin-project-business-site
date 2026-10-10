@@ -1406,8 +1406,7 @@ a.week-schedule-row { text-align: left; }
   white-space: pre-line;
 }
 
-.course-title,
-.course-list {
+.course-title {
   text-align: center;
 }
 .course-title {
@@ -1415,6 +1414,13 @@ a.week-schedule-row { text-align: left; }
 }
 .course-list {
   white-space: pre-line;
+}
+.cb-text .yoga-intro {
+  font-size: clamp(13px, 1.7vw, 15px);
+  color: #555;
+  line-height: 1.75;
+  margin: 0 0 12px;
+  max-width: 480px;
 }
 
 /* Mobile tweaks */
