@@ -1406,6 +1406,17 @@ a.week-schedule-row { text-align: left; }
   white-space: pre-line;
 }
 
+.course-title,
+.course-list {
+  text-align: center;
+}
+.course-title {
+  font-weight: 700;
+}
+.course-list {
+  white-space: pre-line;
+}
+
 /* Mobile tweaks */
 @media (max-width: 480px) {
   .next-slot-btn { min-width: 76px; padding: 10px 10px; }

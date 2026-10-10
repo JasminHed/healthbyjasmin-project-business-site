@@ -347,10 +347,12 @@ const TRANSLATIONS = {
       yogaAyurvedaSub: "Mer info kommer",
       yogaAyurvedaP1:
         "Ayurveda är en av världens äldsta kunskapstraditioner om hälsa. På den här kursen lär du dig förstå dig själv, din kropp och dina vanor, och får samtidigt röra på dig i en lugn och skön yogaklass.",
+      yogaAyurvedaP2Title: "Varje tillfälle är 90 minuter och har två delar:",
       yogaAyurvedaP2:
-        "Varje tillfälle är 90 minuter och har två delar:\n\n30 min ayurveda: du lär dig något nytt om ayurveda.\n60 min yoga: flödesklass med stående och sittande positioner som är bra för vata, pitta och kapha (tridoshisk). Vi avslutar alltid med kroppsscanning.",
+        "30 min ayurveda: du lär dig något nytt om ayurveda.\n60 min yoga: flödesklass med stående och sittande positioner som är bra för vata, pitta och kapha (tridoshisk). Vi avslutar alltid med kroppsscanning.",
+      yogaAyurvedaP3Title: "Kursens innehåll",
       yogaAyurvedaP3:
-        "Kursens innehåll\n\nTillfälle 1 · 17:30–19:00\nAyurveda, vad är det?\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 2 · 17:30–19:00\nDoshorna, vårt utseende och våra personligheter\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 3 · 17:30–19:00\nDoshorna, vår fysik och våra sinnen\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 4 · 17:30–19:00\nLivets rytmer\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 5 · 17:30–19:00\nAgni och ama\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 6 · 17:30–19:00\nMat som medicin\nYoga (tridoshisk) och kroppsscanning",
+        "Tillfälle 1 · 17:30–19:00\nAyurveda, vad är det?\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 2 · 17:30–19:00\nDoshorna, vårt utseende och våra personligheter\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 3 · 17:30–19:00\nDoshorna, vår fysik och våra sinnen\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 4 · 17:30–19:00\nLivets rytmer\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 5 · 17:30–19:00\nAgni och ama\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 6 · 17:30–19:00\nMat som medicin\nYoga (tridoshisk) och kroppsscanning",
     },
     ayurveda: {
       label: "Hälsa & välmående",
@@ -598,10 +600,12 @@ const TRANSLATIONS = {
       yogaAyurvedaSub: "More info coming soon",
       yogaAyurvedaP1:
         "Ayurveda is one of the world's oldest traditions of knowledge about health. In this course you learn to understand yourself, your body and your habits, while moving in a calm and enjoyable yoga class.",
+      yogaAyurvedaP2Title: "Each session is 90 minutes and has two parts:",
       yogaAyurvedaP2:
-        "Each session is 90 minutes and has two parts:\n\n30 min ayurveda: you learn something new about ayurveda.\n60 min yoga: a flow class with standing and seated poses that benefit vata, pitta and kapha (tridoshic). We always finish with a body scan.",
+        "30 min ayurveda: you learn something new about ayurveda.\n60 min yoga: a flow class with standing and seated poses that benefit vata, pitta and kapha (tridoshic). We always finish with a body scan.",
+      yogaAyurvedaP3Title: "Course content",
       yogaAyurvedaP3:
-        "Course content\n\nSession 1 · 17:30–19:00\nWhat is ayurveda?\nYoga (tridoshic) and body scan\n\nSession 2 · 17:30–19:00\nThe doshas, our appearance and personalities\nYoga (tridoshic) and body scan\n\nSession 3 · 17:30–19:00\nThe doshas, our physiology and senses\nYoga (tridoshic) and body scan\n\nSession 4 · 17:30–19:00\nThe rhythms of life\nYoga (tridoshic) and body scan\n\nSession 5 · 17:30–19:00\nAgni and ama\nYoga (tridoshic) and body scan\n\nSession 6 · 17:30–19:00\nFood as medicine\nYoga (tridoshic) and body scan",
+        "Session 1 · 17:30–19:00\nWhat is ayurveda?\nYoga (tridoshic) and body scan\n\nSession 2 · 17:30–19:00\nThe doshas, our appearance and personalities\nYoga (tridoshic) and body scan\n\nSession 3 · 17:30–19:00\nThe doshas, our physiology and senses\nYoga (tridoshic) and body scan\n\nSession 4 · 17:30–19:00\nThe rhythms of life\nYoga (tridoshic) and body scan\n\nSession 5 · 17:30–19:00\nAgni and ama\nYoga (tridoshic) and body scan\n\nSession 6 · 17:30–19:00\nFood as medicine\nYoga (tridoshic) and body scan",
     },
     ayurveda: {
       label: "Health & wellbeing",
@@ -2125,12 +2129,23 @@ export default function HealthByJasmin() {
                 tag="p"
               />
               <EditableText
+                path="yoga.yogaAyurvedaP2Title"
+                value={t.yoga.yogaAyurvedaP2Title}
+                tag="p"
+                className="course-title"
+              />
+              <EditableText
                 path="yoga.yogaAyurvedaP2"
                 value={t.yoga.yogaAyurvedaP2}
                 tag="p"
                 className="course-list"
               />
-
+              <EditableText
+                path="yoga.yogaAyurvedaP3Title"
+                value={t.yoga.yogaAyurvedaP3Title}
+                tag="p"
+                className="course-title"
+              />
               <EditableText
                 path="yoga.yogaAyurvedaP3"
                 value={t.yoga.yogaAyurvedaP3}
