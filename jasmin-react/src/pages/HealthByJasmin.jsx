@@ -1,6 +1,5 @@
 import emailjs from "@emailjs/browser";
 import { createClient } from "@supabase/supabase-js";
-import { QRCodeSVG } from "qrcode.react";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 import "../styles/app.css";
@@ -2404,23 +2403,6 @@ export default function HealthByJasmin() {
                     <polyline points="9 18 15 12 9 6" />
                   </svg>
                 </button>
-              </div>
-              <div className="instagram-cta">
-                <a
-                  href="https://www.instagram.com/healthbyjasmin/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="instagram-qr-wrap"
-                  aria-label="Instagram @healthbyjasmin"
-                >
-                  <QRCodeSVG
-                    value="https://www.instagram.com/healthbyjasmin/"
-                    size={96}
-                    fgColor="#4a6b7c"
-                    bgColor="transparent"
-                  />
-                  <span className="instagram-qr-label">Instagram</span>
-                </a>
               </div>
             </div>
           </section>
