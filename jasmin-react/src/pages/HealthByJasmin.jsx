@@ -323,7 +323,7 @@ const TRANSLATIONS = {
   sv: {
     nav: {
       aboutMe: "Om mig",
-      yoga: "Yoga",
+      yoga: "Yoga & Ayurveda",
       ayurveda: "Ayurveda",
       book: "Boka",
       faq: "FAQ",
@@ -335,9 +335,9 @@ const TRANSLATIONS = {
     },
     about: {
       label: "Om mig",
-      p1: "Jag är Jasmin, personen bakom Health by Jasmin, ett enmannaföretag baserat i Stockholm, Sverige. Jag har praktiserat Ashtanga yoga och Ayurveda i nästan 17 år. Yin yoga byggdes på längs vägen. Det som först drog mig till både yoga och ayurveda var strukturen, rytmen och sättet som båda praktikerna sätter saker i fokus, ibland mjukt, ibland med kraft.",
+      p1: "Jag är Jasmin, personen bakom Health by Jasmin, ett enmannaföretag baserat i Stockholm, Sverige. Jag har praktiserat Ayurveda och Ayurveda sedan 2013. Det som först drog mig till både yoga och ayurveda var strukturen, rytmen och sättet som båda praktikerna sätter saker i fokus, ibland mjukt, ibland med kraft.",
       p2: "Jag förälskade mig i deras holistiska förhållningssätt och hur de utmanar dig att se på dig själv och dina vanor från en helt annan vinkel. År 2015/2016 startade jag Health by Jasmin för att skapa ett utrymme där jag kunde dela det som verkligen har resonerat med mig under åren.",
-      p3: "Det här gör jag i små doser genom yogaklasser, korta kurser, enstaka retreats och naturligtvis de magiska ayurvediska massagerna. Jag erbjuder också föreläsningar och introduktioner till Ayurveda, för att hjälpa människor få en bättre förståelse för dess grund.",
+      p3: "Det här gör jag i små doser genom Ayurveda & Yoga kurser, Ayurvediska behandlingar och Retreats där båda får ta plats.",
     },
     yoga: {
       label: "Kurs",
@@ -350,7 +350,7 @@ const TRANSLATIONS = {
       yogaAyurvedaP2:
         "Varje kurstillfälle varar 90 minuter och består av två delar. 30 min ayurveda: du får lära dig något nytt om ayurveda. 60 min yoga: en flödesklass med stående och sittande positioner som är bra för vata, pitta och kapha (tridoshiskt). Vi avslutar alltid med kroppsscanning.",
       yogaAyurvedaP3:
-        "Kursens innehåll: Tillfälle 1: Ayurveda, vad är det? Tillfälle 2: Doshorna, vårt utseende och våra personligheter. Tillfälle 3: Doshorna, vår fysik och våra sinnen. Tillfälle 4: Livets rytmer. Tillfälle 5: Agni och ama. Tillfälle 6: Mat som medicin.",
+        "Kursens innehåll\n\nTillfälle 1 · 17:30–19:00\nAyurveda, vad är det?\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 2 · 17:30–19:00\nDoshorna, vårt utseende och våra personligheter\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 3 · 17:30–19:00\nDoshorna, vår fysik och våra sinnen\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 4 · 17:30–19:00\nLivets rytmer\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 5 · 17:30–19:00\nAgni och ama\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 6 · 17:30–19:00\nMat som medicin\nYoga (tridoshisk) och kroppsscanning",
     },
     ayurveda: {
       label: "Hälsa & välmående",
@@ -586,9 +586,9 @@ const TRANSLATIONS = {
     },
     about: {
       label: "About me",
-      p1: "I am Jasmin, the person behind Health by Jasmin, a sole proprietorship based in Stockholm, Sweden. I have practised Ashtanga yoga and Ayurveda for almost 17 years. Yin yoga was added along the way. What first drew me to both yoga and ayurveda was the structure, the rhythm and the way both practices bring things into focus, sometimes gently, sometimes with force.",
+      p1: "I am Jasmin, the person behind Health by Jasmin, a sole entrepreunr based in Stockholm, Sweden. I have practised Ayur veda and Yogayoga since 2013. What first drew me to both yoga and ayurveda was the structure, the rhythm and the way both practices bring things into focus, sometimes gently, sometimes with force.",
       p2: "I fell in love with their holistic approach and how they challenge you to look at yourself and your habits from a completely different angle. In 2015/2016 I started Health by Jasmin to create a space where I could share what has truly resonated with me over the years.",
-      p3: "I do this in small doses through yoga classes, short courses, occasional retreats and of course the magical ayurvedic massages. I also offer lectures and introductions to Ayurveda, to help people gain a better understanding of its foundations.",
+      p3: "I do this in small doses through Ayurveda and Yoga courses, Ayurvedic treatments and retreats containing them both.",
     },
     yoga: {
       label: "Course",
@@ -601,7 +601,7 @@ const TRANSLATIONS = {
       yogaAyurvedaP2:
         "Each session lasts 90 minutes and has two parts. 30 min ayurveda: you learn something new about ayurveda. 60 min yoga: a flow class with standing and seated poses that benefit vata, pitta and kapha (tridoshic). We always finish with a body scan.",
       yogaAyurvedaP3:
-        "Course content: Session 1: What is ayurveda? Session 2: The doshas, our appearance and personalities. Session 3: The doshas, our physiology and senses. Session 4: The rhythms of life. Session 5: Agni and ama. Session 6: Food as medicine.",
+        "Course content\n\nSession 1 · 17:30–19:00\nWhat is ayurveda?\nYoga (tridoshic) and body scan\n\nSession 2 · 17:30–19:00\nThe doshas, our appearance and personalities\nYoga (tridoshic) and body scan\n\nSession 3 · 17:30–19:00\nThe doshas, our physiology and senses\nYoga (tridoshic) and body scan\n\nSession 4 · 17:30–19:00\nThe rhythms of life\nYoga (tridoshic) and body scan\n\nSession 5 · 17:30–19:00\nAgni and ama\nYoga (tridoshic) and body scan\n\nSession 6 · 17:30–19:00\nFood as medicine\nYoga (tridoshic) and body scan",
     },
     ayurveda: {
       label: "Health & wellbeing",
@@ -815,7 +815,7 @@ const TRANSLATIONS = {
       tagline: "Yoga & Ayurveda · Stockholm",
       linkAboutMe: "About me",
       linkAyurveda: "Ayurveda",
-      linkYoga: "Yoga",
+      linkYoga: "Ayurveda & Yoga ",
       linkBook: "Book",
       linkFaq: "FAQ",
       copyright: "© 2015 Health by Jasmin",
