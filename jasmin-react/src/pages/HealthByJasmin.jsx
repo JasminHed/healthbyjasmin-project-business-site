@@ -109,7 +109,6 @@ const SECTION_DEFS = [
   { id: "om-mig", label: "Om mig" },
   { id: "ayurveda-yoga", label: "Ayurveda & Yoga" },
   { id: "boka", label: "Schema & bokning" },
-  { id: "retreat", label: "Stadsretreat" },
   { id: "quote", label: "Citat" },
   { id: "testimonials", label: "Recensioner" },
   { id: "faq", label: "FAQ" },
@@ -343,17 +342,15 @@ const TRANSLATIONS = {
     yoga: {
       label: "Kurs",
       intro:
-        "Yoga & Ayurveda är mer än rörelse, det är en praktik av närvaro och koppling mellan kropp och sinne.",
-
+        "Lär dig förstå dig själv, din kropp och dina vanor, och rör på dig i en lugn och skön yogaklass.",
       yogaAyurvedaTitle: "Yoga & Ayurveda",
       yogaAyurvedaSub: "Mer info kommer",
-      yogaAyurvedaBookAria: "",
       yogaAyurvedaP1:
-        "Ayurveda är en av världens äldsta kunskapstraditioner om hälsa. På den här kursen lär du dig förstå dig själv, din kropp och dina vanor och får samtidigt röra på dig i en lugn och skön yogaklass.",
+        "Ayurveda är en av världens äldsta kunskapstraditioner om hälsa. På den här kursen lär du dig förstå dig själv, din kropp och dina vanor, och får samtidigt röra på dig i en lugn och skön yogaklass.",
       yogaAyurvedaP2:
-        "Varje kurstillfälle varar 90 minuter och består av två delar: 30 min ayurveda - Du får lära dig något om ayurveda, en dosha, maten, livets rytmer. 60 min yoga - En flödesklass med stående och sittande positioner som är bra för vata, pitta och kapha (tridoshiskt). Vi avslutar alltid med kroppsscanning.",
+        "Varje kurstillfälle varar 90 minuter och består av två delar. 30 min ayurveda: du får lära dig något nytt om ayurveda. 60 min yoga: en flödesklass med stående och sittande positioner som är bra för vata, pitta och kapha (tridoshiskt). Vi avslutar alltid med kroppsscanning.",
       yogaAyurvedaP3:
-        "Kursens Innehåll: Tillfälle 1: Ayurveda, vad är det?, Tillfälle 2: Doshorna, vårt utseende och våra personligheter, Tillfälle 3: Doshorna, vår fysik och våra sinnen, Tillfälle 4: Livets rytmer, Tillfälle 5: Agni och ama, Tillfälle 6: Mat som medicin",
+        "Kursens innehåll: Tillfälle 1: Ayurveda, vad är det? Tillfälle 2: Doshorna, vårt utseende och våra personligheter. Tillfälle 3: Doshorna, vår fysik och våra sinnen. Tillfälle 4: Livets rytmer. Tillfälle 5: Agni och ama. Tillfälle 6: Mat som medicin.",
     },
     ayurveda: {
       label: "Hälsa & välmående",
@@ -485,10 +482,6 @@ const TRANSLATIONS = {
               a: "Du bokar direkt på den här sidan. Klicka på 'Boka' i schemat, välj behandling, välj en av de närmaste lediga tiderna och fyll i dina uppgifter. Klart på under en minut.",
             },
             {
-              q: "Hur bokar jag yoga?",
-              a: "Yogaklasser bokas via länken i yogasektionen ovan – du dirigeras till studiots bokningssida.",
-            },
-            {
               q: "Hur betalas behandlingen?",
               a: "Betalning sker via Swish eller faktura. Väljer du faktura kan du använda friskvårdsbidraget.",
             },
@@ -498,11 +491,11 @@ const TRANSLATIONS = {
             },
             {
               q: "Vad gäller vid avbokning?",
-              a: "Avbokning av behandling görs senast 24 timmar innan. Mejla healthbyjasmin@gmail.com. För yogaklasser gäller studiots avbokningsregler.",
+              a: "Avbokning görs senast 24 timmar innan. Mejla healthbyjasmin@gmail.com.",
             },
             {
-              q: "Var hålls behandlingar och klasser?",
-              a: "Ayurvediska massager hålls torsdagskvällar på två adresser: Birkagatan 23 (ej dusch, 18:30 & 21:15) och Åsögatan 166 (dusch finns, 17:45). Hälsorådgivning hålls på Birkagatan 23. Yogaklasser hålls på Birkagatan 23 – se tider och bokningslänk i Yoga-sektionen ovan.",
+              q: "Var hålls behandlingarna?",
+              a: "Ayurvediska massager hålls torsdagskvällar på två adresser: Birkagatan 23 (ej dusch, 18:30 & 21:15) och Åsögatan 166 (dusch finns, 17:45). Hälsorådgivning hålls på Birkagatan 23.",
             },
           ],
         },
@@ -539,23 +532,6 @@ const TRANSLATIONS = {
             },
           ],
         },
-        {
-          label: "Yoga",
-          items: [
-            {
-              q: "Passar yoga för nybörjare?",
-              a: "Ja, alla klasser anpassas utifrån varje persons förmåga. Meddela gärna läraren om skador eller saker att ta hänsyn till när du kommer. Alla positioner utförs på dina egna villkor.",
-            },
-            {
-              q: "Vad är skillnaden mellan Yin Yoga och Yoga & Ayurveda?",
-              a: "Yin yoga är en lugn, stilla praktik där positioner hålls länge – den arbetar djupt in i bindväv och leder och ger en lugnande effekt på nervsystemet. Yoga & Ayurveda är en klass i två delar: första halvan är teori från ayurvedans värld, andra halvan är en mer aktiv yogaklass med flöde och stående positioner.",
-            },
-            {
-              q: "Vad är Ashtanga yoga?",
-              a: "Ashtanga är en dynamisk praktik där andning och rörelse är synkroniserade. Den följer en fast sekvens av positioner. Klasser för detta kommer snart – håll utkik!",
-            },
-          ],
-        },
       ],
     },
     weekSchedule: {
@@ -575,34 +551,12 @@ const TRANSLATIONS = {
           id: "radgivning",
         },
       ],
-      klasserItems: [
-        {
-          day: "Torsdag",
-          time: "20:00–21:00",
-          type: "Yoga & Ayurveda klass",
-          loc: "Birkagatan 23",
-          href: "https://www.getmana.app/s/home-in-yoga/schedule",
-        },
-        {
-          day: "Söndag",
-          time: "12:15–13:15",
-          type: "Yin Yoga klass",
-          loc: "Birkagatan 23",
-          href: "https://www.getmana.app/s/home-in-yoga/schedule",
-        },
-      ],
       bookLabel: "Boka",
       closeLabel: "Stäng",
       label: "Schema & bokning",
       title: "Veckans behandlingar",
       colBehandlingar: "Behandlingar",
       classTip: "",
-    },
-    courses: {
-      title: "Stadsretreat",
-      soon: "Kommer snart",
-      intro:
-        "En helg i Stockholm där yoga och ayurveda varvas med teori, praktik och tid för reflektion. Lördag: dynamisk yoga, lättare brunch, föreläsning om ayurvedans grunder och doshorna samt en kort workshop. Dagen avslutas med mjuk yoga och journaling. Söndag: dynamisk yoga, brunch, föreläsning om dygnsrytm, mat och rutiner samt en kort workshop. Helgen avslutas med mjuk yoga och tid för integration. Allt på samma ställe, utan att lämna Stockholm.",
     },
     footer: {
       location: "Stockholm",
@@ -637,30 +591,17 @@ const TRANSLATIONS = {
       p3: "I do this in small doses through yoga classes, short courses, occasional retreats and of course the magical ayurvedic massages. I also offer lectures and introductions to Ayurveda, to help people gain a better understanding of its foundations.",
     },
     yoga: {
-      label: "Movement",
+      label: "Course",
       intro:
-        "Yoga is more than movement. It is a practice of presence and connection between body and mind.",
-      ashtangaTitle: "Ashtanga Yoga",
-      ashtangaP1:
-        "Ashtanga is a practice where the breath is the core, synchronised with soft, dynamic movements. The method originates from India and regards the whole person: body, mind and everything in between. We start where we are and work with what we have.",
-      ashtangaP2:
-        "There are two main styles: Mysore, a self-practice where you learn a sequence of postures at your own pace with support from a teacher, and the more well-known led class where everyone moves together with instructions.",
-      ashtangaSchedule:
-        "Mon–Fri 6:15–9:00 (Mysore) · Sun 9:00–12:00 (led classes) · Rolling schedule",
-      ashtangaBookAria: "Book Ashtanga Yoga via Yogayama (opens in a new tab)",
-      yinTitle: "Yin Yoga",
-      yinP1:
-        "Yin yoga is a slow, still practice where poses are held for several minutes. It works deep into the connective tissue, ligaments and joints rather than the muscles, increasing flexibility and improving joint function. The practice has a calming effect on the nervous system and works well as a complement to more active forms of exercise.",
-      yinSchedule: "60 min · Sundays · 12:15–13:15",
-      yinBookAria: "Book Yin Yoga via Home in Yoga (opens in a new tab)",
+        "Learn to understand yourself, your body and your habits, while moving in a calm and enjoyable yoga class.",
       yogaAyurvedaTitle: "Yoga & Ayurveda",
-      yogaAyurvedaSub: "60 min · Thursdays · 20:00–21:00",
-      yogaAyurvedaBookAria:
-        "Book the Yoga & Ayurveda class via Home in Yoga (opens in a new tab)",
+      yogaAyurvedaSub: "More info coming soon",
       yogaAyurvedaP1:
-        "A class in two parts. We begin with ayurveda, a theme, a topic or a tip from the tradition. It might be about doshas, sleep, food, the body's daily rhythm or something else from the world of ayurveda.",
+        "Ayurveda is one of the world's oldest traditions of knowledge about health. In this course you learn to understand yourself, your body and your habits, while moving in a calm and enjoyable yoga class.",
       yogaAyurvedaP2:
-        "The second part is yoga with poses that benefit all doshas. The class moves through flow, standing and seated positions and ends with rest or meditation.",
+        "Each session lasts 90 minutes and has two parts. 30 min ayurveda: you learn something new about ayurveda. 60 min yoga: a flow class with standing and seated poses that benefit vata, pitta and kapha (tridoshic). We always finish with a body scan.",
+      yogaAyurvedaP3:
+        "Course content: Session 1: What is ayurveda? Session 2: The doshas, our appearance and personalities. Session 3: The doshas, our physiology and senses. Session 4: The rhythms of life. Session 5: Agni and ama. Session 6: Food as medicine.",
     },
     ayurveda: {
       label: "Health & wellbeing",
@@ -767,7 +708,7 @@ const TRANSLATIONS = {
           author: "Frida",
         },
         {
-          text: '"The yin yoga class with Jasmin is one of the highlights of my weekly routine. Calm, inclusive and meaningful. I notice the difference in my body right after."',
+          text: '"The ayurveda and yoga class with Jasmin is one of the highlights of my weekly routine."',
           author: "Anna",
         },
         {
@@ -793,10 +734,6 @@ const TRANSLATIONS = {
               a: "Book directly on this page. Click 'Book' in the schedule, choose a treatment, pick one of the next available slots and fill in your details. Done in under a minute.",
             },
             {
-              q: "How do I book yoga?",
-              a: "Yoga classes are booked via the link in the yoga section above — you'll be taken to the studio's booking page.",
-            },
-            {
               q: "How is payment handled?",
               a: "Payment via Swish or invoice. If you choose invoice you can use your wellness benefit (friskvårdsbidrag).",
             },
@@ -806,11 +743,11 @@ const TRANSLATIONS = {
             },
             {
               q: "What is the cancellation policy?",
-              a: "Treatments must be cancelled no later than 24 hours in advance. Email healthbyjasmin@gmail.com. For yoga classes, the studio's cancellation policy applies.",
+              a: "Treatments must be cancelled no later than 24 hours in advance. Email healthbyjasmin@gmail.com.",
             },
             {
-              q: "Where are treatments and classes held?",
-              a: "Ayurvedic massages are held Thursday evenings at two locations: Birkagatan 23 (no shower, 18:30 & 21:15) and Åsögatan 166 (shower available, 17:45). Health consultations and yoga classes are held at Birkagatan 23 – see times and booking links in the Yoga section above.",
+              q: "Where are treatments held?",
+              a: "Ayurvedic massages are held Thursday evenings at two locations: Birkagatan 23 (no shower, 18:30 & 21:15) and Åsögatan 166 (shower available, 17:45). Health consultations are held at Birkagatan 23.",
             },
           ],
         },
@@ -847,23 +784,6 @@ const TRANSLATIONS = {
             },
           ],
         },
-        {
-          label: "Yoga",
-          items: [
-            {
-              q: "Is yoga suitable for beginners?",
-              a: "Yes, all classes are adapted to each person's ability. Let the teacher know about any injuries or things to keep in mind when you arrive. All postures are performed within your own body's capacity and on your own terms.",
-            },
-            {
-              q: "What is the difference between Yin Yoga and Yoga & Ayurveda?",
-              a: "Yin yoga is a calm, still practice where poses are held for longer — it works deep into connective tissue and joints and has a soothing effect on the nervous system. Yoga & Ayurveda is a two-part class: the first half is ayurvedic theory, the second half is a more active yoga class with flow and standing postures.",
-            },
-            {
-              q: "What is Ashtanga yoga?",
-              a: "Ashtanga is a dynamic practice where breath and movement are synchronised, following a fixed sequence of postures. Classes for this are coming soon — stay tuned!",
-            },
-          ],
-        },
       ],
     },
     weekSchedule: {
@@ -883,34 +803,12 @@ const TRANSLATIONS = {
           id: "radgivning",
         },
       ],
-      klasserItems: [
-        {
-          day: "Thursday",
-          time: "20:00–21:00",
-          type: "Yoga & Ayurveda class",
-          loc: "Birkagatan 23",
-          href: "https://www.getmana.app/s/home-in-yoga/schedule",
-        },
-        {
-          day: "Sunday",
-          time: "12:15–13:15",
-          type: "Yin Yoga class",
-          loc: "Birkagatan 23",
-          href: "https://www.getmana.app/s/home-in-yoga/schedule",
-        },
-      ],
       bookLabel: "Book",
       closeLabel: "Close",
       label: "Schedule & booking",
       title: "This week's treatments",
       colBehandlingar: "Treatments",
       classTip: "",
-    },
-    courses: {
-      title: "City retreat",
-      soon: "Coming soon",
-      intro:
-        "A weekend in Stockholm where yoga and ayurveda blend with theory, practice and time for reflection. Saturday: dynamic yoga, a light brunch, a talk on the foundations of ayurveda and the doshas, and a short workshop. The day ends with gentle yoga and journaling. Sunday: dynamic yoga, brunch, a talk on daily rhythm, food and routines, and a short workshop. The weekend closes with gentle yoga and time for integration. All in one place, without leaving Stockholm.",
     },
     footer: {
       location: "Stockholm",
@@ -1951,7 +1849,7 @@ export default function HealthByJasmin() {
     setEditKlasser(
       scheduleOverride?.klasser
         ? [...scheduleOverride.klasser]
-        : t.weekSchedule.klasserItems.map((r) => ({ ...r })),
+        : (t.weekSchedule.klasserItems || []).map((r) => ({ ...r })),
     );
     setEditTreatments(
       treatmentsOverride
@@ -1980,7 +1878,9 @@ export default function HealthByJasmin() {
   }
 
   // ── Admin: section order & visibility (stored inside scheduleOverride) ───────
-  const sectionOrder = scheduleOverride?.sectionOrder || DEFAULT_SECTION_ORDER;
+  const sectionOrder = (
+    scheduleOverride?.sectionOrder || DEFAULT_SECTION_ORDER
+  ).filter((id) => SECTION_DEFS.some((s) => s.id === id));
   const hiddenSections = scheduleOverride?.hiddenSections || [];
 
   function moveSection(id, dir) {
@@ -2204,7 +2104,7 @@ export default function HealthByJasmin() {
               />
             </div>
 
-            {/* Rad 2: Yoga text | Yoga bild */}
+            {/* Rad 2: Yoga & Ayurveda kurs | Yoga bild */}
             <div className="cb-cell cb-text cb-text-alt fade-up" id="yoga">
               <EditableText
                 path="yoga.label"
@@ -2212,40 +2112,12 @@ export default function HealthByJasmin() {
                 tag="span"
                 className="section-label"
               />
-              <h2>Yoga</h2>
+              <h2>Yoga &amp; Ayurveda</h2>
               <EditableText
                 path="yoga.intro"
                 value={t.yoga.intro}
                 tag="p"
                 className="yoga-intro"
-              />
-              <EditableText
-                path="yoga.yinTitle"
-                value={t.yoga.yinTitle}
-                tag="h3"
-              />
-              <EditableText path="yoga.yinP1" value={t.yoga.yinP1} tag="p" />
-              <span className="yoga-schedule-row">
-                <EditableText
-                  path="yoga.yinSchedule"
-                  value={t.yoga.yinSchedule}
-                  tag="span"
-                  className="yoga-col-schedule"
-                />
-                <a
-                  href="https://www.getmana.app/s/home-in-yoga/schedule"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="yoga-schedule-arrow"
-                  aria-label={t.yoga.yinBookAria}
-                >
-                  ↗
-                </a>
-              </span>
-              <EditableText
-                path="yoga.yogaAyurvedaTitle"
-                value={t.yoga.yogaAyurvedaTitle}
-                tag="h3"
               />
               <EditableText
                 path="yoga.yogaAyurvedaP1"
@@ -2257,6 +2129,11 @@ export default function HealthByJasmin() {
                 value={t.yoga.yogaAyurvedaP2}
                 tag="p"
               />
+              <EditableText
+                path="yoga.yogaAyurvedaP3"
+                value={t.yoga.yogaAyurvedaP3}
+                tag="p"
+              />
               <span className="yoga-schedule-row">
                 <EditableText
                   path="yoga.yogaAyurvedaSub"
@@ -2264,47 +2141,6 @@ export default function HealthByJasmin() {
                   tag="span"
                   className="yoga-col-schedule"
                 />
-                <a
-                  href="https://www.getmana.app/s/home-in-yoga/schedule"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="yoga-schedule-arrow"
-                  aria-label={t.yoga.yogaAyurvedaBookAria}
-                >
-                  ↗
-                </a>
-              </span>
-              <EditableText
-                path="yoga.ashtangaTitle"
-                value={t.yoga.ashtangaTitle}
-                tag="h3"
-              />
-              <EditableText
-                path="yoga.ashtangaP1"
-                value={t.yoga.ashtangaP1}
-                tag="p"
-              />
-              <EditableText
-                path="yoga.ashtangaP2"
-                value={t.yoga.ashtangaP2}
-                tag="p"
-              />
-              <span className="yoga-schedule-row">
-                <EditableText
-                  path="yoga.ashtangaSchedule"
-                  value={t.yoga.ashtangaSchedule}
-                  tag="span"
-                  className="yoga-col-schedule"
-                />
-                <a
-                  href="https://www.yogayama.com/teacher/jamine-hedlund/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="yoga-schedule-arrow"
-                  aria-label={t.yoga.ashtangaBookAria}
-                >
-                  ↗
-                </a>
               </span>
             </div>
             <div className="cb-cell cb-img">
@@ -2458,40 +2294,6 @@ export default function HealthByJasmin() {
                 </div>
               )}
             </div>
-          </section>
-        </SectionWrap>
-
-        {/* Kurser */}
-        <SectionWrap
-          id="retreat"
-          order={sectionOrder}
-          hidden={hiddenSections}
-          isAdmin={isAdmin}
-        >
-          <section className="retreat-section">
-            <article className="retreat">
-              <EditableImage
-                imgKey="retreat"
-                src={imgSrc("retreat", "/assets/retreat.jpg")}
-                alt="Stadsretreat"
-              />
-              <EditableText
-                path="courses.title"
-                value={t.courses.title}
-                tag="h2"
-              />
-              <EditableText
-                path="courses.intro"
-                value={t.courses.intro}
-                tag="p"
-                className="retreat-intro"
-              />
-              <EditableText
-                path="courses.soon"
-                value={t.courses.soon}
-                tag="span"
-              />
-            </article>
           </section>
         </SectionWrap>
 
@@ -2865,7 +2667,7 @@ export default function HealthByJasmin() {
                   />
                   <input
                     className="admin-slots-input"
-                    value={row.loc}
+                    value={row.loc || ""}
                     onChange={(e) =>
                       setEditBehandlingar((p) =>
                         p.map((r, j) =>
