@@ -2133,7 +2133,9 @@ export default function HealthByJasmin() {
                 path="yoga.yogaAyurvedaP3"
                 value={t.yoga.yogaAyurvedaP3}
                 tag="p"
+                className="course-list"
               />
+
               <span className="yoga-schedule-row">
                 <EditableText
                   path="yoga.yogaAyurvedaSub"
