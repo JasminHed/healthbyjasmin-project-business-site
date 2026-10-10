@@ -340,7 +340,7 @@ const TRANSLATIONS = {
       p2: "Jag förälskade mig i deras holistiska förhållningssätt och hur de utmanar dig att se på dig själv och dina vanor från en helt annan vinkel. År 2015/2016 startade jag Health by Jasmin för att skapa ett utrymme där jag kunde dela det som verkligen har resonerat med mig under åren.",
       p3: "Det här gör jag i små doser genom yogaklasser, korta kurser, enstaka retreats och naturligtvis de magiska ayurvediska massagerna. Jag erbjuder också föreläsningar och introduktioner till Ayurveda, för att hjälpa människor få en bättre förståelse för dess grund.",
     },
-    yoga: {
+    yoga och ayurveda: {
       label: "Rörelse",
       intro:
         "Yoga är mer än rörelse, det är en praktik av närvaro och koppling mellan kropp och sinne.",
