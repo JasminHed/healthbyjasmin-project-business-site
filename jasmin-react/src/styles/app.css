@@ -1499,6 +1499,9 @@ button, input, select, textarea {
 .cb-text h3 {
   color: #5C7C8A;
 }
+.cb-text .course-title {
+  color: #5C7C8A;
+}
 
 /* ─── Mer luft på mobil ─────────────────────────────────── */
 @media (max-width: 640px) {
