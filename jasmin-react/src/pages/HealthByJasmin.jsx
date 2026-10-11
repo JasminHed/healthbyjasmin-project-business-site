@@ -2212,9 +2212,11 @@ export default function HealthByJasmin() {
                         >
                           <span className="wsr-info" style={{ flex: 1 }}>
                             <span className="wsr-type">{row.type}</span>
-                            {row.id !== "massage" && (
-                              <span className="wsr-type-loc">(Vasastan)</span>
-                            )}
+                            <span className="wsr-type-loc">
+                              {row.id === "massage"
+                                ? "(Vasastan · ej dusch)"
+                                : "(Vasastan)"}
+                            </span>
                             <span className="wsr-time-inline">{row.time}</span>
                           </span>
                           {price && <span className="wsr-price">{price}</span>}
