@@ -1492,6 +1492,13 @@ a.week-schedule-row { text-align: left; }
   transform: translateY(-1px);
   box-shadow: 0 4px 20px rgba(74,107,124,0.2);
 }
+button, input, select, textarea {
+  font-family: inherit;
+}
+.content-section h3,
+.cb-text h3 {
+  color: #5C7C8A;
+}
 
 /* ─── Mer luft på mobil ─────────────────────────────────── */
 @media (max-width: 640px) {
