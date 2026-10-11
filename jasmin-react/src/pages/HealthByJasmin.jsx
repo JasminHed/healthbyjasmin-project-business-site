@@ -234,14 +234,19 @@ const BIRKA_SLOTS = [
   { t: "19:15", e: "20:10" },
   { t: "20:30", e: "21:25" },
 ];
+// Torsdagar som redan är bokade på annan plats visas som "Bokad"
+const BOOKED_DATES = ["2026-10-22", "2026-11-12", "2026-11-26"];
+
 const TORSDAG_ENTRIES = [];
 for (
   const d = new Date(2026, 9, 15);
   d <= new Date(2026, 11, 17);
   d.setDate(d.getDate() + 7)
 ) {
+  const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const booked = BOOKED_DATES.includes(iso);
   BIRKA_SLOTS.forEach((s) =>
-    TORSDAG_ENTRIES.push({ date: new Date(d), slots: [s] }),
+    TORSDAG_ENTRIES.push({ date: new Date(d), slots: [s], booked }),
   );
 }
 

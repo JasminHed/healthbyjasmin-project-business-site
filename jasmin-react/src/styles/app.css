@@ -1502,6 +1502,13 @@ button, input, select, textarea {
 .cb-text .course-title {
   color: #5C7C8A;
 }
+.dates-grid-row { grid-template-columns: 84px repeat(3, 1fr); gap: 4px; }
+.dates-grid-label { padding: 6px; gap: 3px; }
+.dgr-wd, .dgr-mo { font-size: 10px; }
+.dgr-dd { font-size: 14px; }
+.dgr-slot { min-height: 40px; padding: 6px 4px; }
+.dgr-time { font-size: 13px; }
+.dgr-slot-spacer { min-height: 40px; }
 
 /* ─── Mer luft på mobil ─────────────────────────────────── */
 @media (max-width: 640px) {
