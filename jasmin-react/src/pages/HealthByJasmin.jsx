@@ -227,54 +227,23 @@ const EMAILJS_PUBLIC_KEY = "y7Yu8QbgFj3NM0VeM";
 
 // ── Booking dates & slots (language-neutral) ───────────────────────────────────
 
-// Torsdagar — Birkagatan 23. Varje kväll två tider: 18:30 och 21:15.
-const TORSDAG_ENTRIES = [
-  { date: new Date(2026, 7, 20), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 7, 20), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 7, 27), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 7, 27), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 8, 3), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 8, 3), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 8, 10), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 8, 10), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 8, 17), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 8, 17), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 8, 24), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 8, 24), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 9, 1), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 9, 1), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 9, 8), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 9, 8), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 9, 15), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 9, 15), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 9, 22), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 9, 22), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 9, 29), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 9, 29), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 10, 5), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 10, 5), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 10, 12), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 10, 12), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 10, 19), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 10, 19), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 10, 26), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 10, 26), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 11, 3), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 11, 3), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 11, 10), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 11, 10), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2026, 11, 17), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2026, 11, 17), slots: [{ t: "21:15", e: "22:10" }] },
-  // 24 dec = julafton, 31 dec = nyårsafton — hoppas över
-  { date: new Date(2027, 0, 7), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2027, 0, 7), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2027, 0, 14), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2027, 0, 14), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2027, 0, 21), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2027, 0, 21), slots: [{ t: "21:15", e: "22:10" }] },
-  { date: new Date(2027, 0, 28), slots: [{ t: "18:30", e: "19:25" }] },
-  { date: new Date(2027, 0, 28), slots: [{ t: "21:15", e: "22:10" }] },
+// Torsdagar — Birkagatan 23. Tre tider per kväll, 55 min per behandling
+// med 15 min mellan. Torsdagar 15 okt – 17 dec 2026 (veckan före 19 dec).
+const BIRKA_SLOTS = [
+  { t: "18:00", e: "18:55" },
+  { t: "19:15", e: "20:10" },
+  { t: "20:30", e: "21:25" },
 ];
+const TORSDAG_ENTRIES = [];
+for (
+  const d = new Date(2026, 9, 15);
+  d <= new Date(2026, 11, 17);
+  d.setDate(d.getDate() + 7)
+) {
+  BIRKA_SLOTS.forEach((s) =>
+    TORSDAG_ENTRIES.push({ date: new Date(d), slots: [s] }),
+  );
+}
 
 // Torsdagar — Åsögatan 166. Tid 17:45–18:40. Bara massage (ej rådgivning).
 const ASOGATAN_ENTRIES = [
@@ -496,7 +465,7 @@ const TRANSLATIONS = {
             },
             {
               q: "Var hålls behandlingarna?",
-              a: "Ayurvediska massager hålls torsdagskvällar på två adresser: Birkagatan 23 (ej dusch, 18:30 & 21:15) och Åsögatan 166 (dusch finns, 17:45). Hälsorådgivning hålls på Birkagatan 23.",
+              a: "Ayurvedisk massage och hälsorådgivning hålls torsdagskvällar på Birkagatan 23 (ej dusch, 18:00–21:25).",
             },
           ],
         },
@@ -748,7 +717,7 @@ const TRANSLATIONS = {
             },
             {
               q: "Where are treatments held?",
-              a: "Ayurvedic massages are held Thursday evenings at two locations: Birkagatan 23 (no shower, 18:30 & 21:15) and Åsögatan 166 (shower available, 17:45). Health consultations are held at Birkagatan 23.",
+              a: "Ayurvedic massage and health consultations are held Thursday evenings at Birkagatan 23 (no shower, 18:00–21:25).",
             },
           ],
         },
@@ -962,11 +931,17 @@ function Booking({
   useEffect(() => {
     supabase
       .from("bookings")
-      .select("slot_key, date")
+      .select("slot_key, date, time")
       .then(({ data }) => {
         if (data) {
           setBookedSlots(data.map((r) => r.slot_key));
-          setBookedDates(new Set(data.map((r) => r.date).filter(Boolean)));
+          setBookedDates(
+            new Set(
+              data
+                .filter((r) => r.date && r.time)
+                .map((r) => `${r.date}|${r.time}`),
+            ),
+          );
         }
       });
   }, []);
@@ -974,8 +949,10 @@ function Booking({
   function fmtDate(d) {
     return `${d.getDate()} ${SV_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
   }
-  function isDateBooked(d) {
-    return bookedDates.has(fmtDate(d));
+  // Tiden är upptagen om någon redan bokat samma datum + tid
+  // (gäller både massage och rådgivning)
+  function isDateBooked(d, s) {
+    return bookedDates.has(`${fmtDate(d)}|${s.t}–${s.e}`);
   }
 
   // Compute next 4 available slots for the "Nästa lediga" section
@@ -987,7 +964,11 @@ function Booking({
       if (date < today) continue;
       const slotTime = slots[0].t;
       const key = `${slotPrefix}-${i}-${slotTime}`;
-      if (bookedSlots.includes(key) || entries[i].booked || isDateBooked(date))
+      if (
+        bookedSlots.includes(key) ||
+        entries[i].booked ||
+        isDateBooked(date, slots[0])
+      )
         continue;
       const slotDt = new Date(date);
       const [h, m] = slotTime.split(":").map(Number);
@@ -1012,7 +993,7 @@ function Booking({
     const available =
       !bookedSlots.includes(key) &&
       !entries[i]?.booked &&
-      !isDateBooked(entries[i].date);
+      !isDateBooked(entries[i].date, s);
     setDateIdx(i);
     setSlot(available ? s : null);
     if (available && treatment !== null) setStep("form");
@@ -1084,7 +1065,7 @@ function Booking({
       );
 
       setBookedSlots((prev) => [...prev, key]);
-      setBookedDates((prev) => new Set([...prev, dateStr]));
+      setBookedDates((prev) => new Set([...prev, `${dateStr}|${timeStr}`]));
       setStep("done");
     } catch (err) {
       console.error(err);
@@ -1247,7 +1228,7 @@ function Booking({
                             const isBooked =
                               bookedSlots.includes(slotKey) ||
                               preBooked ||
-                              isDateBooked(date);
+                              isDateBooked(date, slots[0]);
                             const slotDt = new Date(date);
                             const [h, m] = slots[0].t.split(":").map(Number);
                             slotDt.setHours(h, m, 0, 0);
@@ -1733,7 +1714,10 @@ export default function HealthByJasmin() {
     return rows
       .map((r) => {
         const [y, m, d] = r.dateStr.split("-").map(Number);
-        return { date: new Date(y, m - 1, d), slots: [{ t: r.time, e: "" }] };
+        const [hh, mm] = r.time.split(":").map(Number);
+        const endMin = hh * 60 + mm + 55;
+        const e = `${String(Math.floor(endMin / 60)).padStart(2, "0")}:${String(endMin % 60).padStart(2, "0")}`;
+        return { date: new Date(y, m - 1, d), slots: [{ t: r.time, e }] };
       })
       .sort(
         (a, b) => a.date - b.date || a.slots[0].t.localeCompare(b.slots[0].t),
@@ -1747,20 +1731,20 @@ export default function HealthByJasmin() {
   const MASSAGE_STUDIOS = {
     birka: {
       label: "Birkagatan 23",
-      sub: "18:30 & 21:15 · ej dusch",
+      sub: "18:00, 19:15 & 20:30 · ej dusch",
       entries: activeEntries,
       address: "Birkagatan 23, Stockholm (ej dusch)",
       slotPrefix: "birka-massage",
       emailTemplate: EMAILJS_TEMPLATE_BIRKA,
     },
-    aso: {
-      label: "Åsögatan 166",
-      sub: "17:45 · dusch finns",
-      entries: ASOGATAN_ENTRIES,
-      address: "Åsögatan 166, Stockholm (dusch finns)",
-      slotPrefix: "aso-massage",
-      emailTemplate: EMAILJS_TEMPLATE_ASOG,
-    },
+    // aso: {
+    // label: "Åsögatan 166",
+    // sub: "17:45 · dusch finns",
+    // entries: ASOGATAN_ENTRIES,
+    // address: "Åsögatan 166, Stockholm (dusch finns)",
+    // slotPrefix: "aso-massage",
+    // emailTemplate: EMAILJS_TEMPLATE_ASOG,
+    // },
   };
 
   function imgSrc(key, fallback) {
@@ -2228,11 +2212,9 @@ export default function HealthByJasmin() {
                         >
                           <span className="wsr-info" style={{ flex: 1 }}>
                             <span className="wsr-type">{row.type}</span>
-                            <span className="wsr-type-loc">
-                              {row.id === "massage"
-                                ? "(Vasastan & Södermalm)"
-                                : "(Vasastan)"}
-                            </span>
+                            {row.id !== "massage" && (
+                              <span className="wsr-type-loc">(Vasastan)</span>
+                            )}
                             <span className="wsr-time-inline">{row.time}</span>
                           </span>
                           {price && <span className="wsr-price">{price}</span>}
@@ -2259,18 +2241,6 @@ export default function HealthByJasmin() {
 
               {massageOpen && (
                 <div className="week-schedule-booking" ref={bookingRef}>
-                  <div className="studio-toggle">
-                    {Object.entries(MASSAGE_STUDIOS).map(([id, s]) => (
-                      <button
-                        key={id}
-                        className={`studio-toggle-btn${massageStudio === id ? " selected" : ""}`}
-                        onClick={() => setMassageStudio(id)}
-                      >
-                        <span className="stb-label">{s.label}</span>
-                        <span className="stb-sub">{s.sub}</span>
-                      </button>
-                    ))}
-                  </div>
                   <Booking
                     key={massageStudio}
                     t={
