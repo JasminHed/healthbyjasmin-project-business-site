@@ -960,6 +960,36 @@ function Booking({
     return bookedDates.has(`${fmtDate(d)}|${s.t}–${s.e}`);
   }
 
+  // Är en specifik post (index i) redan bokad?
+  function isEntryBooked(i) {
+    const { date, slots, booked } = entries[i];
+    const key = `${slotPrefix}-${i}-${slots[0].t}`;
+    return (
+      bookedSlots.includes(key) || !!booked || isDateBooked(date, slots[0])
+    );
+  }
+
+  // Låst = en dag där ingenting är bokat än, och det här inte är dagens
+  // första tid. Då får man bara boka första tiden (inga luckor i schemat).
+  // Så fort någon tid den dagen är bokad öppnas resterande tider.
+  // Är någon tid redan bokad en dag låter vi dagen vara (inget låses).
+  function isEntryLocked(i) {
+    const dk = entries[i].date.toDateString();
+    const dayIdx = [];
+    entries.forEach((e, j) => {
+      if (e.date.toDateString() === dk) dayIdx.push(j);
+    });
+    // Dagens första tid (tidigast klockslag) är aldrig låst
+    const firstIdx = dayIdx.reduce(
+      (best, j) =>
+        entries[j].slots[0].t < entries[best].slots[0].t ? j : best,
+      dayIdx[0],
+    );
+    if (i === firstIdx) return false;
+    // Om något redan är bokat den dagen → öppna resten
+    return !dayIdx.some((j) => isEntryBooked(j));
+  }
+
   // Compute next 4 available slots for the "Nästa lediga" section
   const nextAvailable = (() => {
     const now = Date.now();
@@ -968,13 +998,7 @@ function Booking({
       const { date, slots } = entries[i];
       if (date < today) continue;
       const slotTime = slots[0].t;
-      const key = `${slotPrefix}-${i}-${slotTime}`;
-      if (
-        bookedSlots.includes(key) ||
-        entries[i].booked ||
-        isDateBooked(date, slots[0])
-      )
-        continue;
+      if (isEntryBooked(i) || isEntryLocked(i)) continue;
       const slotDt = new Date(date);
       const [h, m] = slotTime.split(":").map(Number);
       slotDt.setHours(h, m, 0, 0);
@@ -994,11 +1018,7 @@ function Booking({
 
   function handleDate(i) {
     const s = entries[i].slots[0];
-    const key = `${slotPrefix}-${i}-${s.t}`;
-    const available =
-      !bookedSlots.includes(key) &&
-      !entries[i]?.booked &&
-      !isDateBooked(entries[i].date, s);
+    const available = !isEntryBooked(i) && !isEntryLocked(i);
     setDateIdx(i);
     setSlot(available ? s : null);
     if (available && treatment !== null) setStep("form");
@@ -1034,6 +1054,13 @@ function Booking({
         .maybeSingle();
       if (existing) {
         setBookedSlots((prev) => [...prev, key]);
+        setSlotTaken(true);
+        setSending(false);
+        return;
+      }
+
+      // Extra skydd: första tiden måste vara bokad innan resterande tider
+      if (isEntryLocked(dateIdx)) {
         setSlotTaken(true);
         setSending(false);
         return;
@@ -1228,19 +1255,20 @@ function Booking({
                               {t.months[date.getMonth()]}
                             </span>
                           </div>
-                          {items.map(({ slots, i, preBooked }) => {
-                            const slotKey = `${slotPrefix}-${i}-${slots[0].t}`;
-                            const isBooked =
-                              bookedSlots.includes(slotKey) ||
-                              preBooked ||
-                              isDateBooked(date, slots[0]);
+                          {items.map(({ slots, i }) => {
+                            const isBooked = isEntryBooked(i);
+                            const isLocked = isEntryLocked(i);
                             const slotDt = new Date(date);
                             const [h, m] = slots[0].t.split(":").map(Number);
                             slotDt.setHours(h, m, 0, 0);
                             const isTooSoon =
                               slotDt - Date.now() < 24 * 60 * 60 * 1000;
                             const unavailable =
-                              isPast || isBooked || isTooSoon || !treatment;
+                              isPast ||
+                              isBooked ||
+                              isTooSoon ||
+                              isLocked ||
+                              !treatment;
                             return (
                               <button
                                 key={i}
