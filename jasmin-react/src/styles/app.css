@@ -1,7 +1,23 @@
-/* Importing Google fonts */
+/* ============================================================================
+   HEALTH BY JASMIN – app.css (ersätter hela din gamla app.css)
+
+   Innehåll:
+     1. GRUND          – reset, text, länkar, tona in
+     2. MENY           – navbar, logga, Boka-knapp
+     3. HERO           – första bilden
+     4. SEKTIONER      – om mig, ayurveda/yoga, citat, recensioner, knappar
+     5. BOKA-SIDAN     – de tre valen (massage, rådgivning, kurs)
+     6. BOKNINGSFLÖDE  – kort, tider, formulär, bekräftelse
+     7. SIDFOT
+     8. RESPONSIVT     – platta, mobil, dator
+   ============================================================================ */
+
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
-/* ── Reset & Base ── */
+/* ============================================================================
+   1. GRUND
+   ============================================================================ */
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; scroll-padding-top: 64px; }
@@ -14,28 +30,16 @@ body {
   overflow-x: hidden;
 }
 
+button, input, select, textarea { font-family: inherit; }
+
 a { text-decoration: none; color: whitesmoke; }
 a:hover { text-decoration: underline; }
-
-.fade-up {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.fade-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 h1, h2, h3 {
   font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: 600;
   color: #333333;
 }
-
-h1 { margin-top: 30px; font-size: clamp(24px, 5vw, 36px); padding: 10px; }
-h2 { margin-top: 60px; font-size: clamp(22px, 4vw, 36px); }
-h3 { font-size: clamp(15px, 3vw, 18px); }
 
 p {
   line-height: 1.7;
@@ -45,30 +49,134 @@ p {
   font-size: clamp(14px, 2.5vw, 16px);
 }
 
-/* ── Header (sub-pages) ── */
-header {
-  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-    url(/assets/header.jpeg) no-repeat center center;
-  background-size: cover;
-  height: 80vh;
-  min-height: 300px;
+/* Element med klassen "fade-up" tonas in när de syns */
+.fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
 }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
 
-/* ── Site header (single-page nav) ── */
+.main-sections { display: flex; flex-direction: column; }
+
+/* ============================================================================
+   2. MENY
+   ============================================================================ */
+
 .site-header {
   background: rgba(42, 58, 68, 0.97);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  height: auto;
-  min-height: auto;
   position: sticky;
   top: 0;
   z-index: 100;
   box-shadow: 0 1px 0 rgba(255,255,255,0.07);
 }
 
-/* ── Page hero ── */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 0;
+}
+
+/* Logga */
+@keyframes logoReveal {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+.logo {
+  width: clamp(90px, 12vw, 130px);
+  height: auto;
+  object-fit: contain;
+  opacity: 0;
+  animation: logoReveal 1.1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.nav-logo-link:hover .logo { animation: logoFloat 2.2s ease-in-out infinite; opacity: 1; }
+
+/* Länkar (dropdown på mobil, rad på dator) */
+.nav-links {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 66px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(60%, 280px);
+  background: rgba(42, 58, 68, 0.97);
+  padding: 8px;
+  gap: 10px;
+  z-index: 100;
+}
+.nav-active { display: flex; }
+.nav-links li { list-style: none; padding: 8px 0; }
+.nav-links a { color: white; transition: color 0.3s ease; }
+
+/* Hamburgarmeny */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+  outline: none;
+}
+.hamburger span { width: 25px; height: 3px; background: #f9f9f9; transition: all 0.3s ease; display: block; }
+.toggle span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.toggle span:nth-child(2) { opacity: 0; }
+.toggle span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* Språkknapp */
+.lang-toggle {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.45);
+  border-radius: 6px;
+  color: #f9f9f9;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  cursor: pointer;
+  margin-left: 12px;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.lang-toggle:hover { background: rgba(255,255,255,0.12); }
+
+/* Boka-knapp i menyn */
+.nav-book-btn {
+  display: inline-flex;
+  align-items: center;
+  background: #4a6b7c;
+  color: #fff !important;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none !important;
+  transition: background 0.2s, transform 0.15s;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+.nav-book-btn:hover { background: #3a5a6a; transform: translateY(-1px); }
+
+/* ============================================================================
+   3. HERO
+   ============================================================================ */
+
 .page-hero {
+  position: relative;
+  overflow: hidden;
   height: 92vh;
   min-height: 500px;
   background: linear-gradient(rgba(0,0,0,0.42), rgba(0,0,0,0.42)),
@@ -80,11 +188,19 @@ header {
   text-align: center;
 }
 
-.page-hero-inner {
-  padding: 2rem;
-  max-width: 720px;
-  width: 100%;
+/* Bildspel: en bild i taget tonas in */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.4s ease;
 }
+.hero-slide::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.42); }
+.hero-slide-active { opacity: 1; }
+
+.page-hero-inner { position: relative; z-index: 1; padding: 2rem; max-width: 720px; width: 100%; }
 
 .hero-eyebrow {
   display: block;
@@ -124,34 +240,24 @@ header {
   border: 1.5px solid rgba(255,255,255,0.5);
   border-radius: 50%;
   color: #fff;
-  text-decoration: none;
   transition: border-color 0.25s ease, background 0.25s ease;
   animation: hero-bounce 2.4s ease-in-out infinite;
 }
-
 .hero-scroll-arrow svg { width: 22px; height: 22px; }
-
-.hero-scroll-arrow:hover {
-  border-color: #fff;
-  background: rgba(255,255,255,0.12);
-  text-decoration: none;
-}
+.hero-scroll-arrow:hover { border-color: #fff; background: rgba(255,255,255,0.12); text-decoration: none; }
 
 @keyframes hero-bounce {
   0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(7px); }
+  50%      { transform: translateY(7px); }
 }
 
-/* ── Editorial sections ── */
-.content-section {
-  padding: clamp(72px, 9vw, 128px) 0;
-}
+/* ============================================================================
+   4. SEKTIONER
+   ============================================================================ */
 
-.section-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 clamp(20px, 5vw, 56px);
-}
+/* ── Gemensamt ── */
+.content-section { padding: clamp(72px, 9vw, 128px) 0; }
+.section-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 56px); }
 
 .section-label {
   display: block;
@@ -168,37 +274,139 @@ header {
   font-weight: 300;
   color: #2a3a44;
   letter-spacing: -0.025em;
-  margin-top: 0;
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.5rem;
   line-height: 1.12;
 }
 
 .content-section h3 {
   font-size: clamp(13px, 2.2vw, 16px);
   color: #5C7C8A;
-  margin-top: 1.75rem;
-  margin-bottom: 0.5rem;
+  margin: 1.75rem 0 0.5rem;
   font-weight: 500;
   letter-spacing: 0.01em;
 }
 
-/* ── Om mig warm background ── */
+/* ── Knapp i Ayurveda- och Yoga-sektionerna (och på Boka-sidan) ── */
+.section-book-btn {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.5rem;
+  padding: 0.8rem 2rem;
+  border-radius: 999px;
+  background: #4a6b7c;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: opacity 0.2s ease;
+}
+.section-book-btn:hover { opacity: 0.85; text-decoration: none; }
+
+/* ── Om mig ── */
 .about-bg { background: #f9f7f4; }
 
-/* ── Testimonials ── */
+.about-split {
+  display: grid;
+  grid-template-columns: 1fr 1.7fr;
+  gap: clamp(40px, 7vw, 100px);
+  align-items: start;
+  border-top: 1px solid #e4eaed;
+  padding-top: clamp(36px, 5vw, 60px);
+}
+.about-split-head .section-label { margin-bottom: 20px; }
+.about-split-head h2 {
+  font-size: clamp(38px, 6.5vw, 76px);
+  font-weight: 200;
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+  margin: 0;
+}
+.about-split-body p {
+  font-size: clamp(14px, 1.9vw, 16px);
+  color: #555;
+  line-height: 1.88;
+  margin: 0 0 1.25rem;
+  max-width: 100%;
+}
+
+/* ── Ayurveda + Yoga (schackrutor: bild | text, text | bild) ── */
+.checkerboard-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+}
+.cb-cell { position: relative; min-height: clamp(360px, 50vw, 620px); }
+
+.cb-img { overflow: hidden; }
+.cb-img-fill { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease; }
+.cb-img:hover .cb-img-fill { transform: scale(1.03); }
+
+.cb-text {
+  padding: clamp(40px, 6vw, 80px) clamp(32px, 5vw, 72px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #fff;
+}
+.cb-text-alt { background: #f5f8f9; }
+
+.cb-text h2 {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 300;
+  color: #1e2d35;
+  letter-spacing: -0.025em;
+  margin: 8px 0 clamp(12px, 2vw, 20px);
+  line-height: 1.12;
+}
+.cb-text h3 {
+  font-size: clamp(13px, 1.6vw, 15px);
+  font-weight: 600;
+  color: #5C7C8A;
+  margin: clamp(24px, 3vw, 36px) 0 6px;
+}
+.cb-text h3:first-of-type { margin-top: 8px; }
+.cb-text p {
+  font-size: clamp(13px, 1.7vw, 15px);
+  color: #555;
+  line-height: 1.75;
+  margin: 0 0 12px;
+  max-width: 480px;
+}
+
+/* Kursens rubriker och listor */
+.course-title { text-align: center; font-weight: 700; }
+.cb-text .course-title { color: #5C7C8A; }
+.course-list { white-space: pre-line; }
+
+.yoga-schedule-row { display: flex; align-items: center; gap: 8px; }
+.yoga-col-schedule { font-size: 13px; color: #555; display: block; }
+
+/* ── Citat ── */
+.quote-section {
+  width: 100%;
+  display: flex;
+  border: 1px solid #333333;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #5C7C8A 0%, #6B94A4 50%, #7BA8B8 100%);
+  min-height: 200px;
+  padding: 40px 20px;
+}
+.quote-section p { text-align: center; font-size: clamp(14px, 2.5vw, 20px); color: whitesmoke; padding: 5px; margin: 0; max-width: 700px; }
+
+/* ── Recensioner ── */
 .testimonials-section {
   background: #f9f7f4;
   padding: clamp(72px, 9vw, 120px) 0;
   border-top: 1px solid #ece8e3;
 }
-
 .testimonials-section h2 {
   font-size: clamp(28px, 5vw, 48px);
   font-weight: 300;
   color: #1e2d35;
   letter-spacing: -0.025em;
-  margin-top: 0;
-  margin-bottom: 0;
+  margin: 0;
   line-height: 1.12;
 }
 
@@ -209,7 +417,6 @@ header {
   align-items: center;
   gap: 12px;
 }
-
 .testimonials-shelf {
   display: flex;
   gap: 20px;
@@ -218,10 +425,10 @@ header {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   padding-bottom: 4px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
-
 .testimonials-shelf::-webkit-scrollbar { display: none; }
-.testimonials-shelf { -ms-overflow-style: none; scrollbar-width: none; }
 
 .shelf-arrow {
   flex-shrink: 0;
@@ -231,8 +438,6 @@ header {
   border: 1px solid #d0dde3;
   background: #fff;
   color: #5C7C8A;
-  font-size: 22px;
-  line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -251,202 +456,125 @@ header {
   flex-direction: column;
   justify-content: space-between;
   gap: 20px;
-  transition: background 0.2s ease, border-color 0.2s ease;
   flex-shrink: 0;
   width: calc((100% - 40px) / 2.5);
   min-width: 260px;
   scroll-snap-align: start;
 }
-
+.testimonial-stars { font-size: 0.85rem; color: #c8a84b; letter-spacing: 2px; margin-bottom: 4px; }
 .testimonial-text {
   font-size: clamp(13px, 1.7vw, 15px);
   color: #555;
   line-height: 1.8;
   font-style: italic;
   margin: 0;
-  text-align: left;
   max-width: 100%;
 }
+.testimonial-author { font-size: 11px; letter-spacing: 0.14em; color: #7BA8B8; text-transform: uppercase; font-weight: 500; }
 
-.testimonial-author {
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  color: #7BA8B8;
-  text-transform: uppercase;
-  font-weight: 500;
-}
+/* ============================================================================
+   5. BOKA-SIDAN
+   ============================================================================ */
 
-/* ── About split (typografi-driven, utan bild) ── */
-.about-split {
-  display: grid;
-  grid-template-columns: 1fr 1.7fr;
-  gap: clamp(40px, 7vw, 100px);
-  align-items: start;
-  border-top: 1px solid #e4eaed;
-  padding-top: clamp(36px, 5vw, 60px);
-}
+.week-schedule-section { background: #f5f8f9; padding: clamp(40px, 6vw, 64px) 0; }
+.booking-page { padding-top: clamp(56px, 8vw, 96px); min-height: 70vh; }
 
-.about-split-head .section-label { margin-bottom: 20px; }
-
-.about-split-head h2 {
-  font-size: clamp(38px, 6.5vw, 76px);
-  font-weight: 200;
-  color: #2a3a44;
-  letter-spacing: -0.03em;
-  line-height: 1.0;
-  margin: 0;
-}
-
-.about-split-body p {
-  font-size: clamp(14px, 1.9vw, 16px);
-  color: #555;
-  line-height: 1.88;
-  margin: 0 0 1.25rem;
-  text-align: left;
-  max-width: 100%;
-}
-
-.yoga-intro {
-  font-size: clamp(15px, 2vw, 18px);
-  color: #666;
-  line-height: 1.7;
-  margin: 0;
-  max-width: 100%;
-  text-align: left;
-}
-
-/* ── Checkerboard: Ayurveda + Yoga ── */
-.checkerboard-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
-}
-
-.cb-cell {
-  position: relative;
-  min-height: clamp(360px, 50vw, 620px);
-}
-
-.cb-img { overflow: hidden; }
-
-.cb-img-fill {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.6s ease;
-}
-
-.cb-img:hover .cb-img-fill { transform: scale(1.03); }
-
-.cb-text {
-  padding: clamp(40px, 6vw, 80px) clamp(32px, 5vw, 72px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: #fff;
-}
-
-.cb-text-alt { background: #f5f8f9; }
-
-.cb-text h2 {
-  font-size: clamp(28px, 4vw, 44px);
+.week-schedule-title {
+  font-size: clamp(28px, 5vw, 48px);
   font-weight: 300;
   color: #1e2d35;
   letter-spacing: -0.025em;
-  margin-top: 8px;
-  margin-bottom: clamp(12px, 2vw, 20px);
+  margin: 0 0 clamp(24px, 4vw, 40px);
   line-height: 1.12;
 }
 
-.cb-text h3 {
-  font-size: clamp(13px, 1.6vw, 15px);
+.wsr-columns { display: grid; grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+.wsr-col-label {
+  font-size: 11px;
   font-weight: 600;
-  color: #2a3a44;
-  margin: clamp(24px, 3vw, 36px) 0 6px;
-}
-
-.cb-text h3:first-of-type { margin-top: 8px; }
-
-.cb-text p {
-  font-size: clamp(13px, 1.7vw, 15px);
-  color: #555;
-  line-height: 1.75;
-  margin: 0 0 12px;
-  max-width: 480px;
-}
-
-@media (max-width: 767px) {
-  .checkerboard-section { grid-template-columns: 1fr; }
-  .cb-cell { min-height: auto; }
-  .cb-img { min-height: 260px; }
-}
-
-/* ── Unified Booking ── */
-.booking-wrap {
-  max-width: 760px;
-  margin: 0 auto;
-}
-
-.booking-dates { margin-bottom: 28px; scroll-margin-top: 80px; }
-.booking-row-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #888; font-weight: 500; margin-bottom: 12px; }
-
-/* Yoga column CTAs */
-.yoga-col-schedule {
-  font-size: 13px;
-  color: #555;
-  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8aabb8;
   margin-bottom: 4px;
 }
 
-.yoga-schedule-row {
+/* De tre valen: massage, rådgivning, kurs */
+.week-schedule-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
+  padding: 16px 0;
+  border: none;
+  border-radius: 4px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  transition: background 0.15s;
 }
-.yoga-schedule-row .yoga-col-schedule { margin-bottom: 0; }
-.yoga-schedule-arrow {
-  display: inline-flex;
+.week-schedule-row:first-child { border-top: 0.5px solid #d8e4e8; }
+.week-schedule-row:hover,
+.week-schedule-row.wsr-active { background: #edf3f5; }
+
+.wsr-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.wsr-type { font-size: 14px; color: #333; }
+.wsr-type-loc { font-size: 0.72rem; color: #8aabb8; display: block; margin-top: 1px; }
+.wsr-time-inline { font-size: 0.75rem; color: #888; margin-top: 2px; display: block; }
+.wsr-price { font-size: 0.78rem; font-weight: 600; color: #4a6b7c; white-space: nowrap; align-self: center; }
+.wsr-btn {
+  font-size: 12px;
+  font-weight: 500;
+  color: #5C7C8A;
+  border: 0.5px solid #b0c4cc;
+  border-radius: 6px;
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+
+.week-schedule-booking { max-width: 680px; margin: 0 auto; padding: 28px 0 8px; }
+.week-schedule-booking .booking-wrap { max-width: 100%; }
+
+/* Rutan för kursen ("bokning öppnar snart") */
+.booking-course-box { padding: 1.5rem; border: 1px solid #d8e0e5; border-radius: 12px; background: #fff; }
+.booking-course-box p { text-align: center; }
+
+/* ============================================================================
+   6. BOKNINGSFLÖDE
+   ============================================================================ */
+
+.booking-wrap { max-width: 760px; margin: 0 auto; }
+.booking-row-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #888; font-weight: 500; margin-bottom: 12px; }
+
+/* ── Stegindikator (1 → 2) ── */
+.booking-stepper { display: flex; align-items: center; margin-bottom: 28px; }
+.bks-step { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 0 0 auto; }
+.bks-num {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  margin-bottom: 4px;
-  border-radius: 50%;
-  color: #5C7C8A;
-  text-decoration: none;
-  font-size: 16px;
-  transition: background 0.15s, color 0.15s;
-  flex-shrink: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 2px solid #ccc;
+  color: #aaa;
+  transition: all 0.2s;
 }
-.yoga-schedule-arrow:hover,
-.yoga-schedule-arrow:focus-visible {
-  background: #e5eef1;
-  color: #3F5B6B;
-}
-.yoga-schedule-arrow:focus-visible {
-  outline: 2px solid #5C7C8A;
-  outline-offset: 2px;
-}
+.bks-label { font-size: 0.7rem; color: #aaa; white-space: nowrap; transition: color 0.2s; }
+.bks-line { flex: 1; height: 2px; background: #ddd; margin: 0 8px 20px; }
+.bks-step.bks-active .bks-num { border-color: #4a6b7c; color: #4a6b7c; background: #f0f5f8; }
+.bks-step.bks-active .bks-label { color: #4a6b7c; font-weight: 600; }
+.bks-step.bks-done .bks-num { border-color: #4a6b7c; background: #4a6b7c; color: #fff; }
+.bks-step.bks-done .bks-label { color: #4a6b7c; }
 
-/* Treatment card price */
-.treatment-pick-price {
-  font-size: 13px;
-  font-weight: 600;
-  color: #5C7C8A;
-  margin-top: 2px;
-}
-
-/* Treatment pick cards (step 1 of booking) */
+/* ── Välj behandling ── */
 .booking-treatments { margin-bottom: 24px; }
 .booking-treatment-hint { font-size: 13px; color: #888; margin: 10px 0 0; }
 
-.treatment-pick-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 10px;
-}
+.treatment-pick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
 
 .treatment-pick-card {
   display: flex;
@@ -458,26 +586,92 @@ header {
   border-radius: 10px;
   cursor: pointer;
   background: #fff;
-  transition: border-color 0.15s;
   text-align: left;
   width: 100%;
+  transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;
 }
+.treatment-pick-card:hover:not(.selected) { box-shadow: 0 4px 20px rgba(74,107,124,0.15); transform: translateY(-2px); border-color: #4a6b7c; }
+.treatment-pick-card.selected {
+  border-color: #3F5B6B;
+  border-width: 2px;
+  background: #deeaf0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(74,107,124,0.2);
+}
+.tpc-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+.treatment-pick-card .treatment-pick-name { font-size: 0.95rem; font-weight: 700; color: #2c3e50; line-height: 1.3; }
+.treatment-pick-card .treatment-pick-price { font-size: 0.9rem; font-weight: 700; color: #4a6b7c; white-space: nowrap; flex-shrink: 0; }
+.treatment-pick-card .treatment-pick-desc { font-size: 0.78rem; color: #666; line-height: 1.6; }
+.treatment-pick-card.selected .treatment-pick-name,
+.treatment-pick-card.selected .treatment-pick-desc { color: inherit; }
 
-.treatment-pick-card:hover { border-color: #5C7C8A; }
-.treatment-pick-card.selected { border-color: #3F5B6B; border-width: 2px; background: #deeaf0; }
+/* ── Nästa lediga tider ── */
+.booking-next-slots { margin-bottom: 20px; }
+.booking-no-slots { font-size: 0.85rem; color: #888; font-style: italic; margin: 8px 0; }
 
-.treatment-pick-name { font-size: 15px; font-weight: 500; color: #2a3a44; }
-.treatment-pick-desc { font-size: 12px; color: #777; line-height: 1.5; }
-
-/* Booking form */
-.booking-form-wrap {
-  border: 0.5px solid #d0dde3;
-  border-radius: 12px;
+.next-slot-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+.next-slot-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 20px;
+  min-width: 108px;
+  border: 2px solid #d8e3e9;
+  border-radius: 14px;
   background: #fff;
-  padding: 22px;
-  margin-bottom: 1rem;
-  scroll-margin-top: 80px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s, box-shadow 0.15s;
 }
+.next-slot-btn:hover { border-color: #4a6b7c; background: #f5f9fb; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(74,107,124,0.15); }
+.next-slot-btn.selected { border-color: #4a6b7c; background: #4a6b7c; color: #fff; box-shadow: 0 4px 14px rgba(74,107,124,0.28); }
+.next-slot-btn:disabled { opacity: 0.35; cursor: default; transform: none; }
+.next-slot-btn:disabled:hover { border-color: #d8e3e9; background: #fff; box-shadow: none; }
+.nsb-day { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; font-weight: 600; }
+.next-slot-btn.selected .nsb-day { opacity: 0.85; }
+.nsb-date { font-size: 0.9rem; font-weight: 500; }
+.nsb-time { font-size: 1.1rem; font-weight: 700; }
+
+.booking-show-all {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: #4a6b7c;
+  text-decoration: underline;
+  padding: 8px 0;
+  margin-top: 4px;
+  display: block;
+}
+.booking-show-all:hover { opacity: 0.75; }
+
+/* ── Alla datum ── */
+.dates-grid { display: flex; flex-direction: column; gap: 5px; margin-bottom: 1rem; }
+.dates-grid-row { display: grid; grid-template-columns: 84px repeat(3, 1fr); gap: 4px; align-items: stretch; }
+.dates-grid-label { display: flex; align-items: center; gap: 3px; padding: 6px; background: #f6f8f9; border-radius: 8px; }
+.dgr-wd, .dgr-mo { font-size: 10px; color: #888; }
+.dgr-dd { font-size: 14px; font-weight: 600; color: #3F5B6B; }
+.dgr-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 6px 4px;
+  border: 1.5px solid #d0dde3;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.dgr-slot:hover:not(:disabled) { border-color: #5C7C8A; box-shadow: 0 2px 8px rgba(92,124,138,0.12); }
+.dgr-slot.selected { border-color: #3F5B6B; border-width: 2px; background: #deeaf0; }
+.dgr-slot.disabled { opacity: 0.38; cursor: not-allowed; }
+.dgr-time { font-size: 13px; font-weight: 700; color: #3F5B6B; }
+.dgr-slot.selected .dgr-time { color: #2a3a44; }
+.dgr-slot-spacer { min-height: 40px; }
+
+/* ── Formulär (steg 2) ── */
+.booking-form-wrap { border: 0.5px solid #d0dde3; border-radius: 12px; background: #fff; padding: 22px; margin-bottom: 1rem; scroll-margin-top: 80px; }
 
 .booking-form-summary {
   display: flex;
@@ -488,10 +682,8 @@ header {
   border-bottom: 0.5px solid #e8eef1;
   gap: 8px;
 }
-
 .booking-form-summary-label { display: block; font-size: 11px; color: #888; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 3px; }
 .booking-form-summary-value { font-size: 14px; font-weight: 500; color: #2a3a44; }
-
 .booking-change-btn {
   background: none;
   border: none;
@@ -503,20 +695,66 @@ header {
   text-decoration: underline;
   flex-shrink: 0;
 }
-
 .booking-change-btn:hover { color: #3F5B6B; }
 
-/* Confirmation */
-.booking-confirm {
-  border: 0.5px solid #d0dde3;
-  border-radius: 12px;
+.massage-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; text-align: left; }
+.massage-form label { display: flex; flex-direction: column; gap: 5px; font-size: clamp(12px, 2vw, 13px); color: #555; margin-bottom: 12px; }
+.massage-form input {
+  height: 38px;
+  padding: 0 10px;
+  border: 0.5px solid #b0c4cc;
+  border-radius: 8px;
+  font-size: clamp(13px, 2vw, 14px);
   background: #fff;
-  padding: 28px 22px;
+  color: #333;
+  width: 100%;
 }
+.massage-form input:focus { outline: none; border-color: #5C7C8A; }
+.massage-form .payment-section-label,
+.massage-form .payment-opt,
+.massage-form .full-row { grid-column: 1 / -1; }
 
+.payment-section-label { font-size: clamp(13px, 2vw, 14px); font-weight: 500; color: #3F5B6B; margin: 8px 0; }
+.payment-opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1.5px solid #5C7C8A;
+  border-radius: 10px;
+  background: linear-gradient(145deg, rgba(92,124,138,0.08) 0%, rgba(123,168,184,0.08) 100%);
+}
+.payment-opt input[type="radio"] { width: 16px; height: 16px; accent-color: #5C7C8A; flex-shrink: 0; margin-top: 2px; }
+.payment-opt-title { font-size: clamp(13px, 2vw, 14px); font-weight: 500; color: #3F5B6B; }
+.payment-opt-sub { font-size: clamp(11px, 1.8vw, 12px); color: #666; margin-top: 2px; }
+
+/* Knappar */
+.booking-btn-row { display: flex; gap: 8px; margin-top: 0.25rem; flex-wrap: wrap; }
+.booking-btn-next,
+.booking-btn-back {
+  height: clamp(40px, 7vw, 46px);
+  padding: 0 16px;
+  background: #fff;
+  border: 0.5px solid #b0c4cc;
+  border-radius: 10px;
+  font-size: clamp(13px, 2vw, 15px);
+  font-weight: 500;
+  color: #5C7C8A;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.booking-btn-next { flex: 1; min-width: 120px; }
+.booking-btn-back { white-space: nowrap; }
+.booking-btn-next:hover,
+.booking-btn-back:hover { background: #f0f5f7; }
+.booking-btn-next:disabled { background: #fff; cursor: not-allowed; }
+
+.send-error { margin-top: 10px; font-size: 13px; color: #c0392b; text-align: center; }
+
+/* ── Bekräftelse ── */
+.booking-confirm { border: 0.5px solid #d0dde3; border-radius: 12px; background: #fff; padding: 28px 22px; }
 .booking-confirm-title { font-size: 18px; font-weight: 500; color: #2a3a44; margin-bottom: 6px; }
 .booking-confirm-sub { font-size: 14px; color: #555; margin-bottom: 20px; }
-
 .booking-confirm-details {
   border-top: 1px solid #e8eff2;
   border-bottom: 1px solid #e8eff2;
@@ -529,462 +767,114 @@ header {
 .bcd-row { display: flex; gap: 12px; font-size: 14px; }
 .bcd-label { min-width: 90px; color: #888; }
 .bcd-value { color: #2a3a44; font-weight: 500; }
-
 .booking-confirm-email-note { font-size: 13px; color: #888; line-height: 1.5; }
 
-/* ── Navbar ── */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 90%;
+/* ============================================================================
+   7. SIDFOT
+   ============================================================================ */
+
+.site-footer { background: #1e2d35; color: rgba(255,255,255,0.75); }
+
+.footer-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 16px 0;
-}
-
-.nav-links li { list-style: none; padding: 8px 0; }
-.nav-links a { color: white; text-decoration: none; transition: color 0.3s ease; }
-.nav-links a:hover { text-decoration: underline; }
-
-@keyframes logoReveal {
-  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0)    scale(1);    }
-}
-
-@keyframes logoFloat {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-3px); }
-}
-
-.logo {
-  width: clamp(90px, 12vw, 130px);
-  height: auto;
-  object-fit: contain;
-  opacity: 0;
-  animation: logoReveal 1.1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-.nav-logo-link:hover .logo {
-  animation: logoFloat 2.2s ease-in-out infinite;
-  opacity: 1;
-}
-
-.hamburger {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: 4px;
-  outline: none;
-}
-
-.lang-toggle {
-  background: none;
-  border: 1px solid rgba(255,255,255,0.45);
-  border-radius: 6px;
-  color: #f9f9f9;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  padding: 4px 10px;
-  cursor: pointer;
-  margin-left: 12px;
-  transition: background 0.15s;
-  flex-shrink: 0;
-}
-.lang-toggle:hover { background: rgba(255,255,255,0.12); }
-
-.hamburger span {
-  width: 25px;
-  height: 3px;
-  background: #f9f9f9;
-  transition: all 0.3s ease;
-  display: block;
-}
-
-.nav-links {
-  display: none;
-  flex-direction: column;
-  position: absolute;
-  top: 66px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(60%, 280px);
-  background: rgba(42, 58, 68, 0.97);
-  padding: 8px;
-  gap: 10px;
-  z-index: 100;
-}
-
-.nav-active { display: flex; opacity: 1; }
-.toggle span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-.toggle span:nth-child(2) { opacity: 0; }
-.toggle span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-
-/* ── Retreat section ── */
-/* ── Veckoschema ── */
-.week-schedule-section {
-  background: #f5f8f9;
-  padding: clamp(40px, 6vw, 64px) 0;
-}
-
-.week-schedule-title {
-  font-size: clamp(28px, 5vw, 48px);
-  font-weight: 300;
-  color: #1e2d35;
-  letter-spacing: -0.025em;
-  margin-top: 0;
-  margin-bottom: clamp(24px, 4vw, 40px);
-  line-height: 1.12;
-}
-
-.wsr-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0 40px;
-  align-items: start;
-}
-.wsr-columns-single {
-  grid-template-columns: 1fr;
-  max-width: 520px;
-  margin: 0 auto;
-}
-
-
-.wsr-col-label {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #8aabb8;
-  margin-bottom: 4px;
-}
-
-.week-schedule-rows {}
-
-.week-schedule-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 0;
-  border-bottom: 0.5px solid #d8e4e8;
-  text-decoration: none;
-  color: inherit;
-  transition: background 0.15s;
-  border-radius: 4px;
-  width: 100%;
-}
-
-.week-schedule-row:first-child { border-top: 0.5px solid #d8e4e8; }
-.week-schedule-row:hover { background: #edf3f5; text-decoration: none; }
-.week-schedule-row.wsr-active { background: #edf3f5; }
-button.week-schedule-row { text-align: left; background: none; border: none; cursor: pointer; font: inherit; }
-a.week-schedule-row { text-align: left; }
-
-.wsr-info {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.wsr-type {
-  font-size: 14px;
-  color: #333;
-}
-
-.wsr-btn {
-  font-size: 12px;
-  font-weight: 500;
-  color: #5C7C8A;
-  border: 0.5px solid #b0c4cc;
-  border-radius: 6px;
-  padding: 5px 12px;
-  white-space: nowrap;
-}
-
-@media (max-width: 640px) {
-  .wsr-columns { grid-template-columns: 1fr; gap: 24px 0; }
-  /* Week schedule: button wraps to its own line */
-  .week-schedule-row {
-    flex-wrap: wrap;
-    gap: 4px 10px;
-    padding: 12px 4px;
-    align-items: flex-start;
-  }
-  .wsr-info { flex: 1; min-width: 0; }
-  .wsr-btn {
-    width: 100%;
-    text-align: center;
-    margin-top: 6px;
-    display: block;
-    padding: 7px 12px;
-  }
-
-  /* Testimonial cards: nearly full shelf width so they don't overflow */
-  .testimonial-card {
-    width: calc(100% - 16px);
-    min-width: 0;
-  }
-}
-
-.week-schedule-booking {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 28px 0 8px;
-}
-
-.week-schedule-booking .booking-wrap {
-  max-width: 100%;
-}
-
-/* Studio (location) toggle — pick one, single booking flow below */
-.studio-toggle {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-}
-.studio-toggle-btn {
-  flex: 1;
-  min-width: 160px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 3px;
-  padding: 12px 16px;
-  border: 2px solid #d8e3e9;
-  border-radius: 12px;
-  background: #fff;
-  cursor: pointer;
-  text-align: left;
-  transition: border-color 0.15s, background 0.15s;
-  font-family: inherit;
-}
-.studio-toggle-btn:hover { border-color: #4a6b7c; background: #f5f9fb; }
-.studio-toggle-btn.selected { border-color: #4a6b7c; background: #4a6b7c; }
-.stb-label {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #2c3e50;
-}
-.stb-sub {
-  font-size: 0.75rem;
-  color: #7a9aaa;
-}
-.studio-toggle-btn.selected .stb-label { color: #fff; }
-.studio-toggle-btn.selected .stb-sub { color: rgba(255,255,255,0.8); }
-@media (max-width: 600px) {
-  .studio-toggle { flex-direction: column; }
-  .studio-toggle-btn { min-width: 0; }
-}
-
-.wsr-time-inline {
-  font-size: 0.75rem;
-  color: #888;
-  margin-top: 2px;
-  display: block;
-}
-.wsr-type-loc {
-  font-size: 0.72rem;
-  color: #8aabb8;
-  display: block;
-  margin-top: 1px;
-}
-
-.wsr-class-tip {
-  font-size: 13px;
-  color: #5C7C8A;
-  margin: 14px 0 0;
-  padding: 10px 14px;
-  background: #f0f5f7;
-  border-left: 2px solid #5C7C8A;
-  border-radius: 0 6px 6px 0;
-  line-height: 1.55;
-}
-
-.retreat-section { display: flex; justify-content: center; margin: 60px auto; padding: 0 16px; }
-.retreat { width: 100%; max-width: 900px; background-color: #faf4ef; padding: 15px 20px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); text-align: center; }
-.retreat img { width: 100%; height: clamp(180px, 30vw, 300px); object-fit: cover; border-radius: 12px; margin-bottom: 20px; }
-.retreat a { display: inline-block; padding: 10px 20px; background-color: #3F5B6B; color: white; border-radius: 8px; }
-.retreat-intro { font-size: clamp(14px, 1.8vw, 16px); color: #555; line-height: 1.75; max-width: 620px; margin: 0 auto 20px; }
-
-/* ── Instagram CTA ── */
-.instagram-cta {
-  margin-top: clamp(32px, 5vw, 48px);
-  text-align: center;
-}
-
-.instagram-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 13px 28px;
-  border: 0.5px solid #b0c4cc;
-  border-radius: 10px;
-  background: #fff;
-  color: #5C7C8A;
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: none;
-  transition: background 0.15s;
-}
-
-.instagram-btn:hover { background: #f0f5f7; text-decoration: none; color: #5C7C8A; }
-.instagram-btn i { font-size: 18px; }
-
-/* ── FAQ accordion ── */
-.faq-section { background: #f9f7f4; }
-
-.faq-title {
-  font-size: clamp(28px, 5vw, 48px);
-  font-weight: 300;
-  color: #2a3a44;
-  letter-spacing: -0.025em;
-  margin-top: 0;
-  margin-bottom: clamp(28px, 4vw, 48px);
-  line-height: 1.12;
-}
-
-.faq-cats {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: clamp(20px, 3vw, 40px);
-  align-items: start;
-}
-
-.faq-cat-label {
-  font-size: 0.68rem; letter-spacing: 0.16em;
-  text-transform: uppercase; color: #7BA8B8;
-  font-weight: 600; margin: 0 0 12px;
-  text-align: left;
-}
-
-.faq-accordion { display: flex; flex-direction: column; }
-
-.faq-acc-item {
-  border-bottom: 1px solid #dde4e8;
-}
-.faq-acc-item:first-child { border-top: 1px solid #dde4e8; }
-
-.faq-acc-q {
-  width: 100%; display: flex; justify-content: space-between;
-  align-items: flex-start; gap: 12px;
-  padding: 16px 0; background: none; border: none; cursor: pointer;
-  font-size: clamp(13px, 1.6vw, 14px); font-weight: 500;
-  color: #2a3a44; text-align: left; line-height: 1.45;
-}
-.faq-acc-q:hover { color: #4a6b7c; }
-
-.faq-acc-icon {
-  flex-shrink: 0; font-size: 1.1rem;
-  color: #7BA8B8; line-height: 1;
-  transition: transform 0.25s;
-  margin-top: 1px;
-}
-.faq-acc-item.open .faq-acc-icon { transform: rotate(0deg); color: #4a6b7c; }
-
-.faq-acc-body {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.28s ease;
-}
-.faq-acc-item.open .faq-acc-body { grid-template-rows: 1fr; }
-
-.faq-acc-inner { overflow: hidden; }
-.faq-acc-inner p {
-  font-size: clamp(13px, 1.6vw, 14px); color: #666;
-  line-height: 1.75; margin: 0 0 16px; text-align: left;
-  max-width: 100%;
-}
-
-@media (max-width: 900px) {
-  .faq-cats { grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 600px) {
-  .faq-cats { grid-template-columns: 1fr; }
-}
-
-/* ── Quote section ── */
-.quote-section {
-  width: 100%;
-  display: flex;
-  border: 1px solid #333333;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(145deg, #5C7C8A 0%, #6B94A4 50%, #7BA8B8 100%);
-  min-height: 200px;
-  padding: 40px 20px;
-}
-.quote-section p { text-align: center; font-size: clamp(14px, 2.5vw, 20px); color: whitesmoke; padding: 5px; margin: 0; max-width: 700px; }
-
-/* ── Second image ── */
-.second-image {
-  width: 100%; height: 50vh; min-height: 200px;
-  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(/assets/last.jpeg);
-  background-repeat: no-repeat; background-position: center; background-size: cover;
-}
-
-/* ── Footer ── */
-.site-footer {
-  background: #1e2d35;
-  color: rgba(255,255,255,0.75);
-  padding: 0;
-  margin-top: 0;
-}
-.footer-inner {
-  max-width: 1200px; margin: 0 auto;
-  padding: clamp(48px,7vw,80px) clamp(20px,5vw,56px) clamp(36px,5vw,56px);
+  padding: clamp(48px, 7vw, 80px) clamp(20px, 5vw, 56px) clamp(36px, 5vw, 56px);
   display: grid;
   grid-template-columns: 1fr minmax(160px, auto) 1fr;
-  gap: clamp(32px,5vw,64px);
+  gap: clamp(32px, 5vw, 64px);
   align-items: start;
 }
+
 .footer-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
 .footer-logo { height: 36px; opacity: 0.9; filter: brightness(2); }
-.footer-tagline { font-size: 0.78rem; color: rgba(255,255,255,0.45); letter-spacing: 0.06em; margin: 0; text-align: left; }
+.footer-tagline { font-size: 0.78rem; color: rgba(255,255,255,0.45); letter-spacing: 0.06em; margin: 0; }
 
-.footer-links {
-  display: flex; flex-direction: column; gap: 10px;
-  align-items: center;
-}
-.footer-links a {
-  font-size: 0.82rem; color: rgba(255,255,255,0.65);
-  text-decoration: none; letter-spacing: 0.05em;
-  transition: color 0.2s;
-}
-.footer-links a:hover { color: #fff; text-decoration: none; }
+.footer-links { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.65); letter-spacing: 0.05em; transition: color 0.2s; }
 
 .footer-contact { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
 .footer-loc { font-size: 0.82rem; color: rgba(255,255,255,0.55); text-align: right; }
-.footer-email, .footer-ig {
-  font-size: 0.82rem; color: rgba(255,255,255,0.65);
-  text-decoration: none; transition: color 0.2s;
-  display: flex; align-items: center; gap: 6px;
-}
-.footer-email:hover, .footer-ig:hover { color: #fff; text-decoration: none; }
+.footer-email,
+.footer-ig { font-size: 0.82rem; color: rgba(255,255,255,0.65); transition: color 0.2s; display: flex; align-items: center; gap: 6px; }
 .footer-ig i { font-size: 1rem; }
+.footer-links a:hover,
+.footer-email:hover,
+.footer-ig:hover { color: #fff; text-decoration: none; }
 
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.08);
-  max-width: 1200px; margin: 0 auto;
-  padding: 16px clamp(20px,5vw,56px);
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 0.75rem; color: rgba(255,255,255,0.3);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px clamp(20px, 5vw, 56px);
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.3);
 }
-.admin-lock-btn { color: rgba(255,255,255,0.3); }
-.admin-lock-btn:hover { opacity: 1; color: #fff; }
 
-@media (max-width: 720px) {
-  .footer-inner {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 28px;
-  }
+/* ============================================================================
+   8. RESPONSIVT
+   ============================================================================ */
+
+/* ── Dator (från 1025 px): menyn som en rad ── */
+@media (min-width: 1025px) {
+  .nav-links { display: flex !important; flex-direction: row; position: static; width: auto; background: transparent; transform: none; padding: 0; gap: 28px; }
+  .hamburger { display: none; }
+  .nav-book-mobile { display: none; }
+}
+
+/* ── Platta och mindre (till 1024 px) ── */
+@media (max-width: 1024px) {
+  .nav-book-desktop { display: none; }
+}
+
+/* ── Platta (668–1024 px) ── */
+@media (min-width: 668px) and (max-width: 1024px) {
+  .about-split { grid-template-columns: 1fr 1.5fr; gap: 48px; }
+  .content-section { padding: clamp(56px, 8vw, 100px) 0; }
+}
+
+/* ── Schackrutor i en kolumn (till 767 px) ── */
+@media (max-width: 767px) {
+  .checkerboard-section { grid-template-columns: 1fr; }
+  .cb-cell { min-height: auto; }
+  .cb-img { min-height: 260px; }
+}
+
+/* ── Mobil (till 667 px) ── */
+@media (max-width: 667px) {
+  .navbar { width: 92%; padding: 12px 0; }
+
+  .page-hero { height: 85svh; min-height: 420px; }
+  .hero-title { font-size: 2.6rem; }
+
+  .content-section { padding: clamp(52px, 12vw, 80px) 0; }
+  .section-inner { padding: 0 clamp(18px, 6vw, 28px); }
+  .about-split { grid-template-columns: 1fr; gap: 24px; }
+  .about-split-head h2 { font-size: 3rem; }
+  .checkerboard-section .cb-cell { min-height: clamp(260px, 60vw, 400px); }
+
+  .shelf-arrow { width: 30px; height: 30px; }
+  .testimonial-card { width: calc(100% - 16px); min-width: 0; padding: clamp(18px, 5vw, 24px); }
+
+  /* Boka-sidan: knappen hamnar på egen rad */
+  .week-schedule-section .section-inner { padding: 0 clamp(16px, 5vw, 24px); }
+  .week-schedule-row { flex-wrap: wrap; gap: 4px 10px; padding: 12px 4px; align-items: flex-start; }
+  .wsr-btn { width: 100%; text-align: center; margin-top: 6px; display: block; padding: 7px 12px; }
+
+  /* Bokningsflöde */
+  .booking-wrap { padding: 20px 0; }
+  .treatment-pick-grid { grid-template-columns: 1fr; }
+  .massage-form { grid-template-columns: 1fr; }
+  .massage-form .payment-section-label,
+  .massage-form .payment-opt { grid-column: 1; }
+  .booking-form-wrap { padding: 16px 14px; }
+  .booking-confirm { padding: 20px 14px; }
+  .booking-form-summary { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .booking-btn-row { flex-direction: column; }
+  .booking-btn-next,
+  .booking-btn-back { width: 100%; }
+
+  /* Sidfot */
+  .footer-inner { grid-template-columns: 1fr; text-align: center; gap: 28px; }
   .footer-brand { align-items: center; }
   .footer-tagline { text-align: center; }
   .footer-links { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 12px 20px; }
@@ -992,530 +882,16 @@ a.week-schedule-row { text-align: left; }
   .footer-loc { text-align: center; }
 }
 
-.dates-grid { display: flex; flex-direction: column; gap: 5px; margin-bottom: 1rem; }
-.dates-grid-row { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 5px; align-items: stretch; }
-.dates-grid-label { display: flex; align-items: center; gap: 5px; padding: 10px 10px; background: #f6f8f9; border-radius: 8px; }
-.dgr-wd { font-size: 11px; color: #888; }
-.dgr-dd { font-size: 16px; font-weight: 600; color: #3F5B6B; }
-.dgr-mo { font-size: 11px; color: #888; }
-.dgr-slot { display: flex; align-items: center; justify-content: center; min-height: 54px; border: 1.5px solid #d0dde3; border-radius: 10px; cursor: pointer; background: #fff; transition: border-color 0.2s, box-shadow 0.2s; font-family: inherit; padding: 10px; }
-.dgr-slot:hover:not(:disabled) { border-color: #5C7C8A; box-shadow: 0 2px 8px rgba(92,124,138,0.12); }
-.dgr-slot.selected { border-color: #3F5B6B; border-width: 2px; background: #deeaf0; }
-.dgr-slot.disabled { opacity: 0.38; cursor: not-allowed; }
-.dgr-time { font-size: 15px; font-weight: 700; color: #3F5B6B; }
-.dgr-slot.selected .dgr-time { color: #2a3a44; }
-.dgr-slot-spacer { min-height: 54px; }
-
-/* Form */
-.massage-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; text-align: left; }
-.massage-form label { display: flex; flex-direction: column; gap: 5px; font-size: clamp(12px, 2vw, 13px); color: #555; margin-bottom: 12px; }
-.massage-form input { height: 38px; padding: 0 10px; border: 0.5px solid #b0c4cc; border-radius: 8px; font-size: clamp(13px, 2vw, 14px); background: #fff; color: #333; width: 100%; box-sizing: border-box; }
-.massage-form input:focus { outline: none; border-color: #5C7C8A; }
-.massage-form .payment-section-label,
-.massage-form .payment-opt,
-.massage-form .full-row { grid-column: 1 / -1; }
-.payment-section-label { font-size: clamp(13px, 2vw, 14px); font-weight: 500; color: #3F5B6B; margin-top: 8px; margin-bottom: 8px; }
-.payment-opt { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border: 1.5px solid #5C7C8A; border-radius: 10px; background: linear-gradient(145deg, rgba(92,124,138,0.08) 0%, rgba(123,168,184,0.08) 100%); }
-.payment-opt input[type="radio"] { width: 16px; height: 16px; accent-color: #5C7C8A; flex-shrink: 0; margin-top: 2px; }
-.payment-opt-title { font-size: clamp(13px, 2vw, 14px); font-weight: 500; color: #3F5B6B; }
-.payment-opt-sub { font-size: clamp(11px, 1.8vw, 12px); color: #666; margin-top: 2px; }
-
-/* Buttons */
-.booking-btn-row { display: flex; gap: 8px; margin-top: 0.25rem; flex-wrap: wrap; }
-.booking-btn-next { flex: 1; min-width: 120px; height: clamp(40px, 7vw, 46px); background: #fff; border: 0.5px solid #b0c4cc; border-radius: 10px; font-size: clamp(13px, 2vw, 15px); font-weight: 500; cursor: pointer; color: #5C7C8A; transition: background 0.15s; padding: 0 16px; }
-.booking-btn-next:hover { background: #f0f5f7; }
-.booking-btn-next:disabled { background: #fff; color: #5C7C8A; border-color: #b0c4cc; cursor: not-allowed; }
-.booking-btn-back { height: clamp(40px, 7vw, 46px); padding: 0 16px; background: #fff; border: 0.5px solid #b0c4cc; border-radius: 10px; font-size: clamp(13px, 2vw, 15px); font-weight: 500; cursor: pointer; color: #5C7C8A; white-space: nowrap; transition: background 0.15s; }
-.booking-btn-back:hover { background: #f0f5f7; }
-
-.send-error { margin-top: 10px; font-size: 13px; color: #c0392b; text-align: center; }
-.session-booked-msg { display: flex; align-items: center; gap: 14px; padding: 20px 24px; background: #f0f7f4; border-radius: 12px; border: 1px solid #b8ddd0; }
-.session-booked-msg p { font-size: 14px; color: #2d5a4a; margin: 0; }
-.session-booked-msg a { color: #3a7a64; }
-.session-booked-msg .booking-confirm-icon { flex-shrink: 0; }
-
-/* ════════════════════════════════════════
-   MEDIA QUERIES
-════════════════════════════════════════ */
-
-/* ── Mobile (≤ 667px) ── */
-@media (max-width: 667px) {
-  .navbar { width: 92%; padding: 12px 0; }
-  .nav-links { top: 66px; }
-  .retreat-section { padding: 0 12px; }
-
-  /* Hero */
-  .page-hero { height: 85svh; min-height: 420px; }
-  .hero-title { font-size: 2.6rem; }
-
-  /* Editorial */
-  .editorial-grid { grid-template-columns: 1fr; gap: 28px; }
-  .editorial-grid.reverse .editorial-media { order: 0; }
-  .editorial-grid.reverse .editorial-text  { order: 0; }
-  .editorial-media { aspect-ratio: 3 / 2; }
-  .content-section { padding: 56px 0; }
-
-  /* About & Yoga */
-  .about-split { grid-template-columns: 1fr; gap: 24px; }
-  .about-split-head h2 { font-size: 3rem; }
-  .yoga-split-grid { grid-template-columns: 1fr; gap: 8px; }
-  .yoga-split-top { max-width: 100%; }
-
-  /* Testimonials */
-  .shelf-arrow { width: 30px; height: 30px; }
-
-  /* FAQ accordion — already single column on small screens */
-  .faq-cats { grid-template-columns: 1fr; }
-
-  /* Booking */
-  .treatment-pick-grid { grid-template-columns: 1fr; }
-  .massage-form { grid-template-columns: 1fr; }
-  .massage-form .payment-section-label,
-  .massage-form .payment-opt { grid-column: 1; }
-  .booking-form-wrap { padding: 16px 14px; }
-  .booking-confirm { padding: 20px 14px; }
-  .booking-place { gap: 12px 32px; }
-  .booking-form-summary { flex-direction: column; align-items: flex-start; gap: 10px; }
-  .booking-btn-row { flex-direction: column; }
-  .booking-btn-next, .booking-btn-back { width: 100%; }
-}
-
-/* ── Very small screens (≤ 360px) — catches 320 px ── */
-@media (max-width: 360px) {
-  h1 { font-size: 22px; }
-  h2 { font-size: 20px; margin-top: 40px; }
-  .hero-title { font-size: 2.1rem; }
-  .about-split-head h2 { font-size: 2.4rem; }
-  .yoga-split-top h2 { font-size: 2.4rem; }
-  .booking-panel { padding: 12px; }
-  .booking-card { padding: 12px; }
-  .service-row { padding: 12px 10px; }
-  .booking-form-wrap { padding: 12px 10px; }
-  .booking-confirm { padding: 14px 10px; }
-  .dates-grid-row { grid-template-columns: 72px 1fr 1fr; }
-  .dgr-dd { font-size: 14px; }
-  .dgr-time { font-size: 13px; }
-  .booking-btn-next, .booking-btn-back { font-size: 13px; }
-  .grid-journal { grid-template-columns: 1fr; }
-  .section-inner { padding: 0 16px; }
-  .service-card { padding: 20px 16px; }
-}
-
-/* ── Tablet (668 – 1024 px) ── */
-@media (min-width: 668px) and (max-width: 1024px) {
-  .navbar { width: 90%; }
-
-  /* Layout sections */
-  .about-split { grid-template-columns: 1fr 1.5fr; gap: 48px; }
-  .testimonial-card { width: calc((100% - 40px) / 2.5); }
-  .content-section { padding: clamp(56px, 8vw, 100px) 0; }
-}
-
-/* ── Desktop (≥ 1025 px) ── */
-@media (min-width: 1025px) {
-  .navbar { width: 90%; max-width: 1200px; margin: 0 auto; }
-  .nav-links { display: flex !important; flex-direction: row; position: static; width: auto; background: transparent; box-shadow: none; transform: none; padding: 0; gap: 28px; }
-  .hamburger { display: none; }
-}
-/* ─── Admin mode ──────────────────────────────────────────── */
-.main-sections { display: flex; flex-direction: column; }
-
-.admin-hidden-section { position: relative; opacity: 0.45; }
-.admin-hidden-badge {
-  position: absolute;
-  top: 8px; left: 50%;
-  transform: translateX(-50%);
-  z-index: 5;
-  background: #b47800;
-  color: #fff;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  padding: 4px 12px;
-  border-radius: 20px;
-  pointer-events: none;
-}
-
-.admin-editable {
-  outline: 2px dashed rgba(180,120,0,0.55);
-  border-radius: 3px;
-  cursor: text;
-  min-width: 20px;
-  transition: outline-color 0.2s;
-}
-.admin-editable:hover { outline-color: rgba(180,120,0,0.9); }
-.admin-editable:focus { outline: 2px solid #b47800; background: rgba(255,220,100,0.08); }
-
-.admin-img-wrap { position: relative; display: inline-block; cursor: pointer; }
-.admin-img-overlay {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(0,0,0,0.42);
-  opacity: 0;
-  transition: opacity 0.2s;
-  border-radius: 4px;
-}
-.admin-img-wrap:hover .admin-img-overlay { opacity: 1; }
-.admin-img-overlay span {
-  color: #fff;
-  font-size: 0.85rem;
-  letter-spacing: 0.05em;
-  background: rgba(0,0,0,0.5);
-  padding: 6px 14px;
-  border-radius: 20px;
-}
-
-/* Admin lock button in footer */
-.admin-lock-btn {
-  background: none; border: none;
-  font-size: 1.2rem; cursor: pointer; opacity: 0.4;
-  margin-top: 12px; display: block;
-  transition: opacity 0.2s;
-}
-.admin-lock-btn:hover { opacity: 1; }
-
-/* Admin floating bar */
-.admin-bar {
-  position: fixed; bottom: 0; left: 0; right: 0;
-  background: #1a1a1a;
-  color: #fff;
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 20px;
-  z-index: 9999;
-  flex-wrap: wrap;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.8rem;
-  box-shadow: 0 -2px 16px rgba(0,0,0,0.25);
-}
-.admin-font-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; flex: 1; }
-.admin-font-label { opacity: 0.6; white-space: nowrap; }
-.admin-font-select {
-  background: #333; color: #fff; border: 1px solid #555;
-  border-radius: 4px; padding: 3px 8px; font-size: 0.8rem;
-}
-.admin-bar-right { display: flex; align-items: center; gap: 8px; }
-.admin-save-btn {
-  background: #b47800; color: #fff; border: none;
-  border-radius: 4px; padding: 6px 16px; cursor: pointer;
-  font-size: 0.8rem; font-weight: 600;
-  transition: background 0.2s;
-}
-.admin-save-btn:hover:not(:disabled) { background: #d49000; }
-.admin-save-btn:disabled { opacity: 0.6; cursor: default; }
-.admin-logout-btn {
-  background: #333; color: #ccc; border: 1px solid #555;
-  border-radius: 4px; padding: 6px 14px; cursor: pointer;
-  font-size: 0.8rem;
-}
-.admin-logout-btn:hover { background: #444; }
-
-/* Admin login modal */
-.admin-login-modal {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.55);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 10000;
-}
-.admin-login-box {
-  background: #fff; border-radius: 10px;
-  padding: 36px 32px; min-width: 280px;
-  display: flex; flex-direction: column; gap: 14px;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.25);
-}
-.admin-login-box h3 { margin: 0; font-size: 1.1rem; }
-.admin-login-input {
-  border: 1px solid #ccc; border-radius: 6px;
-  padding: 10px 14px; font-size: 1rem;
-}
-.admin-login-input:focus { outline: 2px solid #b47800; border-color: transparent; }
-.admin-login-error { color: #c00; font-size: 0.85rem; margin: 0; }
-.admin-login-btn {
-  background: #b47800; color: #fff; border: none;
-  border-radius: 6px; padding: 10px; cursor: pointer;
-  font-size: 1rem; font-weight: 600;
-}
-.admin-login-btn:hover { background: #d49000; }
-
-/* Admin slots modal */
-.admin-slots-btn {
-  background: #2a5298; color: #fff; border: none;
-  border-radius: 4px; padding: 6px 14px; cursor: pointer;
-  font-size: 0.8rem; font-weight: 600;
-}
-.admin-slots-btn:hover { background: #3a62b8; }
-.admin-slots-box {
-  background: #fff; border-radius: 10px;
-  padding: 28px 28px 24px; width: min(560px, 94vw);
-  max-height: 85vh; overflow-y: auto;
-  display: flex; flex-direction: column; gap: 14px;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.25);
-}
-.admin-slots-box h3 { margin: 0; font-size: 1.1rem; }
-.admin-slots-hint { margin: 0; font-size: 0.82rem; color: #666; }
-.admin-slots-list { display: flex; flex-direction: column; gap: 6px; }
-.admin-slots-header {
-  display: grid; grid-template-columns: 1fr 110px 32px;
-  gap: 8px; font-size: 0.75rem; color: #888; font-weight: 600;
-  padding: 0 2px;
-}
-.admin-slots-row {
-  display: grid; grid-template-columns: 1fr 110px 32px;
-  gap: 8px; align-items: center;
-}
-.admin-slots-input {
-  border: 1px solid #ccc; border-radius: 5px;
-  padding: 6px 10px; font-size: 0.9rem; width: 100%;
-}
-.admin-slots-time { max-width: 110px; }
-.admin-slots-del {
-  background: none; border: 1px solid #ddd;
-  border-radius: 4px; font-size: 1.1rem; cursor: pointer;
-  color: #c00; width: 32px; height: 32px;
-  display: flex; align-items: center; justify-content: center;
-}
-.admin-slots-del:hover { background: #fee; }
-.admin-slots-add {
-  background: none; border: 1px dashed #aaa;
-  border-radius: 5px; padding: 7px; cursor: pointer;
-  font-size: 0.85rem; color: #555;
-  transition: background 0.15s;
-}
-.admin-slots-add:hover { background: #f5f5f5; }
-.admin-section-row {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 10px; padding: 8px 10px;
-  border: 1px solid #e5e5e5; border-radius: 6px;
-}
-.admin-section-row-label { font-size: 0.88rem; font-weight: 500; color: #333; }
-.admin-section-row-actions { display: flex; align-items: center; gap: 6px; }
-.admin-section-toggle {
-  border: 1px solid #ccc; border-radius: 5px;
-  background: #f0f7f0; color: #2a7a2a;
-  font-size: 0.78rem; font-weight: 500;
-  padding: 6px 10px; cursor: pointer; white-space: nowrap;
-}
-.admin-section-toggle.is-hidden { background: #fdf1e0; color: #b47800; }
-.admin-slots-actions {
-  display: flex; justify-content: flex-end; gap: 10px;
-  margin-top: 4px;
-}
-
-/* Instagram QR code */
-.instagram-qr-wrap {
-  display: inline-flex; flex-direction: column; align-items: center; gap: 8px;
-  text-decoration: none; color: #4a6b7c;
-  padding: 16px 20px; border: 1px solid #dde4e8; border-radius: 12px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-.instagram-qr-wrap:hover { border-color: #4a6b7c; box-shadow: 0 2px 12px rgba(74,107,124,0.15); }
-.instagram-qr-label {
-  font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
-  font-weight: 600; opacity: 0.7;
-}
-
-/* ─── Booking UX v2 ─────────────────────────────────────── */
-
-/* Step indicator */
-.booking-stepper {
-  display: flex; align-items: center; gap: 0;
-  margin-bottom: 28px;
-}
-.bks-step {
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
-  flex: 0 0 auto;
-}
-.bks-num {
-  width: 30px; height: 30px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.8rem; font-weight: 700;
-  border: 2px solid #ccc; color: #aaa;
-  transition: all 0.2s;
-}
-.bks-label {
-  font-size: 0.7rem; color: #aaa; white-space: nowrap;
-  transition: color 0.2s;
-}
-.bks-step.bks-active .bks-num { border-color: #4a6b7c; color: #4a6b7c; background: #f0f5f8; }
-.bks-step.bks-active .bks-label { color: #4a6b7c; font-weight: 600; }
-.bks-step.bks-done .bks-num { border-color: #4a6b7c; background: #4a6b7c; color: #fff; }
-.bks-step.bks-done .bks-label { color: #4a6b7c; }
-.bks-line {
-  flex: 1; height: 2px; background: #ddd; margin: 0 8px; margin-bottom: 20px;
-  transition: background 0.2s;
-}
-
-/* Treatment cards — cleaner layout with price upfront */
-.tpc-top {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  gap: 8px; margin-bottom: 6px;
-}
-.treatment-pick-card .treatment-pick-name {
-  font-size: 0.95rem; font-weight: 700; color: #2c3e50; line-height: 1.3;
-}
-.treatment-pick-card .treatment-pick-price {
-  font-size: 0.9rem; font-weight: 700; color: #4a6b7c;
-  white-space: nowrap; flex-shrink: 0;
-}
-.treatment-pick-card .treatment-pick-desc {
-  font-size: 0.78rem; color: #666; line-height: 1.6;
-}
-.treatment-pick-card.selected .treatment-pick-name,
-.treatment-pick-card.selected .treatment-pick-desc { color: inherit; }
-
-/* Next available slots */
-.booking-next-slots { margin-bottom: 20px; }
-.next-slot-row {
-  display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;
-}
-.next-slot-btn {
-  display: flex; flex-direction: column; align-items: center;
-  gap: 4px; padding: 16px 20px; min-width: 108px;
-  border: 2px solid #d8e3e9; border-radius: 14px;
-  background: #fff; cursor: pointer;
-  transition: border-color 0.15s, background 0.15s, transform 0.1s, box-shadow 0.15s;
-}
-.next-slot-btn:hover { border-color: #4a6b7c; background: #f5f9fb; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(74,107,124,0.15); }
-.next-slot-btn.selected { border-color: #4a6b7c; background: #4a6b7c; color: #fff; box-shadow: 0 4px 14px rgba(74,107,124,0.28); }
-.nsb-day { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; font-weight: 600; }
-.nsb-date { font-size: 0.9rem; font-weight: 500; }
-.nsb-time { font-size: 1.1rem; font-weight: 700; }
-.next-slot-btn.selected .nsb-day { opacity: 0.85; }
-
-/* Show all dates toggle */
-.booking-show-all {
-  background: none; border: none; cursor: pointer;
-  font-size: 0.82rem; color: #4a6b7c; text-decoration: underline;
-  padding: 8px 0; margin-top: 4px; display: block;
-}
-.booking-show-all:hover { opacity: 0.75; }
-
-/* No slots message */
-.booking-no-slots {
-  font-size: 0.85rem; color: #888; font-style: italic; margin: 8px 0;
-}
-
-/* Confirmation icon */
-.booking-confirm-icon {
-  width: 52px; height: 52px; border-radius: 50%;
-  background: #4a6b7c; color: #fff;
-  font-size: 1.4rem; display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 12px;
-}
-.course-list {
-  white-space: pre-line;
-}
-
-.course-title {
-  text-align: center;
-}
-.course-title {
-  font-weight: 700;
-}
-.course-list {
-  white-space: pre-line;
-}
-.cb-text .yoga-intro {
-  font-size: clamp(13px, 1.7vw, 15px);
-  color: #555;
-  line-height: 1.75;
-  margin: 0 0 12px;
-  max-width: 480px;
-}
-
-/* Mobile tweaks */
+/* ── Små mobiler (till 480 px) ── */
 @media (max-width: 480px) {
-  .next-slot-btn { min-width: 76px; padding: 10px 10px; }
+  .next-slot-btn { min-width: 76px; padding: 10px; }
   .bks-label { font-size: 0.62rem; }
 }
 
-.next-slot-btn:disabled { opacity: 0.35; cursor: default; transform: none; }
-.next-slot-btn:disabled:hover { border-color: #d8e3e9; background: #fff; }
-
-/* ─── Navbar: Boka-knapp ────────────────────────────────── */
-.nav-book-btn {
-  display: inline-flex; align-items: center;
-  background: #4a6b7c; color: #fff !important;
-  padding: 8px 18px; border-radius: 6px;
-  font-size: 0.82rem; font-weight: 600;
-  letter-spacing: 0.04em; text-decoration: none !important;
-  transition: background 0.2s, transform 0.15s;
-  flex-shrink: 0;
-  margin-left: 8px;
-}
-.nav-book-btn:hover { background: #3a5a6a; transform: translateY(-1px); text-decoration: none !important; }
-@media (max-width: 1024px) {
-  .nav-book-desktop { display: none; }
-}
-@media (min-width: 1025px) {
-  .nav-book-mobile { display: none; }
-}
-
-/* ─── Hero slideshow ────────────────────────────────────── */
-.page-hero { position: relative; overflow: hidden; }
-.hero-slide {
-  position: absolute; inset: 0;
-  background-size: cover; background-position: center;
-  opacity: 0;
-  transition: opacity 1.4s ease;
-}
-.hero-slide::after {
-  content: ""; position: absolute; inset: 0;
-  background: rgba(0,0,0,0.42);
-}
-.hero-slide-active { opacity: 1; }
-.page-hero-inner { position: relative; z-index: 1; }
-
-/* ─── Week schedule: pris ───────────────────────────────── */
-.wsr-price {
-  font-size: 0.78rem; font-weight: 600;
-  color: #4a6b7c; white-space: nowrap;
-  align-self: center;
-}
-
-/* ─── Recensioner: stjärnor ─────────────────────────────── */
-.testimonial-stars {
-  font-size: 0.85rem; color: #c8a84b;
-  letter-spacing: 2px; margin-bottom: 4px;
-}
-
-/* ─── Behandlingskort: hover ────────────────────────────── */
-.treatment-pick-card {
-  transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;
-}
-.treatment-pick-card:hover:not(.selected) {
-  box-shadow: 0 4px 20px rgba(74,107,124,0.15);
-  transform: translateY(-2px);
-  border-color: #4a6b7c;
-}
-.treatment-pick-card.selected {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 20px rgba(74,107,124,0.2);
-}
-button, input, select, textarea {
-  font-family: inherit;
-}
-.content-section h3,
-.cb-text h3 {
-  color: #5C7C8A;
-}
-.cb-text .course-title {
-  color: #5C7C8A;
-}
-.dates-grid-row { grid-template-columns: 84px repeat(3, 1fr); gap: 4px; }
-.dates-grid-label { padding: 6px; gap: 3px; }
-.dgr-wd, .dgr-mo { font-size: 10px; }
-.dgr-dd { font-size: 14px; }
-.dgr-slot { min-height: 40px; padding: 6px 4px; }
-.dgr-time { font-size: 13px; }
-.dgr-slot-spacer { min-height: 40px; }
-
-/* ─── Mer luft på mobil ─────────────────────────────────── */
-@media (max-width: 640px) {
-  .content-section { padding: clamp(52px, 12vw, 80px) 0; }
-  .section-inner { padding: 0 clamp(18px, 6vw, 28px); }
-  .checkerboard-section .cb-cell { min-height: clamp(260px, 60vw, 400px); }
-  .booking-wrap { padding: 20px 0; }
-  .week-schedule-section .section-inner { padding: 0 clamp(16px, 5vw, 24px); }
-  .testimonial-card { padding: clamp(18px, 5vw, 24px); }
+/* ── Mycket små mobiler (till 360 px) ── */
+@media (max-width: 360px) {
+  .hero-title { font-size: 2.1rem; }
+  .about-split-head h2 { font-size: 2.4rem; }
+  .booking-form-wrap { padding: 12px 10px; }
+  .booking-confirm { padding: 14px 10px; }
 }

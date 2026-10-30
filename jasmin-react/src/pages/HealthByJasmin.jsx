@@ -1,242 +1,59 @@
 import emailjs from "@emailjs/browser";
 import { createClient } from "@supabase/supabase-js";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import "../styles/app.css";
+
+/* ============================================================================
+   HEALTH BY JASMIN – hela hemsidan i en fil
+
+   Innehåll (sök på rubrikerna nedan med Ctrl/Cmd+F):
+     1. INSTÄLLNINGAR      – Supabase + EmailJS
+     2. BOKNINGSTIDER      – datum och klockslag
+     3. TEXTER             – all text på svenska (sv) och engelska (en)
+     4. MENY               – Navbar
+     5. BOKNINGSFORMULÄR   – själva bokningen (välj behandling, tid, uppgifter)
+     6. STARTSIDAN         – hero, om mig, ayurveda, yoga, citat, recensioner
+     7. BOKA-SIDAN         – egen sida (nås via #boka)
+     8. SIDFOT
+     9. APP                – väljer vilken sida som visas
+   ============================================================================ */
+
+/* ============================================================================
+   1. INSTÄLLNINGAR
+   ============================================================================ */
 
 const supabase = createClient(
   "https://besnxjxiadkapxgmabdz.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJlc254anhpYWRrYXB4Z21hYmR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzY0OTIsImV4cCI6MjA5NDI1MjQ5Mn0.VEH6QtlFEieEYtQTuWvXPNPVwAB_Lw19wk-NGYz0oNY",
 );
 
-// ── Admin ──────────────────────────────────────────────────────────────────────
-const ADMIN_HASH =
-  "912c619de98942e7e4466cd5b6cce46e710b60c59f6c0cd2356f256043d9aaf1";
-
-async function hashPassword(pwd) {
-  const buf = await crypto.subtle.digest(
-    "SHA-256",
-    new TextEncoder().encode(pwd),
-  );
-  return Array.from(new Uint8Array(buf))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-}
-
-const CONTENT_KEY = "hbj_content_v2";
-function loadLocalContent() {
-  try {
-    return JSON.parse(localStorage.getItem(CONTENT_KEY) || "null");
-  } catch {
-    return null;
-  }
-}
-function persistLocal(content) {
-  try {
-    localStorage.setItem(CONTENT_KEY, JSON.stringify(content));
-  } catch (e) {
-    console.warn("localStorage save failed", e);
-  }
-}
-
-function deepMerge(base, overrides) {
-  if (!overrides || typeof overrides !== "object") return base;
-  // Array base + object override with numeric string keys → merge into array slots
-  if (Array.isArray(base) && !Array.isArray(overrides)) {
-    const result = [...base];
-    for (const key of Object.keys(overrides)) {
-      const idx = Number(key);
-      if (!isNaN(idx)) {
-        result[idx] =
-          overrides[key] &&
-          typeof overrides[key] === "object" &&
-          result[idx] &&
-          typeof result[idx] === "object"
-            ? deepMerge(result[idx], overrides[key])
-            : overrides[key];
-      }
-    }
-    return result;
-  }
-  const result = { ...base };
-  for (const key of Object.keys(overrides)) {
-    if (
-      typeof overrides[key] === "object" &&
-      overrides[key] !== null &&
-      !Array.isArray(overrides[key]) &&
-      typeof base[key] === "object" &&
-      base[key] !== null &&
-      !Array.isArray(base[key])
-    ) {
-      result[key] = deepMerge(base[key], overrides[key]);
-    } else {
-      result[key] = overrides[key];
-    }
-  }
-  return result;
-}
-
-function setNestedValue(obj, path, value) {
-  const keys = path.split(".");
-  let cur = obj;
-  for (let i = 0; i < keys.length - 1; i++) {
-    if (!cur[keys[i]] || typeof cur[keys[i]] !== "object") cur[keys[i]] = {};
-    cur = cur[keys[i]];
-  }
-  cur[keys[keys.length - 1]] = value;
-}
-
-const HEADING_FONTS = [
-  "Cormorant Garamond",
-  "Playfair Display",
-  "Lora",
-  "Libre Baskerville",
-  "DM Serif Display",
-  "Montserrat",
-];
-const BODY_FONTS = [
-  "Inter",
-  "DM Sans",
-  "Lato",
-  "Nunito",
-  "Raleway",
-  "Source Sans 3",
-];
-
-const SECTION_DEFS = [
-  { id: "hero", label: "Hero (överst)" },
-  { id: "om-mig", label: "Om mig" },
-  { id: "ayurveda-yoga", label: "Ayurveda & Yoga" },
-  { id: "boka", label: "Schema & bokning" },
-  { id: "quote", label: "Citat" },
-  { id: "testimonials", label: "Recensioner" },
-  { id: "faq", label: "FAQ" },
-];
-const DEFAULT_SECTION_ORDER = SECTION_DEFS.map((s) => s.id);
-
-function SectionWrap({ id, order, hidden, isAdmin, children }) {
-  const isHidden = hidden.includes(id);
-  if (!isAdmin && isHidden) return null;
-  const idx = order.indexOf(id);
-  return (
-    <div
-      style={{ order: idx === -1 ? 999 : idx }}
-      className={isHidden ? "admin-hidden-section" : undefined}
-    >
-      {isHidden && isAdmin && (
-        <div className="admin-hidden-badge">Dold för besökare</div>
-      )}
-      {children}
-    </div>
-  );
-}
-
-function loadGoogleFont(name) {
-  if (!name) return;
-  const id = "gf-" + name.replace(/\s+/g, "-").toLowerCase();
-  if (document.getElementById(id)) return;
-  const link = document.createElement("link");
-  link.id = id;
-  link.rel = "stylesheet";
-  link.href = `https://fonts.googleapis.com/css2?family=${name.replace(/ /g, "+")}:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap`;
-  document.head.appendChild(link);
-}
-
-function applyFonts({ heading, body }) {
-  let el = document.getElementById("admin-font-override");
-  if (!el) {
-    el = document.createElement("style");
-    el.id = "admin-font-override";
-    document.head.appendChild(el);
-  }
-  const rules = [];
-  if (heading) {
-    loadGoogleFont(heading);
-    rules.push(`h1,h2,h3,h4{font-family:'${heading}',serif!important}`);
-  }
-  if (body) {
-    loadGoogleFont(body);
-    rules.push(
-      `body,p,li,span,button,input,select,textarea{font-family:'${body}',sans-serif!important}`,
-    );
-  }
-  el.textContent = rules.join("\n");
-}
-
-const AdminCtx = createContext({
-  isAdmin: false,
-  onEdit: () => {},
-  onImageUpload: () => {},
-});
-
-function EditableText({ path, value, tag: Tag = "span", className }) {
-  const { isAdmin, onEdit } = useContext(AdminCtx);
-  if (!isAdmin)
-    return className ? (
-      <Tag className={className}>{value}</Tag>
-    ) : (
-      <Tag>{value}</Tag>
-    );
-  return (
-    <Tag
-      className={(className ? className + " " : "") + "admin-editable"}
-      contentEditable
-      suppressContentEditableWarning
-      spellCheck={false}
-      onBlur={(e) => {
-        const v = e.currentTarget.innerText.trim();
-        if (v !== value) onEdit(path, v);
-      }}
-      dangerouslySetInnerHTML={{ __html: value }}
-    />
-  );
-}
-
-function EditableImage({ imgKey, src, alt, className, wrapStyle }) {
-  const { isAdmin, onImageUpload } = useContext(AdminCtx);
-  const inputRef = useRef(null);
-  if (!isAdmin) return <img src={src} alt={alt} className={className} />;
-  return (
-    <div
-      className="admin-img-wrap"
-      style={wrapStyle}
-      onClick={() => inputRef.current?.click()}
-      title="Klicka för att byta bild"
-    >
-      <img src={src} alt={alt} className={className} />
-      <div className="admin-img-overlay">
-        <span>Byt bild</span>
-      </div>
-      <input
-        ref={inputRef}
-        type="file"
-        accept="image/*"
-        style={{ display: "none" }}
-        onChange={(e) => {
-          if (e.target.files[0]) onImageUpload(imgKey, e.target.files[0]);
-        }}
-      />
-    </div>
-  );
-}
-
 const EMAILJS_SERVICE_ID = "service_mjw4cpb";
-const EMAILJS_TEMPLATE_BIRKA = "template_8rmxsm9";
-const EMAILJS_TEMPLATE_ASOG = "template_m9afbud";
+const EMAILJS_TEMPLATE = "template_8rmxsm9";
 const EMAILJS_PUBLIC_KEY = "y7Yu8QbgFj3NM0VeM";
 
-// ── Booking dates & slots (language-neutral) ───────────────────────────────────
+// Bilder på startsidan
+const HERO_IMAGES = [
+  "/assets/header.jpeg",
+  "/assets/ayurveda.jpg",
+  "/assets/ashtanga.jpeg",
+];
 
-// Torsdagar — Birkagatan 23. Tre tider per kväll, 55 min per behandling
-// med 15 min mellan. Torsdagar 15 okt – 17 dec 2026 (veckan före 19 dec).
+/* ============================================================================
+   2. BOKNINGSTIDER
+   ============================================================================ */
+
+// Tre tider per torsdagskväll, 55 min per behandling med 15 min mellan.
 const BIRKA_SLOTS = [
   { t: "18:00", e: "18:55" },
   { t: "19:15", e: "20:10" },
   { t: "20:30", e: "21:25" },
 ];
-// Torsdagar som redan är bokade på annan plats visas som "Bokad"
+
+// Torsdagar som är bokade på annan plats (visas som "Bokad")
 const BOOKED_DATES = ["2026-10-22", "2026-11-12", "2026-11-26"];
 
+// Bygger listan med alla torsdagar 15 okt – 17 dec 2026
 const TORSDAG_ENTRIES = [];
 for (
   const d = new Date(2026, 9, 15);
@@ -250,31 +67,7 @@ for (
   );
 }
 
-// Torsdagar — Åsögatan 166. Tid 17:45–18:40. Bara massage (ej rådgivning).
-const ASOGATAN_ENTRIES = [
-  {
-    date: new Date(2026, 8, 17),
-    slots: [{ t: "17:45", e: "18:40" }],
-    booked: true,
-  },
-  { date: new Date(2026, 8, 24), slots: [{ t: "17:45", e: "18:40" }] },
-  {
-    date: new Date(2026, 9, 22),
-    slots: [{ t: "17:45", e: "18:40" }],
-    booked: true,
-  },
-  { date: new Date(2026, 10, 12), slots: [{ t: "17:45", e: "18:40" }] },
-  { date: new Date(2026, 10, 19), slots: [{ t: "17:45", e: "18:40" }] },
-  {
-    date: new Date(2026, 10, 26),
-    slots: [{ t: "17:45", e: "18:40" }],
-    booked: true,
-  },
-  { date: new Date(2026, 11, 3), slots: [{ t: "17:45", e: "18:40" }] },
-  { date: new Date(2026, 11, 10), slots: [{ t: "17:45", e: "18:45" }] },
-];
-
-// Swedish months always used in emails to Jasmin
+// Svenska månader som alltid används i mejlet till Jasmin
 const SV_MONTHS = [
   "jan",
   "feb",
@@ -290,16 +83,22 @@ const SV_MONTHS = [
   "dec",
 ];
 
-// ── Translations ───────────────────────────────────────────────────────────────
+/* ============================================================================
+   3. TEXTER
+   ============================================================================ */
 
 const TRANSLATIONS = {
+  /* ───────────── SVENSKA ───────────── */
   sv: {
     nav: {
       aboutMe: "Om mig",
       yoga: "Yoga & Ayurveda",
       ayurveda: "Ayurveda",
       book: "Boka",
-      faq: "FAQ",
+    },
+    buttons: {
+      book: "Boka",
+      interest: "Intresseanmälan",
     },
     hero: {
       eyebrow: "Yoga & Ayurveda · Stockholm · 2015",
@@ -311,21 +110,6 @@ const TRANSLATIONS = {
       p1: "Jag är Jasmin, personen bakom Health by Jasmin, ett enmannaföretag baserat i Stockholm, Sverige. Jag har praktiserat Ayurveda och Yoga sedan 2013. Det som först drog mig till både yoga och ayurveda var strukturen, rytmen och sättet som båda praktikerna sätter saker i fokus, ibland mjukt, ibland med kraft.",
       p2: "Jag förälskade mig i deras holistiska förhållningssätt och hur de utmanar dig att se på dig själv och dina vanor från en helt annan vinkel. År 2015/2016 startade jag Health by Jasmin för att skapa ett utrymme där jag kunde dela det som verkligen har resonerat med mig under åren.",
       p3: "Det här gör jag i små doser genom Ayurveda & Yoga kurser, Ayurvediska behandlingar och Retreats där båda får ta plats.",
-    },
-    yoga: {
-      label: "Kurs",
-      intro:
-        "Lär dig förstå dig själv, din kropp och dina vanor, och rör på dig i en lugn och skön yogaklass.",
-      yogaAyurvedaTitle: "Yoga & Ayurveda",
-      yogaAyurvedaSub: "Bokning öppnar snart",
-      yogaAyurvedaP1:
-        "Ayurveda är en av världens äldsta kunskapstraditioner om hälsa. På den här kursen lär du dig förstå dig själv, din kropp och dina vanor, och får samtidigt röra på dig i en lugn och skön yogaklass.",
-      yogaAyurvedaP2Title: "Varje tillfälle är 90 minuter och har två delar:",
-      yogaAyurvedaP2:
-        "30 min ayurveda: du lär dig något nytt om ayurveda.\n60 min yoga: flödesklass med stående och sittande positioner som är bra för vata, pitta och kapha (tridoshisk). Vi avslutar alltid med kroppsscanning.",
-      yogaAyurvedaP3Title: "Kursens innehåll",
-      yogaAyurvedaP3:
-        "Tillfälle 1 · 17:30–19:00\nAyurveda, vad är det?\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 2 · 17:30–19:00\nDoshorna, vårt utseende och våra personligheter\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 3 · 17:30–19:00\nDoshorna, vår fysik och våra sinnen\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 4 · 17:30–19:00\nLivets rytmer\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 5 · 17:30–19:00\nAgni och ama\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 6 · 17:30–19:00\nMat som medicin\nYoga (tridoshisk) och kroppsscanning",
     },
     ayurveda: {
       label: "Hälsa & välmående",
@@ -340,49 +124,41 @@ const TRANSLATIONS = {
       radgivningP1:
         "En individuell konsultation där vi läser pulsen och undersöker egenskaper som tillhör vata, pitta och kapha. Utifrån det samtalar vi om ditt välmående, din kropp och din livssituation. Du får sedan egna råd och tips som stödjer eventuella obalanser och som är anpassade efter just dig. Det kan handla om rutiner, sömn, dygnsrytm, mat och mycket mer.",
     },
-    booking: {
-      title: "Boka",
-      plats: "Plats",
-      dag: "Dag",
-      sondagar: "Söndagar",
-      torsdagar: "Torsdagar kväll",
-      kvallstider: "Ons & fre kväll",
-      pausad: "Tillfälligt pausad",
-      ingenDusch: "Dusch ej tillgänglig på denna plats",
-      duschFinns: "Dusch finns tillgänglig",
-      valjBehandling: "Välj behandling",
-      valjDatum: "Välj datum",
-      andra: "Ändra",
-      tillbaka: "Tillbaka",
-      bekrafta: "Bekräfta bokning",
-      skickar: "Skickar...",
-      gorNyBokning: "Gör en ny bokning",
-      name: "Namn",
-      namePh: "För- och efternamn",
-      email: "E-post",
-      emailPh: "din@email.se",
-      phone: "Telefon",
-      phonePh: "07X XXX XX XX",
-      betalning: "Betalning",
-      betalningTitle: "Swish eller faktura",
-      betalningDesc:
-        "Betalning sker via Swish eller faktura. Faktura finns för dig som vill använda friskvårdsbidrag.",
-      fullbooked: "Bokad",
-      duration: "55 min",
-      confirmTitle: "Bokning bekräftad",
-      confirmSub: (name) => `Tack ${name}! Din bokning är registrerad.`,
-      confirmEmailNote:
-        "Du har fått ett bekräftelsemejl till den e-postadress du angav i bokningen.",
-      errorMsg: "Något gick fel. Kontakta healthbyjasmin@gmail.com",
-      behandlingHint: "Välj en behandling ovan för att gå vidare.",
-      stepTreatmentTime: "Behandling & tid",
-      stepDetails: "Uppgifter",
-      nextSlotsLabel: "Nästa lediga tider",
-      showAllDates: "Visa alla datum ↓",
-      hideAllDates: "Dölj alla datum ↑",
-      noSlotsMsg:
-        "Inga lediga tider just nu – hör av dig på Instagram eller mail.",
+    yoga: {
+      label: "Kurs",
+      intro:
+        "Lär dig förstå dig själv, din kropp och dina vanor, och rör på dig i en lugn och skön yogaklass.",
+      sub: "Bokning öppnar snart",
+      p1: "Ayurveda är en av världens äldsta kunskapstraditioner om hälsa. På den här kursen lär du dig förstå dig själv, din kropp och dina vanor, och får samtidigt röra på dig i en lugn och skön yogaklass.",
+      p2Title: "Varje tillfälle är 90 minuter och har två delar:",
+      p2: "30 min ayurveda: du lär dig något nytt om ayurveda.\n60 min yoga: flödesklass med stående och sittande positioner som är bra för vata, pitta och kapha (tridoshisk). Vi avslutar alltid med kroppsscanning.",
+      p3Title: "Kursens innehåll",
+      p3: "Tillfälle 1 · 17:30–19:00\nAyurveda, vad är det?\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 2 · 17:30–19:00\nDoshorna, vårt utseende och våra personligheter\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 3 · 17:30–19:00\nDoshorna, vår fysik och våra sinnen\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 4 · 17:30–19:00\nLivets rytmer\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 5 · 17:30–19:00\nAgni och ama\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 6 · 17:30–19:00\nMat som medicin\nYoga (tridoshisk) och kroppsscanning",
     },
+    quote: '"Rörelse är medicin för kroppen, stillhet är medicin för sinnet."',
+    reviews: {
+      label: "Recensioner",
+      title: "Vad våra kunder säger",
+      items: [
+        {
+          text: '"Den ayurvediska massagen var precis vad jag behövde. Djup avslappning och en verkligt professionell behandling. Jag lämnade med en känsla av fullständig återhämtning."',
+          author: "Frida",
+        },
+        {
+          text: '"Ayurveda & Yoga klassen med Jasmin är en av veckorutinens höjdpunkter. Lugn, och trygg. Jag märker skillnaden i kroppen direkt efteråt."',
+          author: "Anna",
+        },
+        {
+          text: '"Jasmin har ett unikt sätt att förmedla både yoga och ayurveda."',
+          author: "Juan",
+        },
+        {
+          text: '"Har fått en underbar varm skön ayurveda massage av Jasmin. I en lugn trygg och mysig lokal. Jag kommer verkligen unna mig att komma tillbaka igen."',
+          author: "Maria",
+        },
+      ],
+    },
+    // Behandlingarna som visas på Boka-sidan
     treatments: [
       {
         id: "abhyanga",
@@ -413,6 +189,77 @@ const TRANSLATIONS = {
           "Enskilt samtal där jag läser din puls och din konstitution. Du får enkla, personliga råd om kost, sömn och rutiner.",
       },
     ],
+    // Boka-sidans rubriker och de tre raderna
+    bookPage: {
+      label: "Boka",
+      title: "Boka din tid",
+      colLabel: "Välj vad du vill boka",
+      openLabel: "Boka",
+      closeLabel: "Stäng",
+      rows: [
+        {
+          id: "massage",
+          type: "Ayurvedisk massage",
+          loc: "(Vasastan · ej dusch)",
+          time: "55 min",
+          price: "",
+        },
+        {
+          id: "radgivning",
+          type: "Ayurvedisk hälsorådgivning",
+          loc: "(Vasastan)",
+          time: "55 min",
+          price: "",
+        },
+        {
+          id: "kurs",
+          type: "Yoga & Ayurveda kurs",
+          loc: "",
+          time: "6 tillfällen · 90 min",
+          price: "",
+        },
+      ],
+      courseText:
+        "Bokningen till kursen öppnar snart. Skicka en intresseanmälan så hör jag av mig när det är dags.",
+      courseMailLabel: "Skicka intresseanmälan",
+      courseMailSubject: "Intresseanmälan Yoga & Ayurveda kurs",
+    },
+    booking: {
+      andra: "Ändra",
+      tillbaka: "Tillbaka",
+      bekrafta: "Bekräfta bokning",
+      skickar: "Skickar...",
+      name: "Namn",
+      namePh: "För- och efternamn",
+      email: "E-post",
+      emailPh: "din@email.se",
+      phone: "Telefon",
+      phonePh: "07X XXX XX XX",
+      betalning: "Betalning",
+      betalningTitle: "Swish eller faktura",
+      betalningDesc:
+        "Betalning sker via Swish eller faktura. Faktura finns för dig som vill använda friskvårdsbidrag.",
+      fullbooked: "Bokad",
+      confirmTitle: "Bokning bekräftad",
+      confirmSub: (name) => `Tack ${name}! Din bokning är registrerad.`,
+      confirmEmailNote:
+        "Du har fått ett bekräftelsemejl till den e-postadress du angav i bokningen.",
+      confirmTreatment: "Behandling",
+      confirmDate: "Datum",
+      confirmTime: "Tid",
+      confirmAddress: "Adress",
+      errorMsg: "Något gick fel. Kontakta healthbyjasmin@gmail.com",
+      slotTakenMsg:
+        "Den här tiden bokades precis av någon annan. Välj en annan tid.",
+      behandlingHint: "Välj en behandling ovan för att gå vidare.",
+      stepTreatmentTime: "Behandling & tid",
+      stepDetails: "Uppgifter",
+      nextSlotsLabel: "Nästa lediga tider",
+      showAllDates: "Visa alla datum ↓",
+      hideAllDates: "Dölj alla datum ↑",
+      noSlotsMsg:
+        "Inga lediga tider just nu – hör av dig på Instagram eller mail.",
+    },
     months: [
       "jan",
       "feb",
@@ -428,136 +275,29 @@ const TRANSLATIONS = {
       "dec",
     ],
     days: ["Sön", "Mån", "Tis", "Ons", "Tor", "Fre", "Lör"],
-    quote: '"Rörelse är medicin för kroppen, stillhet är medicin för sinnet."',
-    reviews: {
-      label: "Recensioner",
-      title: "Vad våra kunder säger",
-      items: [
-        {
-          text: '"Den ayurvediska massagen var precis vad jag behövde. Djup avslappning och en verkligt professionell behandling. Jag lämnade med en känsla av fullständig återhämtning."',
-          author: "Frida",
-        },
-        {
-          text: '"Ayurveda & Yoga klassen med Jasmin är en av veckorutinens höjdpunkter. Lugn, och trygg. Jag märker skillnaden i kroppen direkt efteråt."',
-          author: "Anna",
-        },
-        {
-          text: '"Jasmin har ett unikt sätt att förmedla både yoga och ayurveda."',
-          author: "Juan",
-        },
-        {
-          text: '"Har fått en underbar varm skön ayurveda massage av Jasmin. I en lugn trygg och mysig lokal. Jag kommer verkligen unna mig att komma tillbaka igen."',
-          author: "Maria",
-        },
-      ],
-      instagram: "Följ @healthbyjasmin",
-    },
-    faq: {
-      label: "Vanliga frågor",
-      title: "FAQ",
-      categories: [
-        {
-          label: "Bokning & betalning",
-          items: [
-            {
-              q: "Hur bokar jag en massage eller hälsorådgivning?",
-              a: "Du bokar direkt på den här sidan. Klicka på 'Boka' i schemat, välj behandling, välj en av de närmaste lediga tiderna och fyll i dina uppgifter. Klart på under en minut.",
-            },
-            {
-              q: "Hur betalas behandlingen?",
-              a: "Betalning sker via Swish eller faktura. Väljer du faktura kan du använda friskvårdsbidraget.",
-            },
-            {
-              q: "Kan jag använda friskvårdsbidrag?",
-              a: "Ja. Välj faktura som betalningsalternativ i bokningen så skickas en faktura som du kan använda för att ansöka om friskvårdsbidrag via din arbetsgivare.",
-            },
-            {
-              q: "Vad gäller vid avbokning?",
-              a: "Avbokning görs senast 24 timmar innan. Mejla healthbyjasmin@gmail.com.",
-            },
-            {
-              q: "Var hålls behandlingarna?",
-              a: "Ayurvedisk massage och hälsorådgivning hålls torsdagskvällar på Birkagatan 23 (ej dusch, 18:00–21:25).",
-            },
-          ],
-        },
-        {
-          label: "Massage & rådgivning",
-          items: [
-            {
-              q: "Vilken massage ska jag välja?",
-              a: "Abhyanga ges i långa, svepande rörelser med varm sesamolja – den ger värme, grundning och närvaro, känslan efteråt är samlad och landad. Vishesh ges med mer tryck i djupgående drag – den mjukar upp muskler, frigör spänningar och ger kroppen lätthet. Osäker? Boka Abhyanga som ett första steg.",
-            },
-            {
-              q: "Hur lång är en massage?",
-              a: "En massagebehandling är 55 minuter. Räkna med att vara på plats lite i förväg för att landa ordentligt.",
-            },
-            {
-              q: "Vad ingår i massagen?",
-              a: "Massagen utförs med varm sesamolja och inkluderar huvud, ansikte, kropp fram och baksida samt fötter. Du torkas av med handduk efter behandlingen.",
-            },
-            {
-              q: "Blir man oljig av massagen?",
-              a: "Ja, oljan är en viktig del av behandlingen och sitter kvar i huden. Det finns dusch på plats med handduk, schampo och duschcreme. Vi rekommenderar också att duscha ordentligt hemma efteråt.",
-            },
-            {
-              q: "Vad ska jag ha med mig?",
-              a: "Ta med eller kom i oömma kläder och ett ombyte. Underkläder används under behandlingen.",
-            },
-            {
-              q: "Kan jag boka massage om jag är gravid?",
-              a: "Ayurvedisk massage rekommenderas inte under de tre första månaderna. Kontakta gärna healthbyjasmin@gmail.com så kan vi hitta ett alternativ som passar dig.",
-            },
-            {
-              q: "Vad är en ayurvedisk hälsorådgivning?",
-              a: "En individuell konsultation på ca 60 minuter där vi läser pulsen och undersöker din konstitution (dosha). Utifrån det samtalar vi om din hälsa, dina vanor och din vardag och du får konkreta råd om kost, rutiner, sömn och livsstil anpassade just för dig.",
-            },
-          ],
-        },
-      ],
-    },
-    weekSchedule: {
-      behandlingarItems: [
-        {
-          day: "Torsdag",
-          time: "55 min",
-          type: "Ayurvedisk massage",
-          price: "750 kr",
-          id: "massage",
-        },
-        {
-          day: "Torsdag",
-          time: "55 min",
-          type: "Ayurvedisk hälsorådgivning",
-          price: "695 kr",
-          id: "radgivning",
-        },
-      ],
-      bookLabel: "Boka",
-      closeLabel: "Stäng",
-      label: "Schema & bokning",
-      title: "Veckans behandlingar",
-      colBehandlingar: "Behandlingar",
-      classTip: "",
-    },
     footer: {
       location: "Stockholm",
       tagline: "Yoga & Ayurveda · Stockholm",
       linkAboutMe: "Om mig",
       linkAyurveda: "Ayurveda",
       linkYoga: "Yoga",
+      linkBook: "Boka",
       copyright: "© 2015 Health by Jasmin",
       instagramHandle: "@healthbyjasmin",
     },
   },
 
+  /* ───────────── ENGELSKA ───────────── */
   en: {
     nav: {
       aboutMe: "About me",
       yoga: "Yoga",
       ayurveda: "Ayurveda",
       book: "Book",
-      faq: "FAQ",
+    },
+    buttons: {
+      book: "Book",
+      interest: "Register interest",
     },
     hero: {
       eyebrow: "Yoga & Ayurveda · Stockholm · 2015",
@@ -569,21 +309,6 @@ const TRANSLATIONS = {
       p1: "I am Jasmin, the person behind Health by Jasmin, a sole entrepreneur based in Stockholm, Sweden. I have practised Ayurveda and Yoga since 2013. What first drew me to both yoga and ayurveda was the structure, the rhythm and the way both practices bring things into focus, sometimes gently, sometimes with force.",
       p2: "I fell in love with their holistic approach and how they challenge you to look at yourself and your habits from a completely different angle. In 2015/2016 I started Health by Jasmin to create a space where I could share what has truly resonated with me over the years.",
       p3: "I do this in small doses through Ayurveda and Yoga courses, Ayurvedic treatments and retreats containing them both.",
-    },
-    yoga: {
-      label: "Course",
-      intro:
-        "Learn to understand yourself, your body and your habits, while moving in a calm and enjoyable yoga class.",
-      yogaAyurvedaTitle: "Yoga & Ayurveda",
-      yogaAyurvedaSub: "More info coming soon",
-      yogaAyurvedaP1:
-        "Ayurveda is one of the world's oldest traditions of knowledge about health. In this course you learn to understand yourself, your body and your habits, while moving in a calm and enjoyable yoga class.",
-      yogaAyurvedaP2Title: "Each session is 90 minutes and has two parts:",
-      yogaAyurvedaP2:
-        "30 min ayurveda: you learn something new about ayurveda.\n60 min yoga: a flow class with standing and seated poses that benefit vata, pitta and kapha (tridoshic). We always finish with a body scan.",
-      yogaAyurvedaP3Title: "Course content",
-      yogaAyurvedaP3:
-        "Session 1 · 17:30–19:00\nWhat is ayurveda?\nYoga (tridoshic) and body scan\n\nSession 2 · 17:30–19:00\nThe doshas, our appearance and personalities\nYoga (tridoshic) and body scan\n\nSession 3 · 17:30–19:00\nThe doshas, our physiology and senses\nYoga (tridoshic) and body scan\n\nSession 4 · 17:30–19:00\nThe rhythms of life\nYoga (tridoshic) and body scan\n\nSession 5 · 17:30–19:00\nAgni and ama\nYoga (tridoshic) and body scan\n\nSession 6 · 17:30–19:00\nFood as medicine\nYoga (tridoshic) and body scan",
     },
     ayurveda: {
       label: "Health & wellbeing",
@@ -598,48 +323,40 @@ const TRANSLATIONS = {
       radgivningP1:
         "An individual consultation where we read the pulse and look for qualities belonging to vata, pitta and kapha. Based on that, we talk about your wellbeing, your body and your life situation. You then receive personal advice and tips tailored to support any imbalances and adapted to you specifically. This may include routines, sleep, daily rhythm, food and much more.",
     },
-    booking: {
-      title: "Book",
-      plats: "Location",
-      dag: "Day",
-      sondagar: "Sundays",
-      torsdagar: "Thursday evenings",
-      kvallstider: "Wed & Fri evenings",
-      pausad: "Temporarily paused",
-      ingenDusch: "Shower not available at this location",
-      duschFinns: "Shower available",
-      valjBehandling: "Choose treatment",
-      valjDatum: "Choose date",
-      andra: "Change",
-      tillbaka: "Back",
-      bekrafta: "Confirm booking",
-      skickar: "Sending...",
-      gorNyBokning: "Make a new booking",
-      name: "Name",
-      namePh: "First and last name",
-      email: "Email",
-      emailPh: "your@email.com",
-      phone: "Phone",
-      phonePh: "07X XXX XX XX",
-      betalning: "Payment",
-      betalningTitle: "Swish or invoice",
-      betalningDesc:
-        "Payment via Swish or invoice. Invoice is available for those who want to use their wellness benefit (friskvårdsbidrag).",
-      fullbooked: "Booked",
-      duration: "55 min",
-      confirmTitle: "Booking confirmed",
-      confirmSub: (name) => `Thank you ${name}! Your booking is registered.`,
-      confirmEmailNote:
-        "A confirmation email has been sent to the email address you provided.",
-      errorMsg: "Something went wrong. Contact healthbyjasmin@gmail.com",
-      behandlingHint: "Choose a treatment above to continue.",
-      stepTreatmentTime: "Treatment & time",
-      stepDetails: "Your details",
-      nextSlotsLabel: "Next available times",
-      showAllDates: "Show all dates ↓",
-      hideAllDates: "Hide all dates ↑",
-      noSlotsMsg:
-        "No available times right now – reach out on Instagram or email.",
+    yoga: {
+      label: "Course",
+      intro:
+        "Learn to understand yourself, your body and your habits, while moving in a calm and enjoyable yoga class.",
+      sub: "More info coming soon",
+      p1: "Ayurveda is one of the world's oldest traditions of knowledge about health. In this course you learn to understand yourself, your body and your habits, while moving in a calm and enjoyable yoga class.",
+      p2Title: "Each session is 90 minutes and has two parts:",
+      p2: "30 min ayurveda: you learn something new about ayurveda.\n60 min yoga: a flow class with standing and seated poses that benefit vata, pitta and kapha (tridoshic). We always finish with a body scan.",
+      p3Title: "Course content",
+      p3: "Session 1 · 17:30–19:00\nWhat is ayurveda?\nYoga (tridoshic) and body scan\n\nSession 2 · 17:30–19:00\nThe doshas, our appearance and personalities\nYoga (tridoshic) and body scan\n\nSession 3 · 17:30–19:00\nThe doshas, our physiology and senses\nYoga (tridoshic) and body scan\n\nSession 4 · 17:30–19:00\nThe rhythms of life\nYoga (tridoshic) and body scan\n\nSession 5 · 17:30–19:00\nAgni and ama\nYoga (tridoshic) and body scan\n\nSession 6 · 17:30–19:00\nFood as medicine\nYoga (tridoshic) and body scan",
+    },
+    quote:
+      '"Movement is medicine for the body, stillness is medicine for the mind."',
+    reviews: {
+      label: "Reviews",
+      title: "What our clients say",
+      items: [
+        {
+          text: '"The ayurvedic massage was exactly what I needed. Deep relaxation and a truly professional treatment. I left with a feeling of complete recovery."',
+          author: "Frida",
+        },
+        {
+          text: '"The ayurveda and yoga class with Jasmin is one of the highlights of my weekly routine."',
+          author: "Anna",
+        },
+        {
+          text: '"Jasmin has a unique way of conveying both yoga and ayurveda."',
+          author: "Juan",
+        },
+        {
+          text: '"I had a wonderful, warm and soothing ayurvedic massage with Jasmin. In a calm, safe and cosy space. I will definitely treat myself to coming back again."',
+          author: "Maria",
+        },
+      ],
     },
     treatments: [
       {
@@ -671,6 +388,76 @@ const TRANSLATIONS = {
           "Individual session where I read your pulse and constitution. You get simple, personal advice on food, sleep and routines.",
       },
     ],
+    bookPage: {
+      label: "Book",
+      title: "Book your time",
+      colLabel: "Choose what you want to book",
+      openLabel: "Book",
+      closeLabel: "Close",
+      rows: [
+        {
+          id: "massage",
+          type: "Ayurvedic massage",
+          loc: "(Vasastan · no shower)",
+          time: "55 min",
+          price: "",
+        },
+        {
+          id: "radgivning",
+          type: "Ayurvedic health consultation",
+          loc: "(Vasastan)",
+          time: "55 min",
+          price: "",
+        },
+        {
+          id: "kurs",
+          type: "Yoga & Ayurveda course",
+          loc: "",
+          time: "6 sessions · 90 min",
+          price: "",
+        },
+      ],
+      courseText:
+        "Booking for the course opens soon. Send an expression of interest and I will get back to you when it is time.",
+      courseMailLabel: "Send expression of interest",
+      courseMailSubject: "Interest in Yoga & Ayurveda course",
+    },
+    booking: {
+      andra: "Change",
+      tillbaka: "Back",
+      bekrafta: "Confirm booking",
+      skickar: "Sending...",
+      name: "Name",
+      namePh: "First and last name",
+      email: "Email",
+      emailPh: "your@email.com",
+      phone: "Phone",
+      phonePh: "07X XXX XX XX",
+      betalning: "Payment",
+      betalningTitle: "Swish or invoice",
+      betalningDesc:
+        "Payment via Swish or invoice. Invoice is available for those who want to use their wellness benefit (friskvårdsbidrag).",
+      fullbooked: "Booked",
+      confirmTitle: "Booking confirmed",
+      confirmSub: (name) => `Thank you ${name}! Your booking is registered.`,
+      confirmEmailNote:
+        "A confirmation email has been sent to the email address you provided.",
+      confirmTreatment: "Treatment",
+      confirmDate: "Date",
+      confirmTime: "Time",
+      confirmAddress: "Address",
+      errorMsg: "Something went wrong. Contact healthbyjasmin@gmail.com",
+      slotTakenMsg:
+        "This time was just booked by someone else. Please choose another time.",
+      behandlingHint: "Choose a treatment above to continue.",
+      stepTreatmentTime: "Treatment & time",
+      stepDetails: "Your details",
+      nextSlotsLabel: "Next available times",
+      showAllDates: "Show all dates ↓",
+      hideAllDates: "Hide all dates ↑",
+      noSlotsMsg:
+        "No available times right now – reach out on Instagram or email.",
+    },
     months: [
       "Jan",
       "Feb",
@@ -686,140 +473,31 @@ const TRANSLATIONS = {
       "Dec",
     ],
     days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-    quote:
-      '"Movement is medicine for the body, stillness is medicine for the mind."',
-    reviews: {
-      label: "Reviews",
-      title: "What our clients say",
-      items: [
-        {
-          text: '"The ayurvedic massage was exactly what I needed. Deep relaxation and a truly professional treatment. I left with a feeling of complete recovery."',
-          author: "Frida",
-        },
-        {
-          text: '"The ayurveda and yoga class with Jasmin is one of the highlights of my weekly routine."',
-          author: "Anna",
-        },
-        {
-          text: '"Jasmin has a unique way of conveying both yoga and ayurveda."',
-          author: "Juan",
-        },
-        {
-          text: '"I had a wonderful, warm and soothing ayurvedic massage with Jasmin. In a calm, safe and cosy space. I will definitely treat myself to coming back again."',
-          author: "Maria",
-        },
-      ],
-      instagram: "Follow @healthbyjasmin",
-    },
-    faq: {
-      label: "Frequently asked questions",
-      title: "FAQ",
-      categories: [
-        {
-          label: "Booking & payment",
-          items: [
-            {
-              q: "How do I book a massage or consultation?",
-              a: "Book directly on this page. Click 'Book' in the schedule, choose a treatment, pick one of the next available slots and fill in your details. Done in under a minute.",
-            },
-            {
-              q: "How is payment handled?",
-              a: "Payment via Swish or invoice. If you choose invoice you can use your wellness benefit (friskvårdsbidrag).",
-            },
-            {
-              q: "Can I use my wellness benefit (friskvårdsbidrag)?",
-              a: "Yes. Choose invoice as your payment option and a invoice will be sent that you can submit to your employer to claim your wellness benefit.",
-            },
-            {
-              q: "What is the cancellation policy?",
-              a: "Treatments must be cancelled no later than 24 hours in advance. Email healthbyjasmin@gmail.com.",
-            },
-            {
-              q: "Where are treatments held?",
-              a: "Ayurvedic massage and health consultations are held Thursday evenings at Birkagatan 23 (no shower, 18:00–21:25).",
-            },
-          ],
-        },
-        {
-          label: "Massage & consultation",
-          items: [
-            {
-              q: "Which massage should I choose?",
-              a: "Abhyanga uses long, sweeping strokes with warm sesame oil — it brings warmth, grounding and presence, and the feeling afterwards is calm and settled. Vishesh uses more pressure in longer, deeper strokes — it softens muscles, releases tension and leaves you lighter. Not sure? Book Abhyanga as a first step.",
-            },
-            {
-              q: "How long is a massage?",
-              a: "Each massage treatment is 55 minutes. Allow a little extra time to arrive and settle in.",
-            },
-            {
-              q: "What does the massage include?",
-              a: "The massage is performed with warm sesame oil and includes the head, face, front and back of the body and feet. You are towelled off after the treatment.",
-            },
-            {
-              q: "Will I be oily afterwards?",
-              a: "Yes, the oil is an important part of the treatment and stays in the skin. There is a shower on site with towels, shampoo and shower gel. We also recommend showering thoroughly at home afterwards.",
-            },
-            {
-              q: "What should I bring?",
-              a: "Bring or wear comfortable clothes and a change of clothes. Underwear is needed during the treatment.",
-            },
-            {
-              q: "Can I book a massage if I am pregnant?",
-              a: "Ayurvedic massage is not recommended during the first trimester. Feel free to email healthbyjasmin@gmail.com and we can find an alternative that suits you.",
-            },
-            {
-              q: "What is an ayurvedic health consultation?",
-              a: "An individual session of around 60 minutes where we read your pulse and examine your constitution (dosha). Based on this we discuss your health, habits and daily life and you receive concrete, personalised advice on diet, routines, sleep and lifestyle.",
-            },
-          ],
-        },
-      ],
-    },
-    weekSchedule: {
-      behandlingarItems: [
-        {
-          day: "Thursday",
-          time: "55 min",
-          type: "Ayurvedic massage",
-          price: "750 kr",
-          id: "massage",
-        },
-        {
-          day: "Thursday",
-          time: "55 min",
-          type: "Ayurvedic health consultation",
-          price: "695 kr",
-          id: "radgivning",
-        },
-      ],
-      bookLabel: "Book",
-      closeLabel: "Close",
-      label: "Schedule & booking",
-      title: "This week's treatments",
-      colBehandlingar: "Treatments",
-      classTip: "",
-    },
     footer: {
       location: "Stockholm",
       tagline: "Yoga & Ayurveda · Stockholm",
       linkAboutMe: "About me",
       linkAyurveda: "Ayurveda",
-      linkYoga: "Ayurveda & Yoga ",
+      linkYoga: "Ayurveda & Yoga",
+      linkBook: "Book",
       copyright: "© 2015 Health by Jasmin",
       instagramHandle: "@healthbyjasmin",
     },
   },
 };
 
-// ── Navbar ────────────────────────────────────────────────────────────────────
+/* ============================================================================
+   4. MENY
+   ============================================================================ */
 
 function Navbar({ t, lang, setLang }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const close = () => setMenuOpen(false);
-  const toggleLang = () => {
+
+  function toggleLang() {
     setLang(lang === "sv" ? "en" : "sv");
     close();
-  };
+  }
 
   return (
     <nav className="navbar">
@@ -830,6 +508,7 @@ function Navbar({ t, lang, setLang }) {
           className="logo"
         />
       </a>
+
       <button
         className={`hamburger${menuOpen ? " toggle" : ""}`}
         onClick={() => setMenuOpen((o) => !o)}
@@ -839,25 +518,21 @@ function Navbar({ t, lang, setLang }) {
         <span />
         <span />
       </button>
+
       <ul className={`nav-links${menuOpen ? " nav-active" : ""}`}>
         <li>
           <a href="#om-mig" onClick={close}>
-            <EditableText path="nav.aboutMe" value={t.nav.aboutMe} />
+            {t.nav.aboutMe}
           </a>
         </li>
         <li>
           <a href="#ayurveda" onClick={close}>
-            <EditableText path="nav.ayurveda" value={t.nav.ayurveda} />
+            {t.nav.ayurveda}
           </a>
         </li>
         <li>
           <a href="#yoga" onClick={close}>
-            <EditableText path="nav.yoga" value={t.nav.yoga} />
-          </a>
-        </li>
-        <li>
-          <a href="#faq" onClick={close}>
-            <EditableText path="nav.faq" value={t.nav.faq} />
+            {t.nav.yoga}
           </a>
         </li>
         <li className="nav-book-mobile">
@@ -867,13 +542,15 @@ function Navbar({ t, lang, setLang }) {
             className="nav-book-btn"
             style={{ display: "inline-flex" }}
           >
-            <EditableText path="nav.book" value={t.nav.book} />
+            {t.nav.book}
           </a>
         </li>
       </ul>
+
       <a href="#boka" className="nav-book-btn nav-book-desktop" onClick={close}>
-        <EditableText path="nav.book" value={t.nav.book} />
+        {t.nav.book}
       </a>
+
       <button
         className="lang-toggle"
         onClick={toggleLang}
@@ -885,33 +562,33 @@ function Navbar({ t, lang, setLang }) {
   );
 }
 
-// ── Booking ───────────────────────────────────────────────────────────────────
+/* ============================================================================
+   5. BOKNINGSFORMULÄR
+   ============================================================================ */
 
-function Booking({
-  t,
-  entries,
-  address,
-  slotPrefix,
-  treatmentIds,
-  emailTemplate,
-  onDone,
-}) {
-  const treatments = treatmentIds
-    ? t.treatments.filter((tr) => treatmentIds.includes(tr.id))
-    : t.treatments;
+function Booking({ t, entries, address, slotPrefix, treatmentIds, onDone }) {
+  const b = t.booking;
+  const treatments = t.treatments.filter((tr) => treatmentIds.includes(tr.id));
+
+  // ── Vad kunden har valt ──
   const [dateIdx, setDateIdx] = useState(null);
   const [slot, setSlot] = useState(null);
-  const [treatment, setTreatment] = useState(() =>
+  const [treatment, setTreatment] = useState(
     treatments.length === 1 ? treatments[0].id : null,
   );
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
+
+  // ── Vad som redan är bokat (hämtas från Supabase) ──
   const [bookedSlots, setBookedSlots] = useState([]);
   const [bookedDates, setBookedDates] = useState(new Set());
-  const [step, setStep] = useState("select");
+
+  // ── Status ──
+  const [step, setStep] = useState("select"); // "select" | "form" | "done"
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState(false);
   const [slotTaken, setSlotTaken] = useState(false);
   const [showAllDates, setShowAllDates] = useState(false);
+
   const formRef = useRef(null);
   const datesRef = useRef(null);
   const confirmRef = useRef(null);
@@ -920,6 +597,7 @@ function Booking({
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
+  // Scrolla till rätt ställe när steget ändras
   useEffect(() => {
     if (step === "form" && formRef.current) {
       formRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -936,6 +614,7 @@ function Booking({
     prevStep.current = step;
   }, [step]);
 
+  // Efter 10 sek på bekräftelsen: nollställ och stäng
   useEffect(() => {
     if (step !== "done") return;
     const timer = setTimeout(() => {
@@ -947,34 +626,36 @@ function Booking({
     return () => clearTimeout(timer);
   }, [step]);
 
+  // Hämta redan bokade tider när sidan öppnas
   useEffect(() => {
     supabase
       .from("bookings")
       .select("slot_key, date, time")
       .then(({ data }) => {
-        if (data) {
-          setBookedSlots(data.map((r) => r.slot_key));
-          setBookedDates(
-            new Set(
-              data
-                .filter((r) => r.date && r.time)
-                .map((r) => `${r.date}|${r.time}`),
-            ),
-          );
-        }
+        if (!data) return;
+        setBookedSlots(data.map((r) => r.slot_key));
+        setBookedDates(
+          new Set(
+            data
+              .filter((r) => r.date && r.time)
+              .map((r) => `${r.date}|${r.time}`),
+          ),
+        );
       });
   }, []);
+
+  // ── Hjälpfunktioner för tider ──
 
   function fmtDate(d) {
     return `${d.getDate()} ${SV_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
   }
-  // Tiden är upptagen om någon redan bokat samma datum + tid
-  // (gäller både massage och rådgivning)
+
+  // Någon har redan bokat samma datum + tid (gäller massage och rådgivning)
   function isDateBooked(d, s) {
     return bookedDates.has(`${fmtDate(d)}|${s.t}–${s.e}`);
   }
 
-  // Är en specifik post (index i) redan bokad?
+  // Är tid nummer i redan bokad?
   function isEntryBooked(i) {
     const { date, slots, booked } = entries[i];
     const key = `${slotPrefix}-${i}-${slots[0].t}`;
@@ -983,44 +664,41 @@ function Booking({
     );
   }
 
-  // Låst = en dag där ingenting är bokat än, och det här inte är dagens
-  // första tid. Då får man bara boka första tiden (inga luckor i schemat).
-  // Så fort någon tid den dagen är bokad öppnas resterande tider.
-  // Är någon tid redan bokad en dag låter vi dagen vara (inget låses).
+  // Låst = en dag där inget är bokat än, och det här inte är dagens första tid.
+  // Då går bara första tiden att boka (inga luckor). När något är bokat
+  // den dagen öppnas resten.
   function isEntryLocked(i) {
-    const dk = entries[i].date.toDateString();
-    const dayIdx = [];
+    const dayKey = entries[i].date.toDateString();
+    const sameDay = [];
     entries.forEach((e, j) => {
-      if (e.date.toDateString() === dk) dayIdx.push(j);
+      if (e.date.toDateString() === dayKey) sameDay.push(j);
     });
-    // Dagens första tid (tidigast klockslag) är aldrig låst
-    const firstIdx = dayIdx.reduce(
+    const first = sameDay.reduce(
       (best, j) =>
         entries[j].slots[0].t < entries[best].slots[0].t ? j : best,
-      dayIdx[0],
+      sameDay[0],
     );
-    if (i === firstIdx) return false;
-    // Om något redan är bokat den dagen → öppna resten
-    return !dayIdx.some((j) => isEntryBooked(j));
+    if (i === first) return false;
+    return !sameDay.some((j) => isEntryBooked(j));
   }
 
-  // Compute next 4 available slots for the "Nästa lediga" section
-  const nextAvailable = (() => {
-    const now = Date.now();
-    const result = [];
-    for (let i = 0; i < entries.length && result.length < 4; i++) {
-      const { date, slots } = entries[i];
-      if (date < today) continue;
-      const slotTime = slots[0].t;
-      if (isEntryBooked(i) || isEntryLocked(i)) continue;
-      const slotDt = new Date(date);
-      const [h, m] = slotTime.split(":").map(Number);
-      slotDt.setHours(h, m, 0, 0);
-      if (slotDt - now < 24 * 60 * 60 * 1000) continue;
-      result.push({ i, date, slotTime });
-    }
-    return result;
-  })();
+  // Mindre än 24 timmar kvar?
+  function isTooSoon(date, time) {
+    const dt = new Date(date);
+    const [h, m] = time.split(":").map(Number);
+    dt.setHours(h, m, 0, 0);
+    return dt - Date.now() < 24 * 60 * 60 * 1000;
+  }
+
+  // De 4 närmaste lediga tiderna
+  const nextAvailable = [];
+  for (let i = 0; i < entries.length && nextAvailable.length < 4; i++) {
+    const { date, slots } = entries[i];
+    if (date < today) continue;
+    if (isEntryBooked(i) || isEntryLocked(i)) continue;
+    if (isTooSoon(date, slots[0].t)) continue;
+    nextAvailable.push({ i, date, slotTime: slots[0].t });
+  }
 
   const currentStep = step === "form" ? 2 : 1;
 
@@ -1030,11 +708,12 @@ function Booking({
     form.phone.trim().length >= 8 &&
     treatment !== null;
 
+  // ── Klick-funktioner ──
+
   function handleDate(i) {
-    const s = entries[i].slots[0];
     const available = !isEntryBooked(i) && !isEntryLocked(i);
     setDateIdx(i);
-    setSlot(available ? s : null);
+    setSlot(available ? entries[i].slots[0] : null);
     if (available && treatment !== null) setStep("form");
     else if (step === "form") setStep("select");
   }
@@ -1048,19 +727,20 @@ function Booking({
     setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
   }
 
+  // ── Skicka bokningen ──
   async function submit() {
     setSending(true);
     setSendError(false);
     setSlotTaken(false);
+
     const key = `${slotPrefix}-${dateIdx}-${slot.t}`;
-    const d = entries[dateIdx].date;
-    const dateStr = `${d.getDate()} ${SV_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+    const dateStr = fmtDate(entries[dateIdx].date);
     const timeStr = `${slot.t}–${slot.e}`;
     const fullName = form.name.trim();
     const treatmentName = treatments.find((tr) => tr.id === treatment).name;
 
     try {
-      // Re-check slot availability right before inserting to prevent race conditions
+      // Kolla en sista gång att tiden är ledig
       const { data: existing } = await supabase
         .from("bookings")
         .select("slot_key")
@@ -1073,13 +753,14 @@ function Booking({
         return;
       }
 
-      // Extra skydd: första tiden måste vara bokad innan resterande tider
+      // Första tiden måste vara bokad före resterande tider
       if (isEntryLocked(dateIdx)) {
         setSlotTaken(true);
         setSending(false);
         return;
       }
 
+      // Spara i databasen
       const { data: ins, error } = await supabase
         .from("bookings")
         .insert({
@@ -1094,9 +775,10 @@ function Booking({
         .single();
       if (error) throw error;
 
+      // Skicka bekräftelsemejl
       await emailjs.send(
         EMAILJS_SERVICE_ID,
-        emailTemplate || EMAILJS_TEMPLATE_BIRKA,
+        EMAILJS_TEMPLATE,
         {
           customer_name: fullName,
           customer_email: form.email,
@@ -1121,48 +803,29 @@ function Booking({
     }
   }
 
-  function reset() {
-    setDateIdx(null);
-    setSlot(null);
-    setTreatment(treatments.length === 1 ? treatments[0].id : null);
-    setForm({ name: "", email: "", phone: "" });
-    setStep("select");
-    setShowAllDates(false);
-  }
-
   const selectedDate = dateIdx !== null ? entries[dateIdx].date : null;
-  const b = t.booking;
+  const selectedTreatment = treatments.find((tr) => tr.id === treatment);
 
   return (
     <div className="booking-wrap">
       {step !== "done" && (
         <>
-          {/* ── Stegindikator ── */}
+          {/* ── Stegindikator (1 → 2) ── */}
           <div className="booking-stepper">
             <div
               className={`bks-step${currentStep >= 1 ? " bks-active" : ""}${currentStep > 1 ? " bks-done" : ""}`}
             >
               <span className="bks-num">{currentStep > 1 ? "✓" : "1"}</span>
-              <EditableText
-                path="booking.stepTreatmentTime"
-                value={b.stepTreatmentTime}
-                tag="span"
-                className="bks-label"
-              />
+              <span className="bks-label">{b.stepTreatmentTime}</span>
             </div>
             <div className="bks-line" />
             <div className={`bks-step${currentStep >= 2 ? " bks-active" : ""}`}>
               <span className="bks-num">2</span>
-              <EditableText
-                path="booking.stepDetails"
-                value={b.stepDetails}
-                tag="span"
-                className="bks-label"
-              />
+              <span className="bks-label">{b.stepDetails}</span>
             </div>
           </div>
 
-          {/* ── Behandlingsval (bara om >1 behandling) ── */}
+          {/* ── Välj behandling (bara om det finns fler än en) ── */}
           {treatments.length > 1 && step !== "form" && (
             <div className="booking-treatments">
               <div className="treatment-pick-grid">
@@ -1183,32 +846,18 @@ function Booking({
                 ))}
               </div>
               {!treatment && (
-                <EditableText
-                  path="booking.behandlingHint"
-                  value={b.behandlingHint}
-                  tag="p"
-                  className="booking-treatment-hint"
-                />
+                <p className="booking-treatment-hint">{b.behandlingHint}</p>
               )}
             </div>
           )}
 
-          {/* ── Nästa lediga tider ── */}
+          {/* ── Välj tid ── */}
           {step !== "form" && (
             <div className="booking-next-slots" ref={datesRef}>
-              <EditableText
-                path="booking.nextSlotsLabel"
-                value={b.nextSlotsLabel}
-                tag="p"
-                className="booking-row-label"
-              />
+              <p className="booking-row-label">{b.nextSlotsLabel}</p>
+
               {nextAvailable.length === 0 ? (
-                <EditableText
-                  path="booking.noSlotsMsg"
-                  value={b.noSlotsMsg}
-                  tag="p"
-                  className="booking-no-slots"
-                />
+                <p className="booking-no-slots">{b.noSlotsMsg}</p>
               ) : (
                 <div className="next-slot-row">
                   {nextAvailable.map(({ i, date, slotTime }) => (
@@ -1227,97 +876,83 @@ function Booking({
                   ))}
                 </div>
               )}
+
               <button
                 className="booking-show-all"
                 onClick={() => setShowAllDates((p) => !p)}
               >
-                <EditableText
-                  path={
-                    showAllDates
-                      ? "booking.hideAllDates"
-                      : "booking.showAllDates"
-                  }
-                  value={showAllDates ? b.hideAllDates : b.showAllDates}
-                />
+                {showAllDates ? b.hideAllDates : b.showAllDates}
               </button>
+
+              {/* Alla datum */}
               {showAllDates && (
                 <div className="dates-grid" style={{ marginTop: "1rem" }}>
                   {(() => {
-                    const grouped = [];
+                    // Gruppera tiderna per dag
+                    const days = [];
                     const seen = new Map();
-                    entries.forEach(({ date, slots, booked: preBooked }, i) => {
+                    entries.forEach(({ date, slots }, i) => {
                       const dk = date.toDateString();
                       if (!seen.has(dk)) {
-                        seen.set(dk, grouped.length);
-                        grouped.push({ date, items: [] });
+                        seen.set(dk, days.length);
+                        days.push({ date, items: [] });
                       }
-                      grouped[seen.get(dk)].items.push({ slots, i, preBooked });
+                      days[seen.get(dk)].items.push({ slots, i });
                     });
-                    return grouped.map(({ date, items }) => {
-                      const isPast = date < today;
-                      return (
-                        <div
-                          key={date.toDateString()}
-                          className="dates-grid-row"
-                        >
-                          <div className="dates-grid-label">
-                            <span className="dgr-wd">
-                              {t.days[date.getDay()]}
-                            </span>
-                            <span className="dgr-dd">{date.getDate()}</span>
-                            <span className="dgr-mo">
-                              {t.months[date.getMonth()]}
-                            </span>
-                          </div>
-                          {items.map(({ slots, i }) => {
-                            const isBooked = isEntryBooked(i);
-                            const isLocked = isEntryLocked(i);
-                            const slotDt = new Date(date);
-                            const [h, m] = slots[0].t.split(":").map(Number);
-                            slotDt.setHours(h, m, 0, 0);
-                            const isTooSoon =
-                              slotDt - Date.now() < 24 * 60 * 60 * 1000;
-                            const unavailable =
-                              isPast ||
-                              isBooked ||
-                              isTooSoon ||
-                              isLocked ||
-                              !treatment;
-                            return (
-                              <button
-                                key={i}
-                                className={`dgr-slot${unavailable ? " disabled" : ""}${dateIdx === i ? " selected" : ""}`}
-                                disabled={unavailable}
-                                onClick={() => handleDate(i)}
-                              >
-                                <span className="dgr-time">
-                                  {isBooked || isTooSoon
-                                    ? b.fullbooked
-                                    : slots[0].t}
-                                </span>
-                              </button>
-                            );
-                          })}
-                          {items.length === 1 && (
-                            <div className="dgr-slot-spacer" />
-                          )}
+
+                    return days.map(({ date, items }) => (
+                      <div key={date.toDateString()} className="dates-grid-row">
+                        <div className="dates-grid-label">
+                          <span className="dgr-wd">
+                            {t.days[date.getDay()]}
+                          </span>
+                          <span className="dgr-dd">{date.getDate()}</span>
+                          <span className="dgr-mo">
+                            {t.months[date.getMonth()]}
+                          </span>
                         </div>
-                      );
-                    });
+
+                        {items.map(({ slots, i }) => {
+                          const booked = isEntryBooked(i);
+                          const tooSoon = isTooSoon(date, slots[0].t);
+                          const unavailable =
+                            date < today ||
+                            booked ||
+                            tooSoon ||
+                            isEntryLocked(i) ||
+                            !treatment;
+                          return (
+                            <button
+                              key={i}
+                              className={`dgr-slot${unavailable ? " disabled" : ""}${dateIdx === i ? " selected" : ""}`}
+                              disabled={unavailable}
+                              onClick={() => handleDate(i)}
+                            >
+                              <span className="dgr-time">
+                                {booked || tooSoon ? b.fullbooked : slots[0].t}
+                              </span>
+                            </button>
+                          );
+                        })}
+
+                        {items.length === 1 && (
+                          <div className="dgr-slot-spacer" />
+                        )}
+                      </div>
+                    ));
                   })()}
                 </div>
               )}
             </div>
           )}
 
-          {/* ── Bokningsformulär ── */}
+          {/* ── Uppgifter (steg 2) ── */}
           {step === "form" && selectedDate && slot && (
             <div className="booking-form-wrap" ref={formRef}>
               <div className="booking-form-summary">
                 <div>
                   <span className="booking-form-summary-label">
-                    {treatments.find((tr) => tr.id === treatment)?.name}{" "}
-                    &middot; 55 min
+                    {selectedTreatment?.name} &middot; 55 min
                   </span>
                   <span className="booking-form-summary-value">
                     {selectedDate.getDate()} {t.months[selectedDate.getMonth()]}{" "}
@@ -1328,13 +963,13 @@ function Booking({
                   className="booking-change-btn"
                   onClick={() => setStep("select")}
                 >
-                  <EditableText path="booking.andra" value={b.andra} />
+                  {b.andra}
                 </button>
               </div>
 
               <div className="massage-form">
                 <label className="full-row">
-                  <EditableText path="booking.name" value={b.name} />
+                  {b.name}
                   <input
                     type="text"
                     name="name"
@@ -1344,7 +979,7 @@ function Booking({
                   />
                 </label>
                 <label>
-                  <EditableText path="booking.email" value={b.email} />
+                  {b.email}
                   <input
                     type="email"
                     name="email"
@@ -1354,7 +989,7 @@ function Booking({
                   />
                 </label>
                 <label>
-                  <EditableText path="booking.phone" value={b.phone} />
+                  {b.phone}
                   <input
                     type="tel"
                     name="phone"
@@ -1363,27 +998,13 @@ function Booking({
                     placeholder={b.phonePh}
                   />
                 </label>
-                <EditableText
-                  path="booking.betalning"
-                  value={b.betalning}
-                  tag="div"
-                  className="payment-section-label"
-                />
+
+                <div className="payment-section-label">{b.betalning}</div>
                 <div className="payment-opt">
                   <input type="radio" name="pay" defaultChecked readOnly />
                   <div>
-                    <EditableText
-                      path="booking.betalningTitle"
-                      value={b.betalningTitle}
-                      tag="div"
-                      className="payment-opt-title"
-                    />
-                    <EditableText
-                      path="booking.betalningDesc"
-                      value={b.betalningDesc}
-                      tag="div"
-                      className="payment-opt-sub"
-                    />
+                    <div className="payment-opt-title">{b.betalningTitle}</div>
+                    <div className="payment-opt-sub">{b.betalningDesc}</div>
                   </div>
                 </div>
               </div>
@@ -1393,26 +1014,18 @@ function Booking({
                   className="booking-btn-back"
                   onClick={() => setStep("select")}
                 >
-                  <EditableText path="booking.tillbaka" value={b.tillbaka} />
+                  {b.tillbaka}
                 </button>
                 <button
                   className="booking-btn-next"
                   disabled={!formValid || sending}
                   onClick={submit}
                 >
-                  {sending ? (
-                    <EditableText path="booking.skickar" value={b.skickar} />
-                  ) : (
-                    <EditableText path="booking.bekrafta" value={b.bekrafta} />
-                  )}
+                  {sending ? b.skickar : b.bekrafta}
                 </button>
               </div>
-              {slotTaken && (
-                <p className="send-error">
-                  Den här tiden bokades precis av någon annan. Välj en annan
-                  tid.
-                </p>
-              )}
+
+              {slotTaken && <p className="send-error">{b.slotTakenMsg}</p>}
               {sendError && <p className="send-error">{b.errorMsg}</p>}
             </div>
           )}
@@ -1428,26 +1041,24 @@ function Booking({
           </p>
           <div className="booking-confirm-details">
             <div className="bcd-row">
-              <span className="bcd-label">Behandling</span>
-              <span className="bcd-value">
-                {treatments.find((tr) => tr.id === treatment)?.name}
-              </span>
+              <span className="bcd-label">{b.confirmTreatment}</span>
+              <span className="bcd-value">{selectedTreatment?.name}</span>
             </div>
             <div className="bcd-row">
-              <span className="bcd-label">Datum</span>
+              <span className="bcd-label">{b.confirmDate}</span>
               <span className="bcd-value">
                 {selectedDate.getDate()} {t.months[selectedDate.getMonth()]}{" "}
                 {selectedDate.getFullYear()}
               </span>
             </div>
             <div className="bcd-row">
-              <span className="bcd-label">Tid</span>
+              <span className="bcd-label">{b.confirmTime}</span>
               <span className="bcd-value">
                 {slot.t}–{slot.e}
               </span>
             </div>
             <div className="bcd-row">
-              <span className="bcd-label">Adress</span>
+              <span className="bcd-label">{b.confirmAddress}</span>
               <span className="bcd-value">{address}</span>
             </div>
           </div>
@@ -1458,164 +1069,24 @@ function Booking({
   );
 }
 
-// ── FAQ accordion ────────────────────────────────────────────────────────────
+/* ============================================================================
+   6. STARTSIDAN
+   ============================================================================ */
 
-function FaqSection({ t }) {
-  const [openKey, setOpenKey] = useState(null);
-  const { isAdmin } = useContext(AdminCtx);
-  const cats = t.faq.categories || [{ label: "", items: t.faq.items || [] }];
-
-  return (
-    <section id="faq" className="faq-section content-section">
-      <div className="section-inner">
-        <EditableText
-          path="faq.label"
-          value={t.faq.label}
-          tag="span"
-          className="section-label"
-        />
-        <EditableText
-          path="faq.title"
-          value={t.faq.title}
-          tag="h2"
-          className="faq-title"
-        />
-        <div className="faq-cats fade-up">
-          {cats.map((cat, catIdx) => (
-            <div key={catIdx} className="faq-cat">
-              {cat.label && (
-                <EditableText
-                  path={`faq.categories.${catIdx}.label`}
-                  value={cat.label}
-                  tag="p"
-                  className="faq-cat-label"
-                />
-              )}
-              <div className="faq-accordion">
-                {cat.items.map(({ q, a }, i) => {
-                  const key = `${catIdx}-${i}`;
-                  const open = openKey === key;
-                  return (
-                    <div
-                      key={key}
-                      className={`faq-acc-item${open ? " open" : ""}`}
-                    >
-                      <button
-                        className="faq-acc-q"
-                        onClick={() =>
-                          !isAdmin && setOpenKey(open ? null : key)
-                        }
-                      >
-                        <EditableText
-                          path={`faq.categories.${catIdx}.items.${i}.q`}
-                          value={q}
-                          tag="span"
-                        />
-                        {!isAdmin && (
-                          <span className="faq-acc-icon">
-                            {open ? "−" : "+"}
-                          </span>
-                        )}
-                      </button>
-                      <div
-                        className={`faq-acc-body${open || isAdmin ? " open" : ""}`}
-                      >
-                        <div className="faq-acc-inner">
-                          <EditableText
-                            path={`faq.categories.${catIdx}.items.${i}.a`}
-                            value={a}
-                            tag="p"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ── Main ──────────────────────────────────────────────────────────────────────
-
-export default function HealthByJasmin() {
-  const [lang, setLang] = useState("sv");
-  const [massageOpen, setMassageOpen] = useState(false);
-  const [massageStudio, setMassageStudio] = useState("birka"); // "birka" | "aso"
-  const [radgivningOpen, setRadgivningOpen] = useState(false);
-
-  // ── Admin state ──────────────────────────────────────────────────────────────
-  const [isAdmin, setIsAdmin] = useState(
-    () => localStorage.getItem("hbj_admin") === "1",
-  );
-  const [textOverrides, setTextOverrides] = useState({ sv: {}, en: {} });
-  const [imageOverrides, setImageOverrides] = useState({});
-  const [fontOverrides, setFontOverrides] = useState({ heading: "", body: "" });
-  const [slotsOverride, setSlotsOverride] = useState(null); // null = use TORSDAG_ENTRIES default
-  const [slotsModalOpen, setSlotsModalOpen] = useState(false);
-  const [editSlots, setEditSlots] = useState([]); // working copy inside modal
-  const [scheduleOverride, setScheduleOverride] = useState(null); // {behandlingar:[...], klasser:[...], sectionOrder:[...], hiddenSections:[...]}
-  const [treatmentsOverride, setTreatmentsOverride] = useState(null); // [...] or null
-  const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
-  const [sectionsModalOpen, setSectionsModalOpen] = useState(false);
-  const [editBehandlingar, setEditBehandlingar] = useState([]);
-  const [editKlasser, setEditKlasser] = useState([]);
-  const [editTreatments, setEditTreatments] = useState([]);
-  const [hasUnsaved, setHasUnsaved] = useState(false);
-  const [adminLoginOpen, setAdminLoginOpen] = useState(false);
-  const [adminPwd, setAdminPwd] = useState("");
-  const [adminError, setAdminError] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [saveError, setSaveError] = useState(false);
-
-  const t = deepMerge(TRANSLATIONS[lang], textOverrides[lang] || {});
-
+function HomePage({ t, lang }) {
   const [heroImg, setHeroImg] = useState(0);
-  const HERO_IMAGES = [
-    "/assets/header.jpeg",
-    "/assets/ayurveda.jpg",
-    "/assets/ashtanga.jpeg",
-  ];
-
   const shelfRef = useRef(null);
-  const bookingRef = useRef(null);
-  const radgivningRef = useRef(null);
-  const scheduleSectionRef = useRef(null);
 
+  // Byt bakgrundsbild i hero var 5:e sekund
   useEffect(() => {
-    function handleClickOutside(e) {
-      if (
-        scheduleSectionRef.current &&
-        !scheduleSectionRef.current.contains(e.target)
-      ) {
-        setMassageOpen(false);
-        setRadgivningOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    const id = setInterval(
+      () => setHeroImg((i) => (i + 1) % HERO_IMAGES.length),
+      5000,
+    );
+    return () => clearInterval(id);
   }, []);
 
-  // ── Scroll to the right section when arriving via a shared link like #boka ──
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (!hash) return;
-    const id = hash.slice(1);
-    const scrollToHash = () => {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    };
-    // The section may not exist yet on first paint, and images loading below
-    // it can shift the layout afterwards — retry once the page has settled.
-    requestAnimationFrame(() => requestAnimationFrame(scrollToHash));
-    window.addEventListener("load", scrollToHash);
-    return () => window.removeEventListener("load", scrollToHash);
-  }, []);
-
+  // Pilarna i recensionerna
   function scrollShelf(dir) {
     const el = shelfRef.current;
     if (!el) return;
@@ -1624,9 +1095,9 @@ export default function HealthByJasmin() {
     el.scrollBy({ left: dir * cardW, behavior: "smooth" });
   }
 
+  // Tona in element med klassen "fade-up" när de syns
   useEffect(() => {
     const els = document.querySelectorAll(".fade-up");
-    if (!els.length) return;
     const observer = new IntersectionObserver(
       (entries) =>
         entries.forEach((e) => {
@@ -1641,1452 +1112,373 @@ export default function HealthByJasmin() {
     return () => observer.disconnect();
   }, [lang]);
 
-  // ── Admin: apply a content snapshot to all state ────────────────────────────
-  function applyContent(c) {
-    if (!c) return;
-    if (c.textOverrides) setTextOverrides(c.textOverrides);
-    if (c.imageOverrides) setImageOverrides(c.imageOverrides);
-    if (c.fontOverrides) {
-      setFontOverrides(c.fontOverrides);
-      applyFonts(c.fontOverrides);
-    }
-    if (c.slotsOverride) setSlotsOverride(c.slotsOverride);
-    if (c.scheduleOverride) setScheduleOverride(c.scheduleOverride);
-    if (c.treatmentsOverride) setTreatmentsOverride(c.treatmentsOverride);
-  }
+  return (
+    <>
+      {/* ───────── HERO (överst) ───────── */}
+      <section id="top" className="page-hero">
+        {HERO_IMAGES.map((src, i) => (
+          <div
+            key={src}
+            className={`hero-slide${heroImg === i ? " hero-slide-active" : ""}`}
+            style={{ backgroundImage: `url(${src})` }}
+          />
+        ))}
+        <div className="page-hero-inner">
+          <span className="hero-eyebrow">{t.hero.eyebrow}</span>
+          <h1 className="hero-title">Health by Jasmin</h1>
+          <p className="hero-sub">{t.hero.sub}</p>
+          <a
+            href="#om-mig"
+            className="hero-scroll-arrow"
+            aria-label={t.hero.scrollLabel}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </a>
+        </div>
+      </section>
 
-  // ── Admin: build content snapshot from current state ─────────────────────────
-  function buildSnapshot(overrides = {}) {
-    return {
-      textOverrides: overrides.textOverrides ?? textOverrides,
-      imageOverrides: overrides.imageOverrides ?? imageOverrides,
-      fontOverrides: overrides.fontOverrides ?? fontOverrides,
-      slotsOverride:
-        overrides.slotsOverride !== undefined
-          ? overrides.slotsOverride
-          : slotsOverride,
-      scheduleOverride:
-        overrides.scheduleOverride !== undefined
-          ? overrides.scheduleOverride
-          : scheduleOverride,
-      treatmentsOverride:
-        overrides.treatmentsOverride !== undefined
-          ? overrides.treatmentsOverride
-          : treatmentsOverride,
-    };
-  }
+      {/* ───────── OM MIG ───────── */}
+      <section id="om-mig" className="content-section about-bg">
+        <div className="section-inner">
+          <div className="about-split fade-up">
+            <div className="about-split-head">
+              <span className="section-label">{t.about.label}</span>
+              <h2>
+                Jasmin
+                <br />
+                Hedlund
+              </h2>
+            </div>
+            <div className="about-split-body">
+              <p>{t.about.p1}</p>
+              <p>{t.about.p2}</p>
+              <p>{t.about.p3}</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  // ── Admin: save to Supabase ───────────────────────────────────────────────────
-  async function saveToSupabase(snap) {
-    const { error } = await supabase.from("site_content").upsert({
-      id: "main",
-      sv_text: snap.textOverrides?.sv || {},
-      en_text: snap.textOverrides?.en || {},
-      images: snap.imageOverrides || {},
-      fonts: snap.fontOverrides || {},
-      slots: snap.slotsOverride || [],
-      schedule: snap.scheduleOverride || {},
-      treatments_override: snap.treatmentsOverride || [],
-    });
-    return error;
-  }
+      {/* ───────── AYURVEDA + YOGA (schackrutor: bild | text, text | bild) ───────── */}
+      <section className="checkerboard-section" id="ayurveda">
+        {/* Rad 1 vänster: bild */}
+        <div className="cb-cell cb-img">
+          <img
+            src="/assets/ayurveda.jpg"
+            alt="Ayurvediska örter och oljor"
+            className="cb-img-fill"
+          />
+        </div>
 
-  // ── Admin: load – localStorage first (instant), then Supabase (authoritative)
-  useEffect(() => {
-    const local = loadLocalContent();
-    if (local) applyContent(local);
+        {/* Rad 1 höger: Ayurveda-text + Boka-knapp */}
+        <div className="cb-cell cb-text fade-up">
+          <span className="section-label">{t.ayurveda.label}</span>
+          <h2>Ayurveda</h2>
+          <p>{t.ayurveda.p1}</p>
+          <p>{t.ayurveda.p2}</p>
+          <h3>{t.ayurveda.massageTitle}</h3>
+          <p>{t.ayurveda.massageP1}</p>
+          <p>{t.ayurveda.massageP2}</p>
+          <h3>{t.ayurveda.radgivningTitle}</h3>
+          <p>{t.ayurveda.radgivningP1}</p>
+          <a href="#boka" className="section-book-btn">
+            {t.buttons.book}
+          </a>
+        </div>
 
-    supabase
-      .from("site_content")
-      .select("*")
-      .eq("id", "main")
-      .single()
-      .then(({ data }) => {
-        if (!data) return;
-        const fromDb = {
-          textOverrides: { sv: data.sv_text || {}, en: data.en_text || {} },
-          imageOverrides: data.images || {},
-          fontOverrides: data.fonts || { heading: "", body: "" },
-          slotsOverride: data.slots?.length > 0 ? data.slots : null,
-          scheduleOverride:
-            data.schedule && Object.keys(data.schedule).length > 0
-              ? data.schedule
-              : null,
-          treatmentsOverride:
-            data.treatments_override?.length > 0
-              ? data.treatments_override
-              : null,
-        };
-        applyContent(fromDb);
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+        {/* Rad 2 vänster: Yoga & Ayurveda-kursen + knapp */}
+        <div className="cb-cell cb-text cb-text-alt fade-up" id="yoga">
+          <span className="section-label">{t.yoga.label}</span>
+          <h2>Yoga &amp; Ayurveda</h2>
+          <p className="yoga-intro">{t.yoga.intro}</p>
+          <p>{t.yoga.p1}</p>
+          <p className="course-title">{t.yoga.p2Title}</p>
+          <p className="course-list">{t.yoga.p2}</p>
+          <p className="course-title">{t.yoga.p3Title}</p>
+          <p className="course-list">{t.yoga.p3}</p>
+          <span className="yoga-schedule-row">
+            <span className="yoga-col-schedule">{t.yoga.sub}</span>
+          </span>
+          <a href="#boka" className="section-book-btn">
+            {t.buttons.interest}
+          </a>
+        </div>
 
-  // ── Admin: auto-save to localStorage on every change ─────────────────────────
-  useEffect(() => {
-    persistLocal(buildSnapshot());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    textOverrides,
-    imageOverrides,
-    fontOverrides,
-    slotsOverride,
-    scheduleOverride,
-    treatmentsOverride,
-  ]);
+        {/* Rad 2 höger: bild */}
+        <div className="cb-cell cb-img">
+          <img src="/assets/ashtanga.jpeg" alt="Yoga" className="cb-img-fill" />
+        </div>
+      </section>
 
-  // ── Hero slideshow ────────────────────────────────────────────────────────────
-  useEffect(() => {
-    if (imageOverrides.header) return; // don't cycle if admin set a custom image
-    const id = setInterval(
-      () => setHeroImg((i) => (i + 1) % HERO_IMAGES.length),
-      5000,
-    );
-    return () => clearInterval(id);
-  }, [imageOverrides.header]);
+      {/* ───────── CITAT ───────── */}
+      <section className="quote-section">
+        <p>{t.quote}</p>
+      </section>
 
-  // ── Admin: warn before leaving with unsaved Supabase changes ─────────────────
-  useEffect(() => {
-    if (!hasUnsaved) return;
-    const handler = (e) => {
-      e.preventDefault();
-      e.returnValue = "";
-    };
-    window.addEventListener("beforeunload", handler);
-    return () => window.removeEventListener("beforeunload", handler);
-  }, [hasUnsaved]);
+      {/* ───────── RECENSIONER ───────── */}
+      <section className="testimonials-section">
+        <div className="section-inner">
+          <span className="section-label">{t.reviews.label}</span>
+          <h2>{t.reviews.title}</h2>
 
-  // Convert flat slot rows [{dateStr,time}] → Booking entries [{date,slots}]
-  function slotsToEntries(rows) {
-    return rows
-      .map((r) => {
-        const [y, m, d] = r.dateStr.split("-").map(Number);
-        const [hh, mm] = r.time.split(":").map(Number);
-        const endMin = hh * 60 + mm + 55;
-        const e = `${String(Math.floor(endMin / 60)).padStart(2, "0")}:${String(endMin % 60).padStart(2, "0")}`;
-        return { date: new Date(y, m - 1, d), slots: [{ t: r.time, e }] };
-      })
-      .sort(
-        (a, b) => a.date - b.date || a.slots[0].t.localeCompare(b.slots[0].t),
-      );
-  }
+          <div className="testimonials-shelf-wrap">
+            <button
+              className="shelf-arrow shelf-arrow-prev"
+              onClick={() => scrollShelf(-1)}
+              aria-label="Föregående"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                width="18"
+                height="18"
+              >
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+            </button>
 
-  const activeEntries = slotsOverride
-    ? slotsToEntries(slotsOverride)
-    : TORSDAG_ENTRIES;
+            <div className="testimonials-shelf fade-up" ref={shelfRef}>
+              {t.reviews.items.map((r) => (
+                <div key={r.author} className="testimonial-card">
+                  <div className="testimonial-stars">★★★★★</div>
+                  <p className="testimonial-text">{r.text}</p>
+                  <span className="testimonial-author">{r.author}</span>
+                </div>
+              ))}
+            </div>
 
-  const MASSAGE_STUDIOS = {
-    birka: {
-      label: "Birkagatan 23",
-      sub: "18:00, 19:15 & 20:30 · ej dusch",
-      entries: activeEntries,
-      address: "Birkagatan 23, Stockholm (ej dusch)",
-      slotPrefix: "birka-massage",
-      emailTemplate: EMAILJS_TEMPLATE_BIRKA,
-    },
-    // aso: {
-    // label: "Åsögatan 166",
-    // sub: "17:45 · dusch finns",
-    // entries: ASOGATAN_ENTRIES,
-    // address: "Åsögatan 166, Stockholm (dusch finns)",
-    // slotPrefix: "aso-massage",
-    // emailTemplate: EMAILJS_TEMPLATE_ASOG,
-    // },
-  };
+            <button
+              className="shelf-arrow shelf-arrow-next"
+              onClick={() => scrollShelf(1)}
+              aria-label="Nästa"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                width="18"
+                height="18"
+              >
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
 
-  function imgSrc(key, fallback) {
-    return imageOverrides[key] || fallback;
-  }
+/* ============================================================================
+   7. BOKA-SIDAN (egen sida, nås via #boka)
+   ============================================================================ */
 
-  function handleEdit(path, value) {
-    setTextOverrides((prev) => {
-      const lo = JSON.parse(JSON.stringify(prev[lang] || {}));
-      setNestedValue(lo, path, value);
-      return { ...prev, [lang]: lo };
-    });
-    setHasUnsaved(true);
-  }
-
-  async function handleImageUpload(imgKey, file) {
-    const ext = file.name.split(".").pop();
-    const path = `${imgKey}-${Date.now()}.${ext}`;
-    const { error: upErr } = await supabase.storage
-      .from("site-images")
-      .upload(path, file, { upsert: true });
-    if (upErr) {
-      console.error(upErr);
-      return;
-    }
-    const { data: urlData } = supabase.storage
-      .from("site-images")
-      .getPublicUrl(path);
-    const newImages = { ...imageOverrides, [imgKey]: urlData.publicUrl };
-    setImageOverrides(newImages);
-    // Immediately persist the new image URL to Supabase
-    saveToSupabase(buildSnapshot({ imageOverrides: newImages }));
-    setHasUnsaved(false);
-  }
-
-  function handleFontChange(type, name) {
-    const updated = { ...fontOverrides, [type]: name };
-    setFontOverrides(updated);
-    applyFonts(updated);
-    setHasUnsaved(true);
-  }
-
-  async function handleSave() {
-    setSaving(true);
-    setSaveError(false);
-    const err = await saveToSupabase(buildSnapshot());
-    setSaving(false);
-    if (err) {
-      setSaveError(true);
-      console.error("Supabase save error:", err);
-    } else {
-      setHasUnsaved(false);
-      setSaveError(false);
-    }
-  }
-
-  function openSlotsModal() {
-    const rows = slotsOverride
-      ? [...slotsOverride]
-      : TORSDAG_ENTRIES.map((e) => ({
-          dateStr: `${e.date.getFullYear()}-${String(e.date.getMonth() + 1).padStart(2, "0")}-${String(e.date.getDate()).padStart(2, "0")}`,
-          time: e.slots[0].t,
-        }));
-    setEditSlots(rows);
-    setSlotsModalOpen(true);
-  }
-
-  function saveSlots() {
-    const sorted = [...editSlots].sort(
-      (a, b) =>
-        a.dateStr.localeCompare(b.dateStr) || a.time.localeCompare(b.time),
-    );
-    setSlotsOverride(sorted);
-    setSlotsModalOpen(false);
-    setHasUnsaved(false);
-    saveToSupabase(buildSnapshot({ slotsOverride: sorted }));
-  }
-
-  function openScheduleModal() {
-    setEditBehandlingar(
-      scheduleOverride?.behandlingar
-        ? [...scheduleOverride.behandlingar]
-        : t.weekSchedule.behandlingarItems.map((r) => ({ ...r })),
-    );
-    setEditKlasser(
-      scheduleOverride?.klasser
-        ? [...scheduleOverride.klasser]
-        : (t.weekSchedule.klasserItems || []).map((r) => ({ ...r })),
-    );
-    setEditTreatments(
-      treatmentsOverride
-        ? [...treatmentsOverride]
-        : (t.treatments || []).map((r) => ({ ...r })),
-    );
-    setScheduleModalOpen(true);
-  }
-
-  function saveSchedule() {
-    const newSchedule = {
-      ...(scheduleOverride || {}),
-      behandlingar: editBehandlingar,
-      klasser: editKlasser,
-    };
-    setScheduleOverride(newSchedule);
-    setTreatmentsOverride(editTreatments);
-    setScheduleModalOpen(false);
-    setHasUnsaved(false);
-    saveToSupabase(
-      buildSnapshot({
-        scheduleOverride: newSchedule,
-        treatmentsOverride: editTreatments,
-      }),
-    );
-  }
-
-  // ── Admin: section order & visibility (stored inside scheduleOverride) ───────
-  const sectionOrder = (
-    scheduleOverride?.sectionOrder || DEFAULT_SECTION_ORDER
-  ).filter((id) => SECTION_DEFS.some((s) => s.id === id));
-  const hiddenSections = scheduleOverride?.hiddenSections || [];
-
-  function moveSection(id, dir) {
-    const order = [...sectionOrder];
-    const i = order.indexOf(id);
-    const j = i + dir;
-    if (i === -1 || j < 0 || j >= order.length) return;
-    [order[i], order[j]] = [order[j], order[i]];
-    setScheduleOverride((prev) => ({ ...(prev || {}), sectionOrder: order }));
-    setHasUnsaved(true);
-  }
-
-  function toggleSectionHidden(id) {
-    const isHidden = hiddenSections.includes(id);
-    const next = isHidden
-      ? hiddenSections.filter((x) => x !== id)
-      : [...hiddenSections, id];
-    setScheduleOverride((prev) => ({ ...(prev || {}), hiddenSections: next }));
-    setHasUnsaved(true);
-  }
-
-  async function handleAdminLogin(e) {
-    e.preventDefault();
-    const hash = await hashPassword(adminPwd);
-    if (hash === ADMIN_HASH) {
-      setIsAdmin(true);
-      localStorage.setItem("hbj_admin", "1");
-      setAdminLoginOpen(false);
-      setAdminPwd("");
-      setAdminError(false);
-    } else {
-      setAdminError(true);
-    }
-  }
-
-  function handleAdminLogout() {
-    setIsAdmin(false);
-    localStorage.removeItem("hbj_admin");
-    setHasUnsaved(false);
-  }
-
-  // Editable text can sit inside a link or button (nav, footer, booking flow).
-  // While in admin mode, clicking to place the cursor shouldn't also fire that
-  // element's own action (navigate away, submit a booking, etc).
-  function guardAdminEdit(e) {
-    if (isAdmin && e.target.closest(".admin-editable")) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  }
-
-  const adminCtxValue = {
-    isAdmin,
-    onEdit: handleEdit,
-    onImageUpload: handleImageUpload,
-  };
+function BookingPage({ t }) {
+  // Vilken rad som är öppen: "massage", "radgivning", "kurs" eller null
+  const [open, setOpen] = useState(null);
+  const p = t.bookPage;
 
   return (
-    <AdminCtx.Provider value={adminCtxValue}>
-      <header className="site-header" onClickCapture={guardAdminEdit}>
-        <Navbar t={t} lang={lang} setLang={setLang} />
-      </header>
+    <section className="week-schedule-section booking-page">
+      <div className="section-inner">
+        <span className="section-label">{p.label}</span>
+        <h2 className="week-schedule-title">{p.title}</h2>
 
-      <main className="main-sections" onClickCapture={guardAdminEdit}>
-        {/* Hero */}
-        <SectionWrap
-          id="hero"
-          order={sectionOrder}
-          hidden={hiddenSections}
-          isAdmin={isAdmin}
-        >
-          <section id="top" className="page-hero">
-            {/* Slideshow layers */}
-            {imageOverrides.header ? (
-              <div
-                className="hero-slide hero-slide-active"
-                style={{ backgroundImage: `url(${imageOverrides.header})` }}
-              />
-            ) : (
-              HERO_IMAGES.map((src, i) => (
-                <div
-                  key={src}
-                  className={`hero-slide${heroImg === i ? " hero-slide-active" : ""}`}
-                  style={{ backgroundImage: `url(${src})` }}
-                />
-              ))
-            )}
-            {isAdmin && (
-              <label className="admin-hero-img-btn" title="Byt bakgrundsbild">
-                Byt bakgrundsbild
-                <input
-                  type="file"
-                  accept="image/*"
-                  style={{ display: "none" }}
-                  onChange={(e) => {
-                    if (e.target.files[0])
-                      handleImageUpload("header", e.target.files[0]);
-                  }}
-                />
-              </label>
-            )}
-            <div className="page-hero-inner">
-              <EditableText
-                path="hero.eyebrow"
-                value={t.hero.eyebrow}
-                tag="span"
-                className="hero-eyebrow"
-              />
-              <h1 className="hero-title">Health by Jasmin</h1>
-              <EditableText
-                path="hero.sub"
-                value={t.hero.sub}
-                tag="p"
-                className="hero-sub"
-              />
-              <a
-                href="#om-mig"
-                className="hero-scroll-arrow"
-                aria-label={t.hero.scrollLabel}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-              </a>
-            </div>
-          </section>
-        </SectionWrap>
-
-        {/* Om mig */}
-        <SectionWrap
-          id="om-mig"
-          order={sectionOrder}
-          hidden={hiddenSections}
-          isAdmin={isAdmin}
-        >
-          <section id="om-mig" className="content-section about-bg">
-            <div className="section-inner">
-              <div className="about-split fade-up">
-                <div className="about-split-head">
-                  <EditableText
-                    path="about.label"
-                    value={t.about.label}
-                    tag="span"
-                    className="section-label"
-                  />
-                  <h2>
-                    Jasmin
-                    <br />
-                    Hedlund
-                  </h2>
-                </div>
-                <div className="about-split-body">
-                  <EditableText path="about.p1" value={t.about.p1} tag="p" />
-                  <EditableText path="about.p2" value={t.about.p2} tag="p" />
-                  <EditableText path="about.p3" value={t.about.p3} tag="p" />
-                </div>
-              </div>
-            </div>
-          </section>
-        </SectionWrap>
-
-        {/* Ayurveda & Yoga */}
-        <SectionWrap
-          id="ayurveda-yoga"
-          order={sectionOrder}
-          hidden={hiddenSections}
-          isAdmin={isAdmin}
-        >
-          <section className="checkerboard-section" id="ayurveda">
-            {/* Rad 1: Ayurveda bild | Ayurveda text */}
-            <div className="cb-cell cb-img">
-              <EditableImage
-                imgKey="ayurveda"
-                src={imgSrc("ayurveda", "/assets/ayurveda.jpg")}
-                alt="Ayurvediska örter och oljor"
-                className="cb-img-fill"
-                wrapStyle={{ height: "100%", display: "block" }}
-              />
-            </div>
-            <div className="cb-cell cb-text fade-up">
-              <EditableText
-                path="ayurveda.label"
-                value={t.ayurveda.label}
-                tag="span"
-                className="section-label"
-              />
-              <h2>Ayurveda</h2>
-              <EditableText path="ayurveda.p1" value={t.ayurveda.p1} tag="p" />
-              <EditableText path="ayurveda.p2" value={t.ayurveda.p2} tag="p" />
-              <EditableText
-                path="ayurveda.massageTitle"
-                value={t.ayurveda.massageTitle}
-                tag="h3"
-              />
-              <EditableText
-                path="ayurveda.massageP1"
-                value={t.ayurveda.massageP1}
-                tag="p"
-              />
-              <EditableText
-                path="ayurveda.massageP2"
-                value={t.ayurveda.massageP2}
-                tag="p"
-              />
-              <EditableText
-                path="ayurveda.radgivningTitle"
-                value={t.ayurveda.radgivningTitle}
-                tag="h3"
-              />
-              <EditableText
-                path="ayurveda.radgivningP1"
-                value={t.ayurveda.radgivningP1}
-                tag="p"
-              />
-            </div>
-
-            {/* Rad 2: Yoga & Ayurveda kurs | Yoga bild */}
-            <div className="cb-cell cb-text cb-text-alt fade-up" id="yoga">
-              <EditableText
-                path="yoga.label"
-                value={t.yoga.label}
-                tag="span"
-                className="section-label"
-              />
-              <h2>Yoga &amp; Ayurveda</h2>
-              <EditableText
-                path="yoga.intro"
-                value={t.yoga.intro}
-                tag="p"
-                className="yoga-intro"
-              />
-              <EditableText
-                path="yoga.yogaAyurvedaP1"
-                value={t.yoga.yogaAyurvedaP1}
-                tag="p"
-              />
-              <EditableText
-                path="yoga.yogaAyurvedaP2Title"
-                value={t.yoga.yogaAyurvedaP2Title}
-                tag="p"
-                className="course-title"
-              />
-              <EditableText
-                path="yoga.yogaAyurvedaP2"
-                value={t.yoga.yogaAyurvedaP2}
-                tag="p"
-                className="course-list"
-              />
-              <EditableText
-                path="yoga.yogaAyurvedaP3Title"
-                value={t.yoga.yogaAyurvedaP3Title}
-                tag="p"
-                className="course-title"
-              />
-              <EditableText
-                path="yoga.yogaAyurvedaP3"
-                value={t.yoga.yogaAyurvedaP3}
-                tag="p"
-                className="course-list"
-              />
-
-              <span className="yoga-schedule-row">
-                <EditableText
-                  path="yoga.yogaAyurvedaSub"
-                  value={t.yoga.yogaAyurvedaSub}
-                  tag="span"
-                  className="yoga-col-schedule"
-                />
-              </span>
-            </div>
-            <div className="cb-cell cb-img">
-              <EditableImage
-                imgKey="ashtanga"
-                src={imgSrc("ashtanga", "/assets/ashtanga.jpeg")}
-                alt="Yoga"
-                className="cb-img-fill"
-                wrapStyle={{ height: "100%", display: "block" }}
-              />
-            </div>
-          </section>
-        </SectionWrap>
-
-        {/* Veckoschema + bokning */}
-        <SectionWrap
-          id="boka"
-          order={sectionOrder}
-          hidden={hiddenSections}
-          isAdmin={isAdmin}
-        >
-          <section
-            className="week-schedule-section"
-            id="boka"
-            ref={scheduleSectionRef}
-          >
-            <div className="section-inner">
-              <EditableText
-                path="weekSchedule.label"
-                value={t.weekSchedule.label}
-                tag="span"
-                className="section-label"
-              />
-              <EditableText
-                path="weekSchedule.title"
-                value={t.weekSchedule.title}
-                tag="h2"
-                className="week-schedule-title"
-              />
-              <div className="wsr-columns wsr-columns-single">
-                <div className="wsr-col">
-                  <EditableText
-                    path="weekSchedule.colBehandlingar"
-                    value={t.weekSchedule.colBehandlingar}
-                    tag="p"
-                    className="wsr-col-label"
-                  />
-                  <div className="week-schedule-rows">
-                    {(
-                      scheduleOverride?.behandlingar ||
-                      t.weekSchedule.behandlingarItems
-                    ).map((row) => {
-                      const isOpen =
-                        row.id === "massage" ? massageOpen : radgivningOpen;
-                      const toggle =
-                        row.id === "massage"
-                          ? () => {
-                              setMassageOpen((o) => !o);
-                              setRadgivningOpen(false);
-                            }
-                          : () => {
-                              setRadgivningOpen((o) => !o);
-                              setMassageOpen(false);
-                            };
-                      const price = row.price || "";
-                      return (
-                        <button
-                          key={row.id}
-                          className={`week-schedule-row${isOpen ? " wsr-active" : ""}`}
-                          onClick={toggle}
-                        >
-                          <span className="wsr-info" style={{ flex: 1 }}>
-                            <span className="wsr-type">{row.type}</span>
-                            <span className="wsr-type-loc">
-                              {row.id === "massage"
-                                ? "(Vasastan · ej dusch)"
-                                : "(Vasastan)"}
-                            </span>
-                            <span className="wsr-time-inline">{row.time}</span>
-                          </span>
-                          {price && <span className="wsr-price">{price}</span>}
-                          <EditableText
-                            path={
-                              isOpen
-                                ? "weekSchedule.closeLabel"
-                                : "weekSchedule.bookLabel"
-                            }
-                            value={
-                              isOpen
-                                ? t.weekSchedule.closeLabel
-                                : t.weekSchedule.bookLabel
-                            }
-                            tag="span"
-                            className="wsr-btn"
-                          />
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-
-              {massageOpen && (
-                <div className="week-schedule-booking" ref={bookingRef}>
-                  <Booking
-                    key={massageStudio}
-                    t={
-                      treatmentsOverride
-                        ? { ...t, treatments: treatmentsOverride }
-                        : t
-                    }
-                    entries={MASSAGE_STUDIOS[massageStudio].entries}
-                    address={MASSAGE_STUDIOS[massageStudio].address}
-                    slotPrefix={MASSAGE_STUDIOS[massageStudio].slotPrefix}
-                    treatmentIds={["abhyanga", "vishesh", "marma"]}
-                    emailTemplate={MASSAGE_STUDIOS[massageStudio].emailTemplate}
-                    onDone={() => {
-                      setMassageOpen(false);
-                      setMassageStudio("birka");
-                    }}
-                  />
-                </div>
-              )}
-              {radgivningOpen && (
-                <div className="week-schedule-booking" ref={radgivningRef}>
-                  <Booking
-                    t={
-                      treatmentsOverride
-                        ? { ...t, treatments: treatmentsOverride }
-                        : t
-                    }
-                    entries={activeEntries}
-                    address="Birkagatan 23, Stockholm"
-                    slotPrefix="birka-radgivning"
-                    treatmentIds={["halsradgivning"]}
-                    emailTemplate={EMAILJS_TEMPLATE_BIRKA}
-                    onDone={() => setRadgivningOpen(false)}
-                  />
-                </div>
-              )}
-            </div>
-          </section>
-        </SectionWrap>
-
-        {/* Quote */}
-        <SectionWrap
-          id="quote"
-          order={sectionOrder}
-          hidden={hiddenSections}
-          isAdmin={isAdmin}
-        >
-          <section className="quote-section">
-            <EditableText path="quote" value={t.quote} tag="p" />
-          </section>
-        </SectionWrap>
-
-        {/* Recensioner */}
-        <SectionWrap
-          id="testimonials"
-          order={sectionOrder}
-          hidden={hiddenSections}
-          isAdmin={isAdmin}
-        >
-          <section className="testimonials-section">
-            <div className="section-inner">
-              <EditableText
-                path="reviews.label"
-                value={t.reviews.label}
-                tag="span"
-                className="section-label"
-              />
-              <EditableText
-                path="reviews.title"
-                value={t.reviews.title}
-                tag="h2"
-              />
-              <div className="testimonials-shelf-wrap">
-                <button
-                  className="shelf-arrow shelf-arrow-prev"
-                  onClick={() => scrollShelf(-1)}
-                  aria-label="Föregående"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    width="18"
-                    height="18"
-                  >
-                    <polyline points="15 18 9 12 15 6" />
-                  </svg>
-                </button>
-                <div className="testimonials-shelf fade-up" ref={shelfRef}>
-                  {t.reviews.items.map((r, i) => (
-                    <div key={r.author} className="testimonial-card">
-                      <div className="testimonial-stars">★★★★★</div>
-                      <EditableText
-                        path={`reviews.items.${i}.text`}
-                        value={r.text}
-                        tag="p"
-                        className="testimonial-text"
-                      />
-                      <EditableText
-                        path={`reviews.items.${i}.author`}
-                        value={r.author}
-                        tag="span"
-                        className="testimonial-author"
-                      />
-                    </div>
-                  ))}
-                </div>
-                <button
-                  className="shelf-arrow shelf-arrow-next"
-                  onClick={() => scrollShelf(1)}
-                  aria-label="Nästa"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    width="18"
-                    height="18"
-                  >
-                    <polyline points="9 18 15 12 9 6" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </section>
-        </SectionWrap>
-
-        {/* FAQ */}
-        <SectionWrap
-          id="faq"
-          order={sectionOrder}
-          hidden={hiddenSections}
-          isAdmin={isAdmin}
-        >
-          <FaqSection t={t} />
-        </SectionWrap>
-      </main>
-
-      <footer className="site-footer" onClickCapture={guardAdminEdit}>
-        <div className="footer-inner">
-          <div className="footer-brand">
-            <img
-              src="/assets/lightlogo.png"
-              alt="Health by Jasmin"
-              className="footer-logo"
-            />
-            <EditableText
-              path="footer.tagline"
-              value={t.footer.tagline}
-              tag="p"
-              className="footer-tagline"
-            />
-          </div>
-
-          <div className="footer-links">
-            <a href="#om-mig">
-              <EditableText
-                path="footer.linkAboutMe"
-                value={t.footer.linkAboutMe}
-              />
-            </a>
-            <a href="#ayurveda">
-              <EditableText
-                path="footer.linkAyurveda"
-                value={t.footer.linkAyurveda}
-              />
-            </a>
-            <a href="#yoga">
-              <EditableText path="footer.linkYoga" value={t.footer.linkYoga} />
-            </a>
-            <a href="#boka">
-              <EditableText path="footer.linkBook" value={t.footer.linkBook} />
-            </a>
-            <a href="#faq">
-              <EditableText path="footer.linkFaq" value={t.footer.linkFaq} />
-            </a>
-          </div>
-
-          <div className="footer-contact">
-            <EditableText
-              path="footer.location"
-              value={t.footer.location}
-              tag="span"
-              className="footer-loc"
-            />
-            <a href="mailto:healthbyjasmin@gmail.com" className="footer-email">
-              healthbyjasmin@gmail.com
-            </a>
-            <a
-              href="https://www.instagram.com/healthbyjasmin/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="footer-ig"
-              aria-label="Instagram"
-            >
-              <i className="fab fa-instagram" />
-              <EditableText
-                path="footer.instagramHandle"
-                value={t.footer.instagramHandle}
-              />
-            </a>
-          </div>
-        </div>
-
-        <div className="footer-bottom">
-          <EditableText
-            path="footer.copyright"
-            value={t.footer.copyright}
-            tag="span"
-          />
-          <button
-            className="admin-lock-btn"
-            onClick={() =>
-              isAdmin ? handleAdminLogout() : setAdminLoginOpen(true)
-            }
-            title={isAdmin ? "Logga ut admin" : "Admin"}
-          >
-            {isAdmin ? "🔓" : "🔒"}
-          </button>
-        </div>
-      </footer>
-
-      {/* Admin: inloggningsmodal */}
-      {adminLoginOpen && (
-        <div
-          className="admin-login-modal"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setAdminLoginOpen(false);
-          }}
-        >
-          <form className="admin-login-box" onSubmit={handleAdminLogin}>
-            <h3>Admin</h3>
-            <input
-              className="admin-login-input"
-              type="password"
-              placeholder="Lösenord"
-              value={adminPwd}
-              onChange={(e) => setAdminPwd(e.target.value)}
-              autoFocus
-            />
-            {adminError && <p className="admin-login-error">Fel lösenord.</p>}
-            <button className="admin-login-btn" type="submit">
-              Logga in
-            </button>
-          </form>
-        </div>
-      )}
-
-      {/* Admin: verktygsfält */}
-      {isAdmin && (
-        <div className="admin-bar">
-          <div className="admin-font-row">
-            <span className="admin-font-label">Rubrikfont</span>
-            <select
-              className="admin-font-select"
-              value={fontOverrides.heading}
-              onChange={(e) => handleFontChange("heading", e.target.value)}
-            >
-              <option value="">Standard</option>
-              {HEADING_FONTS.map((f) => (
-                <option key={f} value={f}>
-                  {f}
-                </option>
-              ))}
-            </select>
-            <span className="admin-font-label">Brödtextfont</span>
-            <select
-              className="admin-font-select"
-              value={fontOverrides.body}
-              onChange={(e) => handleFontChange("body", e.target.value)}
-            >
-              <option value="">Standard</option>
-              {BODY_FONTS.map((f) => (
-                <option key={f} value={f}>
-                  {f}
-                </option>
-              ))}
-            </select>
-            <span className="admin-font-label" style={{ marginLeft: 8 }}>
-              Klicka på text för att redigera · Klicka på bild för att byta
-            </span>
-          </div>
-          <div className="admin-bar-right">
-            <button
-              className="admin-slots-btn"
-              onClick={() => setSectionsModalOpen(true)}
-            >
-              Sektioner
-            </button>
-            <button className="admin-slots-btn" onClick={openSlotsModal}>
-              Redigera tider
-            </button>
-            <button className="admin-slots-btn" onClick={openScheduleModal}>
-              Schema &amp; Behandlingar
-            </button>
-            <button
-              className="admin-save-btn"
-              onClick={handleSave}
-              disabled={saving}
-              style={saveError ? { background: "#c00" } : {}}
-            >
-              {saving
-                ? "Sparar…"
-                : saveError
-                  ? "Fel – försök igen"
-                  : hasUnsaved
-                    ? "Spara ändringar ●"
-                    : "Sparat ✓"}
-            </button>
-            <button className="admin-logout-btn" onClick={handleAdminLogout}>
-              Logga ut
-            </button>
-          </div>
-        </div>
-      )}
-      {/* Admin: schema & behandlingar modal */}
-      {scheduleModalOpen && (
-        <div
-          className="admin-login-modal"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setScheduleModalOpen(false);
-          }}
-        >
-          <div className="admin-slots-box" style={{ width: "min(680px,96vw)" }}>
-            <h3>Schema &amp; Behandlingar</h3>
-
-            <p
-              className="admin-slots-hint"
-              style={{ fontWeight: 600, color: "#333", marginBottom: 0 }}
-            >
-              Behandlingsrader (massage &amp; rådgivning)
-            </p>
-            <div className="admin-slots-list">
-              <div
-                className="admin-slots-header"
-                style={{ gridTemplateColumns: "80px 110px 1fr 1fr 32px" }}
-              >
-                <span>Dag</span>
-                <span>Tid</span>
-                <span>Typ</span>
-                <span>Lokal</span>
-                <span></span>
-              </div>
-              {editBehandlingar.map((row, i) => (
-                <div
-                  key={i}
-                  className="admin-slots-row"
-                  style={{ gridTemplateColumns: "80px 110px 1fr 1fr 32px" }}
-                >
-                  <input
-                    className="admin-slots-input"
-                    value={row.day}
-                    onChange={(e) =>
-                      setEditBehandlingar((p) =>
-                        p.map((r, j) =>
-                          j === i ? { ...r, day: e.target.value } : r,
-                        ),
-                      )
-                    }
-                    placeholder="Dag"
-                  />
-                  <input
-                    className="admin-slots-input"
-                    value={row.time}
-                    onChange={(e) =>
-                      setEditBehandlingar((p) =>
-                        p.map((r, j) =>
-                          j === i ? { ...r, time: e.target.value } : r,
-                        ),
-                      )
-                    }
-                    placeholder="Tid"
-                  />
-                  <input
-                    className="admin-slots-input"
-                    value={row.type}
-                    onChange={(e) =>
-                      setEditBehandlingar((p) =>
-                        p.map((r, j) =>
-                          j === i ? { ...r, type: e.target.value } : r,
-                        ),
-                      )
-                    }
-                    placeholder="Typ"
-                  />
-                  <input
-                    className="admin-slots-input"
-                    value={row.loc || ""}
-                    onChange={(e) =>
-                      setEditBehandlingar((p) =>
-                        p.map((r, j) =>
-                          j === i ? { ...r, loc: e.target.value } : r,
-                        ),
-                      )
-                    }
-                    placeholder="Lokal"
-                  />
-                  <button
-                    className="admin-slots-del"
-                    onClick={() =>
-                      setEditBehandlingar((p) => p.filter((_, j) => j !== i))
-                    }
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-              <button
-                className="admin-slots-add"
-                onClick={() =>
-                  setEditBehandlingar((p) => [
-                    ...p,
-                    {
-                      day: "Torsdag",
-                      time: "18:30",
-                      type: "",
-                      loc: "",
-                      id: `behandling-${Date.now()}`,
-                    },
-                  ])
-                }
-              >
-                + Lägg till behandlingsrad
-              </button>
-            </div>
-
-            <p
-              className="admin-slots-hint"
-              style={{
-                fontWeight: 600,
-                color: "#333",
-                marginBottom: 0,
-                marginTop: 8,
-              }}
-            >
-              Yogaklasser
-            </p>
-            <div className="admin-slots-list">
-              <div
-                className="admin-slots-header"
-                style={{ gridTemplateColumns: "80px 110px 1fr 1fr 1fr 32px" }}
-              >
-                <span>Dag</span>
-                <span>Tid</span>
-                <span>Typ</span>
-                <span>Studio</span>
-                <span>Länk</span>
-                <span></span>
-              </div>
-              {editKlasser.map((row, i) => (
-                <div
-                  key={i}
-                  className="admin-slots-row"
-                  style={{ gridTemplateColumns: "80px 110px 1fr 1fr 1fr 32px" }}
-                >
-                  <input
-                    className="admin-slots-input"
-                    value={row.day}
-                    onChange={(e) =>
-                      setEditKlasser((p) =>
-                        p.map((r, j) =>
-                          j === i ? { ...r, day: e.target.value } : r,
-                        ),
-                      )
-                    }
-                    placeholder="Dag"
-                  />
-                  <input
-                    className="admin-slots-input"
-                    value={row.time}
-                    onChange={(e) =>
-                      setEditKlasser((p) =>
-                        p.map((r, j) =>
-                          j === i ? { ...r, time: e.target.value } : r,
-                        ),
-                      )
-                    }
-                    placeholder="Tid"
-                  />
-                  <input
-                    className="admin-slots-input"
-                    value={row.type}
-                    onChange={(e) =>
-                      setEditKlasser((p) =>
-                        p.map((r, j) =>
-                          j === i ? { ...r, type: e.target.value } : r,
-                        ),
-                      )
-                    }
-                    placeholder="Typ"
-                  />
-                  <input
-                    className="admin-slots-input"
-                    value={row.loc}
-                    onChange={(e) =>
-                      setEditKlasser((p) =>
-                        p.map((r, j) =>
-                          j === i ? { ...r, loc: e.target.value } : r,
-                        ),
-                      )
-                    }
-                    placeholder="Studio"
-                  />
-                  <input
-                    className="admin-slots-input"
-                    value={row.href}
-                    onChange={(e) =>
-                      setEditKlasser((p) =>
-                        p.map((r, j) =>
-                          j === i ? { ...r, href: e.target.value } : r,
-                        ),
-                      )
-                    }
-                    placeholder="https://..."
-                  />
-                  <button
-                    className="admin-slots-del"
-                    onClick={() =>
-                      setEditKlasser((p) => p.filter((_, j) => j !== i))
-                    }
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-              <button
-                className="admin-slots-add"
-                onClick={() =>
-                  setEditKlasser((p) => [
-                    ...p,
-                    { day: "", time: "", type: "", loc: "", href: "" },
-                  ])
-                }
-              >
-                + Lägg till klass
-              </button>
-            </div>
-
-            <p
-              className="admin-slots-hint"
-              style={{
-                fontWeight: 600,
-                color: "#333",
-                marginBottom: 0,
-                marginTop: 8,
-              }}
-            >
-              Behandlingar (priser &amp; beskrivningar)
-            </p>
-            <div className="admin-slots-list">
-              {editTreatments.map((tr, i) => (
-                <div
-                  key={i}
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 90px 32px",
-                    gap: 6,
-                    marginBottom: 4,
-                  }}
-                >
-                  <input
-                    className="admin-slots-input"
-                    value={tr.name}
-                    onChange={(e) =>
-                      setEditTreatments((p) =>
-                        p.map((r, j) =>
-                          j === i ? { ...r, name: e.target.value } : r,
-                        ),
-                      )
-                    }
-                    placeholder="Namn"
-                  />
-                  <input
-                    className="admin-slots-input"
-                    value={tr.price}
-                    onChange={(e) =>
-                      setEditTreatments((p) =>
-                        p.map((r, j) =>
-                          j === i ? { ...r, price: e.target.value } : r,
-                        ),
-                      )
-                    }
-                    placeholder="Pris"
-                  />
-                  <button
-                    className="admin-slots-del"
-                    onClick={() =>
-                      setEditTreatments((p) => p.filter((_, j) => j !== i))
-                    }
-                  >
-                    ×
-                  </button>
-                  <textarea
-                    className="admin-slots-input"
-                    style={{
-                      gridColumn: "1/3",
-                      resize: "vertical",
-                      minHeight: 48,
-                    }}
-                    value={tr.description}
-                    onChange={(e) =>
-                      setEditTreatments((p) =>
-                        p.map((r, j) =>
-                          j === i ? { ...r, description: e.target.value } : r,
-                        ),
-                      )
-                    }
-                    placeholder="Beskrivning"
-                  />
-                </div>
-              ))}
-              <button
-                className="admin-slots-add"
-                onClick={() =>
-                  setEditTreatments((p) => [
-                    ...p,
-                    {
-                      id: `t-${Date.now()}`,
-                      name: "",
-                      price: "",
-                      description: "",
-                    },
-                  ])
-                }
-              >
-                + Lägg till behandling
-              </button>
-            </div>
-
-            <div className="admin-slots-actions">
-              <button
-                className="admin-logout-btn"
-                onClick={() => setScheduleModalOpen(false)}
-              >
-                Avbryt
-              </button>
-              <button className="admin-save-btn" onClick={saveSchedule}>
-                Spara schema
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Admin: sektioner (visa/dölj & ordning) */}
-      {sectionsModalOpen && (
-        <div
-          className="admin-login-modal"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setSectionsModalOpen(false);
-          }}
-        >
-          <div className="admin-slots-box" style={{ width: "min(480px,96vw)" }}>
-            <h3>Sektioner</h3>
-            <p className="admin-slots-hint">
-              Dölj sektioner du inte vill visa, eller flytta dem upp/ner för att
-              ändra ordningen på sidan. Ändringar syns direkt – klicka sedan på
-              "Spara ändringar".
-            </p>
-            <div className="admin-slots-list">
-              {sectionOrder.map((id, i) => {
-                const def = SECTION_DEFS.find((s) => s.id === id);
-                const hidden = hiddenSections.includes(id);
+        {/* De tre valen */}
+        <div className="wsr-columns wsr-columns-single">
+          <div className="wsr-col">
+            <p className="wsr-col-label">{p.colLabel}</p>
+            <div className="week-schedule-rows">
+              {p.rows.map((row) => {
+                const isOpen = open === row.id;
                 return (
-                  <div key={id} className="admin-section-row">
-                    <span className="admin-section-row-label">
-                      {def?.label || id}
+                  <button
+                    key={row.id}
+                    className={`week-schedule-row${isOpen ? " wsr-active" : ""}`}
+                    onClick={() => setOpen(isOpen ? null : row.id)}
+                  >
+                    <span className="wsr-info" style={{ flex: 1 }}>
+                      <span className="wsr-type">{row.type}</span>
+                      {row.loc && (
+                        <span className="wsr-type-loc">{row.loc}</span>
+                      )}
+                      <span className="wsr-time-inline">{row.time}</span>
                     </span>
-                    <div className="admin-section-row-actions">
-                      <button
-                        className="admin-slots-del"
-                        title="Flytta upp"
-                        disabled={i === 0}
-                        onClick={() => moveSection(id, -1)}
-                      >
-                        ↑
-                      </button>
-                      <button
-                        className="admin-slots-del"
-                        title="Flytta ner"
-                        disabled={i === sectionOrder.length - 1}
-                        onClick={() => moveSection(id, 1)}
-                      >
-                        ↓
-                      </button>
-                      <button
-                        className={`admin-section-toggle${hidden ? " is-hidden" : ""}`}
-                        onClick={() => toggleSectionHidden(id)}
-                      >
-                        {hidden ? "Dold – visa" : "Synlig – dölj"}
-                      </button>
-                    </div>
-                  </div>
+                    {row.price && (
+                      <span className="wsr-price">{row.price}</span>
+                    )}
+                    <span className="wsr-btn">
+                      {isOpen ? p.closeLabel : p.openLabel}
+                    </span>
+                  </button>
                 );
               })}
             </div>
-            <div className="admin-slots-actions">
-              <button
-                className="admin-logout-btn"
-                onClick={() => setSectionsModalOpen(false)}
-              >
-                Stäng
-              </button>
-            </div>
           </div>
         </div>
-      )}
 
-      {/* Admin: tider/datum modal */}
-      {slotsModalOpen && (
-        <div
-          className="admin-login-modal"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setSlotsModalOpen(false);
-          }}
-        >
-          <div className="admin-slots-box">
-            <h3>Redigera tider &amp; datum</h3>
-            <p className="admin-slots-hint">
-              Lägg till eller ta bort datum och tider för ayurvedisk massage och
-              hälsorådgivning.
-            </p>
-            <div className="admin-slots-list">
-              <div className="admin-slots-header">
-                <span>Datum (ÅÅÅÅ-MM-DD)</span>
-                <span>Tid (TT:MM)</span>
-                <span></span>
-              </div>
-              {editSlots.map((row, i) => (
-                <div key={i} className="admin-slots-row">
-                  <input
-                    className="admin-slots-input"
-                    type="date"
-                    value={row.dateStr}
-                    onChange={(e) =>
-                      setEditSlots((prev) =>
-                        prev.map((r, j) =>
-                          j === i ? { ...r, dateStr: e.target.value } : r,
-                        ),
-                      )
-                    }
-                  />
-                  <input
-                    className="admin-slots-input admin-slots-time"
-                    type="time"
-                    value={row.time}
-                    onChange={(e) =>
-                      setEditSlots((prev) =>
-                        prev.map((r, j) =>
-                          j === i ? { ...r, time: e.target.value } : r,
-                        ),
-                      )
-                    }
-                  />
-                  <button
-                    className="admin-slots-del"
-                    onClick={() =>
-                      setEditSlots((prev) => prev.filter((_, j) => j !== i))
-                    }
-                    title="Ta bort"
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-            </div>
-            <button
-              className="admin-slots-add"
-              onClick={() =>
-                setEditSlots((prev) => [
-                  ...prev,
-                  { dateStr: "", time: "18:30" },
-                ])
-              }
-            >
-              + Lägg till tid
-            </button>
-            <div className="admin-slots-actions">
-              <button
-                className="admin-logout-btn"
-                onClick={() => setSlotsModalOpen(false)}
-              >
-                Avbryt
-              </button>
-              <button className="admin-save-btn" onClick={saveSlots}>
-                Spara tider
-              </button>
-            </div>
+        {/* Massage */}
+        {open === "massage" && (
+          <div className="week-schedule-booking">
+            <Booking
+              t={t}
+              entries={TORSDAG_ENTRIES}
+              address="Birkagatan 23, Stockholm (ej dusch)"
+              slotPrefix="birka-massage"
+              treatmentIds={["abhyanga", "vishesh", "marma"]}
+              onDone={() => setOpen(null)}
+            />
           </div>
+        )}
+
+        {/* Rådgivning */}
+        {open === "radgivning" && (
+          <div className="week-schedule-booking">
+            <Booking
+              t={t}
+              entries={TORSDAG_ENTRIES}
+              address="Birkagatan 23, Stockholm"
+              slotPrefix="birka-radgivning"
+              treatmentIds={["halsradgivning"]}
+              onDone={() => setOpen(null)}
+            />
+          </div>
+        )}
+
+        {/* Kurs (bokning öppnar snart) */}
+        {open === "kurs" && (
+          <div className="week-schedule-booking booking-course-box">
+            <p>{p.courseText}</p>
+            <a
+              className="section-book-btn"
+              href={`mailto:healthbyjasmin@gmail.com?subject=${encodeURIComponent(p.courseMailSubject)}`}
+            >
+              {p.courseMailLabel}
+            </a>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================================
+   8. SIDFOT
+   ============================================================================ */
+
+function Footer({ t }) {
+  return (
+    <footer className="site-footer">
+      <div className="footer-inner">
+        <div className="footer-brand">
+          <img
+            src="/assets/lightlogo.png"
+            alt="Health by Jasmin"
+            className="footer-logo"
+          />
+          <p className="footer-tagline">{t.footer.tagline}</p>
         </div>
-      )}
-    </AdminCtx.Provider>
+
+        <div className="footer-links">
+          <a href="#om-mig">{t.footer.linkAboutMe}</a>
+          <a href="#ayurveda">{t.footer.linkAyurveda}</a>
+          <a href="#yoga">{t.footer.linkYoga}</a>
+          <a href="#boka">{t.footer.linkBook}</a>
+        </div>
+
+        <div className="footer-contact">
+          <span className="footer-loc">{t.footer.location}</span>
+          <a href="mailto:healthbyjasmin@gmail.com" className="footer-email">
+            healthbyjasmin@gmail.com
+          </a>
+          <a
+            href="https://www.instagram.com/healthbyjasmin/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-ig"
+            aria-label="Instagram"
+          >
+            <i className="fab fa-instagram" />
+            <span>{t.footer.instagramHandle}</span>
+          </a>
+        </div>
+      </div>
+
+      <div className="footer-bottom">
+        <span>{t.footer.copyright}</span>
+      </div>
+    </footer>
+  );
+}
+
+/* ============================================================================
+   9. APP – väljer vilken sida som visas
+      Adressen slutar på #boka  → Boka-sidan
+      Allt annat                → Startsidan
+   ============================================================================ */
+
+export default function HealthByJasmin() {
+  const [lang, setLang] = useState("sv");
+  const [hash, setHash] = useState(window.location.hash);
+
+  const t = TRANSLATIONS[lang];
+  const page = hash === "#boka" ? "boka" : "home";
+
+  // Lyssna på när adressen (#...) ändras
+  useEffect(() => {
+    const onHashChange = () => setHash(window.location.hash);
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
+  // Scrolla rätt när sidan eller adressen ändras
+  useEffect(() => {
+    if (page === "boka") {
+      window.scrollTo(0, 0);
+      return;
+    }
+    const id = hash.slice(1);
+    if (!id) return;
+    const scrollToSection = () => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+    // Vänta tills sidan ritats, och försök igen när bilder laddats klart
+    requestAnimationFrame(() => requestAnimationFrame(scrollToSection));
+    window.addEventListener("load", scrollToSection);
+    return () => window.removeEventListener("load", scrollToSection);
+  }, [page, hash]);
+
+  return (
+    <>
+      <header className="site-header">
+        <Navbar t={t} lang={lang} setLang={setLang} />
+      </header>
+
+      <main className="main-sections">
+        {page === "boka" ? (
+          <BookingPage t={t} />
+        ) : (
+          <HomePage t={t} lang={lang} />
+        )}
+      </main>
+
+      <Footer t={t} />
+    </>
   );
 }
