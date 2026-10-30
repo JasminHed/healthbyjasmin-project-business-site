@@ -389,21 +389,28 @@ const TRANSLATIONS = {
         name: "Abhyanga",
         price: "750 kr",
         description:
-          "Helkroppsmassage med varm sesamolja i långa, svepande rörelser. Ger värme, grundning och närvaro. Ett sätt för kropp och sinne att sakta ned och landa.",
+          "Klassisk helkroppsmassage med varm sesamolja i långa, mjuka drag, från huvud till fötter. Ger återhämtning, grundning och ro, och mjukar upp muskler och leder.",
       },
       {
         id: "vishesh",
         name: "Vishesh",
         price: "750 kr",
         description:
-          "Helkroppsmassage med varm sesamolja i långa drag med mer tryck. Mjukar upp muskler, frigör spänningar och ger kroppen lätthet. Du lämnar lättare och klarare i kropp och sinne.",
+          "Som Abhyanga, men med fastare tryck och lite högre tempo. Når djupare spänningar, ökar cirkulationen och ger lätthet i kropp och sinne.",
+      },
+      {
+        id: "marma",
+        name: "Marma",
+        price: "750 kr",
+        description:
+          "Börjar med samtal och pulsläsning. Sedan en subtil beröring över marmapunkter, valda efter din dosha, med fokus på huvud, hjärta, mage, knän och fötter. Balanserar doshan och ger ofta djup återhämtning.",
       },
       {
         id: "halsradgivning",
         name: "Ayurvedisk hälsorådgivning",
         price: "695 kr",
         description:
-          "Individuell rådgivning baserad på din ayurvediska konstitution. Vi tittar på hur du mår, dina vanor och din vardag – och sätter ihop konkreta råd för kost, rutiner och livsstil anpassade för dig.",
+          "Enskilt samtal där jag läser din puls och din konstitution. Du får enkla, personliga råd om kost, sömn och rutiner.",
       },
     ],
     months: [
@@ -640,21 +647,28 @@ const TRANSLATIONS = {
         name: "Abhyanga",
         price: "750 kr",
         description:
-          "Full-body massage with warm sesame oil using long, sweeping strokes. Brings warmth, grounding and presence. A way for body and mind to slow down and settle.",
+          "Classic full-body massage with warm sesame oil in long, soft strokes, from head to feet. Brings recovery, grounding and calm, and softens muscles and joints.",
       },
       {
         id: "vishesh",
         name: "Vishesh",
         price: "750 kr",
         description:
-          "Full-body massage with warm sesame oil using long strokes with more pressure. Softens muscles, releases tension and brings lightness to the body. You leave lighter and clearer in body and mind.",
+          "Like Abhyanga, but with firmer pressure and a slightly faster pace. Reaches deeper tension, boosts circulation and brings lightness to body and mind.",
+      },
+      {
+        id: "marma",
+        name: "Marma",
+        price: "750 kr",
+        description:
+          "Begins with a conversation and pulse reading. Then a subtle touch over marma points, chosen for your dosha, focusing on the head, heart, stomach, knees and feet. Balances the dosha and often brings deep recovery.",
       },
       {
         id: "halsradgivning",
         name: "Ayurvedic health consultation",
         price: "695 kr",
         description:
-          "Individual consultation based on your ayurvedic constitution. We look at how you feel, your habits and daily life – and put together concrete advice on diet, routines and lifestyle tailored to you.",
+          "Individual session where I read your pulse and constitution. You get simple, personal advice on food, sleep and routines.",
       },
     ],
     months: [
@@ -2286,7 +2300,7 @@ export default function HealthByJasmin() {
                     entries={MASSAGE_STUDIOS[massageStudio].entries}
                     address={MASSAGE_STUDIOS[massageStudio].address}
                     slotPrefix={MASSAGE_STUDIOS[massageStudio].slotPrefix}
-                    treatmentIds={["abhyanga", "vishesh"]}
+                    treatmentIds={["abhyanga", "vishesh", "marma"]}
                     emailTemplate={MASSAGE_STUDIOS[massageStudio].emailTemplate}
                     onDone={() => {
                       setMassageOpen(false);
