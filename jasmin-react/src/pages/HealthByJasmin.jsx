@@ -4,25 +4,6 @@ import { useEffect, useRef, useState } from "react";
 
 import "../styles/app.css";
 
-/* ============================================================================
-   HEALTH BY JASMIN – hela hemsidan i en fil
-
-   Innehåll (sök på rubrikerna nedan med Ctrl/Cmd+F):
-     1. INSTÄLLNINGAR      – Supabase + EmailJS
-     2. BOKNINGSTIDER      – datum och klockslag
-     3. TEXTER             – all text på svenska (sv) och engelska (en)
-     4. MENY               – Navbar
-     5. BOKNINGSFORMULÄR   – själva bokningen (välj behandling, tid, uppgifter)
-     6. STARTSIDAN         – hero, om mig, ayurveda, yoga, citat, recensioner
-     7. BOKA-SIDAN         – egen sida (nås via #boka)
-     8. SIDFOT
-     9. APP                – väljer vilken sida som visas
-   ============================================================================ */
-
-/* ============================================================================
-   1. INSTÄLLNINGAR
-   ============================================================================ */
-
 const supabase = createClient(
   "https://besnxjxiadkapxgmabdz.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJlc254anhpYWRrYXB4Z21hYmR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzY0OTIsImV4cCI6MjA5NDI1MjQ5Mn0.VEH6QtlFEieEYtQTuWvXPNPVwAB_Lw19wk-NGYz0oNY",
