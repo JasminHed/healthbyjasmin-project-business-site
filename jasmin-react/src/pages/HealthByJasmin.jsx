@@ -100,6 +100,27 @@ const TRANSLATIONS = {
       book: "Boka",
       interest: "Intresseanmälan",
     },
+    home: {
+      treatLabel: "Behandlingar",
+      treatTitle: "Hitta din behandling",
+      treatLink: "Boka →",
+      stepsLabel: "Så går det till",
+      stepsTitle: "Enkelt från start till ro",
+      steps: [
+        {
+          title: "Boka online",
+          text: "Välj behandling och en tid som passar. Du får ett bekräftelsemejl direkt. Avboka senast 24 timmar innan.",
+        },
+        {
+          title: "Kom och landa",
+          text: "Kom i oömma kläder, underkläder används under behandlingen. Vi börjar lugnt så att du hinner landa.",
+        },
+        {
+          title: "Återhämta dig",
+          text: "Ta det lugnt efteråt och duscha ordentligt hemma, så får oljan göra sitt.",
+        },
+      ],
+    },
     hero: {
       eyebrow: "Yoga & Ayurveda · Stockholm · 2015",
       sub: "Välkommen. Genom yoga och ayurveda erbjuder jag verktyg för att stärka, återhämta och hitta balans i vardagen.",
@@ -298,6 +319,27 @@ const TRANSLATIONS = {
     buttons: {
       book: "Book",
       interest: "Register interest",
+    },
+    home: {
+      treatLabel: "Treatments",
+      treatTitle: "Find your treatment",
+      treatLink: "Book →",
+      stepsLabel: "How it works",
+      stepsTitle: "Simple from start to calm",
+      steps: [
+        {
+          title: "Book online",
+          text: "Choose a treatment and a time that suits you. You get a confirmation email right away. Cancel at least 24 hours before.",
+        },
+        {
+          title: "Arrive and settle",
+          text: "Wear comfortable clothes, underwear is worn during the treatment. We start slowly so you can settle in.",
+        },
+        {
+          title: "Recover",
+          text: "Take it easy afterwards and shower thoroughly at home, so the oil can do its work.",
+        },
+      ],
     },
     hero: {
       eyebrow: "Yoga & Ayurveda · Stockholm · 2015",
@@ -1167,6 +1209,26 @@ function HomePage({ t, lang }) {
         </div>
       </section>
 
+      {/* ───────── BEHANDLINGAR ───────── */}
+      <section id="behandlingar" className="content-section">
+        <div className="section-inner">
+          <span className="section-label">{t.home.treatLabel}</span>
+          <h2>{t.home.treatTitle}</h2>
+          <div className="treat-grid fade-up">
+            {t.treatments.map((tr) => (
+              <a key={tr.id} href="#boka" className="treat-card">
+                <div className="treat-card-top">
+                  <h3>{tr.name}</h3>
+                  <span className="treat-card-price">{tr.price}</span>
+                </div>
+                <p>{tr.description}</p>
+                <span className="treat-card-link">{t.home.treatLink}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ───────── AYURVEDA + YOGA (schackrutor: bild | text, text | bild) ───────── */}
       <section className="checkerboard-section" id="ayurveda">
         {/* Rad 1 vänster: bild */}
@@ -1215,6 +1277,23 @@ function HomePage({ t, lang }) {
         {/* Rad 2 höger: bild */}
         <div className="cb-cell cb-img">
           <img src="/assets/ashtanga.jpeg" alt="Yoga" className="cb-img-fill" />
+        </div>
+      </section>
+
+      {/* ───────── SÅ GÅR DET TILL ───────── */}
+      <section className="content-section about-bg">
+        <div className="section-inner">
+          <span className="section-label">{t.home.stepsLabel}</span>
+          <h2>{t.home.stepsTitle}</h2>
+          <div className="steps-grid fade-up">
+            {t.home.steps.map((st, i) => (
+              <div key={st.title} className="step-card">
+                <span className="step-num">{i + 1}</span>
+                <h3>{st.title}</h3>
+                <p>{st.text}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
