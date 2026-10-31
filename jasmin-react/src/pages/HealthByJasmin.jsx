@@ -88,7 +88,7 @@ const TRANSLATIONS = {
     },
     hero: {
       eyebrow: "Yoga & Ayurveda · Stockholm · 2015",
-      sub: "Massage, rådgivning och Ayurveda & Yoga i Stockholm.",
+      sub: "massage, rådgivning och ayurvedayoga kurser i Stockholm.",
       scrollLabel: "Scrolla ned",
     },
     about: {
