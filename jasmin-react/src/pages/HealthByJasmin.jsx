@@ -112,39 +112,40 @@ const TRANSLATIONS = {
     },
     about: {
       label: "Om mig",
-      p1: "Jag är Jasmin, personen bakom Health by Jasmin, ett enmannaföretag baserat i Stockholm, Sverige. Jag har praktiserat Ayurveda och Yoga sedan 2013. Det som först drog mig till både yoga och ayurveda var strukturen, rytmen och sättet som båda praktikerna sätter saker i fokus, ibland mjukt, ibland med kraft.",
-      p2: "Jag förälskade mig i deras holistiska förhållningssätt och hur de utmanar dig att se på dig själv och dina vanor från en helt annan vinkel. År 2015/2016 startade jag Health by Jasmin för att skapa ett utrymme där jag kunde dela det som verkligen har resonerat med mig under åren.",
-      p3: "Det här gör jag i små doser genom Ayurveda & Yoga kurser, Ayurvediska behandlingar och Retreats där båda får ta plats.",
+      p1: "Det är jag som är Jasmin, personen bakom Health by Jasmin, ett företag baserat i Stockholm, Sverige. Jag har praktiserat Ayurveda och Yoga sedan 2011. Det som först drog mig till praktikerna var strukturen, rytmen och sättet som de båda sätter saker i fokus, ibland mjukt, ibland med kraft.",
+      p2: "Jag förälskade mig i deras holistiska förhållningssätt och hur de utmanar dig att se på dig själv och dina vanor. År 2015 startade jag Health by Jasmin för att kunna dela det som resonerat hos mig under åren.",
+      p3: "Det här gör jag i små doser genom Ayurveda & Yoga kurser, ayurvediska behandlingar och rådgivning. Välkommen!",
     },
     ayurveda: {
       label: "Hälsa & välmående",
-      p1: "Ayurveda ger oss kunskap och verktyg för att stärka och läka oss själva, både fysiskt och mentalt. Det är ett holistiskt förhållningssätt till hälsa med rötter i Indien och över 6000 år av tradition.",
-      p2: "Ayurveda ser hela människan, kropp, sinne och allt däremellan. Har du huvudvärk beror det sällan bara på huvudet, det finns troligtvis något annat i kroppen eller livet som hänger samman.",
+      p1: "Ayurveda ger oss kunskap och verktyg för att stärka och läka oss själva, både fysiskt och mentalt. Det är ett holistiskt förhållningssätt till hälsa med rötter i Indien och har över 6000 år av historik och tradition bakom sig.",
+      p2: "Den kanske mest kända delen inom Ayurveda är tri-dosha teorin som beskriver tre energier, fysiska och mentala, så kallade doshor: Vata, Pitta och Kapha. Man tror att allting består av dessa tre energier och att de påverkar oss, våra relationer, vår omgivning och mycket mer.",
       massageTitle: "Ayurvedisk massage",
       massageP1:
-        "En av de finaste delarna av Ayurveda är behandlingarna, framförallt massagerna. De är ofta värmande och djupt lugnande, med varm sesamolja. Den är gynnsam för alla doshor: vata, pitta och kapha.",
+        "En av de finaste delarna i Ayurveda är behandlingarna. De är värmande och djupt lugnande och utförs med varm sesamolja eller eteriska oljor, beroende på val av behandling.",
       massageP2:
-        "Ayurvediska massager utförs med varm sesamolja och vid specifika behandlingar används varmvattenpåsar. Vi masserar huvud, ansikte, fram- och baksida av kroppen inklusive fötter.",
+        "Vi masserar huvud, ansikte, fram- och baksida av kroppen inklusive fötter.",
       radgivningTitle: "Ayurvedisk rådgivning",
       radgivningP1:
-        "En individuell konsultation där vi läser pulsen och undersöker egenskaper som tillhör vata, pitta och kapha. Utifrån det samtalar vi om ditt välmående, din kropp och din livssituation. Du får sedan egna råd och tips som stödjer eventuella obalanser och som är anpassade efter just dig. Det kan handla om rutiner, sömn, dygnsrytm, mat och mycket mer.",
+        "En individuell rådgivning där vi läser din puls och egenskaper som tillhör vata, pitta och kapha. Utifrån pulsen samtalar vi om ditt välmående och din livsstil. Rådgivningen avslutas med att du får råd och tips, baserade på både puls och samtal, som stödjer dig. Det kan handla om andningsövning, sömn, dygnsrytm och mat.",
     },
     yoga: {
       label: "Kurs",
       intro:
-        "En kurs för dig som vill hitta nya rutiner i vardagen, tillsammans med andra.",
+        "En kurs för dig som vill lära dig om, förnya eller fortsätta växa inom ayurveda och yoga.",
       sub: "Bokning öppnar snart",
-      p1: "Vi samlas för att skapa gemenskap och prova nya vanor tillsammans. Du behöver inte kunna något om ayurveda eller yoga sedan förut. Det viktiga är att du är öppen för att öva och ta till dig.",
+      p1: "Vi lär oss, hittar nya rutiner, rör oss och skriver tillsammans.",
       p2Title: "Varje tillfälle är 90 minuter",
       parts: [
         {
-          title: "Ayurveda · 30 min",
-          text: "Vi pratar om ayurveda och skriver journal tillsammans.",
+          title: "Ayurveda",
+          text: "Du får lyssna till ett specifikt tema inom ayurveda.",
         },
         {
-          title: "Yoga · 60 min",
+          title: "Yoga",
           text: "Rörelse i stående och sittande positioner. Varje position har ett syfte och är bra för vata, pitta och kapha. Vi avslutar med kroppsscanning.",
         },
+        { title: "Journal", text: "Vi skriver journal mellan veckorna." },
         {
           title: "Vardagsövning",
           text: "Du får en liten övning att prova hemma till nästa gång, och vi pratar om hur det gick.",
@@ -339,39 +340,40 @@ const TRANSLATIONS = {
     },
     about: {
       label: "About me",
-      p1: "I am Jasmin, the person behind Health by Jasmin, a sole entrepreneur based in Stockholm, Sweden. I have practised Ayurveda and Yoga since 2013. What first drew me to both yoga and ayurveda was the structure, the rhythm and the way both practices bring things into focus, sometimes gently, sometimes with force.",
-      p2: "I fell in love with their holistic approach and how they challenge you to look at yourself and your habits from a completely different angle. In 2015/2016 I started Health by Jasmin to create a space where I could share what has truly resonated with me over the years.",
-      p3: "I do this in small doses through Ayurveda and Yoga courses, Ayurvedic treatments and retreats containing them both.",
+      p1: "I am Jasmin, the person behind Health by Jasmin, a business based in Stockholm, Sweden. I have practised Ayurveda and Yoga since 2011. What first drew me to both practices was the structure, the rhythm and the way they both bring things into focus, sometimes gently, sometimes with force.",
+      p2: "I fell in love with their holistic approach and how they challenge you to look at yourself and your habits. In 2015 I started Health by Jasmin to share what has resonated with me over the years.",
+      p3: "I do this in small doses through Ayurveda & Yoga courses, ayurvedic treatments and consultations. Welcome!",
     },
     ayurveda: {
       label: "Health & wellbeing",
-      p1: "Ayurveda gives us knowledge and tools to strengthen and heal ourselves, both physically and mentally. It is a holistic approach to health with roots in India and over 6,000 years of tradition.",
-      p2: "Ayurveda sees the whole person: body, mind and everything in between. If you have a headache, it is rarely just about your head; there is likely something else in the body or in life that is connected.",
+      p1: "Ayurveda gives us knowledge and tools to strengthen and heal ourselves, both physically and mentally. It is a holistic approach to health with roots in India and more than 6,000 years of history and tradition behind it.",
+      p2: "Perhaps the best-known part of Ayurveda is the tri-dosha theory, which describes three energies, both physical and mental, called the doshas: Vata, Pitta and Kapha. It is believed that everything is made up of these three energies and that they affect us, our relationships, our surroundings and much more.",
       massageTitle: "Ayurvedic massage",
       massageP1:
-        "One of the most beautiful parts of Ayurveda is the treatments, especially the massages. They are often warming and deeply soothing, using warm sesame oil. It is beneficial for all doshas: vata, pitta and kapha.",
+        "One of the most beautiful parts of Ayurveda is the treatments. They are warming and deeply soothing and are performed with warm sesame oil or essential oils, depending on the treatment you choose.",
       massageP2:
-        "Ayurvedic massages are performed with warm sesame oil and for specific treatments warm water bags are used. We massage the head, face, front and back of the body including the feet.",
+        "We massage the head, face, front and back of the body, including the feet.",
       radgivningTitle: "Ayurvedic consultation",
       radgivningP1:
-        "An individual consultation where we read the pulse and look for qualities belonging to vata, pitta and kapha. Based on that, we talk about your wellbeing, your body and your life situation. You then receive personal advice and tips tailored to support any imbalances and adapted to you specifically. This may include routines, sleep, daily rhythm, food and much more.",
+        "An individual consultation where we read your pulse and the qualities belonging to vata, pitta and kapha. Based on the pulse, we talk about your wellbeing and your lifestyle. The consultation ends with advice and tips, based on both the pulse and the conversation, to support you. It can be about breathing exercises, sleep, daily rhythm and food.",
     },
     yoga: {
       label: "Course",
       intro:
-        "A course for you who want to find new routines in everyday life, together with others.",
+        "A course for you who want to learn about, renew or keep growing within ayurveda and yoga.",
       sub: "Booking opens soon",
-      p1: "We gather to build community and try new habits together. You don't need to know anything about ayurveda or yoga beforehand. What matters is that you are open to practising and taking it in.",
+      p1: "We learn, find new routines, move and write together.",
       p2Title: "Each session is 90 minutes",
       parts: [
         {
-          title: "Ayurveda · 30 min",
-          text: "We talk about ayurveda and write a journal together.",
+          title: "Ayurveda",
+          text: "You get to listen to a specific theme within ayurveda.",
         },
         {
-          title: "Yoga · 60 min",
+          title: "Yoga",
           text: "Movement in standing and seated positions. Every position has a purpose and is good for vata, pitta and kapha. We finish with a body scan.",
         },
+        { title: "Journal", text: "We write a journal between the weeks." },
         {
           title: "Everyday practice",
           text: "You get a small exercise to try at home before the next session, and we talk about how it went.",
@@ -1279,7 +1281,7 @@ function HomePage({ t, lang }) {
           <p className="course-title">{t.yoga.p2Title}</p>
           {t.yoga.parts.map((pt) => (
             <p key={pt.title}>
-              <strong>{pt.title}</strong> {pt.text}
+              <strong>{pt.title}:</strong> {pt.text}
             </p>
           ))}
           <span className="yoga-schedule-row">
