@@ -92,7 +92,7 @@ const TRANSLATIONS = {
   sv: {
     nav: {
       aboutMe: "Om mig",
-      yoga: "Yoga & Ayurveda",
+      yoga: "Ayurveda & Yoga",
       ayurveda: "Ayurveda",
       book: "Boka",
     },
@@ -101,29 +101,13 @@ const TRANSLATIONS = {
       interest: "Intresseanmälan",
     },
     home: {
-      treatLabel: "Behandlingar",
-      treatTitle: "Hitta din behandling",
+      treatLabel: "Boka",
+      treatTitle: "Behandlingar",
       treatLink: "Boka →",
-      stepsLabel: "Så går det till",
-      stepsTitle: "Enkelt från start till ro",
-      steps: [
-        {
-          title: "Boka online",
-          text: "Välj behandling och en tid som passar. Du får ett bekräftelsemejl direkt. Avboka senast 24 timmar innan.",
-        },
-        {
-          title: "Kom och landa",
-          text: "Kom i oömma kläder, underkläder används under behandlingen. Vi börjar lugnt så att du hinner landa.",
-        },
-        {
-          title: "Återhämta dig",
-          text: "Ta det lugnt efteråt och duscha ordentligt hemma, så får oljan göra sitt.",
-        },
-      ],
     },
     hero: {
       eyebrow: "Yoga & Ayurveda · Stockholm · 2015",
-      sub: "Välkommen. Genom yoga och ayurveda erbjuder jag verktyg för att stärka, återhämta och hitta balans i vardagen.",
+      sub: "Massage, rådgivning och Ayurveda & Yoga i Stockholm.",
       scrollLabel: "Scrolla ned",
     },
     about: {
@@ -148,18 +132,41 @@ const TRANSLATIONS = {
     yoga: {
       label: "Kurs",
       intro:
-        "Lär dig förstå dig själv, din kropp och dina vanor, och rör på dig i en lugn och skön yogaklass.",
+        "En kurs för dig som vill hitta nya rutiner i vardagen, tillsammans med andra.",
       sub: "Bokning öppnar snart",
-      p1: "Ayurveda är en av världens äldsta kunskapstraditioner om hälsa. På den här kursen lär du dig förstå dig själv, din kropp och dina vanor, och får samtidigt röra på dig i en lugn och skön yogaklass.",
-      p2Title: "Varje tillfälle är 90 minuter och har två delar:",
-      p2: "30 min ayurveda: du lär dig något nytt om ayurveda.\n60 min yoga: flödesklass med stående och sittande positioner som är bra för vata, pitta och kapha (tridoshisk). Vi avslutar alltid med kroppsscanning.",
-      p3Title: "Kursens innehåll",
-      p3: "Tillfälle 1 · 17:30–19:00\nAyurveda, vad är det?\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 2 · 17:30–19:00\nDoshorna, vårt utseende och våra personligheter\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 3 · 17:30–19:00\nDoshorna, vår fysik och våra sinnen\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 4 · 17:30–19:00\nLivets rytmer\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 5 · 17:30–19:00\nAgni och ama\nYoga (tridoshisk) och kroppsscanning\n\nTillfälle 6 · 17:30–19:00\nMat som medicin\nYoga (tridoshisk) och kroppsscanning",
+      p1: "Vi samlas för att skapa gemenskap och prova nya vanor tillsammans. Du behöver inte kunna något om ayurveda eller yoga sedan förut. Det viktiga är att du är öppen för att öva och ta till dig.",
+      p2Title: "Varje tillfälle är 90 minuter",
+      parts: [
+        {
+          title: "Ayurveda · 30 min",
+          text: "Vi pratar om ayurveda och skriver journal tillsammans.",
+        },
+        {
+          title: "Yoga · 60 min",
+          text: "Rörelse i stående och sittande positioner. Varje position har ett syfte och är bra för vata, pitta och kapha. Vi avslutar med kroppsscanning.",
+        },
+        {
+          title: "Vardagsövning",
+          text: "Du får en liten övning att prova hemma till nästa gång, och vi pratar om hur det gick.",
+        },
+      ],
+      contentLabel: "Kursen",
+      contentTitle: "Kursens innehåll",
+      sessionLabel: "Tillfälle",
+      sessionMeta: "17:30–19:00 · Yoga och kroppsscanning",
+      sessions: [
+        "Ayurveda, vad är det?",
+        "Doshorna, vårt utseende och våra personligheter",
+        "Doshorna, vår fysik och våra sinnen",
+        "Livets rytmer",
+        "Agni och ama",
+        "Mat som medicin",
+      ],
     },
     quote: '"Rörelse är medicin för kroppen, stillhet är medicin för sinnet."',
     reviews: {
       label: "Recensioner",
-      title: "Vad våra kunder säger",
+      title: "Vad kunderna säger",
       items: [
         {
           text: '"Den ayurvediska massagen var precis vad jag behövde. Djup avslappning och en verkligt professionell behandling. Jag lämnade med en känsla av fullständig återhämtning."',
@@ -234,7 +241,7 @@ const TRANSLATIONS = {
         },
         {
           id: "kurs",
-          type: "Yoga & Ayurveda kurs",
+          type: "Ayurveda & Yoga",
           loc: "",
           time: "6 tillfällen · 90 min",
           price: "",
@@ -243,7 +250,7 @@ const TRANSLATIONS = {
       courseText:
         "Bokningen till kursen öppnar snart. Skicka en intresseanmälan så hör jag av mig när det är dags.",
       courseMailLabel: "Skicka intresseanmälan",
-      courseMailSubject: "Intresseanmälan Yoga & Ayurveda kurs",
+      courseMailSubject: "Intresseanmälan Ayurveda & Yoga",
     },
     booking: {
       andra: "Ändra",
@@ -301,7 +308,7 @@ const TRANSLATIONS = {
       tagline: "Yoga & Ayurveda · Stockholm",
       linkAboutMe: "Om mig",
       linkAyurveda: "Ayurveda",
-      linkYoga: "Yoga",
+      linkYoga: "Ayurveda & Yoga",
       linkBook: "Boka",
       copyright: "© 2015 Health by Jasmin",
       instagramHandle: "@healthbyjasmin",
@@ -312,7 +319,7 @@ const TRANSLATIONS = {
   en: {
     nav: {
       aboutMe: "About me",
-      yoga: "Yoga",
+      yoga: "Ayurveda & Yoga",
       ayurveda: "Ayurveda",
       book: "Book",
     },
@@ -321,29 +328,13 @@ const TRANSLATIONS = {
       interest: "Register interest",
     },
     home: {
-      treatLabel: "Treatments",
-      treatTitle: "Find your treatment",
+      treatLabel: "Book",
+      treatTitle: "Treatments",
       treatLink: "Book →",
-      stepsLabel: "How it works",
-      stepsTitle: "Simple from start to calm",
-      steps: [
-        {
-          title: "Book online",
-          text: "Choose a treatment and a time that suits you. You get a confirmation email right away. Cancel at least 24 hours before.",
-        },
-        {
-          title: "Arrive and settle",
-          text: "Wear comfortable clothes, underwear is worn during the treatment. We start slowly so you can settle in.",
-        },
-        {
-          title: "Recover",
-          text: "Take it easy afterwards and shower thoroughly at home, so the oil can do its work.",
-        },
-      ],
     },
     hero: {
       eyebrow: "Yoga & Ayurveda · Stockholm · 2015",
-      sub: "Welcome. Through yoga and ayurveda I offer tools to strengthen, recover and find balance in everyday life.",
+      sub: "Massage, consultation and Ayurveda & Yoga in Stockholm.",
       scrollLabel: "Scroll down",
     },
     about: {
@@ -368,19 +359,42 @@ const TRANSLATIONS = {
     yoga: {
       label: "Course",
       intro:
-        "Learn to understand yourself, your body and your habits, while moving in a calm and enjoyable yoga class.",
-      sub: "More info coming soon",
-      p1: "Ayurveda is one of the world's oldest traditions of knowledge about health. In this course you learn to understand yourself, your body and your habits, while moving in a calm and enjoyable yoga class.",
-      p2Title: "Each session is 90 minutes and has two parts:",
-      p2: "30 min ayurveda: you learn something new about ayurveda.\n60 min yoga: a flow class with standing and seated poses that benefit vata, pitta and kapha (tridoshic). We always finish with a body scan.",
-      p3Title: "Course content",
-      p3: "Session 1 · 17:30–19:00\nWhat is ayurveda?\nYoga (tridoshic) and body scan\n\nSession 2 · 17:30–19:00\nThe doshas, our appearance and personalities\nYoga (tridoshic) and body scan\n\nSession 3 · 17:30–19:00\nThe doshas, our physiology and senses\nYoga (tridoshic) and body scan\n\nSession 4 · 17:30–19:00\nThe rhythms of life\nYoga (tridoshic) and body scan\n\nSession 5 · 17:30–19:00\nAgni and ama\nYoga (tridoshic) and body scan\n\nSession 6 · 17:30–19:00\nFood as medicine\nYoga (tridoshic) and body scan",
+        "A course for you who want to find new routines in everyday life, together with others.",
+      sub: "Booking opens soon",
+      p1: "We gather to build community and try new habits together. You don't need to know anything about ayurveda or yoga beforehand. What matters is that you are open to practising and taking it in.",
+      p2Title: "Each session is 90 minutes",
+      parts: [
+        {
+          title: "Ayurveda · 30 min",
+          text: "We talk about ayurveda and write a journal together.",
+        },
+        {
+          title: "Yoga · 60 min",
+          text: "Movement in standing and seated positions. Every position has a purpose and is good for vata, pitta and kapha. We finish with a body scan.",
+        },
+        {
+          title: "Everyday practice",
+          text: "You get a small exercise to try at home before the next session, and we talk about how it went.",
+        },
+      ],
+      contentLabel: "The course",
+      contentTitle: "What we cover",
+      sessionLabel: "Session",
+      sessionMeta: "17:30–19:00 · Yoga and body scan",
+      sessions: [
+        "What is ayurveda?",
+        "The doshas, our appearance and personalities",
+        "The doshas, our physiology and senses",
+        "The rhythms of life",
+        "Agni and ama",
+        "Food as medicine",
+      ],
     },
     quote:
       '"Movement is medicine for the body, stillness is medicine for the mind."',
     reviews: {
       label: "Reviews",
-      title: "What our clients say",
+      title: "What clients say",
       items: [
         {
           text: '"The ayurvedic massage was exactly what I needed. Deep relaxation and a truly professional treatment. I left with a feeling of complete recovery."',
@@ -453,7 +467,7 @@ const TRANSLATIONS = {
         },
         {
           id: "kurs",
-          type: "Yoga & Ayurveda course",
+          type: "Ayurveda & Yoga",
           loc: "",
           time: "6 sessions · 90 min",
           price: "",
@@ -462,7 +476,7 @@ const TRANSLATIONS = {
       courseText:
         "Booking for the course opens soon. Send an expression of interest and I will get back to you when it is time.",
       courseMailLabel: "Send expression of interest",
-      courseMailSubject: "Interest in Yoga & Ayurveda course",
+      courseMailSubject: "Interest in Ayurveda & Yoga",
     },
     booking: {
       andra: "Change",
@@ -1259,13 +1273,15 @@ function HomePage({ t, lang }) {
         {/* Rad 2 vänster: Yoga & Ayurveda-kursen + knapp */}
         <div className="cb-cell cb-text cb-text-alt fade-up" id="yoga">
           <span className="section-label">{t.yoga.label}</span>
-          <h2>Yoga &amp; Ayurveda</h2>
+          <h2>Ayurveda &amp; Yoga</h2>
           <p className="yoga-intro">{t.yoga.intro}</p>
           <p>{t.yoga.p1}</p>
           <p className="course-title">{t.yoga.p2Title}</p>
-          <p className="course-list">{t.yoga.p2}</p>
-          <p className="course-title">{t.yoga.p3Title}</p>
-          <p className="course-list">{t.yoga.p3}</p>
+          {t.yoga.parts.map((pt) => (
+            <p key={pt.title}>
+              <strong>{pt.title}</strong> {pt.text}
+            </p>
+          ))}
           <span className="yoga-schedule-row">
             <span className="yoga-col-schedule">{t.yoga.sub}</span>
           </span>
@@ -1280,20 +1296,25 @@ function HomePage({ t, lang }) {
         </div>
       </section>
 
-      {/* ───────── SÅ GÅR DET TILL ───────── */}
-      <section className="content-section about-bg">
+      {/* ───────── KURSENS INNEHÅLL ───────── */}
+      <section id="kursinnehall" className="content-section about-bg">
         <div className="section-inner">
-          <span className="section-label">{t.home.stepsLabel}</span>
-          <h2>{t.home.stepsTitle}</h2>
-          <div className="steps-grid fade-up">
-            {t.home.steps.map((st, i) => (
-              <div key={st.title} className="step-card">
-                <span className="step-num">{i + 1}</span>
-                <h3>{st.title}</h3>
-                <p>{st.text}</p>
+          <span className="section-label">{t.yoga.contentLabel}</span>
+          <h2>{t.yoga.contentTitle}</h2>
+          <div className="session-grid fade-up">
+            {t.yoga.sessions.map((title, i) => (
+              <div key={title} className="session-card">
+                <span className="session-num">
+                  {t.yoga.sessionLabel} {i + 1}
+                </span>
+                <h3>{title}</h3>
+                <p>{t.yoga.sessionMeta}</p>
               </div>
             ))}
           </div>
+          <a href="#boka" className="section-book-btn">
+            {t.buttons.interest}
+          </a>
         </div>
       </section>
 
