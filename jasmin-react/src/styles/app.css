@@ -1,4 +1,16 @@
+/* ============================================================================
+   HEALTH BY JASMIN – app.css (ersätter hela din gamla app.css)
 
+   Innehåll:
+     1. GRUND          – reset, text, länkar, tona in
+     2. MENY           – navbar, logga, Boka-knapp
+     3. HERO           – första bilden
+     4. SEKTIONER      – om mig, ayurveda/yoga, citat, recensioner, knappar
+     5. BOKA-SIDAN     – de tre valen (massage, rådgivning, kurs)
+     6. BOKNINGSFLÖDE  – kort, tider, formulär, bekräftelse
+     7. SIDFOT
+     8. RESPONSIVT     – platta, mobil, dator
+   ============================================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
@@ -52,7 +64,7 @@ p {
    ============================================================================ */
 
 .site-header {
-  background: rgba(42, 58, 68, 0.97);
+  background: rgba(45, 61, 55, 0.97);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   position: sticky;
@@ -98,7 +110,7 @@ p {
   left: 50%;
   transform: translateX(-50%);
   width: min(60%, 280px);
-  background: rgba(42, 58, 68, 0.97);
+  background: rgba(45, 61, 55, 0.97);
   padding: 8px;
   gap: 10px;
   z-index: 100;
@@ -144,7 +156,7 @@ p {
 .nav-book-btn {
   display: inline-flex;
   align-items: center;
-  background: #4a6b7c;
+  background: #5f7a6b;
   color: #fff !important;
   padding: 8px 18px;
   border-radius: 6px;
@@ -156,7 +168,7 @@ p {
   flex-shrink: 0;
   margin-left: 8px;
 }
-.nav-book-btn:hover { background: #3a5a6a; transform: translateY(-1px); }
+.nav-book-btn:hover { background: #4d6558; transform: translateY(-1px); }
 
 /* ============================================================================
    3. HERO
@@ -252,7 +264,7 @@ p {
   font-size: clamp(10px, 1.6vw, 11px);
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #7BA8B8;
+  color: #7f9a88;
   margin-bottom: 14px;
   font-weight: 500;
 }
@@ -260,7 +272,7 @@ p {
 .content-section h2 {
   font-size: clamp(28px, 5vw, 48px);
   font-weight: 300;
-  color: #2a3a44;
+  color: #2d3d37;
   letter-spacing: -0.025em;
   margin: 0 0 1.5rem;
   line-height: 1.12;
@@ -268,7 +280,7 @@ p {
 
 .content-section h3 {
   font-size: clamp(13px, 2.2vw, 16px);
-  color: #5C7C8A;
+  color: #5f7a6b;
   margin: 1.75rem 0 0.5rem;
   font-weight: 500;
   letter-spacing: 0.01em;
@@ -283,7 +295,7 @@ p {
   margin-top: 1.5rem;
   padding: 0.8rem 2rem;
   border-radius: 999px;
-  background: #4a6b7c;
+  background: #5f7a6b;
   color: #fff;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -292,14 +304,14 @@ p {
 .section-book-btn:hover { opacity: 0.85; text-decoration: none; }
 
 /* ── Om mig ── */
-.about-bg { background: #f9f7f4; }
+.about-bg { background: #f4f5f0; }
 
 .about-split {
   display: grid;
   grid-template-columns: 1fr 1.7fr;
   gap: clamp(40px, 7vw, 100px);
   align-items: start;
-  border-top: 1px solid #e4eaed;
+  border-top: 1px solid #e4e9e4;
   padding-top: clamp(36px, 5vw, 60px);
 }
 .about-split-head .section-label { margin-bottom: 20px; }
@@ -337,12 +349,12 @@ p {
   justify-content: center;
   background: #fff;
 }
-.cb-text-alt { background: #f5f8f9; }
+.cb-text-alt { background: #f1f4ef; }
 
 .cb-text h2 {
   font-size: clamp(28px, 4vw, 44px);
   font-weight: 300;
-  color: #1e2d35;
+  color: #243029;
   letter-spacing: -0.025em;
   margin: 8px 0 clamp(12px, 2vw, 20px);
   line-height: 1.12;
@@ -350,7 +362,7 @@ p {
 .cb-text h3 {
   font-size: clamp(13px, 1.6vw, 15px);
   font-weight: 600;
-  color: #5C7C8A;
+  color: #5f7a6b;
   margin: clamp(24px, 3vw, 36px) 0 6px;
 }
 .cb-text h3:first-of-type { margin-top: 8px; }
@@ -364,7 +376,7 @@ p {
 
 /* Kursens rubriker och listor */
 .course-title { text-align: center; font-weight: 700; }
-.cb-text .course-title { color: #5C7C8A; }
+.cb-text .course-title { color: #5f7a6b; }
 
 .yoga-schedule-row { display: flex; align-items: center; gap: 8px; }
 .yoga-col-schedule { font-size: 13px; color: #555; display: block; }
@@ -376,7 +388,7 @@ p {
   border: 1px solid #333333;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(145deg, #5C7C8A 0%, #6B94A4 50%, #7BA8B8 100%);
+  background: linear-gradient(145deg, #5f7a6b 0%, #70897a 50%, #7f9a88 100%);
   min-height: 200px;
   padding: 40px 20px;
 }
@@ -384,14 +396,14 @@ p {
 
 /* ── Recensioner ── */
 .testimonials-section {
-  background: #f9f7f4;
+  background: #f4f5f0;
   padding: clamp(72px, 9vw, 120px) 0;
   border-top: 1px solid #ece8e3;
 }
 .testimonials-section h2 {
   font-size: clamp(28px, 5vw, 48px);
   font-weight: 300;
-  color: #1e2d35;
+  color: #243029;
   letter-spacing: -0.025em;
   margin: 0;
   line-height: 1.12;
@@ -422,9 +434,9 @@ p {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1px solid #d0dde3;
+  border: 1px solid #d3dcd5;
   background: #fff;
-  color: #5C7C8A;
+  color: #5f7a6b;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -432,7 +444,7 @@ p {
   transition: background 0.15s, border-color 0.15s;
   padding: 0;
 }
-.shelf-arrow:hover { background: #f0f5f7; border-color: #5C7C8A; }
+.shelf-arrow:hover { background: #f2f5f1; border-color: #5f7a6b; }
 
 .testimonial-card {
   background: #fff;
@@ -457,19 +469,19 @@ p {
   margin: 0;
   max-width: 100%;
 }
-.testimonial-author { font-size: 11px; letter-spacing: 0.14em; color: #7BA8B8; text-transform: uppercase; font-weight: 500; }
+.testimonial-author { font-size: 11px; letter-spacing: 0.14em; color: #7f9a88; text-transform: uppercase; font-weight: 500; }
 
 /* ============================================================================
    5. BOKA-SIDAN
    ============================================================================ */
 
-.week-schedule-section { background: #f5f8f9; padding: clamp(40px, 6vw, 64px) 0; }
+.week-schedule-section { background: #f1f4ef; padding: clamp(40px, 6vw, 64px) 0; }
 .booking-page { padding-top: clamp(56px, 8vw, 96px); min-height: 70vh; }
 
 .week-schedule-title {
   font-size: clamp(28px, 5vw, 48px);
   font-weight: 300;
-  color: #1e2d35;
+  color: #243029;
   letter-spacing: -0.025em;
   margin: 0 0 clamp(24px, 4vw, 40px);
   line-height: 1.12;
@@ -481,7 +493,7 @@ p {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #8aabb8;
+  color: #8da595;
   margin-bottom: 4px;
 }
 
@@ -501,20 +513,20 @@ p {
   color: inherit;
   transition: background 0.15s;
 }
-.week-schedule-row:first-child { border-top: 0.5px solid #d8e4e8; }
+.week-schedule-row:first-child { border-top: 0.5px solid #dde4de; }
 .week-schedule-row:hover,
-.week-schedule-row.wsr-active { background: #edf3f5; }
+.week-schedule-row.wsr-active { background: #eef3ee; }
 
 .wsr-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .wsr-type { font-size: 14px; color: #333; }
-.wsr-type-loc { font-size: 0.72rem; color: #8aabb8; display: block; margin-top: 1px; }
+.wsr-type-loc { font-size: 0.72rem; color: #8da595; display: block; margin-top: 1px; }
 .wsr-time-inline { font-size: 0.75rem; color: #888; margin-top: 2px; display: block; }
-.wsr-price { font-size: 0.78rem; font-weight: 600; color: #4a6b7c; white-space: nowrap; align-self: center; }
+.wsr-price { font-size: 0.78rem; font-weight: 600; color: #5f7a6b; white-space: nowrap; align-self: center; }
 .wsr-btn {
   font-size: 12px;
   font-weight: 500;
-  color: #5C7C8A;
-  border: 0.5px solid #b0c4cc;
+  color: #5f7a6b;
+  border: 0.5px solid #b7c6bb;
   border-radius: 6px;
   padding: 5px 12px;
   white-space: nowrap;
@@ -524,7 +536,7 @@ p {
 .week-schedule-booking .booking-wrap { max-width: 100%; }
 
 /* Rutan för kursen ("bokning öppnar snart") */
-.booking-course-box { padding: 1.5rem; border: 1px solid #d8e0e5; border-radius: 12px; background: #fff; }
+.booking-course-box { padding: 1.5rem; border: 1px solid #dde4de; border-radius: 12px; background: #fff; }
 .booking-course-box p { text-align: center; }
 
 /* ============================================================================
@@ -552,10 +564,10 @@ p {
 }
 .bks-label { font-size: 0.7rem; color: #aaa; white-space: nowrap; transition: color 0.2s; }
 .bks-line { flex: 1; height: 2px; background: #ddd; margin: 0 8px 20px; }
-.bks-step.bks-active .bks-num { border-color: #4a6b7c; color: #4a6b7c; background: #f0f5f8; }
-.bks-step.bks-active .bks-label { color: #4a6b7c; font-weight: 600; }
-.bks-step.bks-done .bks-num { border-color: #4a6b7c; background: #4a6b7c; color: #fff; }
-.bks-step.bks-done .bks-label { color: #4a6b7c; }
+.bks-step.bks-active .bks-num { border-color: #5f7a6b; color: #5f7a6b; background: #f2f5f1; }
+.bks-step.bks-active .bks-label { color: #5f7a6b; font-weight: 600; }
+.bks-step.bks-done .bks-num { border-color: #5f7a6b; background: #5f7a6b; color: #fff; }
+.bks-step.bks-done .bks-label { color: #5f7a6b; }
 
 /* ── Välj behandling ── */
 .booking-treatments { margin-bottom: 24px; }
@@ -569,7 +581,7 @@ p {
   align-items: flex-start;
   gap: 6px;
   padding: 16px 18px;
-  border: 1.5px solid #d0dde3;
+  border: 1.5px solid #d3dcd5;
   border-radius: 10px;
   cursor: pointer;
   background: #fff;
@@ -577,17 +589,17 @@ p {
   width: 100%;
   transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;
 }
-.treatment-pick-card:hover:not(.selected) { box-shadow: 0 4px 20px rgba(74,107,124,0.15); transform: translateY(-2px); border-color: #4a6b7c; }
+.treatment-pick-card:hover:not(.selected) { box-shadow: 0 4px 20px rgba(95,122,107,0.15); transform: translateY(-2px); border-color: #5f7a6b; }
 .treatment-pick-card.selected {
-  border-color: #3F5B6B;
+  border-color: #4d6558;
   border-width: 2px;
-  background: #deeaf0;
+  background: #e3ece5;
   transform: translateY(-1px);
-  box-shadow: 0 4px 20px rgba(74,107,124,0.2);
+  box-shadow: 0 4px 20px rgba(95,122,107,0.2);
 }
 .tpc-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
-.treatment-pick-card .treatment-pick-name { font-size: 0.95rem; font-weight: 700; color: #2c3e50; line-height: 1.3; }
-.treatment-pick-card .treatment-pick-price { font-size: 0.9rem; font-weight: 700; color: #4a6b7c; white-space: nowrap; flex-shrink: 0; }
+.treatment-pick-card .treatment-pick-name { font-size: 0.95rem; font-weight: 700; color: #2d3d37; line-height: 1.3; }
+.treatment-pick-card .treatment-pick-price { font-size: 0.9rem; font-weight: 700; color: #5f7a6b; white-space: nowrap; flex-shrink: 0; }
 .treatment-pick-card .treatment-pick-desc { font-size: 0.78rem; color: #666; line-height: 1.6; }
 .treatment-pick-card.selected .treatment-pick-name,
 .treatment-pick-card.selected .treatment-pick-desc { color: inherit; }
@@ -604,16 +616,16 @@ p {
   gap: 4px;
   padding: 16px 20px;
   min-width: 108px;
-  border: 2px solid #d8e3e9;
+  border: 2px solid #dde4de;
   border-radius: 14px;
   background: #fff;
   cursor: pointer;
   transition: border-color 0.15s, background 0.15s, transform 0.1s, box-shadow 0.15s;
 }
-.next-slot-btn:hover { border-color: #4a6b7c; background: #f5f9fb; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(74,107,124,0.15); }
-.next-slot-btn.selected { border-color: #4a6b7c; background: #4a6b7c; color: #fff; box-shadow: 0 4px 14px rgba(74,107,124,0.28); }
+.next-slot-btn:hover { border-color: #5f7a6b; background: #f2f5f1; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(95,122,107,0.15); }
+.next-slot-btn.selected { border-color: #5f7a6b; background: #5f7a6b; color: #fff; box-shadow: 0 4px 14px rgba(95,122,107,0.28); }
 .next-slot-btn:disabled { opacity: 0.35; cursor: default; transform: none; }
-.next-slot-btn:disabled:hover { border-color: #d8e3e9; background: #fff; box-shadow: none; }
+.next-slot-btn:disabled:hover { border-color: #dde4de; background: #fff; box-shadow: none; }
 .nsb-day { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; font-weight: 600; }
 .next-slot-btn.selected .nsb-day { opacity: 0.85; }
 .nsb-date { font-size: 0.9rem; font-weight: 500; }
@@ -624,7 +636,7 @@ p {
   border: none;
   cursor: pointer;
   font-size: 0.82rem;
-  color: #4a6b7c;
+  color: #5f7a6b;
   text-decoration: underline;
   padding: 8px 0;
   margin-top: 4px;
@@ -635,30 +647,30 @@ p {
 /* ── Alla datum ── */
 .dates-grid { display: flex; flex-direction: column; gap: 5px; margin-bottom: 1rem; }
 .dates-grid-row { display: grid; grid-template-columns: 84px repeat(3, 1fr); gap: 4px; align-items: stretch; }
-.dates-grid-label { display: flex; align-items: center; gap: 3px; padding: 6px; background: #f6f8f9; border-radius: 8px; }
+.dates-grid-label { display: flex; align-items: center; gap: 3px; padding: 6px; background: #f2f5f1; border-radius: 8px; }
 .dgr-wd, .dgr-mo { font-size: 10px; color: #888; }
-.dgr-dd { font-size: 14px; font-weight: 600; color: #3F5B6B; }
+.dgr-dd { font-size: 14px; font-weight: 600; color: #4d6558; }
 .dgr-slot {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 40px;
   padding: 6px 4px;
-  border: 1.5px solid #d0dde3;
+  border: 1.5px solid #d3dcd5;
   border-radius: 10px;
   cursor: pointer;
   background: #fff;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
-.dgr-slot:hover:not(:disabled) { border-color: #5C7C8A; box-shadow: 0 2px 8px rgba(92,124,138,0.12); }
-.dgr-slot.selected { border-color: #3F5B6B; border-width: 2px; background: #deeaf0; }
+.dgr-slot:hover:not(:disabled) { border-color: #5f7a6b; box-shadow: 0 2px 8px rgba(95,122,107,0.12); }
+.dgr-slot.selected { border-color: #4d6558; border-width: 2px; background: #e3ece5; }
 .dgr-slot.disabled { opacity: 0.38; cursor: not-allowed; }
-.dgr-time { font-size: 13px; font-weight: 700; color: #3F5B6B; }
-.dgr-slot.selected .dgr-time { color: #2a3a44; }
+.dgr-time { font-size: 13px; font-weight: 700; color: #4d6558; }
+.dgr-slot.selected .dgr-time { color: #2d3d37; }
 .dgr-slot-spacer { min-height: 40px; }
 
 /* ── Formulär (steg 2) ── */
-.booking-form-wrap { border: 0.5px solid #d0dde3; border-radius: 12px; background: #fff; padding: 22px; margin-bottom: 1rem; scroll-margin-top: 80px; }
+.booking-form-wrap { border: 0.5px solid #d3dcd5; border-radius: 12px; background: #fff; padding: 22px; margin-bottom: 1rem; scroll-margin-top: 80px; }
 
 .booking-form-summary {
   display: flex;
@@ -666,53 +678,53 @@ p {
   justify-content: space-between;
   padding-bottom: 16px;
   margin-bottom: 20px;
-  border-bottom: 0.5px solid #e8eef1;
+  border-bottom: 0.5px solid #e4e9e4;
   gap: 8px;
 }
 .booking-form-summary-label { display: block; font-size: 11px; color: #888; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 3px; }
-.booking-form-summary-value { font-size: 14px; font-weight: 500; color: #2a3a44; }
+.booking-form-summary-value { font-size: 14px; font-weight: 500; color: #2d3d37; }
 .booking-change-btn {
   background: none;
   border: none;
   font-size: 13px;
-  color: #5C7C8A;
+  color: #5f7a6b;
   cursor: pointer;
   padding: 4px 8px;
   white-space: nowrap;
   text-decoration: underline;
   flex-shrink: 0;
 }
-.booking-change-btn:hover { color: #3F5B6B; }
+.booking-change-btn:hover { color: #4d6558; }
 
 .massage-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; text-align: left; }
 .massage-form label { display: flex; flex-direction: column; gap: 5px; font-size: clamp(12px, 2vw, 13px); color: #555; margin-bottom: 12px; }
 .massage-form input {
   height: 38px;
   padding: 0 10px;
-  border: 0.5px solid #b0c4cc;
+  border: 0.5px solid #b7c6bb;
   border-radius: 8px;
   font-size: clamp(13px, 2vw, 14px);
   background: #fff;
   color: #333;
   width: 100%;
 }
-.massage-form input:focus { outline: none; border-color: #5C7C8A; }
+.massage-form input:focus { outline: none; border-color: #5f7a6b; }
 .massage-form .payment-section-label,
 .massage-form .payment-opt,
 .massage-form .full-row { grid-column: 1 / -1; }
 
-.payment-section-label { font-size: clamp(13px, 2vw, 14px); font-weight: 500; color: #3F5B6B; margin: 8px 0; }
+.payment-section-label { font-size: clamp(13px, 2vw, 14px); font-weight: 500; color: #4d6558; margin: 8px 0; }
 .payment-opt {
   display: flex;
   align-items: flex-start;
   gap: 10px;
   padding: 12px 14px;
-  border: 1.5px solid #5C7C8A;
+  border: 1.5px solid #5f7a6b;
   border-radius: 10px;
-  background: linear-gradient(145deg, rgba(92,124,138,0.08) 0%, rgba(123,168,184,0.08) 100%);
+  background: linear-gradient(145deg, rgba(95,122,107,0.08) 0%, rgba(163,184,170,0.1) 100%);
 }
-.payment-opt input[type="radio"] { width: 16px; height: 16px; accent-color: #5C7C8A; flex-shrink: 0; margin-top: 2px; }
-.payment-opt-title { font-size: clamp(13px, 2vw, 14px); font-weight: 500; color: #3F5B6B; }
+.payment-opt input[type="radio"] { width: 16px; height: 16px; accent-color: #5f7a6b; flex-shrink: 0; margin-top: 2px; }
+.payment-opt-title { font-size: clamp(13px, 2vw, 14px); font-weight: 500; color: #4d6558; }
 .payment-opt-sub { font-size: clamp(11px, 1.8vw, 12px); color: #666; margin-top: 2px; }
 
 /* Knappar */
@@ -722,29 +734,29 @@ p {
   height: clamp(40px, 7vw, 46px);
   padding: 0 16px;
   background: #fff;
-  border: 0.5px solid #b0c4cc;
+  border: 0.5px solid #b7c6bb;
   border-radius: 10px;
   font-size: clamp(13px, 2vw, 15px);
   font-weight: 500;
-  color: #5C7C8A;
+  color: #5f7a6b;
   cursor: pointer;
   transition: background 0.15s;
 }
 .booking-btn-next { flex: 1; min-width: 120px; }
 .booking-btn-back { white-space: nowrap; }
 .booking-btn-next:hover,
-.booking-btn-back:hover { background: #f0f5f7; }
+.booking-btn-back:hover { background: #f2f5f1; }
 .booking-btn-next:disabled { background: #fff; cursor: not-allowed; }
 
 .send-error { margin-top: 10px; font-size: 13px; color: #c0392b; text-align: center; }
 
 /* ── Bekräftelse ── */
-.booking-confirm { border: 0.5px solid #d0dde3; border-radius: 12px; background: #fff; padding: 28px 22px; }
-.booking-confirm-title { font-size: 18px; font-weight: 500; color: #2a3a44; margin-bottom: 6px; }
+.booking-confirm { border: 0.5px solid #d3dcd5; border-radius: 12px; background: #fff; padding: 28px 22px; }
+.booking-confirm-title { font-size: 18px; font-weight: 500; color: #2d3d37; margin-bottom: 6px; }
 .booking-confirm-sub { font-size: 14px; color: #555; margin-bottom: 20px; }
 .booking-confirm-details {
-  border-top: 1px solid #e8eff2;
-  border-bottom: 1px solid #e8eff2;
+  border-top: 1px solid #e4e9e4;
+  border-bottom: 1px solid #e4e9e4;
   padding: 16px 0;
   margin-bottom: 20px;
   display: flex;
@@ -753,14 +765,14 @@ p {
 }
 .bcd-row { display: flex; gap: 12px; font-size: 14px; }
 .bcd-label { min-width: 90px; color: #888; }
-.bcd-value { color: #2a3a44; font-weight: 500; }
+.bcd-value { color: #2d3d37; font-weight: 500; }
 .booking-confirm-email-note { font-size: 13px; color: #888; line-height: 1.5; }
 
 /* ============================================================================
    7. SIDFOT
    ============================================================================ */
 
-.site-footer { background: #1e2d35; color: rgba(255,255,255,0.75); }
+.site-footer { background: #232f2a; color: rgba(255,255,255,0.75); }
 
 .footer-inner {
   max-width: 1200px;
@@ -803,8 +815,8 @@ p {
 
 :root { --serif: "Cormorant Garamond", Georgia, serif; }
 
-body { background: #fdfbf8; }
-.cb-text { background: #fdfbf8; }
+body { background: #fbfbf7; }
+.cb-text { background: #fbfbf7; }
 
 /* Elegant serif på de stora rubrikerna */
 .hero-title,
@@ -815,7 +827,8 @@ body { background: #fdfbf8; }
 .about-split-head h2,
 .quote-section p { font-family: var(--serif); }
 
-.hero-title { font-size: clamp(3.4rem, 9vw, 6.8rem); font-weight: 400; letter-spacing: -0.01em; }
+.hero-title { font-size: clamp(2.8rem, 6.5vw, 5.4rem); font-weight: 400; letter-spacing: -0.01em; }
+.page-hero-inner { max-width: 900px; }
 .content-section h2,
 .testimonials-section h2,
 .week-schedule-title { font-size: clamp(36px, 5.5vw, 60px); font-weight: 400; }
@@ -827,10 +840,10 @@ body { background: #fdfbf8; }
 .content-section { padding: clamp(88px, 11vw, 150px) 0; }
 
 /* Mjukare kort och skuggor */
-.testimonial-card { border-radius: 14px; box-shadow: 0 2px 14px rgba(42,58,68,0.05); }
+.testimonial-card { border-radius: 14px; box-shadow: 0 2px 14px rgba(45,61,55,0.05); }
 .booking-form-wrap,
 .booking-confirm,
-.booking-course-box { box-shadow: 0 2px 14px rgba(42,58,68,0.05); }
+.booking-course-box { box-shadow: 0 2px 14px rgba(45,61,55,0.05); }
 
 /* Behandlingskort på startsidan */
 .treat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: clamp(32px, 5vw, 56px); }
@@ -844,15 +857,15 @@ body { background: #fdfbf8; }
   border: 1px solid #ece8e3;
   border-radius: 14px;
   color: #333;
-  box-shadow: 0 2px 14px rgba(42,58,68,0.05);
+  box-shadow: 0 2px 14px rgba(45,61,55,0.05);
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
-.treat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(42,58,68,0.12); border-color: #b0c4cc; text-decoration: none; }
+.treat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(45,61,55,0.12); border-color: #b7c6bb; text-decoration: none; }
 .treat-card-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
-.content-section .treat-card h3 { font-family: var(--serif); font-size: 26px; font-weight: 500; color: #1e2d35; margin: 0; line-height: 1.15; }
-.treat-card-price { font-size: 13px; font-weight: 600; color: #4a6b7c; white-space: nowrap; }
+.content-section .treat-card h3 { font-family: var(--serif); font-size: 26px; font-weight: 500; color: #243029; margin: 0; line-height: 1.15; }
+.treat-card-price { font-size: 13px; font-weight: 600; color: #5f7a6b; white-space: nowrap; }
 .treat-card p { margin: 0; font-size: 14px; color: #666; line-height: 1.7; max-width: 100%; flex: 1; }
-.treat-card-link { font-size: 13px; font-weight: 600; color: #4a6b7c; letter-spacing: 0.04em; }
+.treat-card-link { font-size: 13px; font-weight: 600; color: #5f7a6b; letter-spacing: 0.04em; }
 
 /* Kursens innehåll (sex kort) */
 .session-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: clamp(32px, 5vw, 56px); }
@@ -862,10 +875,10 @@ body { background: #fdfbf8; }
   background: #fff;
   border: 1px solid #ece8e3;
   border-radius: 14px;
-  box-shadow: 0 2px 14px rgba(42,58,68,0.05);
+  box-shadow: 0 2px 14px rgba(45,61,55,0.05);
 }
-.session-num { display: block; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #7BA8B8; font-weight: 500; margin-bottom: 10px; }
-.content-section .session-card h3 { font-family: var(--serif); font-size: 24px; font-weight: 500; color: #1e2d35; margin: 0 0 10px; line-height: 1.2; }
+.session-num { display: block; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #7f9a88; font-weight: 500; margin-bottom: 10px; }
+.content-section .session-card h3 { font-family: var(--serif); font-size: 24px; font-weight: 500; color: #243029; margin: 0 0 10px; line-height: 1.2; }
 .session-card p { margin: 0; font-size: 13px; color: #666; max-width: 100%; }
 .session-grid + .section-book-btn { margin-top: 2.5rem; }
 
@@ -906,7 +919,7 @@ body { background: #fdfbf8; }
   .navbar { width: 92%; padding: 12px 0; }
 
   .page-hero { height: 85svh; min-height: 420px; }
-  .hero-title { font-size: 3.2rem; }
+  .hero-title { font-size: 2.8rem; }
 
   .content-section { padding: clamp(52px, 12vw, 80px) 0; }
   .section-inner { padding: 0 clamp(18px, 6vw, 28px); }
@@ -952,7 +965,7 @@ body { background: #fdfbf8; }
 
 /* ── Mycket små mobiler (till 360 px) ── */
 @media (max-width: 360px) {
-  .hero-title { font-size: 2.7rem; }
+  .hero-title { font-size: 2.4rem; }
   .about-split-head h2 { font-size: 3rem; }
   .booking-form-wrap { padding: 12px 10px; }
   .booking-confirm { padding: 14px 10px; }
