@@ -792,9 +792,9 @@ p {
 .footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.65); letter-spacing: 0.05em; transition: color 0.2s; }
 
 .footer-contact { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
-.footer-loc { font-size: 0.82rem; color: rgba(255,255,255,0.55); text-align: center; }
+.footer-loc { font-size: 0.82rem; color: rgba(255,255,255,0.55); text-align: right; }
 .footer-email,
-.footer-ig { font-size: 0.82rem; color: rgba(255,255,255,0.65); transition: color 0.2s; display: flex; align-items: flex-end; gap: 6px; }
+.footer-ig { font-size: 0.82rem; color: rgba(255,255,255,0.65); transition: color 0.2s; display: flex; align-items: center; gap: 6px; }
 .footer-ig i { font-size: 1rem; }
 .footer-links a:hover,
 .footer-email:hover,
@@ -885,9 +885,28 @@ body { background: #fcfdfd; }
 @media (max-width: 1024px) { .treat-grid, .session-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 667px)  { .treat-grid, .session-grid { grid-template-columns: 1fr; } }
 
-/* Menyknapp: vit mot den blå menyn */
-.nav-book-btn { background: #fff; color: #3f5b6b !important; }
-.nav-book-btn:hover { background: #eef4f5; }
+/* Ljus beige meny och sidfot (mörk text, mörk logotyp) */
+.site-header { background: rgba(247, 245, 241, 0.96); box-shadow: 0 1px 0 rgba(47, 70, 81, 0.08); }
+.nav-links { background: rgba(247, 245, 241, 0.98); }
+.nav-links a { color: #2f4651; }
+.hamburger span { background: #2f4651; }
+.lang-toggle { border-color: rgba(47, 70, 81, 0.35); color: #2f4651; }
+.lang-toggle:hover { background: rgba(47, 70, 81, 0.06); }
+.nav-book-btn { background: #5c7c8a; color: #fff !important; }
+.nav-book-btn:hover { background: #4a6b7c; }
+.logo,
+.footer-logo { filter: brightness(0); }
+
+.site-footer { background: #f1ede6; color: rgba(47, 70, 81, 0.8); }
+.footer-tagline { color: rgba(47, 70, 81, 0.6); }
+.footer-links a,
+.footer-email,
+.footer-ig { color: rgba(47, 70, 81, 0.8); }
+.footer-loc { color: rgba(47, 70, 81, 0.65); }
+.footer-links a:hover,
+.footer-email:hover,
+.footer-ig:hover { color: #2f4651; }
+.footer-bottom { border-top-color: rgba(47, 70, 81, 0.12); color: rgba(47, 70, 81, 0.5); }
 
 /* ============================================================================
    8. RESPONSIVT

@@ -1362,11 +1362,10 @@ function HomePage({ t, lang }) {
             </button>
           </div>
         </div>
-      </section>
+      </section> */}
     </>
   );
 }
-*/}
 
 /* ============================================================================
    7. BOKA-SIDAN (egen sida, nås via #boka)
