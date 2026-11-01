@@ -1477,13 +1477,6 @@ function Footer({ t }) {
           <p className="footer-tagline">{t.footer.tagline}</p>
         </div>
 
-        <div className="footer-links">
-          <a href="#om-mig">{t.footer.linkAboutMe}</a>
-          <a href="#ayurveda">{t.footer.linkAyurveda}</a>
-          <a href="#yoga">{t.footer.linkYoga}</a>
-          <a href="#boka">{t.footer.linkBook}</a>
-        </div>
-
         <div className="footer-contact">
           <span className="footer-loc">{t.footer.location}</span>
           <a href="mailto:healthbyjasmin@gmail.com" className="footer-email">
