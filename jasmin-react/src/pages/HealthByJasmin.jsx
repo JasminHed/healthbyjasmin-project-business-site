@@ -1306,7 +1306,7 @@ function HomePage({ t, lang }) {
         <p>{t.quote}</p>
       </section>
 
-      {/* ───────── RECENSIONER ───────── */}
+      {/* ───────── RECENSIONER ───────── 
       <section className="testimonials-section">
         <div className="section-inner">
           <span className="section-label">{t.reviews.label}</span>
@@ -1366,6 +1366,7 @@ function HomePage({ t, lang }) {
     </>
   );
 }
+*/}
 
 /* ============================================================================
    7. BOKA-SIDAN (egen sida, nås via #boka)
