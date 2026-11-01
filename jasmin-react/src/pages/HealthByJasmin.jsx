@@ -1301,10 +1301,10 @@ function HomePage({ t, lang }) {
         </div>
       </section>
 
-      {/* ───────── CITAT ───────── */}
+      {/* ───────── CITAT ───────── 
       <section className="quote-section">
         <p>{t.quote}</p>
-      </section>
+      </section> */}
 
       {/* ───────── RECENSIONER ───────── 
       <section className="testimonials-section">
