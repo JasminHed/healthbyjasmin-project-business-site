@@ -14,11 +14,7 @@ const EMAILJS_TEMPLATE = "template_8rmxsm9";
 const EMAILJS_PUBLIC_KEY = "y7Yu8QbgFj3NM0VeM";
 
 // Bilder på startsidan
-const HERO_IMAGES = [
-  "/assets/header.jpeg",
-  "/assets/ayurveda.jpg",
-  "/assets/ashtanga.jpeg",
-];
+const HERO_IMAGES = ["/assets/ayurveda.jpg", "/assets/ashtanga.jpeg"];
 
 /* ============================================================================
    2. BOKNINGSTIDER
