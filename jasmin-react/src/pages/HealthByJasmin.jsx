@@ -4,6 +4,25 @@ import { useEffect, useRef, useState } from "react";
 
 import "../styles/app.css";
 
+/* ============================================================================
+   HEALTH BY JASMIN – hela hemsidan i en fil
+
+   Innehåll (sök på rubrikerna nedan med Ctrl/Cmd+F):
+     1. INSTÄLLNINGAR      – Supabase + EmailJS
+     2. BOKNINGSTIDER      – datum och klockslag
+     3. TEXTER             – all text på svenska (sv) och engelska (en)
+     4. MENY               – Navbar
+     5. BOKNINGSFORMULÄR   – själva bokningen (välj behandling, tid, uppgifter)
+     6. STARTSIDAN         – hero, om mig, ayurveda, yoga, citat, recensioner
+     7. BOKA-SIDAN         – egen sida (nås via #boka)
+     8. SIDFOT
+     9. APP                – väljer vilken sida som visas
+   ============================================================================ */
+
+/* ============================================================================
+   1. INSTÄLLNINGAR
+   ============================================================================ */
+
 const supabase = createClient(
   "https://besnxjxiadkapxgmabdz.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJlc254anhpYWRrYXB4Z21hYmR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzY0OTIsImV4cCI6MjA5NDI1MjQ5Mn0.VEH6QtlFEieEYtQTuWvXPNPVwAB_Lw19wk-NGYz0oNY",
@@ -31,7 +50,10 @@ const BIRKA_SLOTS = [
 const BOOKED_DATES = ["2026-10-22", "2026-11-12", "2026-11-26"];
 
 // Bygger listan med alla torsdagar 15 okt – 17 dec 2026
-const TORSDAG_ENTRIES = [];
+// Sätt till true när du har lagt till nya tider, så visas alla lediga torsdagar igen.
+const SHOW_FREE_TIMES = false;
+
+const ALL_ENTRIES = [];
 for (
   const d = new Date(2026, 9, 15);
   d <= new Date(2026, 11, 17);
@@ -40,9 +62,18 @@ for (
   const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   const booked = BOOKED_DATES.includes(iso);
   BIRKA_SLOTS.forEach((s) =>
-    TORSDAG_ENTRIES.push({ date: new Date(d), slots: [s], booked }),
+    // n = tidens ordinarie nummer, så att gamla bokningar fortfarande matchar
+    ALL_ENTRIES.push({
+      date: new Date(d),
+      slots: [s],
+      booked,
+      n: ALL_ENTRIES.length,
+    }),
   );
 }
+
+// Just nu visas bara de torsdagar som redan är bokade.
+const TORSDAG_ENTRIES = ALL_ENTRIES.filter((e) => e.booked || SHOW_FREE_TIMES);
 
 // Svenska månader som alltid används i mejlet till Jasmin
 const SV_MONTHS = [
@@ -692,8 +723,8 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, onDone }) {
 
   // Är tid nummer i redan bokad?
   function isEntryBooked(i) {
-    const { date, slots, booked } = entries[i];
-    const key = `${slotPrefix}-${i}-${slots[0].t}`;
+    const { date, slots, booked, n } = entries[i];
+    const key = `${slotPrefix}-${n}-${slots[0].t}`;
     return (
       bookedSlots.includes(key) || !!booked || isDateBooked(date, slots[0])
     );
@@ -768,7 +799,7 @@ function Booking({ t, entries, address, slotPrefix, treatmentIds, onDone }) {
     setSendError(false);
     setSlotTaken(false);
 
-    const key = `${slotPrefix}-${dateIdx}-${slot.t}`;
+    const key = `${slotPrefix}-${entries[dateIdx].n}-${slot.t}`;
     const dateStr = fmtDate(entries[dateIdx].date);
     const timeStr = `${slot.t}–${slot.e}`;
     const fullName = form.name.trim();
