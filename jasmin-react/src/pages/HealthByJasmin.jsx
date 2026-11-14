@@ -32,6 +32,9 @@ const EMAILJS_SERVICE_ID = "service_mjw4cpb";
 const EMAILJS_TEMPLATE = "template_8rmxsm9";
 const EMAILJS_PUBLIC_KEY = "y7Yu8QbgFj3NM0VeM";
 
+// Adress för all verksamhet (visas i bekräftelse och mejl)
+const ADDRESS = "Södermalm, Åsögatan 166 (dusch finns)";
+
 // Bilder på startsidan
 const HERO_IMAGES = ["/assets/ayurveda.jpg", "/assets/ashtanga.jpeg"];
 
@@ -39,41 +42,27 @@ const HERO_IMAGES = ["/assets/ayurveda.jpg", "/assets/ashtanga.jpeg"];
    2. BOKNINGSTIDER
    ============================================================================ */
 
-// Tre tider per torsdagskväll, 55 min per behandling med 15 min mellan.
-const BIRKA_SLOTS = [
-  { t: "18:00", e: "18:55" },
-  { t: "19:15", e: "20:10" },
-  { t: "20:30", e: "21:25" },
+// Alla bokningsbara tider (55 min var). Lägg till fler rader här vid behov.
+const NEW_DATES = [
+  [new Date(2026, 10, 24), [{ t: "17:45", e: "18:40" }]],
+  [new Date(2026, 11, 8), [{ t: "17:45", e: "18:40" }]],
+  [new Date(2026, 11, 22), [{ t: "17:45", e: "18:40" }]],
+  [
+    new Date(2026, 11, 23),
+    [
+      { t: "10:00", e: "10:55" },
+      { t: "11:15", e: "12:10" },
+    ],
+  ],
 ];
 
-// Torsdagar som är bokade på annan plats (visas som "Bokad")
-const BOOKED_DATES = ["2026-10-22", "2026-11-12", "2026-11-26"];
-
-// Bygger listan med alla torsdagar 15 okt – 17 dec 2026
-// Sätt till true när du har lagt till nya tider, så visas alla lediga torsdagar igen.
-const SHOW_FREE_TIMES = false;
-
-const ALL_ENTRIES = [];
-for (
-  const d = new Date(2026, 9, 15);
-  d <= new Date(2026, 11, 17);
-  d.setDate(d.getDate() + 7)
-) {
-  const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-  const booked = BOOKED_DATES.includes(iso);
-  BIRKA_SLOTS.forEach((s) =>
-    // n = tidens ordinarie nummer, så att gamla bokningar fortfarande matchar
-    ALL_ENTRIES.push({
-      date: new Date(d),
-      slots: [s],
-      booked,
-      n: ALL_ENTRIES.length,
-    }),
-  );
-}
-
-// Just nu visas bara de torsdagar som redan är bokade.
-const TORSDAG_ENTRIES = ALL_ENTRIES.filter((e) => e.booked || SHOW_FREE_TIMES);
+// n börjar på 30 så att tidigare bokningsnycklar fortfarande matchar
+const ENTRIES = [];
+NEW_DATES.forEach(([date, slots]) =>
+  slots.forEach((s) =>
+    ENTRIES.push({ date, slots: [s], booked: false, n: 30 + ENTRIES.length }),
+  ),
+);
 
 // Svenska månader som alltid används i mejlet till Jasmin
 const SV_MONTHS = [
@@ -237,14 +226,14 @@ const TRANSLATIONS = {
         {
           id: "massage",
           type: "Ayurvedisk massage",
-          loc: "(Vasastan · ej dusch)",
+          loc: "(Södermalm, Åsögatan 166 · dusch finns)",
           time: "55 min",
           price: "",
         },
         {
           id: "radgivning",
           type: "Ayurvedisk hälsorådgivning",
-          loc: "(Vasastan)",
+          loc: "(Södermalm, Åsögatan 166)",
           time: "55 min",
           price: "",
         },
@@ -464,14 +453,14 @@ const TRANSLATIONS = {
         {
           id: "massage",
           type: "Ayurvedic massage",
-          loc: "(Vasastan · no shower)",
+          loc: "(Södermalm, Åsögatan 166 · shower available)",
           time: "55 min",
           price: "",
         },
         {
           id: "radgivning",
           type: "Ayurvedic health consultation",
-          loc: "(Vasastan)",
+          loc: "(Södermalm, Åsögatan 166)",
           time: "55 min",
           price: "",
         },
@@ -1447,8 +1436,8 @@ function BookingPage({ t }) {
           <div className="week-schedule-booking">
             <Booking
               t={t}
-              entries={TORSDAG_ENTRIES}
-              address="Birkagatan 23, Stockholm (ej dusch)"
+              entries={ENTRIES}
+              address={ADDRESS}
               slotPrefix="birka-massage"
               treatmentIds={["abhyanga", "vishesh", "marma"]}
               onDone={() => setOpen(null)}
@@ -1461,8 +1450,8 @@ function BookingPage({ t }) {
           <div className="week-schedule-booking">
             <Booking
               t={t}
-              entries={TORSDAG_ENTRIES}
-              address="Birkagatan 23, Stockholm"
+              entries={ENTRIES}
+              address={ADDRESS}
               slotPrefix="birka-radgivning"
               treatmentIds={["halsradgivning"]}
               onDone={() => setOpen(null)}
